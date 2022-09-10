@@ -11,13 +11,18 @@ const assets = [
   },
   {
     assetType: 'image',
-    src: 'https://eoimages.gsfc.nasa.gov/images/imagerecords/150000/150290/ISS067-E-302073_lrg.jpg',
-    title: '지구',
+    src: 'C:/Users/USER/Downloads/imrs.jpg',
+    title: '부산',
   },
   {
     assetType: 'web',
     src: 'https://www.weather.go.kr/wgis-nuri/html/map.html',
     title: '날씨누리',
+  },
+  {
+    assetType: 'web',
+    src: 'https://www.weather.go.kr/w/typhoon/ko/weather/typhoon_02.jsp',
+    title: '태풍현재상황',
   },
   {
     assetType: 'web',

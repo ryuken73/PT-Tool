@@ -1,7 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  drawShow: false
+  drawShow: false,
+  pathDatum: [],
 };
 
 export const drawSlice = createSlice({
@@ -12,10 +13,15 @@ export const drawSlice = createSlice({
       const { payload } = action;
       const { drawShow } = payload;
       state.drawShow = drawShow;
-    }
+    },
+    setPathDatum: (state, action) => {
+      const { payload } = action;
+      const { pathDatum } = payload;
+      state.pathDatum = pathDatum
+    },
   },
 })
 
-export const { setDrawShow } = drawSlice.actions;
+export const { setDrawShow, setPathDatum } = drawSlice.actions;
 
 export default drawSlice.reducer;
