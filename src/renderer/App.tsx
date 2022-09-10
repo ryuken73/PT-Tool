@@ -2,14 +2,12 @@ import React from 'react';
 import DrawSvg from 'renderer/Components/Common/DrawSvg';
 import MenuContainer from 'renderer/Components/Common/MenuContainer';
 import Asset from 'renderer/Components/Common/Asset';
-import WebView from 'renderer/Components/Common/WebView';
-import ImageBox from 'renderer/Components/Common/ImageBox';
-import HLSPlayer from 'renderer/Components/HLSPlayer';
 import styled from 'styled-components';
 import colors from 'renderer/config/colors';
 import Loading from './Components/Common/Loading';
+import ToolContainer from './Components/Common/ToolContainer';
 
-const BasicBox = styled.div`
+const BodyContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -22,7 +20,8 @@ const BasicBox = styled.div`
   overflow: hidden;
 `;
 
-const AppContainer = styled(BasicBox)`
+const AppContainer = styled(BodyContainer)`
+  display: relative;
   text-align: center;
   background-color: ${colors.base};
   flex-direction: column;
@@ -31,7 +30,7 @@ const AppContainer = styled(BasicBox)`
   overflow: hidden;
 `;
 
-const setPlayer = () => {};
+// const setPlayer = () => {};
 
 const assets = [
   {
@@ -56,7 +55,7 @@ const assets = [
     fill: true,
     fluid: false,
     aspectRatio: "",
-    setPlayer,
+    // setPlayer,
     enableOverlay: false,
   },
   {
@@ -68,30 +67,34 @@ const assets = [
     fill: true,
     fluid: false,
     aspectRatio: "",
-    setPlayer,
+    // setPlayer,
     enableOverlay: false,
   },
 ];
 
 export default function App() {
-  const show=false;
+  const [drawShow, setDrawShow] = React.useState(false);
   const [currentAsset, setCurrentAsset] = React.useState(0);
   const showMap = React.useMemo(() => {
     return assets.map((asset, index) => {
       return index === currentAsset;
     })
   }, [currentAsset])
+  const toggleDraw = React.useCallback(() => {
+    setDrawShow((show) => !show);
+  }, []);
 
   return (
     <AppContainer>
-      {show && <DrawSvg />}
+      {drawShow && <DrawSvg />}
       <Loading />
       <MenuContainer setCurrentAsset={setCurrentAsset} />
-      <BasicBox>
+      <ToolContainer toggleDraw={toggleDraw} />
+      <BodyContainer>
         {assets.map((asset, index) => (
-          <Asset options={asset} show={showMap[index]}></Asset>
+          <Asset options={asset} drawOn={drawShow} show={showMap[index]} />
         ))}
-      </BasicBox>
+      </BodyContainer>
     </AppContainer>
   );
 }
