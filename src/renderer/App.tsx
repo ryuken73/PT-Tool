@@ -19,6 +19,7 @@ const BasicBox = styled.div`
   box-sizing: border-box;
   border-collapse: collapse;
   font-size: calc(10px + 2vmin);
+  overflow: hidden;
 `;
 
 const AppContainer = styled(BasicBox)`
@@ -27,34 +28,53 @@ const AppContainer = styled(BasicBox)`
   flex-direction: column;
   justify-content: flex-start;
   color: white;
+  overflow: hidden;
 `;
 
 const setPlayer = () => {};
 
 const assets = [
   {
-    type: 'image',
+    assetType: 'image',
+    src: 'C:/Users/USER/Downloads/norman-hermle-MMqbhMWpqg8-unsplash.jpg',
+  },
+  {
+    assetType: 'image',
     src: 'https://eoimages.gsfc.nasa.gov/images/imagerecords/150000/150290/ISS067-E-302073_lrg.jpg',
   },
-  { type: 'web', src: 'https://www.weather.go.kr/wgis-nuri/html/map.html' },
   {
-    type: 'web',
+    assetType: 'web',
+    src: 'https://www.weather.go.kr/wgis-nuri/html/map.html',
+  },
+  {
+    assetType: 'web',
     src: 'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.50,37.91,4250',
   },
   {
-    type: 'video',
+    assetType: 'video',
     source: {url: 'http://61.43.246.225:1935/rtplive/cctv_86.stream/chunklist_w1471259849.m3u8'},
     fill: true,
     fluid: false,
     aspectRatio: "",
     setPlayer,
     enableOverlay: false,
-    fullScreen: true
+  },
+  {
+    assetType: 'video',
+    source: {
+      url: 'C:/Users/USER/Downloads/y1.mp4',
+    },
+    type: 'video/mp4',
+    fill: true,
+    fluid: false,
+    aspectRatio: "",
+    setPlayer,
+    enableOverlay: false,
   },
 ];
 
 export default function App() {
-  const show=true;
+  const show=false;
   const [currentAsset, setCurrentAsset] = React.useState(0);
   const showMap = React.useMemo(() => {
     return assets.map((asset, index) => {
@@ -71,33 +91,6 @@ export default function App() {
         {assets.map((asset, index) => (
           <Asset options={asset} show={showMap[index]}></Asset>
         ))}
-        {/* <WebView src="https://www.weather.go.kr/wgis-nuri/html/map.html" /> */}
-        {/* <WebView src="https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.50,37.91,4250" /> */}
-        {/* <div
-          style={{
-            width: '100%',
-            height: '100%',
-            boxSizing: 'border-box',
-            padding: '1px',
-            borderColor: 'black',
-            border: 'solid 1px black',
-            background: 'maroon',
-          }}
-        >
-          <HLSPlayer
-            fill
-            fluid={false}
-            aspectRatio=""
-            source={{
-              url: 'http://61.43.246.225:1935/rtplive/cctv_86.stream/chunklist_w1471259849.m3u8',
-            }}
-            setPlayer={setPlayer}
-            enableOverlay
-            overlayModal
-            overlayContent="해운대"
-          />
-        </div> */}
-        {/* <ImageBox src="https://eoimages.gsfc.nasa.gov/images/imagerecords/150000/150290/ISS067-E-302073_lrg.jpg"></ImageBox> */}
       </BasicBox>
     </AppContainer>
   );

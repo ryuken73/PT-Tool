@@ -10,7 +10,7 @@ const Container = styled.div`
   z-index: 9999;
 `;
 
-const buttons = ['image', 'web1', 'web2', 'video'];
+const buttons = ['image', 'image', 'web1', 'web2', 'video', 'video'];
 
 const MenuContainer = (props) => {
   const {setCurrentAsset}  = props;
