@@ -4,8 +4,8 @@ const initialState = {
   drawShow: false
 };
 
-export const appSlice = createSlice({
-  name: 'appSlice',
+export const drawSlice = createSlice({
+  name: 'drawSlice',
   initialState,
   reducers: {
     setDrawShow: (state, action) => {
@@ -16,6 +16,6 @@ export const appSlice = createSlice({
   },
 })
 
-export const { setDrawShow } = appSlice.actions;
+export const { setDrawShow } = drawSlice.actions;
 
-export default appSlice.reducer;
+export default drawSlice.reducer;

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import useBodyState from 'renderer/hooks/useBodyState';
 
 const Container = styled.div`
   position: fixed;
@@ -12,13 +13,19 @@ const Container = styled.div`
 
 const buttons = ['image', 'image', 'web1', 'web2', 'video', 'video'];
 
-const MenuContainer = (props) => {
-  const {setCurrentAsset}  = props;
+const MenuContainer = () => {
+  const { setCurrentAssetState } = useBodyState();
   return (
     <Container>
       {buttons.map((text, index) => (
         // eslint-disable-next-line react/button-has-type
-        <button onClick={() => {setCurrentAsset(index)}}>{text}</button>
+        <button
+          onClick={() => {
+            setCurrentAssetState(index);
+          }}
+        >
+          {text}
+        </button>
       ))}
     </Container>
   )

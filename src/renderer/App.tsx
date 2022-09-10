@@ -1,11 +1,12 @@
 import React from 'react';
-import DrawSvg from 'renderer/Components/Common/DrawSvg';
-import MenuContainer from 'renderer/Components/Common/MenuContainer';
-import Asset from 'renderer/Components/Common/Asset';
+import AssetContainer from 'renderer/Components/Body/AssetContainer';
+import DrawSvg from 'renderer/Components/Draw/DrawSvg';
+import MenuContainer from 'renderer/Components/Menus/MenuContainer';
 import styled from 'styled-components';
 import colors from 'renderer/config/colors';
 import Loading from './Components/Common/Loading';
 import ToolContainer from './Components/Common/ToolContainer';
+import useAppState from './hooks/useAppState';
 
 const BodyContainer = styled.div`
   display: flex;
@@ -21,7 +22,6 @@ const BodyContainer = styled.div`
 `;
 
 const AppContainer = styled(BodyContainer)`
-  display: relative;
   text-align: center;
   background-color: ${colors.base};
   flex-direction: column;
@@ -30,71 +30,15 @@ const AppContainer = styled(BodyContainer)`
   overflow: hidden;
 `;
 
-// const setPlayer = () => {};
-
-const assets = [
-  {
-    assetType: 'image',
-    src: 'C:/Users/USER/Downloads/norman-hermle-MMqbhMWpqg8-unsplash.jpg',
-  },
-  {
-    assetType: 'image',
-    src: 'https://eoimages.gsfc.nasa.gov/images/imagerecords/150000/150290/ISS067-E-302073_lrg.jpg',
-  },
-  {
-    assetType: 'web',
-    src: 'https://www.weather.go.kr/wgis-nuri/html/map.html',
-  },
-  {
-    assetType: 'web',
-    src: 'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.50,37.91,4250',
-  },
-  {
-    assetType: 'video',
-    source: {url: 'http://61.43.246.225:1935/rtplive/cctv_86.stream/chunklist_w1471259849.m3u8'},
-    fill: true,
-    fluid: false,
-    aspectRatio: "",
-    // setPlayer,
-    enableOverlay: false,
-  },
-  {
-    assetType: 'video',
-    source: {
-      url: 'C:/Users/USER/Downloads/y1.mp4',
-    },
-    type: 'video/mp4',
-    fill: true,
-    fluid: false,
-    aspectRatio: "",
-    // setPlayer,
-    enableOverlay: false,
-  },
-];
-
 export default function App() {
-  const [drawShow, setDrawShow] = React.useState(false);
-  const [currentAsset, setCurrentAsset] = React.useState(0);
-  const showMap = React.useMemo(() => {
-    return assets.map((asset, index) => {
-      return index === currentAsset;
-    })
-  }, [currentAsset])
-  const toggleDraw = React.useCallback(() => {
-    setDrawShow((show) => !show);
-  }, []);
-
+  const {drawShow, toggleDraw} = useAppState();
   return (
     <AppContainer>
       {drawShow && <DrawSvg />}
       <Loading />
-      <MenuContainer setCurrentAsset={setCurrentAsset} />
+      <MenuContainer />
       <ToolContainer toggleDraw={toggleDraw} />
-      <BodyContainer>
-        {assets.map((asset, index) => (
-          <Asset options={asset} drawOn={drawShow} show={showMap[index]} />
-        ))}
-      </BodyContainer>
+      <AssetContainer />
     </AppContainer>
   );
 }

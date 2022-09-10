@@ -1,15 +1,69 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setModalOpen } from 'renderer/appSlice';
+import { setDrawShow } from 'renderer/appSlice';
+import { setAssets } from 'renderer/Components/Body/bodySlice';
+
+const assets = [
+  {
+    assetType: 'image',
+    src: 'C:/Users/USER/Downloads/norman-hermle-MMqbhMWpqg8-unsplash.jpg',
+    title: '홈',
+  },
+  {
+    assetType: 'image',
+    src: 'https://eoimages.gsfc.nasa.gov/images/imagerecords/150000/150290/ISS067-E-302073_lrg.jpg',
+    title: '지구',
+  },
+  {
+    assetType: 'web',
+    src: 'https://www.weather.go.kr/wgis-nuri/html/map.html',
+    title: '날씨누리',
+  },
+  {
+    assetType: 'web',
+    src: 'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.50,37.91,4250',
+    title: 'earthnull',
+  },
+  {
+    assetType: 'video',
+    source: {
+      url: 'http://61.43.246.225:1935/rtplive/cctv_86.stream/chunklist_w1471259849.m3u8',
+    },
+    fill: true,
+    fluid: false,
+    aspectRatio: '',
+    // setPlayer,
+    enableOverlay: false,
+    title: '해운대',
+  },
+  {
+    assetType: 'video',
+    source: {
+      url: 'C:/Users/USER/Downloads/y1.mp4',
+    },
+    type: 'video/mp4',
+    fill: true,
+    fluid: false,
+    aspectRatio: '',
+    // setPlayer,
+    enableOverlay: false,
+    title: '로컬영상',
+  },
+];
 
 export default function useAppState() {
   const dispatch = useDispatch();
-  const modalOpen = useSelector((state) => state.app.modalOpen);
-  const setModalOpenState = React.useCallback(
-    (open) => {
-      dispatch(setModalOpen({ open }));
-    },
-    [dispatch]
-  );
-  return { modalOpen, setModalOpenState };
+  const drawShow = useSelector((state) => state.app.drawShow);
+  React.useEffect(() => {
+    dispatch(
+      setAssets({
+        assets,
+      })
+    );
+  }, [dispatch]);
+  const toggleDraw = React.useCallback(() => {
+    dispatch(setDrawShow({ drawShow: !drawShow }));
+  }, [dispatch, drawShow]);
+
+  return { drawShow, toggleDraw };
 }
