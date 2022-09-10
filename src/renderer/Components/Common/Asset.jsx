@@ -16,7 +16,10 @@ const Container = styled.div`
   /* visibility: ${(props) => (props.show ? 'visible' : 'hidden')}; */
   overflow: hidden;
   /* filter: grayscale(100%); */
-
+  /* filter: ${(props) => props.drawOn && 'grayscale(100%)'}; */
+  /* filter: ${(props) => props.drawOn && 'contrast(175%) brightness(103%)'}; */
+  ${(props) => props.drawOn && 'transform: scale(1.2)'};
+  transition: transform 0.5s;
 `
 
 const AssetMap = {
@@ -27,12 +30,12 @@ const AssetMap = {
 
 const AssetContainer = (props) => {
   // eslint-disable-next-line react/prop-types
-  const { options, show } = props;
+  const { options, show, drawOn } = props;
   const { assetType, ...remainOpts } = options;
   const Asset = AssetMap[assetType];
 
   return (
-    <Container show={show}>
+    <Container show={show} drawOn={drawOn}>
       <Asset {...remainOpts} />
     </Container>
   )
