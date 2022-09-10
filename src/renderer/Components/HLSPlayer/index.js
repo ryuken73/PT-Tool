@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import Box from '@mui/material/Box';
 import VideoPlayer from './VideoPlayer';
+import ReloadButton from '../Common/ReloadButton';
 
 const HLSPlayer = (props) => {
     console.log('rerender hlsplayer', props)
     const {
-        player=null, 
-        enableAutoRefresh=null, 
+        // player=null,
+        enableAutoRefresh=null,
         enableOverlay=false,
         overlayContent='Default Overlay Content',
         overlayRightBtn='Default Right Button',
@@ -24,16 +25,18 @@ const HLSPlayer = (props) => {
     const {
         width="100%",
         height=0,
-        controls=false, 
-        autoplay=true, 
-        bigPlayButton=false, 
-        bigPlayButtonCentered=false, 
+        controls=false,
+        autoplay=true,
+        bigPlayButton=false,
+        bigPlayButtonCentered=false,
         source={},
         type='application/x-mpegURL',
         LONG_BUFFERING_MS_SECONDS=3000
     } = props;
     const {activeSource} = props;
-    const {setPlayer} = props;
+    // const {setPlayer} = props;
+
+    const [player, setPlayer] = React.useState(null);
 
     const srcObject = {
         src: source.url,
@@ -53,6 +56,12 @@ const HLSPlayer = (props) => {
         setPlayer(player);
         player.muted(true);
     }
+
+    const reloadPlayer = React.useCallback(() => {
+      console.log(player);
+      player.src(srcObject)
+      player.load();
+  }, [player, srcObject]);
 
     const onVideoPlay = React.useCallback(duration => {
         // channelLog.info("Video played at: ", duration);
@@ -172,6 +181,7 @@ const HLSPlayer = (props) => {
                 overlayBig={overlayBig}
                 overlayModal={overlayModal}
             />
+            <ReloadButton reload={reloadPlayer}></ReloadButton>
         </Box>
     );
 };
