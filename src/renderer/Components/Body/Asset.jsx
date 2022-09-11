@@ -18,7 +18,7 @@ const Container = styled.div`
   /* filter: grayscale(100%); */
   /* filter: ${(props) => props.drawOn && 'grayscale(100%)'}; */
   /* filter: ${(props) => props.drawOn && 'contrast(175%) brightness(103%)'}; */
-  ${(props) => props.drawOn && 'transform: scale(1.2)'};
+  ${(props) => props.drawOn && 'transform: scale(1.01)'};
   transition: transform 0.5s;
 `
 
