@@ -18,7 +18,7 @@ export const drawSlice = createSlice({
       const { payload } = action;
       const { pathDatum } = payload;
       state.pathDatum = pathDatum
-    },
+    }
   },
 })
 

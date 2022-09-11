@@ -5,7 +5,7 @@ import MenuContainer from 'renderer/Components/Menus/MenuContainer';
 import styled from 'styled-components';
 import colors from 'renderer/config/colors';
 import Loading from './Components/Common/Loading';
-import ToolContainer from './Components/Common/ToolContainer';
+import ToolContainer from './Components/Draw/ToolContainer';
 import useAppState from './hooks/useAppState';
 
 const BodyContainer = styled.div`
@@ -37,7 +37,7 @@ export default function App() {
       {drawShow && <DrawSvg />}
       <Loading />
       <MenuContainer />
-      <ToolContainer toggleDraw={toggleDraw} />
+      <ToolContainer drawShow={drawShow} toggleDraw={toggleDraw} />
       <AssetContainer />
     </AppContainer>
   );
