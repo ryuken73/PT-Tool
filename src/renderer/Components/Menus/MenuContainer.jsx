@@ -11,8 +11,6 @@ const Container = styled.div`
   z-index: 9999;
 `;
 
-const buttons = ['image', 'image', 'web1', 'web2', 'video', 'video'];
-
 const MenuContainer = () => {
   const { assets, setCurrentAssetState } = useBodyState();
   return (
