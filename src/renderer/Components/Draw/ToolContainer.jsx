@@ -44,23 +44,12 @@ const ColorBox = styled.div`
   margin-bottom: 2px;
   /* margin: 3px; */
   cursor: pointer;
+  font-size: 20px;
 `
-const IconContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  /* background: #140e30; */
-  justify-content: space-around;
-  background: white;
+const IconContainer = styled(PalleteContainer)`
+  background: grey;
   opacity: 0.6 !important;
-  color: white;
-  border-radius: 10px;
-  margin-top: 5px;
-  padding: 3px;
-  flex-wrap: wrap;
-  width: 80px;
-  border: 2px solid #140e30;
-  /* width: 100px; */
+  width: auto;
 `
 const iconStyle = {
   background:"#140e30",
@@ -68,28 +57,73 @@ const iconStyle = {
   borderRadius: "20%",
   fontSize: "38px",
   padding: "0px !important"
-}
+};
+const CheckSvg = (props) => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 20"
+      fill={props.color}
+    >
+      <path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z" />
+    </svg>
+  )
+};
+
+const COLORS = ["black", "white", "red", "yellow"];
+const CHECK_COLORS = ["white", "black", "black", "black"];
 
 const ToolContainer = (props) => {
   const { drawShow, toggleDraw } = props;
-  const { clearPathDatumState, undoPathDatumState } = useDrawState();
+  const {
+    fillColor,
+    showBorder,
+    clearPathDatumState,
+    undoPathDatumState,
+    setFillColorState,
+    setShowBorderState,
+  } = useDrawState();
+
+  const showStokeIconGrey = !drawShow  || !showBorder;
+
+  const customIconStyle = {
+    ...iconStyle,
+    background: `${showStokeIconGrey ? 'darkgrey' : '#140e30'}`,
+  };
+  const onClickColor = React.useCallback((event) => {
+    setFillColorState(event.target.getAttribute('color'));
+  },[setFillColorState]);
+
+  const toggleStroke = React.useCallback(() => {
+    setShowBorderState(!showBorder)
+  }, [setShowBorderState, showBorder]);
   return (
     <Container>
       <IconContainer>
         <IconButton sx={{ padding: '0px' }} size="medium" onClick={toggleDraw}>
           <ModeEditIcon sx={iconStyle} />
         </IconButton>
-        <IconButton sx={{ padding: '0px' }} size="medium" onClick={toggleDraw}>
-          <ModeEditOutlinedIcon sx={iconStyle} />
+        <IconButton
+          sx={{ padding: '0px' }}
+          disabled={!drawShow}
+          size="medium"
+          onClick={toggleStroke}
+        >
+          <ModeEditOutlinedIcon sx={customIconStyle} />
         </IconButton>
       </IconContainer>
       <Zoom in={drawShow} timeout={500} style={{ transformOrigin: '0 0 0' }}>
         <div>
           <PalleteContainer>
-            <ColorBox color="black" />
-            <ColorBox color="white" />
-            <ColorBox color="maroon" />
-            <ColorBox color="yellow" />
+            {COLORS.map((color, index) => (
+              <ColorBox key={color} onClick={onClickColor} color={color}>
+                {fillColor === color && (
+                  <CheckSvg color={CHECK_COLORS[index]} />
+                )}
+              </ColorBox>
+            ))}
           </PalleteContainer>
           <IconContainer>
             <IconButton
