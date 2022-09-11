@@ -32,12 +32,24 @@ const options = {
 };
 
 const DrawSvg = (props) => {
-  const {pathDatum, addPathDatumState} = useDrawState();
+  const {
+    pathDatum,
+    fillWidth,
+    fillColor,
+    showBorder,
+    borderWidth,
+    borderColor,
+    pathRenderOptions,
+    addPathDatumState,
+    saveRenderOptionState
+  } = useDrawState();
   const [points, setPoints] = React.useState([]);
   const [mouseUp, setMouseUP] = React.useState(false);
 
   const pathData = React.useRef([]);
   const rawPathData = React.useRef([]);
+
+  options.size = fillWidth;
 
   function handlePointerDown(e) {
     e.target.setPointerCapture(e.pointerId);
@@ -53,7 +65,8 @@ const DrawSvg = (props) => {
   const handlePointerUp = React.useCallback(() => {
     setMouseUP(true);
     addPathDatumState(pathData.current);
-  }, [addPathDatumState]);
+    saveRenderOptionState();
+  }, [addPathDatumState, saveRenderOptionState]);
 
   const stroke = getStroke(points, options);
   // const pathData = getSvgPathFromStroke(stroke);
@@ -78,12 +91,20 @@ const DrawSvg = (props) => {
             orient="auto">
         <path d="M 0 0 L 10 5 L 0 10 z" fill="#f00"/>
       </marker> */}
-      {pathDatum.map(pathData => (
+      {pathDatum.map((pathData, index) => (
         <path
           d={pathData}
-          fill={'white'}
-          stroke="black"
-          strokeWidth={'3'}
+          fill={pathRenderOptions[index].fillColor}
+          stroke={
+            pathRenderOptions[index].showBorder &&
+            pathRenderOptions[index].borderColor
+          }
+          strokeWidth={
+            pathRenderOptions[index].showBorder &&
+            pathRenderOptions[index].borderWidth
+          }
+          // stroke="yellow"
+          // strokeWidth={'3'}
         />
       ))}
       {points && !mouseUp && (
@@ -91,12 +112,12 @@ const DrawSvg = (props) => {
         // <path d={pathData.current} markerEnd={mouseUp && "url(#triangle)"}></path>
         <path
           d={pathData.current}
-          fill={'white'}
-          stroke="black"
-          strokeWidth={'3'}
+          fill={fillColor}
+          stroke={showBorder && borderColor}
+          strokeWidth={showBorder && borderWidth}
           // strokeLinejoin={'square'}
           // strokeLinecap={'square'}
-        ></path>
+         />
       )}
     </StyledSvg>
 };
