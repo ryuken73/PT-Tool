@@ -6,21 +6,30 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
+  display: flex;
+  flex-direction: row;
 `
 const WebView = (props) => {
   const { src } = props;
-  const webviewRef = React.useRef('null');
+  const srcIsArray = Array.isArray(src);
+  const srcArray = srcIsArray ? src : [src];
+  const webviewRefs = srcArray.map(() => React.useRef(null));
+
   const reload = React.useCallback(() => {
-    webviewRef.current.reload();
-  }, []);
+    webviewRefs.forEach(ref => ref.current.reload());
+  }, [webviewRefs]);
+
   return (
     <Container>
-      <webview
-        ref={webviewRef}
-        style={{width:'100%',height:'100%'}}
-        src={src}
-      />
-      <ReloadButton reload={reload}></ReloadButton>
+      {srcArray.map((src, index) => (
+        <webview
+          key={src}
+          ref={webviewRefs[index]}
+          style={{ width: '100%', height: '100%' }}
+          src={src}
+        />
+      ))}
+      <ReloadButton reload={reload} />
     </Container>
   )
 }
