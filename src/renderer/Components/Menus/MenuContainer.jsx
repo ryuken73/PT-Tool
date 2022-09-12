@@ -11,7 +11,8 @@ const Container = styled.div`
   flex-direction: row;
   z-index: 9999;
   font-weight: bold;
-  font-size: 35px;
+  /* font-size: 35px; */
+  font-size: 2vw;
   color: white;
   background: rgb(0,0,0,0.2);
   padding: 5px;
