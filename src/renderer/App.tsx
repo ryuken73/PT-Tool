@@ -7,7 +7,9 @@ import colors from 'renderer/config/colors';
 import Draggable from 'react-draggable';
 import Loading from './Components/Common/Loading';
 import ToolContainer from './Components/Draw/ToolContainer';
+import DragHandle from './Components/Draw/DragHandle';
 import useAppState from './hooks/useAppState';
+import useSyncPosition from './hooks/useSyncPosition';
 
 const BodyContainer = styled.div`
   display: flex;
@@ -36,18 +38,33 @@ const ToolDivWithPosition  = styled.div`
   right: 200px;
   z-index: 9999;
 `
+const ToolDragLeader  = styled.div`
+  position: absolute;
+  top: 170px;
+  right: 200px;
+  z-index: 9999;
+  width: 90px;
+  height: 40px;
+  /* background: yellow; */
+`
 
 
 export default function App() {
   const {drawShow, toggleDraw} = useAppState();
+  const {position, syncPosition} = useSyncPosition();
   return (
     <AppContainer>
       {drawShow && <DrawSvg />}
       <Loading />
       <MenuContainer />
-      <Draggable>
+      <Draggable onDrag={syncPosition}>
+        <ToolDragLeader>
+          <DragHandle />
+        </ToolDragLeader>
+      </Draggable>
+      <Draggable position={position} onStart={() => false}>
         <ToolDivWithPosition>
-        <ToolContainer drawShow={drawShow} toggleDraw={toggleDraw} />
+          <ToolContainer drawShow={drawShow} toggleDraw={toggleDraw} />
         </ToolDivWithPosition>
       </Draggable>
       <AssetContainer />
