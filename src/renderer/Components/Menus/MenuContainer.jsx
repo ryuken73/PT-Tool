@@ -1,14 +1,24 @@
 import React from 'react';
 import styled from 'styled-components';
 import useBodyState from 'renderer/hooks/useBodyState';
+import MenuItem from './MenuItem';
 
 const Container = styled.div`
-  position: fixed;
-  top: 10;
-  right: 10;
+  position: absolute;
+  top: 10px;
+  right: 10px;
   display: flex;
   flex-direction: row;
   z-index: 9999;
+  font-weight: bold;
+  font-size: 35px;
+  color: white;
+  background: rgb(0,0,0,0.2);
+  padding: 5px;
+  /* width: 80%; */
+  justify-content: space-around;
+  border-radius: 20px;
+  /* border-bottom: 6px solid white; */
 `;
 
 const MenuContainer = () => {
@@ -17,13 +27,13 @@ const MenuContainer = () => {
     <Container>
       {assets.map((asset, index) => (
         // eslint-disable-next-line react/button-has-type
-        <button
+        <MenuItem
+          menuText={asset.title}
           onClick={() => {
             setCurrentAssetState(index);
           }}
         >
-          {asset.title}
-        </button>
+        </MenuItem>
       ))}
     </Container>
   )
