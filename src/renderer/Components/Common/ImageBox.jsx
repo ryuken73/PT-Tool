@@ -9,7 +9,7 @@ const StyledImage = styled.img`
 
 const ImageBox = (props) => {
   const { src } = props;
-  return <StyledImage src={src} />;
+  return <StyledImage src={src} draggable={false} />;
 }
 
 export default React.memo(ImageBox);
