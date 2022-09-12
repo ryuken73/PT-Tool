@@ -1,18 +1,13 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setDrawShow } from 'renderer/appSlice';
+import { setDrawShow, setDialogOpen, setDroppedSrc } from 'renderer/appSlice';
 import { setAssets } from 'renderer/Components/Body/bodySlice';
 
-const assets = [
+const INITIAL_ASSETS = [
   {
     assetType: 'image',
-    src: 'C:/Users/USER/Downloads/norman-hermle-MMqbhMWpqg8-unsplash.jpg',
+    src: 'https://images.unsplash.com/photo-1626126525134-fbbc07afb32c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
     title: '홈',
-  },
-  {
-    assetType: 'image',
-    src: 'C:/Users/USER/Downloads/imrs.jpg',
-    title: '부산',
   },
   {
     assetType: 'web',
@@ -22,12 +17,12 @@ const assets = [
   {
     assetType: 'web',
     src: 'https://www.weather.go.kr/w/typhoon/ko/weather/typhoon_02.jsp',
-    title: '태풍현재상황',
+    title: '태풍정보',
   },
   {
     assetType: 'web',
     src: 'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.50,37.91,4250',
-    title: 'earthnull',
+    title: '공기흐름',
   },
   {
     assetType: 'web',
@@ -35,7 +30,7 @@ const assets = [
       'https://www.weather.go.kr/wgis-nuri/html/map.html',
       'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.50,37.91,4250',
     ],
-    title: '다중 페이지'
+    title: '멀티웹',
   },
   {
     assetType: 'video',
@@ -48,35 +43,74 @@ const assets = [
     // setPlayer,
     enableOverlay: false,
     title: '해운대',
-  },
-  {
-    assetType: 'video',
-    source: {
-      url: 'C:/Users/USER/Downloads/y1.mp4',
-    },
-    type: 'video/mp4',
+  }
+];
+
+const addExtAttr = (videoAsset) => {
+  const type = videoAsset.src.toUpperCase().endsWith('MP4') ? 'video/mp4' : 'application/x-mpegURL';
+  const extraVideoAttr = {
     fill: true,
     fluid: false,
     aspectRatio: '',
-    // setPlayer,
     enableOverlay: false,
-    title: '로컬영상',
-  },
-];
+  };
+  return {
+    ...videoAsset,
+    ...extraVideoAttr,
+    type,
+    source: {
+      url: videoAsset.src
+    }
+  };
+}
 
 export default function useAppState() {
   const dispatch = useDispatch();
   const drawShow = useSelector((state) => state.app.drawShow);
+  const assets = useSelector((state) => state.body.assets);
+  const dialogOpen = useSelector((state) => state.app.dialogOpen);
+  const droppedSrc = useSelector((state) => state.app.droppedSrc);
+  console.log('###', droppedSrc);
   React.useEffect(() => {
     dispatch(
       setAssets({
-        assets,
+        assets: INITIAL_ASSETS,
       })
     );
   }, [dispatch]);
+
+  const addAssetState = React.useCallback(
+    (asset) => {
+      const extraAttrAdded =  asset.assetType === 'video' ? addExtAttr(asset) : asset;
+      dispatch(setAssets({ assets: [...assets, extraAttrAdded] }));
+    },
+    [assets, dispatch]
+  );
   const toggleDraw = React.useCallback(() => {
     dispatch(setDrawShow({ drawShow: !drawShow }));
   }, [dispatch, drawShow]);
 
-  return { drawShow, toggleDraw };
+  const setDroppedSrcState = React.useCallback(
+    (src) => {
+      dispatch(setDroppedSrc({ droppedSrc: src }));
+    },
+    [dispatch, drawShow]
+  );
+
+  const setDialogOpenState = React.useCallback(
+    (open) => {
+      dispatch(setDialogOpen({ dialogOpen: open }));
+    },
+    [dispatch]
+  );
+
+  return {
+    drawShow,
+    dialogOpen,
+    droppedSrc,
+    toggleDraw,
+    setDialogOpenState,
+    setDroppedSrcState,
+    addAssetState,
+  };
 }
