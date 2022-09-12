@@ -68,7 +68,7 @@ export default function App() {
     <AppContainer onDrop={handleDrop} onDragOver={handleDragOver}>
       {drawShow && <DrawSvg />}
       <Loading />
-      <MenuContainer />
+      {!drawShow && <MenuContainer />}
       <Draggable onDrag={syncPosition}>
         <ToolDragLeader>
           <DragHandle />
@@ -80,7 +80,7 @@ export default function App() {
         </ToolDivWithPosition>
       </Draggable>
       <AssetContainer />
-      <AddDialog></AddDialog>
+      <AddDialog />
     </AppContainer>
   );
 }
