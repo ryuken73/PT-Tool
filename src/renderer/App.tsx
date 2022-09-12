@@ -10,6 +10,8 @@ import ToolContainer from './Components/Draw/ToolContainer';
 import DragHandle from './Components/Draw/DragHandle';
 import useAppState from './hooks/useAppState';
 import useSyncPosition from './hooks/useSyncPosition';
+import AddDialog from './Components/Dialog/AddDialog';
+import path from 'path';
 
 const BodyContainer = styled.div`
   display: flex;
@@ -50,10 +52,20 @@ const ToolDragLeader  = styled.div`
 
 
 export default function App() {
-  const {drawShow, toggleDraw} = useAppState();
+  const {drawShow, toggleDraw, setDialogOpenState, setDroppedSrcState} = useAppState();
   const {position, syncPosition} = useSyncPosition();
+  const handleDragOver = (event) => {
+    event.preventDefault()
+  }
+  const handleDrop = (event) => {
+    const url = event.dataTransfer.getData('url');
+    const file = event.dataTransfer.files[0];
+    const droppedSrc = file ? file.path : url;
+    setDroppedSrcState(droppedSrc);
+    setDialogOpenState(true);
+  }
   return (
-    <AppContainer>
+    <AppContainer onDrop={handleDrop} onDragOver={handleDragOver}>
       {drawShow && <DrawSvg />}
       <Loading />
       <MenuContainer />
@@ -68,6 +80,7 @@ export default function App() {
         </ToolDivWithPosition>
       </Draggable>
       <AssetContainer />
+      <AddDialog></AddDialog>
     </AppContainer>
   );
 }
