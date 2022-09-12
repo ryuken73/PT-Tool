@@ -16,7 +16,7 @@ const StyledSvg = styled.svg`
 const options = {
   size: 14,
   thinning: 0.5,
-  smoothing: 0.5,
+  smoothing: 1,
   streamline: 1,
   easing: (t) => t,
   start: {
