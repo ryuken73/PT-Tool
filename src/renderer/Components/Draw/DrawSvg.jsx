@@ -17,7 +17,7 @@ const options = {
   size: 14,
   thinning: 0.5,
   smoothing: 0.5,
-  streamline: 0.5,
+  streamline: 1,
   easing: (t) => t,
   start: {
     taper: 0,
