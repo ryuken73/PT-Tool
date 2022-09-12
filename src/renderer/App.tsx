@@ -4,6 +4,7 @@ import DrawSvg from 'renderer/Components/Draw/DrawSvg';
 import MenuContainer from 'renderer/Components/Menus/MenuContainer';
 import styled from 'styled-components';
 import colors from 'renderer/config/colors';
+import Draggable from 'react-draggable';
 import Loading from './Components/Common/Loading';
 import ToolContainer from './Components/Draw/ToolContainer';
 import useAppState from './hooks/useAppState';
@@ -20,8 +21,8 @@ const BodyContainer = styled.div`
   font-size: calc(10px + 2vmin);
   overflow: hidden;
 `;
-
 const AppContainer = styled(BodyContainer)`
+  position: relative;
   text-align: center;
   background-color: ${colors.base};
   flex-direction: column;
@@ -29,6 +30,13 @@ const AppContainer = styled(BodyContainer)`
   color: white;
   overflow: hidden;
 `;
+const ToolDivWithPosition  = styled.div`
+  position: absolute;
+  top: 200px;
+  right: 200px;
+  z-index: 9999;
+`
+
 
 export default function App() {
   const {drawShow, toggleDraw} = useAppState();
@@ -37,7 +45,11 @@ export default function App() {
       {drawShow && <DrawSvg />}
       <Loading />
       <MenuContainer />
-      <ToolContainer drawShow={drawShow} toggleDraw={toggleDraw} />
+      <Draggable>
+        <ToolDivWithPosition>
+        <ToolContainer drawShow={drawShow} toggleDraw={toggleDraw} />
+        </ToolDivWithPosition>
+      </Draggable>
       <AssetContainer />
     </AppContainer>
   );

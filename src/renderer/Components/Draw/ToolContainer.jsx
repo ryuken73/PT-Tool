@@ -10,9 +10,6 @@ import EditIcon from '@mui/icons-material/Edit';
 import useDrawState from 'renderer/hooks/useDrawState';
 
 const Container = styled.div`
-  position: absolute;
-  top: 200px;
-  right: 200px;
   display: flex;
   flex-direction: column;
   z-index: 9999;
