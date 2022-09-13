@@ -7,6 +7,8 @@ import IconButton from '@mui/material/IconButton';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
 import EditIcon from '@mui/icons-material/Edit';
+import CircleIcon from '@mui/icons-material/Circle';
+import PanoramaFishEyeIcon from '@mui/icons-material/PanoramaFishEye';
 import useDrawState from 'renderer/hooks/useDrawState';
 
 const Container = styled.div`
@@ -48,11 +50,14 @@ const IconContainer = styled(PalleteContainer)`
   opacity: 0.6 !important;
   width: auto;
 `
+const IconContainerOne = styled(IconContainer)`
+  width: 34px;
+`
 const iconStyle = {
   background:"#140e30",
   color:"white",
   borderRadius: "20%",
-  fontSize: "38px",
+  fontSize: "34px",
   padding: "0px !important"
 };
 const CheckSvg = (props) => {
@@ -85,10 +90,15 @@ const ToolContainer = (props) => {
 
   const showStokeIconGrey = !drawShow  || !showBorder;
 
-  const customIconStyle = {
+  const withOutline = {
     ...iconStyle,
     background: `${showStokeIconGrey ? 'darkgrey' : '#140e30'}`,
   };
+  const noOutline = {
+    ...iconStyle,
+    background: `${showStokeIconGrey ? '#140e30': 'darkgrey'}`,
+  };
+
   const onClickColor = React.useCallback((event) => {
     setFillColorState(event.target.getAttribute('color'));
   },[setFillColorState]);
@@ -96,21 +106,14 @@ const ToolContainer = (props) => {
   const toggleStroke = React.useCallback(() => {
     setShowBorderState(!showBorder)
   }, [setShowBorderState, showBorder]);
+
   return (
     <Container>
-      <IconContainer>
+      <IconContainerOne>
         <IconButton sx={{ padding: '0px' }} size="medium" onClick={toggleDraw}>
           <ModeEditIcon sx={iconStyle} />
         </IconButton>
-        <IconButton
-          sx={{ padding: '0px' }}
-          disabled={!drawShow}
-          size="medium"
-          onClick={toggleStroke}
-        >
-          <ModeEditOutlinedIcon sx={customIconStyle} />
-        </IconButton>
-      </IconContainer>
+      </IconContainerOne>
       <Zoom in={drawShow} timeout={500} style={{ transformOrigin: '0 0 0' }}>
         <div>
           <PalleteContainer>
@@ -122,6 +125,22 @@ const ToolContainer = (props) => {
               </ColorBox>
             ))}
           </PalleteContainer>
+          <IconContainer>
+            <IconButton
+              sx={{ padding: '0px' }}
+              size="medium"
+              onClick={toggleStroke}
+            >
+              <CircleIcon sx={noOutline} />
+            </IconButton>
+            <IconButton
+              sx={{ padding: '0px' }}
+              size="medium"
+              onClick={toggleStroke}
+            >
+              <PanoramaFishEyeIcon sx={withOutline} />
+            </IconButton>
+          </IconContainer>
           <IconContainer>
             <IconButton
               sx={{ padding: '0px' }}

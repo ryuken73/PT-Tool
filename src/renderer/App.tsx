@@ -43,9 +43,9 @@ const ToolDivWithPosition  = styled.div`
 const ToolDragLeader  = styled.div`
   position: absolute;
   top: 170px;
-  right: 200px;
+  right: 248px;
   z-index: 9999;
-  width: 90px;
+  width: 40px;
   height: 40px;
   /* background: yellow; */
 `
