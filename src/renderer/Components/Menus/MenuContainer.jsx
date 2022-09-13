@@ -14,7 +14,7 @@ const Container = styled.div`
   /* font-size: 35px; */
   font-size: 2vw;
   color: white;
-  background: rgb(0,0,0,0.2);
+  background: rgb(0,0,0,0.05);
   padding: 5px;
   /* width: 80%; */
   justify-content: space-around;
@@ -23,12 +23,14 @@ const Container = styled.div`
 `;
 
 const MenuContainer = () => {
-  const { assets, setCurrentAssetState } = useBodyState();
+  const { assets, currentAsset, setCurrentAssetState } = useBodyState();
   return (
     <Container>
       {assets.map((asset, index) => (
         // eslint-disable-next-line react/button-has-type
         <MenuItem
+          key={asset.title}
+          isCurrent={currentAsset === index}
           menuText={asset.title}
           onClick={() => {
             setCurrentAssetState(index);
