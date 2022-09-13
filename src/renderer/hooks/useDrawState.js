@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   setPathDatum,
   setFillColor,
+  setFillWidth,
   saveRenderOption,
   setPathRenderOptions,
   setShowBorder,
@@ -64,6 +65,14 @@ export default function useBodyState() {
     [dispatch, fillColor]
   );
 
+  const increaseFillWidthState = React.useCallback(() => {
+    dispatch(setFillWidth({ fillWidth: fillWidth + 1 }));
+  }, [dispatch, fillWidth]);
+
+  const decreaseFillWidthState = React.useCallback(() => {
+    dispatch(setFillWidth({ fillWidth: fillWidth - 1 }));
+  }, [dispatch, fillWidth]);
+
   return {
     pathDatum,
     fillWidth,
@@ -77,6 +86,8 @@ export default function useBodyState() {
     undoPathDatumState,
     setFillColorState,
     saveRenderOptionState,
-    setShowBorderState
+    setShowBorderState,
+    increaseFillWidthState,
+    decreaseFillWidthState
   };
 }

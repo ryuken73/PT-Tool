@@ -9,6 +9,10 @@ import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox
 import EditIcon from '@mui/icons-material/Edit';
 import CircleIcon from '@mui/icons-material/Circle';
 import PanoramaFishEyeIcon from '@mui/icons-material/PanoramaFishEye';
+import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
+import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import useDrawState from 'renderer/hooks/useDrawState';
 
 const Container = styled.div`
@@ -33,6 +37,10 @@ const PalleteContainer = styled.div`
   border: 2px solid white;
   /* width: 100px; */
 `
+const RowFlexBox = styled.div`
+  display: flex;
+  flex-direction: row
+`
 const ColorBox = styled.div`
   width: 43%;
   height: 30px;
@@ -48,10 +56,13 @@ const ColorBox = styled.div`
 const IconContainer = styled(PalleteContainer)`
   background: grey;
   opacity: 0.6 !important;
-  width: auto;
 `
 const IconContainerOne = styled(IconContainer)`
   width: 34px;
+`
+const IconContainerVertical = styled(IconContainerOne)`
+  width: 34px;
+  margin-left: 5px;
 `
 const iconStyle = {
   background:"#140e30",
@@ -86,6 +97,8 @@ const ToolContainer = (props) => {
     undoPathDatumState,
     setFillColorState,
     setShowBorderState,
+    increaseFillWidthState,
+    decreaseFillWidthState
   } = useDrawState();
 
   const showStokeIconGrey = !drawShow  || !showBorder;
@@ -116,6 +129,7 @@ const ToolContainer = (props) => {
       </IconContainerOne>
       <Zoom in={drawShow} timeout={500} style={{ transformOrigin: '0 0 0' }}>
         <div>
+          <RowFlexBox>
           <PalleteContainer>
             {COLORS.map((color, index) => (
               <ColorBox key={color} onClick={onClickColor} color={color}>
@@ -125,6 +139,15 @@ const ToolContainer = (props) => {
               </ColorBox>
             ))}
           </PalleteContainer>
+          <IconContainerVertical>
+            <IconButton sx={{ padding: '0px' }} size="medium" onClick={increaseFillWidthState}>
+              <ArrowDropUpIcon sx={iconStyle} />
+            </IconButton>
+            <IconButton sx={{ padding: '0px' }} size="medium" onClick={decreaseFillWidthState}>
+              <ArrowDropDownIcon sx={iconStyle} />
+            </IconButton>
+          </IconContainerVertical>
+          </RowFlexBox>
           <IconContainer>
             <IconButton
               sx={{ padding: '0px' }}
