@@ -85,8 +85,8 @@ const CheckSvg = (props) => {
   )
 };
 
-const COLORS = ["black", "white", "red", "yellow"];
-const CHECK_COLORS = ["white", "black", "black", "black"];
+const COLORS = ["black", "darkblue", "red", "yellow"];
+const CHECK_COLORS = ["white", "white", "black", "black"];
 
 const ToolContainer = (props) => {
   const { drawShow, toggleDraw } = props;

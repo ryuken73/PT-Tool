@@ -8,7 +8,7 @@ const StyledSvg = styled.svg`
   position: absolute;
   width: 100%;
   height: 100vh;
-  opacity: 0.5;
+  opacity: 0.7;
   touch-action: none;
   z-index: 9999;
 `

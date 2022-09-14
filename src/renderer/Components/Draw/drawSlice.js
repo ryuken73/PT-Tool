@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const INITIAL_FILL_COLOR = 'red';
 const BORDER_COLOR = {
   red: 'black',
-  white: 'black',
+  darkblue: 'white',
   black: 'white',
   yellow: 'black',
 };
