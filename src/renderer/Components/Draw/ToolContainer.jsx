@@ -27,7 +27,7 @@ const PalleteContainer = styled.div`
   align-items: center;
   justify-content: space-around;
   background: #140e30;
-  opacity: 0.7 !important;
+  opacity: 0.8 !important;
   color: white;
   border-radius: 10px;
   margin-top: 5px;
@@ -55,7 +55,7 @@ const ColorBox = styled.div`
 `
 const IconContainer = styled(PalleteContainer)`
   background: grey;
-  opacity: 0.6 !important;
+  opacity: 0.8 !important;
 `
 const IconContainerOne = styled(IconContainer)`
   width: 34px;
