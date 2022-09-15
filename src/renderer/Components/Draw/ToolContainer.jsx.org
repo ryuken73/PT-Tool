@@ -117,14 +117,13 @@ const ToolContainer = (props) => {
   },[setFillColorState]);
 
   const toggleStroke = React.useCallback(() => {
-    console.log('touch')
     setShowBorderState(!showBorder)
   }, [setShowBorderState, showBorder]);
 
   return (
     <Container>
       <IconContainerOne>
-        <IconButton sx={{ padding: '0px' }} size="medium" onTouchStart={toggleDraw} onClick={toggleDraw} onTouchTap={toggleDraw}>
+        <IconButton sx={{ padding: '0px' }} size="medium" onClick={toggleDraw}>
           <ModeEditIcon sx={iconStyle} />
         </IconButton>
       </IconContainerOne>
@@ -133,7 +132,7 @@ const ToolContainer = (props) => {
           <RowFlexBox>
           <PalleteContainer>
             {COLORS.map((color, index) => (
-              <ColorBox key={color} onTouchStart={onClickColor} onClick={onClickColor} color={color}>
+              <ColorBox key={color} onClick={onClickColor} color={color}>
                 {fillColor === color && (
                   <CheckSvg color={CHECK_COLORS[index]} />
                 )}
@@ -141,10 +140,10 @@ const ToolContainer = (props) => {
             ))}
           </PalleteContainer>
           <IconContainerVertical>
-            <IconButton sx={{ padding: '0px' }} size="medium" onTouchStart={increaseFillWidthState} onClick={increaseFillWidthState}>
+            <IconButton sx={{ padding: '0px' }} size="medium" onClick={increaseFillWidthState}>
               <ArrowDropUpIcon sx={iconStyle} />
             </IconButton>
-            <IconButton sx={{ padding: '0px' }} size="medium" onTouchStart={decreaseFillWidthState} onClick={decreaseFillWidthState}>
+            <IconButton sx={{ padding: '0px' }} size="medium" onClick={decreaseFillWidthState}>
               <ArrowDropDownIcon sx={iconStyle} />
             </IconButton>
           </IconContainerVertical>
@@ -153,7 +152,6 @@ const ToolContainer = (props) => {
             <IconButton
               sx={{ padding: '0px' }}
               size="medium"
-              onTouchStart={toggleStroke} 
               onClick={toggleStroke}
             >
               <CircleIcon sx={noOutline} />
@@ -161,7 +159,6 @@ const ToolContainer = (props) => {
             <IconButton
               sx={{ padding: '0px' }}
               size="medium"
-              onTouchStart={toggleStroke} 
               onClick={toggleStroke}
             >
               <PanoramaFishEyeIcon sx={withOutline} />
@@ -171,7 +168,6 @@ const ToolContainer = (props) => {
             <IconButton
               sx={{ padding: '0px' }}
               size="medium"
-              onTouchStart={undoPathDatumState} 
               onClick={undoPathDatumState}
             >
               <IndeterminateCheckBoxIcon sx={iconStyle} />
@@ -179,7 +175,6 @@ const ToolContainer = (props) => {
             <IconButton
               sx={{ padding: '0px' }}
               size="medium"
-              onTouchStart={clearPathDatumState} 
               onClick={clearPathDatumState}
             >
               <DeleteForeverIcon sx={iconStyle} />
