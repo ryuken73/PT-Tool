@@ -46,6 +46,14 @@ const HLSPlayer = (props) => {
     handleManifestRedirects: true,
   };
 
+
+  // React.useEffect(() => {
+  //   if (!isStream && show) {
+  //     alert('refresh')
+  //     player.src(srcObject);
+  //     player.load();
+  //   }
+  // }, [player, show, srcObject]);
   // make util...
 
   React.useEffect(() => {
@@ -202,11 +210,11 @@ const HLSPlayer = (props) => {
         overlayBig={overlayBig}
         overlayModal={overlayModal}
       />
-      <PlayerControl
+      {/* <PlayerControl
         player={player}
         canPlay={canPlay}
         isPlaying={isPlaying}
-      ></PlayerControl>
+      ></PlayerControl>` */}
       <ReloadButton reload={reloadPlayer} />
     </Box>
   );
