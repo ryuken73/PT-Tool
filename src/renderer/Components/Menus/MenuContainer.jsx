@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import useBodyState from 'renderer/hooks/useBodyState';
+import useAssetState from 'renderer/hooks/useAssetState';
 import MenuItem from './MenuItem';
 
 const Container = styled.div`
@@ -23,7 +23,7 @@ const Container = styled.div`
 `;
 
 const MenuContainer = () => {
-  const { assets, currentAsset, setCurrentAssetState } = useBodyState();
+  const { assets, currentAsset, setCurrentAssetState } = useAssetState();
   return (
     <Container>
       {assets.map((asset, index) => (

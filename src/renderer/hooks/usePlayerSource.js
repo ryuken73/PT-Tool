@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from 'react-redux';
 export default function usePlayer(playerId, src, mediaElementRef) {
   const dispatch = useDispatch();
   const player = useSelector((state) =>
-    state.body.assets.find(
+    state.asset.assets.find(
       (asset) => asset.assetId === playerId
     )
   );

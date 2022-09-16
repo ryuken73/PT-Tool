@@ -6,8 +6,8 @@ const initialState = {
   currentAsset: FIRST_ASSET_INDEX
 };
 
-export const bodySlice = createSlice({
-  name: 'bodySlice',
+export const assetSlice = createSlice({
+  name: 'assetSlice',
   initialState,
   reducers: {
     setAssets: (state, action) => {
@@ -23,6 +23,6 @@ export const bodySlice = createSlice({
   },
 })
 
-export const { setAssets, setCurrentAsset } = bodySlice.actions;
+export const { setAssets, setCurrentAsset } = assetSlice.actions;
 
-export default bodySlice.reducer;
+export default assetSlice.reducer;

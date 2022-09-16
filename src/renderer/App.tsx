@@ -1,5 +1,5 @@
 import React from 'react';
-import AssetContainer from 'renderer/Components/Body/AssetContainer';
+import AssetContainer from 'renderer/Components/Assets/AssetContainer';
 import DrawSvg from 'renderer/Components/Draw/DrawSvg';
 import MenuContainer from 'renderer/Components/Menus/MenuContainer';
 import styled from 'styled-components';
@@ -13,7 +13,7 @@ import useSyncPosition from './hooks/useSyncPosition';
 import AddDialog from './Components/Dialog/AddDialog';
 import path from 'path';
 
-const BodyContainer = styled.div`
+const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -25,7 +25,7 @@ const BodyContainer = styled.div`
   font-size: calc(10px + 2vmin);
   overflow: hidden;
 `;
-const AppContainer = styled(BodyContainer)`
+const AppContainer = styled(Container)`
   position: relative;
   text-align: center;
   background-color: ${colors.base};

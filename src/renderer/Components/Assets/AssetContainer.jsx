@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import useBodyState from 'renderer/hooks/useBodyState';
+import useAssetState from 'renderer/hooks/useAssetState';
 import useAppState from 'renderer/hooks/useAppState';
 import Asset from './Asset';
 
@@ -19,7 +19,7 @@ const Container = styled.div`
 
 const AssetContainer = () => {
   const { drawShow } = useAppState()
-  const { assets, assetShowMask } = useBodyState();
+  const { assets, assetShowMask } = useAssetState();
   return (
     <Container>
       {assets.map((asset, index) => (

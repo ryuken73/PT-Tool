@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setDrawShow, setDialogOpen, setDroppedSrc } from 'renderer/appSlice';
-import { setAssets } from 'renderer/Components/Body/bodySlice';
+import { setAssets } from 'renderer/Components/Assets/assetSlice';
 
 const INITIAL_ASSETS = [
   {
@@ -73,7 +73,7 @@ const addExtAttr = (videoAsset) => {
 export default function useAppState() {
   const dispatch = useDispatch();
   const drawShow = useSelector((state) => state.app.drawShow);
-  const assets = useSelector((state) => state.body.assets);
+  const assets = useSelector((state) => state.asset.assets);
   const dialogOpen = useSelector((state) => state.app.dialogOpen);
   const droppedSrc = useSelector((state) => state.app.droppedSrc);
   console.log('###', droppedSrc);

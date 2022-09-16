@@ -10,7 +10,7 @@ import {
   setBorderColor,
 } from 'renderer/Components/Draw/drawSlice';
 
-export default function useBodyState() {
+export default function useDrawState() {
   const dispatch = useDispatch();
   const pathDatum = useSelector((state) => state.draw.pathDatum);
   const fillWidth = useSelector((state) => state.draw.fillWidth);

@@ -1,7 +1,7 @@
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit';
 import { createLogger } from 'redux-logger';
 import appReducer from 'renderer/appSlice';
-import bodyReducer from 'renderer/Components/Body/bodySlice';
+import assetReducer from 'renderer/Components/Assets/assetSlice';
 import drawReducer from 'renderer/Components/Draw/drawSlice';
 import playerReducer from 'renderer/Components/HLSPlayer/playerSlice';
 import CONSTANTS from 'renderer/config/constants';
@@ -15,7 +15,7 @@ const logger = createLogger({
 export const store = configureStore({
   reducer: {
     app: appReducer,
-    body: bodyReducer,
+    asset: assetReducer,
     draw: drawReducer,
     player: playerReducer,
   },

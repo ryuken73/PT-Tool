@@ -1,11 +1,11 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setAssets, setCurrentAsset } from 'renderer/Components/Body/bodySlice';
+import { setAssets, setCurrentAsset } from 'renderer/Components/Assets/assetSlice';
 
-export default function useBodyState() {
+export default function useAssetState() {
   const dispatch = useDispatch();
-  const assets = useSelector((state) => state.body.assets);
-  const currentAsset = useSelector((state) => state.body.currentAsset);
+  const assets = useSelector((state) => state.asset.assets);
+  const currentAsset = useSelector((state) => state.asset.currentAsset);
 
   const assetShowMask = React.useMemo(() => {
     return assets.map((asset, index) => {
