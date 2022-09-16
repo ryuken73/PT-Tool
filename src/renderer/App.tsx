@@ -43,7 +43,7 @@ const ToolDivWithPosition  = styled.div`
 const ToolDragLeader  = styled.div`
   position: absolute;
   top: 170px;
-  right: 297px;
+  right: 248px;
   z-index: 9999;
   width: 40px;
   height: 40px;

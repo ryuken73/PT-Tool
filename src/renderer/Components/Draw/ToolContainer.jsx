@@ -140,20 +140,20 @@ const ToolContainer = (props) => {
               </ColorBox>
             ))}
           </PalleteContainer>
-          <IconContainerVertical>
+          {/* <IconContainerVertical>
             <IconButton sx={{ padding: '0px' }} size="medium" onTouchStart={increaseFillWidthState} onClick={increaseFillWidthState}>
               <ArrowDropUpIcon sx={iconStyle} />
             </IconButton>
             <IconButton sx={{ padding: '0px' }} size="medium" onTouchStart={decreaseFillWidthState} onClick={decreaseFillWidthState}>
               <ArrowDropDownIcon sx={iconStyle} />
             </IconButton>
-          </IconContainerVertical>
+          </IconContainerVertical> */}
           </RowFlexBox>
           <IconContainer>
             <IconButton
               sx={{ padding: '0px' }}
               size="medium"
-              onTouchStart={toggleStroke} 
+              onTouchStart={toggleStroke}
               onClick={toggleStroke}
             >
               <CircleIcon sx={noOutline} />
@@ -161,7 +161,7 @@ const ToolContainer = (props) => {
             <IconButton
               sx={{ padding: '0px' }}
               size="medium"
-              onTouchStart={toggleStroke} 
+              onTouchStart={toggleStroke}
               onClick={toggleStroke}
             >
               <PanoramaFishEyeIcon sx={withOutline} />
@@ -171,7 +171,7 @@ const ToolContainer = (props) => {
             <IconButton
               sx={{ padding: '0px' }}
               size="medium"
-              onTouchStart={undoPathDatumState} 
+              onTouchStart={undoPathDatumState}
               onClick={undoPathDatumState}
             >
               <IndeterminateCheckBoxIcon sx={iconStyle} />
@@ -179,7 +179,7 @@ const ToolContainer = (props) => {
             <IconButton
               sx={{ padding: '0px' }}
               size="medium"
-              onTouchStart={clearPathDatumState} 
+              onTouchStart={clearPathDatumState}
               onClick={clearPathDatumState}
             >
               <DeleteForeverIcon sx={iconStyle} />
