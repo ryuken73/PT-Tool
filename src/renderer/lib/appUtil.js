@@ -6,6 +6,18 @@ const getVersion = async () => {
 
 // Turn the points returned from perfect-freehand into SVG path data.
 
+const secondsToTime = (seconds, format='mm:ss') => {
+  const startIndex = format.startsWith('hh:') ? 10 :
+                      format.startsWith('mm:') ? 13 :
+    ? 13
+    : 16;
+  const sliceLength = format.length;
+  if(typeof(seconds) !== 'number' || seconds === Infinity){
+      return '00:00'
+  }
+  return new Date(seconds*999).toISOString().substr(startIndex, sliceLength)
+}
+
 const getSvgPathFromStroke = (stroke) => {
   if (!stroke.length) return '';
 
@@ -25,4 +37,5 @@ const getSvgPathFromStroke = (stroke) => {
 module.exports = {
   getVersion,
   getSvgPathFromStroke,
+  secondsToTime
 };

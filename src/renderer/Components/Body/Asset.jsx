@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import HLSPlayer from 'renderer/Components/HLSPlayer';
+// import Player from 'renderer/Components/Players/Player';
 import WebView from 'renderer/Components/Common/WebView';
 import ImageBox from 'renderer/Components/Common/ImageBox';
 
@@ -25,6 +26,7 @@ const Container = styled.div`
 const AssetMap = {
   web: WebView,
   video: HLSPlayer,
+  // video: Player,
   image: ImageBox,
 };
 
