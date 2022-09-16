@@ -12,6 +12,7 @@ import useAppState from 'renderer/hooks/useAppState';
 import useConfigState from 'hooks/useConfigState';
 import useMonitorListState from 'hooks/useMonitorListState';
 import CONSTANTS from 'config/constants';
+import useAssetState from 'renderer/hooks/useAssetState';
 
 
 // const toLabelValueFormat = type => {
@@ -43,7 +44,12 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 const AddDialog = props => {
-  const {dialogOpen:open, setDialogOpenState:setOpen, droppedSrc, addAssetState} = useAppState();
+  const {
+    dialogOpen: open,
+    setDialogOpenState: setOpen,
+    droppedSrc,
+  } = useAppState();
+  const { addAssetState } = useAssetState();
   const [asset, setAsset] = React.useState({
     src: droppedSrc,
     assetType: 'web'
