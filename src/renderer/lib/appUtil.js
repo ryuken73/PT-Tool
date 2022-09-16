@@ -4,20 +4,18 @@ const getVersion = async () => {
   return ipcRenderer.invoke('getVersion');
 };
 
-// Turn the points returned from perfect-freehand into SVG path data.
-
 const secondsToTime = (seconds, format='mm:ss') => {
-  const startIndex = format.startsWith('hh:') ? 10 :
-                      format.startsWith('mm:') ? 13 :
-    ? 13
-    : 16;
+  const startIndex = format.startsWith('hh:') ? 11 :
+                     format.startsWith('mm:') ? 14 :
+                     17
   const sliceLength = format.length;
   if(typeof(seconds) !== 'number' || seconds === Infinity){
-      return '00:00'
+    return '00:00'
   }
-  return new Date(seconds*999).toISOString().substr(startIndex, sliceLength)
+  return new Date(seconds*1000).toISOString().substr(startIndex, sliceLength)
 }
 
+// Turn the points returned from perfect-freehand into SVG path data.
 const getSvgPathFromStroke = (stroke) => {
   if (!stroke.length) return '';
 
