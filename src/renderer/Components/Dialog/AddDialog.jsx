@@ -81,7 +81,7 @@ const AddDialog = props => {
 
   const onChangeOption = React.useCallback((event, idOfRadiioButton) => {
       const key = event.target.id !== '' ? event.target.id : idOfRadiioButton;
-      const value = event.target.value;
+      const { value } = event.target;
       console.log(key, value)
       setAsset({
         ...asset,
@@ -102,25 +102,39 @@ const AddDialog = props => {
       >
         <DialogTitle>{"Add Asset"}</DialogTitle>
         <DialogContent>
-          <OptionItemText autoFocus onChange={onChangeOption} title="Title" id="title"></OptionItemText>
-          <OptionItemText onChange={onChangeOption} value={asset.src} title="Source" id="src"></OptionItemText>
-          {radioButtons.map(radioButton => (
+          <OptionItemText
+            autoFocus
+            onChange={onChangeOption}
+            title="Title"
+            id="title"
+          />
+          <OptionItemText
+            onChange={onChangeOption}
+            value={asset.src}
+            title="Source"
+            id="src"
+          />
+          {radioButtons.map((radioButton) => (
             <OptionItemRadio
               onChange={onChangeOption}
               title={radioButton.title}
               id={radioButton.id}
               selected={asset[radioButton.id]}
               formItems={radioButton.formItems}
-            ></OptionItemRadio>
+             />
           ))}
         </DialogContent>
         <DialogActions>
-          <Button sx={{color: 'black'}} onClick={handleClose}>Cancel</Button>
-          <Button sx={{color: 'black'}} onClick={handleAddAsset}>Add</Button>
+          <Button sx={{ color: 'black' }} onClick={handleClose}>
+            Cancel
+          </Button>
+          <Button sx={{ color: 'black' }} onClick={handleAddAsset}>
+            Add
+          </Button>
         </DialogActions>
       </CustomDialog>
     </div>
   );
 }
 
-export default React.memo(AddDialog)
+export default React.memo(AddDialog);
