@@ -17,7 +17,7 @@ const Player = (props) => {
   const { assetId: sourceId, source } = props;
   const { url } = source;
   const playerRef = React.useRef(null);
-  usePlayerSource(sourceId, url, playerRef);
+  const { loadHLS } = usePlayerSource(sourceId, url, playerRef);
   const {
     isPlaying,
     getCurrentTime,
@@ -29,6 +29,10 @@ const Player = (props) => {
 
   const reloadPlayer = React.useCallback(() => {
     playerRef.current.src = url;
+    if(loadHLS){
+      loadHLS();
+      return
+    }
     playerRef.current.load();
   }, []);
 
