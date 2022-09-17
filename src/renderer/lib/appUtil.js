@@ -1,8 +1,14 @@
 const { ipcRenderer } = require('electron');
+const MEDIA_EXTENSIONS = ['MP4', 'OGG', 'WEBM'];
 
 const getVersion = async () => {
   return ipcRenderer.invoke('getVersion');
 };
+
+const isHlsStream = (url) => {
+  const hasMediaFileExt = MEDIA_EXTENSIONS.some((ext) => url.toUpperCase().endsWith(ext));
+  return !hasMediaFileExt;
+}
 
 const secondsToTime = (seconds, format='mm:ss') => {
   const startIndex = format.startsWith('hh:') ? 11 :
@@ -34,6 +40,7 @@ const getSvgPathFromStroke = (stroke) => {
 
 module.exports = {
   getVersion,
+  isHlsStream,
   getSvgPathFromStroke,
   secondsToTime
 };

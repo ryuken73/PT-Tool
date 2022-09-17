@@ -2,7 +2,9 @@ import React from 'react'
 import styled from 'styled-components';
 
 const CustomVideo = styled.video`
-  width: 290px;
+  /* width: 290px; */
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 `
 

@@ -20,9 +20,15 @@ export const assetSlice = createSlice({
       const { currentAsset } = payload;
       state.currentAsset = currentAsset
     },
+    setItemValue: (state, action) => {
+      const { payload } = action;
+      const { itemId, key, value } = payload;
+      const item = state.assets.find((asset) => asset.assetId === itemId);
+      if(item) item[key] = value;
+    },
   },
 })
 
-export const { setAssets, setCurrentAsset } = assetSlice.actions;
+export const { setAssets, setCurrentAsset, setItemValue } = assetSlice.actions;
 
 export default assetSlice.reducer;

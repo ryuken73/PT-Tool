@@ -5,10 +5,14 @@ import usePlayerSource from 'renderer/hooks/usePlayerSource';
 import usePlayerEvent from 'renderer/hooks/usePlayerEvent';
 
 const Container = styled.div`
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 `;
 
 const Player = (props) => {
   // eslint-disable-next-line react/prop-types
+  console.log('re-render Player props =', props);
   const { assetId: sourceId, source } = props;
   const { url } = source;
   const playerRef = React.useRef(null);
@@ -19,7 +23,7 @@ const Player = (props) => {
     getDuration,
     onClickPlay,
     onClickForward10,
-  } = usePlayerEvent(playerRef);
+  } = usePlayerEvent(playerRef, sourceId);
 
   return (
     <Container>

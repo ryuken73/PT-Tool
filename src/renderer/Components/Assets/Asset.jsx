@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import HLSPlayer from 'renderer/Components/HLSPlayer';
-// import Player from 'renderer/Components/Players/Player';
+import Player from 'renderer/Components/Players/Player';
 import WebView from 'renderer/Components/Common/WebView';
 import ImageBox from 'renderer/Components/Common/ImageBox';
 
@@ -19,25 +19,27 @@ const Container = styled.div`
   /* filter: grayscale(100%); */
   /* filter: ${(props) => props.drawOn && 'grayscale(100%)'}; */
   /* filter: ${(props) => props.drawOn && 'contrast(175%) brightness(103%)'}; */
-  ${(props) => props.drawOn && 'transform: scale(1.01)'};
+  /* ${(props) => props.drawOn && 'transform: scale(1.01)'}; */
   transition: transform 0.5s;
 `
 
 const AssetMap = {
   web: WebView,
-  video: HLSPlayer,
-  // video: Player,
+  // video: HLSPlayer,
+  video: Player,
   image: ImageBox,
 };
 
 const AssetContainer = (props) => {
   // eslint-disable-next-line react/prop-types
-  const { options, show, drawOn } = props;
+  // const { options, show, drawOn } = props;
+  const { options, show } = props;
   const { assetType, ...remainOpts } = options;
   const Asset = AssetMap[assetType];
 
   return (
-    <Container show={show} drawOn={drawOn}>
+    <Container show={show}>
+    {/* <Container show={show} drawOn={drawOn}> */}
       <Asset {...remainOpts} />
     </Container>
   )
