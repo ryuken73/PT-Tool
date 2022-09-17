@@ -4,6 +4,7 @@ import appReducer from 'renderer/appSlice';
 import assetReducer from 'renderer/Components/Assets/assetSlice';
 import drawReducer from 'renderer/Components/Draw/drawSlice';
 import playerReducer from 'renderer/Components/HLSPlayer/playerSlice';
+import dialogReducer from 'renderer/Components/Dialog/dialogSlice';
 import CONSTANTS from 'renderer/config/constants';
 
 const { LOGLESS_REDUX_ACTIONS = [] } = CONSTANTS;
@@ -18,6 +19,7 @@ export const store = configureStore({
     asset: assetReducer,
     draw: drawReducer,
     player: playerReducer,
+    dialog: dialogReducer
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
   devTools: process.env.NODE_ENV !== 'production',

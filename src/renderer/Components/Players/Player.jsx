@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components';
 import VideoPlayer from 'renderer/Components/Players/VideoPlayer';
+import ReloadButton from 'renderer/Components/Common/ReloadButton';
 import usePlayerSource from 'renderer/hooks/usePlayerSource';
 import usePlayerEvent from 'renderer/hooks/usePlayerEvent';
 
@@ -22,12 +23,19 @@ const Player = (props) => {
     getCurrentTime,
     getDuration,
     onClickPlay,
+    onClickReload,
     onClickForward10,
   } = usePlayerEvent(playerRef, sourceId);
+
+  const reloadPlayer = React.useCallback(() => {
+    playerRef.current.src = url;
+    playerRef.current.load();
+  }, []);
 
   return (
     <Container>
       <VideoPlayer {...props} ref={playerRef} />
+      <ReloadButton reload={reloadPlayer} />
     </Container>
   )
 }

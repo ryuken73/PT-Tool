@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import useAssetState from 'renderer/hooks/useAssetState';
-import useAppState from 'renderer/hooks/useAppState';
+import useDialogState from 'renderer/hooks/useDialogState';
 import Asset from './Asset';
+import AddDialog from '../Dialog/AddDialog';
 
 const Container = styled.div`
   display: flex;
@@ -17,15 +18,32 @@ const Container = styled.div`
   overflow: hidden;
 `;
 
+const handleDragOver = (event) => {
+  event.preventDefault();
+};
+
 const AssetContainer = () => {
   // const { drawShow } = useAppState()
+  const { setDialogOpenState, setDroppedSrcState } = useDialogState();
   const { assets, assetShowMask } = useAssetState();
+
+  const handleDrop = React.useCallback((event) => {
+    const url = event.dataTransfer.getData('url');
+    const file = event.dataTransfer.files[0];
+    const droppedSrc = file ? file.path : url;
+    setDroppedSrcState(droppedSrc);
+    setDialogOpenState(true);
+    },
+    [setDialogOpenState, setDroppedSrcState]
+  );
+
   return (
-    <Container>
+    <Container onDrop={handleDrop} onDragOver={handleDragOver}>
       {assets.map((asset, index) => (
         // <Asset options={asset} drawOn={drawShow} show={assetShowMask[index]} />
         <Asset options={asset} show={assetShowMask[index]} />
       ))}
+      <AddDialog />
     </Container>
   )
 }

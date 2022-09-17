@@ -8,9 +8,8 @@ import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import OptionItemText from 'renderer/Components/Dialog/OptionItemText';
 import OptionItemRadio from 'renderer/Components/Dialog/OptionItemRadio';
-import useAppState from 'renderer/hooks/useAppState';
+import useDialogState from 'renderer/hooks/useDialogState';
 import useConfigState from 'hooks/useConfigState';
-import useMonitorListState from 'hooks/useMonitorListState';
 import CONSTANTS from 'config/constants';
 import useAssetState from 'renderer/hooks/useAssetState';
 
@@ -28,7 +27,11 @@ const assetTypeFormItems = [
   {label: 'video', value: 'video'},
   {label: 'image', value: 'image'},
   {label: 'web', value: 'web'}
-]
+];
+
+const radioButtons = [
+  {title: 'TYPE', id: 'assetType', formItems: assetTypeFormItems}
+];
 
 const CustomDialog = styled(Dialog)`
   div.MuiDialog-container {
@@ -48,7 +51,7 @@ const AddDialog = props => {
     dialogOpen: open,
     setDialogOpenState: setOpen,
     droppedSrc,
-  } = useAppState();
+  } = useDialogState();
   const { addAssetState } = useAssetState();
   const [asset, setAsset] = React.useState({
     src: droppedSrc,
@@ -74,7 +77,7 @@ const AddDialog = props => {
     console.log(asset);
     addAssetState(asset);
     handleClose();
-  },[asset, addAssetState, handleClose])
+  }, [asset, addAssetState, handleClose]);
 
   const onChangeOption = React.useCallback((event, idOfRadiioButton) => {
       const key = event.target.id !== '' ? event.target.id : idOfRadiioButton;
@@ -84,11 +87,9 @@ const AddDialog = props => {
         ...asset,
         [key]: value
       })
-  },[setAsset, asset])
-
-  const radioButtons = [
-    {title: 'TYPE', id: 'assetType', formItems: assetTypeFormItems}
-  ]
+    },
+    [setAsset, asset]
+  );
 
   return (
     <div>

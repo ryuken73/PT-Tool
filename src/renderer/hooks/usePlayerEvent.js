@@ -2,7 +2,11 @@
 import React from 'react';
 import { secondsToTime } from 'renderer/lib/appUtil';
 import { useSelector, useDispatch } from 'react-redux';
-import { setItemValue } from 'renderer/Components/Assets/assetSlice';
+import {
+  setItemValue,
+  setVideoProgress,
+  setVideoCurrentTime,
+} from 'renderer/Components/Assets/assetSlice';
 // import {setCurrentSrc, setDuration, setIsPlaying, setCurrentTime} from 'Components/Monitor/monitorListSlice'
 // import {setItemValue} from 'Components/Monitor/monitorListSlice'
 // import CONSTANTS from 'config/constants';
@@ -14,8 +18,7 @@ export default function usePlayerEvent(playerRef, playerId) {
   const asset = useSelector((state) =>
     state.asset.assets.find((asset) => asset.assetId === playerId)
   );
-  const { currentSrc, isPlaying, currentTime, manifestLoaded, duration } =
-    asset;
+  const { isPlaying, currentTime, manifestLoaded, progress, duration } = asset;
   const player = playerRef.current;
   const currentTimeRef = React.useRef(null);
   const currentDurationRef = React.useRef(null);
@@ -59,7 +62,14 @@ export default function usePlayerEvent(playerRef, playerId) {
   const handleTimeupdate = React.useCallback(() => {
     const currentTime = secondsToTime(parseInt(player.currentTime, 10));
     currentTimeRef.current = currentTime;
-  }, [player]);
+    dispatch(
+      setVideoCurrentTime({ itemId: playerId, key: 'currentTime', value: currentTime })
+    );
+    const progress = ((player.currentTime/player.duration) * 100).toFixed(0);
+    dispatch(
+      setVideoProgress({ itemId: playerId, key: 'progress', value: progress })
+    );
+  }, [dispatch, playerId, player]);
 
   const getCurrentTime = React.useCallback(() => {
     return currentTimeRef.current;
@@ -73,7 +83,10 @@ export default function usePlayerEvent(playerRef, playerId) {
     const { duration } = player;
     const durationSec = secondsToTime(parseInt(duration, 10));
     currentDurationRef.current = durationSec;
-  }, [player]);
+    dispatch(
+      setItemValue({ itemId: playerId, key: 'duration', value: duration })
+    );
+  }, [dispatch, player, playerId]);
 
   const onClickPlay = React.useCallback(() => {
     console.log(playerId, isPlaying);

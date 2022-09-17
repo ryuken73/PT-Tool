@@ -6,13 +6,11 @@ import MenuContainer from 'renderer/Components/Menus/MenuContainer';
 import styled from 'styled-components';
 import colors from 'renderer/config/colors';
 import Draggable from 'react-draggable';
-import path from 'path';
 import Loading from './Components/Common/Loading';
 import ToolContainer from './Components/Draw/ToolContainer';
 import DragHandle from './Components/Draw/DragHandle';
 import useAppState from './hooks/useAppState';
 import useSyncPosition from './hooks/useSyncPosition';
-import AddDialog from './Components/Dialog/AddDialog';
 import useAssetState from './hooks/useAssetState';
 
 const INITIAL_ASSETS = [
@@ -106,11 +104,12 @@ const getInitialAssets = () => {
   });
 };
 
+
 export default function App() {
-  const { drawShow, toggleDraw, setDialogOpenState, setDroppedSrcState } =
-    useAppState();
+  const { drawShow, toggleDraw } = useAppState();
   const { position, syncPosition } = useSyncPosition();
   const { setAssetsState } = useAssetState();
+
   React.useEffect(() => {
     getInitialAssets()
     .then((assets) => {
@@ -120,18 +119,9 @@ export default function App() {
       alert('fail to get asset list! try again.')
     })
   }, [setAssetsState]);
-  const handleDragOver = (event) => {
-    event.preventDefault();
-  };
-  const handleDrop = (event) => {
-    const url = event.dataTransfer.getData('url');
-    const file = event.dataTransfer.files[0];
-    const droppedSrc = file ? file.path : url;
-    setDroppedSrcState(droppedSrc);
-    setDialogOpenState(true);
-  };
+
   return (
-    <AppContainer onDrop={handleDrop} onDragOver={handleDragOver}>
+    <AppContainer>
       {drawShow && <DrawSvg />}
       <Loading />
       {!drawShow && <MenuContainer />}
@@ -146,7 +136,7 @@ export default function App() {
         </ToolDivWithPosition>
       </Draggable>
       <AssetContainer />
-      <AddDialog />
+      {/* <AddDialog /> */}
     </AppContainer>
   );
 }

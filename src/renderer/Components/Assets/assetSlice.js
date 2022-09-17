@@ -26,9 +26,27 @@ export const assetSlice = createSlice({
       const item = state.assets.find((asset) => asset.assetId === itemId);
       if(item) item[key] = value;
     },
+    setVideoCurrentTime: (state, action) => {
+      const { payload } = action;
+      const { itemId, key, value } = payload;
+      const item = state.assets.find((asset) => asset.assetId === itemId);
+      if(item) item[key] = value;
+    },
+    setVideoProgress: (state, action) => {
+      const { payload } = action;
+      const { itemId, key, value } = payload;
+      const item = state.assets.find((asset) => asset.assetId === itemId);
+      if(item) item[key] = value;
+    },
   },
 })
 
-export const { setAssets, setCurrentAsset, setItemValue } = assetSlice.actions;
+export const {
+  setAssets,
+  setCurrentAsset,
+  setItemValue,
+  setVideoCurrentTime,
+  setVideoProgress,
+} = assetSlice.actions;
 
 export default assetSlice.reducer;
