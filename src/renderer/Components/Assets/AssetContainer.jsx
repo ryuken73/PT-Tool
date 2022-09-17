@@ -18,12 +18,13 @@ const Container = styled.div`
 `;
 
 const AssetContainer = () => {
-  const { drawShow } = useAppState()
+  // const { drawShow } = useAppState()
   const { assets, assetShowMask } = useAssetState();
   return (
     <Container>
       {assets.map((asset, index) => (
-        <Asset options={asset} drawOn={drawShow} show={assetShowMask[index]} />
+        // <Asset options={asset} drawOn={drawShow} show={assetShowMask[index]} />
+        <Asset options={asset} show={assetShowMask[index]} />
       ))}
     </Container>
   )
