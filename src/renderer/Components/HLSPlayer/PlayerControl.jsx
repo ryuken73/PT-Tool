@@ -41,9 +41,8 @@ const ControlContainer = styled(Box)`
   position: relative;
 `;
 
-const Player = (props) => {
+const Player = (props, playerRef) => {
   const {
-    player,
     isPlaying = false,
     progress = '0',
     currentTime = '00:00',
@@ -59,11 +58,11 @@ const Player = (props) => {
 
   const onClickPlay = React.useCallback(() => {
     if(isPlaying) {
-      player.pause();
+      playerRef.current.pause();
       return
     }
-    player.play();
-  }, [player, isPlaying]);
+    playerRef.current.play();
+  }, [playerRef, isPlaying]);
 
   // const canPlay = manifestLoaded;
   // const [volumeIconActive, setVolumeIconActive] = React.useState(false);
@@ -77,14 +76,15 @@ const Player = (props) => {
 
   const handleMoveProgressSlider = React.useCallback(
     (progressPercent) => {
+      const player = playerRef.current;
+      console.log('****', player);
       const duration = player?.duration;
       if (duration === undefined || duration === null) return;
       const timeToGo = (duration * progressPercent) / 100;
-      console.log(duration, timeToGo);
       if (Number.isNaN(timeToGo)) return;
       player.currentTime = timeToGo;
     },
-    [player]
+    [playerRef]
   );
 
   // const onClickSkipNext = React.useCallback(() => {
@@ -98,6 +98,7 @@ const Player = (props) => {
   // const anchorElRef = React.useRef(null);
 
   React.useEffect(() => {
+    const player = playerRef.current;
     if (player === undefined || player === null) return;
     if (player.duration !== player.currentTime) return;
     if (endedTime) {
@@ -110,7 +111,7 @@ const Player = (props) => {
         player.play();
       }
     }
-  }, [player, endedTime, repeatMode]);
+  }, [playerRef, endedTime, repeatMode]);
 
   const repeatHoverButtonColor = React.useMemo(() => {
     return repeatMode === 'none'

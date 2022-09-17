@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components';
 import VideoPlayer from 'renderer/Components/Players/VideoPlayer';
+import PlayerControl from '../HLSPlayer/PlayerControl';
 import ReloadButton from 'renderer/Components/Common/ReloadButton';
 import usePlayerSource from 'renderer/hooks/usePlayerSource';
 import usePlayerEvent from 'renderer/hooks/usePlayerEvent';
@@ -19,9 +20,15 @@ const Player = (props) => {
   // const { assetId: sourceId, source } = props.asset;
   // const { url } = source;
   const playerRef = React.useRef(null);
-  const { loadHLS } = usePlayerSource(asset, playerRef);
+  const {
+    manifestLoaded,
+    loadHLS
+  } = usePlayerSource(asset, playerRef);
   const {
     isPlaying,
+    currentTime,
+    progress,
+    duration,
     getCurrentTime,
     getDuration,
     onClickPlay,
@@ -42,6 +49,15 @@ const Player = (props) => {
   return (
     <Container>
       <VideoPlayer {...props} ref={playerRef} />
+      <PlayerControl
+        // ref={playerRef}
+        ref={playerRef}
+        progress={progress}
+        currentTime={currentTime}
+        canPlay={manifestLoaded}
+        isPlaying={isPlaying}
+        duration={duration}
+      />
       <ReloadButton reload={reloadPlayer} />
     </Container>
   )

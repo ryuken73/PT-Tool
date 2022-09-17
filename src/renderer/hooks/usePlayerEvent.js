@@ -133,8 +133,10 @@ export default function usePlayerEvent(asset, playerRef) {
   ]);
 
   return {
+    player,
     isPlaying,
     setPlayerSource,
+    progress,
     currentTime,
     manifestLoaded,
     duration,
