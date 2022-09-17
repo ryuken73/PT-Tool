@@ -12,12 +12,10 @@ import {
 // import CONSTANTS from 'config/constants';
 const MAX_LATENCY_SEC = 15;
 
-export default function usePlayerEvent(playerRef, playerId) {
+export default function usePlayerEvent(asset, playerRef) {
   console.log('usePlayerEvent called ')
   const dispatch = useDispatch();
-  const asset = useSelector((state) =>
-    state.asset.assets.find((asset) => asset.assetId === playerId)
-  );
+  const { assetId: playerId } = asset;
   const { isPlaying, currentTime, manifestLoaded, progress, duration } = asset;
   const player = playerRef.current;
   const currentTimeRef = React.useRef(null);

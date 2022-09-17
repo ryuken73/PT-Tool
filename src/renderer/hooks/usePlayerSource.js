@@ -7,11 +7,11 @@ import { useSelector, useDispatch } from 'react-redux';
 // import CONSTANTS from 'config/constants';
 // const {STREAM_TYPE} = CONSTANTS;
 
-export default function usePlayer(playerId, src, mediaElementRef) {
+export default function usePlayer(asset, mediaElementRef) {
   const dispatch = useDispatch();
-  const player = useSelector((state) =>
-    state.asset.assets.find((asset) => asset.assetId === playerId)
-  );
+  const player = asset;
+  const { assetId: playerId, source } = player;
+  const { url: src } = source;
   const { title, duration = 0, manifestLoaded = false } = player;
   const hlsRef = React.useRef(null);
 

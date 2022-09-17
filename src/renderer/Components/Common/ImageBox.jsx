@@ -8,7 +8,7 @@ const StyledImage = styled.img`
 `
 
 const ImageBox = (props) => {
-  const { src } = props;
+  const { src } = props.asset;
   return <StyledImage src={src} draggable={false} />;
 }
 

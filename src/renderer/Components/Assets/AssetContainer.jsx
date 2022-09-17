@@ -41,7 +41,7 @@ const AssetContainer = () => {
     <Container onDrop={handleDrop} onDragOver={handleDragOver}>
       {assets.map((asset, index) => (
         // <Asset options={asset} drawOn={drawShow} show={assetShowMask[index]} />
-        <Asset options={asset} show={assetShowMask[index]} />
+        <Asset key={asset.assetId} asset={asset} show={assetShowMask[index]} />
       ))}
       <AddDialog />
     </Container>

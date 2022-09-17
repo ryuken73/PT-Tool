@@ -4,6 +4,7 @@ import VideoPlayer from 'renderer/Components/Players/VideoPlayer';
 import ReloadButton from 'renderer/Components/Common/ReloadButton';
 import usePlayerSource from 'renderer/hooks/usePlayerSource';
 import usePlayerEvent from 'renderer/hooks/usePlayerEvent';
+import { isHlsStream } from 'renderer/lib/appUtil';
 
 const Container = styled.div`
   width: 100%;
@@ -14,10 +15,11 @@ const Container = styled.div`
 const Player = (props) => {
   // eslint-disable-next-line react/prop-types
   console.log('re-render Player props =', props);
-  const { assetId: sourceId, source } = props;
-  const { url } = source;
+  const { asset } = props;
+  // const { assetId: sourceId, source } = props.asset;
+  // const { url } = source;
   const playerRef = React.useRef(null);
-  const { loadHLS } = usePlayerSource(sourceId, url, playerRef);
+  const { loadHLS } = usePlayerSource(asset, playerRef);
   const {
     isPlaying,
     getCurrentTime,
@@ -25,16 +27,17 @@ const Player = (props) => {
     onClickPlay,
     onClickReload,
     onClickForward10,
-  } = usePlayerEvent(playerRef, sourceId);
+  } = usePlayerEvent(asset, playerRef);
 
   const reloadPlayer = React.useCallback(() => {
-    playerRef.current.src = url;
-    if(loadHLS){
+    const src = asset.source.url;
+    if (isHlsStream(src)) {
       loadHLS();
-      return
+      return;
     }
+    playerRef.current.src = src;
     playerRef.current.load();
-  }, []);
+  }, [loadHLS, asset]);
 
   return (
     <Container>

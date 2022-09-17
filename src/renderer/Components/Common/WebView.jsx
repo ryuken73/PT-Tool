@@ -10,7 +10,7 @@ const Container = styled.div`
   flex-direction: row;
 `
 const WebView = (props) => {
-  const { src } = props;
+  const { src } = props.asset;
   const srcIsArray = Array.isArray(src);
   const srcArray = srcIsArray ? src : [src];
   const webviewRefs = srcArray.map(() => React.useRef(null));

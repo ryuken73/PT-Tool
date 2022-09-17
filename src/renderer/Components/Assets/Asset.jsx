@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import styled from 'styled-components';
 import HLSPlayer from 'renderer/Components/HLSPlayer';
@@ -33,14 +34,13 @@ const AssetMap = {
 const AssetContainer = (props) => {
   // eslint-disable-next-line react/prop-types
   // const { options, show, drawOn } = props;
-  const { options, show } = props;
-  const { assetType, ...remainOpts } = options;
-  const Asset = AssetMap[assetType];
+  const { asset, show } = props;
+  const Asset = AssetMap[asset.assetType];
 
   return (
     <Container show={show}>
     {/* <Container show={show} drawOn={drawOn}> */}
-      <Asset {...remainOpts} />
+      <Asset asset={asset} />
     </Container>
   )
 
