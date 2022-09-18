@@ -12,7 +12,7 @@ import {
 const MAX_LATENCY_SEC = 15;
 
 export default function usePlayerEvent(asset, playerRef) {
-  console.log('usePlayerEvent called ')
+  // console.log('usePlayerEvent called ')
   const dispatch = useDispatch();
   const { assetId: playerId } = asset;
   const videoPlayer = useSelector((state) =>

@@ -1,7 +1,7 @@
 const dev =  {
   LOGLESS_REDUX_ACTIONS: [
-    'assetSlice/setVideoCurrentTime',
-    'assetSlice/setVideoProgress',
+    'playerSlice/setPlayerCurrentTime',
+    'playerSlice/setPlayerProgress',
   ],
 }
 

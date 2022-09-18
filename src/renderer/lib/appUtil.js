@@ -11,7 +11,7 @@ const isHlsStream = (url) => {
 }
 
 const secondsToTime = (seconds, format='mm:ss') => {
-  console.log('####', seconds)
+  // console.log('####', seconds)
   const startIndex = format.startsWith('hh:') ? 11 :
                      format.startsWith('mm:') ? 14 :
                      17
