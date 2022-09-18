@@ -128,7 +128,7 @@ export default function App() {
     <AppContainer>
       {drawShow && <DrawSvg />}
       <Loading />
-      {!drawShow && <MenuContainer />}
+      <MenuContainer drawShow={drawShow} />
       <Draggable onDrag={syncPosition}>
         <ToolDragLeader>
           <DragHandle />
