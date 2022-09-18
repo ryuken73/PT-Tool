@@ -21,7 +21,8 @@ const Container = styled(Box)`
   right: 50px;
 `;
 const ProgressContainer = styled(Box)`
-  display: flex;
+  /* display: flex; */
+  display: ${(props) => (props.isLive ? 'none' : 'flex')};
   flex-direction: column;
   flex-grow: 0;
   height: 50px;
@@ -61,7 +62,8 @@ const Player = (props, playerRef) => {
     isPlaying,
     currentTime,
     progress,
-    duration
+    duration,
+    isLive
   } = usePlayerEvent(asset, playerRef)
 
   console.log('###', currentTime, progress, duration)
@@ -74,20 +76,9 @@ const Player = (props, playerRef) => {
     playerRef.current.play();
   }, [playerRef, isPlaying]);
 
-  // const canPlay = manifestLoaded;
-  // const [volumeIconActive, setVolumeIconActive] = React.useState(false);
-  // const onClickVolumeControl = React.useCallback(() => {
-    // setVolumeIconActive(true);
-  // }, [setVolumeIconActive]);
-
-  // const handleCloseVolumeSlider = React.useCallback(() => {
-    // setVolumeIconActive(false);
-  // }, []);
-
   const handleMoveProgressSlider = React.useCallback(
     (progressPercent) => {
       const player = playerRef.current;
-      console.log('****', player);
       const duration = player?.duration;
       if (duration === undefined || duration === null) return;
       const timeToGo = (duration * progressPercent) / 100;
@@ -97,15 +88,6 @@ const Player = (props, playerRef) => {
     [playerRef]
   );
 
-  // const onClickSkipNext = React.useCallback(() => {
-    // playNextSong();
-  // }, [playNextSong]);
-
-  // const onClickSkipPrevious = React.useCallback(() => {
-    // playPrevSong();
-  // }, [playPrevSong]);
-
-  // const anchorElRef = React.useRef(null);
 
   React.useEffect(() => {
     const player = playerRef.current;
@@ -143,7 +125,7 @@ const Player = (props, playerRef) => {
 
   return (
     <Container>
-        <ProgressContainer>
+        <ProgressContainer isLive={isLive}>
           <Progress>
             <SliderBar value={progress} onChange={handleMoveProgressSlider} />
           </Progress>
