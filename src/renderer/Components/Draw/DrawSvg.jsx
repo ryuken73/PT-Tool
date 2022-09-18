@@ -97,20 +97,43 @@ const DrawSvg = (props) => {
       onPointerUp={handlePointerUp}
       style={{ touchAction: 'none' }}
     >
-      {pathDatum.map((pathData, index) => (
+      {pathDatum.map((pathData, index) =>
         pathRenderOptions[index].strokeWidth ? (
-          <path
-            d={pathData}
-            fill="transparent"
-            stroke={pathRenderOptions[index].stroke}
-            strokeWidth={pathRenderOptions[index].strokeWidth}
-            strokeLinejoin="round"
-            strokeLinecap="round"
-            pointerEvents="all"
-          />
-        ) : null
-      ))}
-      {pathDatum.map((pathData, index) => (
+          <>
+            <path
+              d={pathData}
+              fill="transparent"
+              stroke={pathRenderOptions[index].stroke}
+              strokeWidth={pathRenderOptions[index].strokeWidth}
+              strokeLinejoin="round"
+              strokeLinecap="round"
+              pointerEvents="all"
+            />
+            <path
+              d={pathData}
+              fill={
+                pathRenderOptions[index].isFilled
+                  ? pathRenderOptions[index].fill
+                  : 'transparent'
+              }
+              stroke={
+                pathRenderOptions[index].isFilled ||
+                pathRenderOptions[index].strokeWidth > 0
+                  ? 'transparent'
+                  : 'black'
+              }
+              strokeWidth={
+                pathRenderOptions[index].isFilled ||
+                pathRenderOptions[index].strokeWidth > 0
+                  ? 0
+                  : 1
+              }
+              strokeLinejoin="round"
+              strokeLinecap="round"
+              pointerEvents="all"
+            />
+          </>
+        ) : (
           <path
             d={pathData}
             fill={
@@ -134,7 +157,8 @@ const DrawSvg = (props) => {
             strokeLinecap="round"
             pointerEvents="all"
           />
-      ))}
+        )
+      )}
       {points && !mouseUp && strokeWidth ? (
         <path
           d={pathData.current}

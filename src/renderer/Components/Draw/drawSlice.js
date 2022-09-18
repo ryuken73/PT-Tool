@@ -13,7 +13,7 @@ const initialState = {
   pathDatum: [],
   pathRenderOptions: [],
   currentOptions: {
-    size: 8,
+    size: 10,
     strokeWidth: 0,
     thinning: 0.75,
     streamline: 0.5,
@@ -62,7 +62,7 @@ export const drawSlice = createSlice({
     setCurrentOptionValue: (state, action) => {
       const { payload } = action;
       const { key, value } = payload;
-      state.currentrOptions[key] = value;
+      state.currentOptions[key] = value;
     },
   },
 });
