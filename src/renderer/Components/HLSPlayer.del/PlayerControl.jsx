@@ -10,6 +10,8 @@ import TextBox from 'renderer/Components/Common/TextBox';
 import SliderBar from 'renderer/Components/Common/SliderBar';
 import HoverButton from 'renderer/Components/Common/ButtonHover';
 import colors from 'renderer/config/colors';
+import usePlayerEvent from 'renderer/hooks/usePlayerEvent';
+import usePlayer from 'renderer/hooks/usePlayerSource';
 
 const Container = styled(Box)`
   display: 'flex';
@@ -43,18 +45,26 @@ const ControlContainer = styled(Box)`
 
 const Player = (props, playerRef) => {
   const {
-    isPlaying = false,
-    progress = '0',
-    currentTime = '00:00',
+    // isPlaying = false,
+    // progress = '0',
+    // currentTime = '00:00',
+    asset,
     endedTime,
     repeatMode,
-    canPlay,
-    manifestLoaded,
-    duration,
     onClickReplay10 = () => {},
     onClickForward10 = () => {},
     onClickRepeat = () => {},
   } = props;
+
+  const {
+    manifestLoaded,
+    isPlaying,
+    currentTime,
+    progress,
+    duration
+  } = usePlayerEvent(asset, playerRef)
+
+  console.log('###', currentTime, progress, duration)
 
   const onClickPlay = React.useCallback(() => {
     if(isPlaying) {
@@ -166,7 +176,7 @@ const Player = (props, playerRef) => {
             onClick={onClickPlay}
             opacitynormal="0.7"
             opacityhover="1"
-            disabled={!canPlay}
+            disabled={!manifestLoaded}
           >
             {isPlaying ? (
               <PauseIcon fontSize="large" />
