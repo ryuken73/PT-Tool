@@ -2,15 +2,22 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   setPathDatum,
-  setPathRenderOptions,
+  setFillColor,
+  setFillWidth,
   saveRenderOption,
-  setCurrentOptionValue
+  setPathRenderOptions,
+  setShowBorder,
+  setBorderColor,
 } from 'renderer/Components/Draw/drawSlice';
 
 export default function useDrawState() {
   const dispatch = useDispatch();
   const pathDatum = useSelector((state) => state.draw.pathDatum);
-  const currentOptions = useSelector((state) => state.draw.currentOptions);
+  const fillWidth = useSelector((state) => state.draw.fillWidth);
+  const fillColor = useSelector((state) => state.draw.fillColor);
+  const showBorder = useSelector((state) => state.draw.showBorder);
+  const borderWidth = useSelector((state) => state.draw.borderWidth);
+  const borderColor = useSelector((state) => state.draw.borderColor);
   const pathRenderOptions = useSelector(
     (state) => state.draw.pathRenderOptions
   );
@@ -40,22 +47,47 @@ export default function useDrawState() {
     );
   }, [dispatch, pathDatum, pathRenderOptions]);
 
+  const setFillColorState = React.useCallback((color) => {
+    dispatch(setBorderColor({ fillColor: color }));
+    dispatch(setFillColor({ fillColor: color }));
+    },
+    [dispatch]
+  );
+
   const saveRenderOptionState = React.useCallback(() => {
     dispatch(saveRenderOption());
   }, [dispatch]);
 
-  const changePathOptionState = React.useCallback((key, value) => {
-    dispatch(setCurrentOptionValue({key, value}));
-  }, [dispatch]);
+  const setShowBorderState = React.useCallback((enableStroke) => {
+      enableStroke && dispatch(setBorderColor({ fillColor }));
+      dispatch(setShowBorder({ showBorder: enableStroke }));
+    },
+    [dispatch, fillColor]
+  );
+
+  const increaseFillWidthState = React.useCallback(() => {
+    dispatch(setFillWidth({ fillWidth: fillWidth + 1 }));
+  }, [dispatch, fillWidth]);
+
+  const decreaseFillWidthState = React.useCallback(() => {
+    dispatch(setFillWidth({ fillWidth: fillWidth - 1 }));
+  }, [dispatch, fillWidth]);
 
   return {
     pathDatum,
-    currentOptions,
+    fillWidth,
+    fillColor,
+    showBorder,
+    borderWidth,
+    borderColor,
     pathRenderOptions,
     addPathDatumState,
     clearPathDatumState,
     undoPathDatumState,
+    setFillColorState,
     saveRenderOptionState,
-    changePathOptionState,
+    setShowBorderState,
+    increaseFillWidthState,
+    decreaseFillWidthState
   };
 }

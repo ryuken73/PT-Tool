@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const INITIAL_FILL_COLOR = 'red';
-const BORDER_COLOR = {
+const STROKE_COLOR = {
   red: 'black',
   darkblue: 'white',
   black: 'white',
@@ -12,11 +12,28 @@ const initialState = {
   drawShow: false,
   pathDatum: [],
   pathRenderOptions: [],
-  fillWidth: 14,
-  fillColor: INITIAL_FILL_COLOR,
-  showBorder: false,
-  borderWidth: 3,
-  borderColor: BORDER_COLOR[INITIAL_FILL_COLOR]
+  currentOptions: {
+    size: 8,
+    strokeWidth: 0,
+    thinning: 0.75,
+    streamline: 0.5,
+    smoothing: 0.5,
+    easing: 'linear',
+    taperStart: 0,
+    taperEnd: 0,
+    capStart: true,
+    capEnd: true,
+    easingStart: 'linear',
+    easingEnd: 'linear',
+    isFilled: true,
+    stroke: STROKE_COLOR[INITIAL_FILL_COLOR],
+    fill: INITIAL_FILL_COLOR
+  },
+  // fillWidth: 14,
+  // fillColor: INITIAL_FILL_COLOR,
+  // showBorder: false,
+  // borderWidth: 3,
+  // borderColor: BORDER_COLOR[INITIAL_FILL_COLOR]
 };
 
 export const drawSlice = createSlice({
@@ -39,40 +56,13 @@ export const drawSlice = createSlice({
       state.pathRenderOptions = pathRenderOptions;
     },
     saveRenderOption: (state) => {
-      const { fillWidth, fillColor, showBorder, borderWidth, borderColor } = state;
-      const currentOption = {
-        fillWidth,
-        fillColor,
-        showBorder,
-        borderWidth,
-        borderColor,
-      };
-      state.pathRenderOptions = [...state.pathRenderOptions, currentOption];
+      const { currentOptions } = state;
+      state.pathRenderOptions.push(currentOptions);
     },
-    setFillColor: (state, action) => {
+    setCurrentOptionValue: (state, action) => {
       const { payload } = action;
-      const { fillColor } = payload;
-      state.fillColor = fillColor;
-    },
-    setFillWidth: (state, action) => {
-      const { payload } = action;
-      const { fillWidth } = payload;
-      state.fillWidth = fillWidth;
-    },
-    setShowBorder: (state, action) => {
-      const { payload } = action;
-      const { showBorder } = payload;
-      state.showBorder = showBorder;
-    },
-    setBorderColor: (state, action) => {
-      const { payload } = action;
-      const { fillColor } = payload;
-      state.borderColor = BORDER_COLOR[fillColor];
-    },
-    setBorderWidth: (state, action) => {
-      const { payload } = action;
-      const { borderWidth } = payload;
-      state.borderWidth = borderWidth;
+      const { key, value } = payload;
+      state.currentrOptions[key] = value;
     },
   },
 });
@@ -80,13 +70,9 @@ export const drawSlice = createSlice({
 export const {
   setDrawShow,
   setPathDatum,
-  setFillColor,
-  setFillWidth,
-  setShowBorder,
-  setBorderColor,
-  setBorderWidth,
   setPathRenderOptions,
-  saveRenderOption
+  saveRenderOption,
+  setCurrentOptionValue
 } = drawSlice.actions;
 
 export default drawSlice.reducer;
