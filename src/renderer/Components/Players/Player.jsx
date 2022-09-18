@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components';
 import VideoPlayer from 'renderer/Components/Players/VideoPlayer';
-import PlayerControl from '../HLSPlayer/PlayerControl';
+import PlayerControl from 'renderer/Components/Players/PlayerControl';
 import ReloadButton from 'renderer/Components/Common/ReloadButton';
 import usePlayerSource from 'renderer/hooks/usePlayerSource';
 import usePlayerEvent from 'renderer/hooks/usePlayerEvent';
@@ -17,24 +17,8 @@ const Player = (props) => {
   // eslint-disable-next-line react/prop-types
   console.log('re-render Player props =', props);
   const { asset } = props;
-  // const { assetId: sourceId, source } = props.asset;
-  // const { url } = source;
   const playerRef = React.useRef(null);
-  const {
-    manifestLoaded,
-    loadHLS
-  } = usePlayerSource(asset, playerRef);
-  const {
-    isPlaying,
-    currentTime,
-    progress,
-    duration,
-    getCurrentTime,
-    getDuration,
-    onClickPlay,
-    onClickReload,
-    onClickForward10,
-  } = usePlayerEvent(asset, playerRef);
+  const { loadHLS } = usePlayerSource(asset, playerRef);
 
   const reloadPlayer = React.useCallback(() => {
     const src = asset.source.url;
@@ -49,15 +33,7 @@ const Player = (props) => {
   return (
     <Container>
       <VideoPlayer {...props} ref={playerRef} />
-      <PlayerControl
-        // ref={playerRef}
-        ref={playerRef}
-        progress={progress}
-        currentTime={currentTime}
-        canPlay={manifestLoaded}
-        isPlaying={isPlaying}
-        duration={duration}
-      />
+      <PlayerControl ref={playerRef} asset={asset} />
       <ReloadButton reload={reloadPlayer} />
     </Container>
   )

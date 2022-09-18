@@ -11,11 +11,12 @@ const isHlsStream = (url) => {
 }
 
 const secondsToTime = (seconds, format='mm:ss') => {
+  console.log('####', seconds)
   const startIndex = format.startsWith('hh:') ? 11 :
                      format.startsWith('mm:') ? 14 :
                      17
   const sliceLength = format.length;
-  if(typeof(seconds) !== 'number' || seconds === Infinity){
+  if(isNaN(seconds) || typeof(seconds) !== 'number' || seconds === Infinity){
     return '00:00'
   }
   return new Date(seconds*1000).toISOString().substr(startIndex, sliceLength)

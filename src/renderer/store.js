@@ -3,7 +3,7 @@ import { createLogger } from 'redux-logger';
 import appReducer from 'renderer/appSlice';
 import assetReducer from 'renderer/Components/Assets/assetSlice';
 import drawReducer from 'renderer/Components/Draw/drawSlice';
-import playerReducer from 'renderer/Components/HLSPlayer/playerSlice';
+import playerReducer from 'renderer/Components/Players/playerSlice';
 import dialogReducer from 'renderer/Components/Dialog/dialogSlice';
 import CONSTANTS from 'renderer/config/constants';
 
