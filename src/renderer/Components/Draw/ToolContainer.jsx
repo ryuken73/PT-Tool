@@ -39,7 +39,7 @@ const PalleteContainer = styled.div`
 `
 const RowFlexBox = styled.div`
   display: flex;
-  flex-direction: row
+  flex-direction: row;
 `
 const ColorBox = styled.div`
   width: 43%;
@@ -91,17 +91,23 @@ const CHECK_COLORS = ["white", "white", "black", "black"];
 const ToolContainer = (props) => {
   const { drawShow, toggleDraw } = props;
   const {
-    fillColor,
-    showBorder,
+    currentOptions,
+    changePathOptionState,
     clearPathDatumState,
     undoPathDatumState,
-    setFillColorState,
-    setShowBorderState,
-    increaseFillWidthState,
-    decreaseFillWidthState
   } = useDrawState();
+  const {
+    size,
+    strokeWidth,
+    thinning,
+    streamline,
+    smoothing,
+    isFilled,
+    stroke,
+    fill,
+  } = currentOptions;
 
-  const showStokeIconGrey = !drawShow  || !showBorder;
+  const showStokeIconGrey = !drawShow  || strokeWidth === 0;
 
   const withOutline = {
     ...iconStyle,
@@ -109,22 +115,33 @@ const ToolContainer = (props) => {
   };
   const noOutline = {
     ...iconStyle,
-    background: `${showStokeIconGrey ? '#140e30': 'darkgrey'}`,
+    background: `${showStokeIconGrey ? '#140e30' : 'darkgrey'}`,
   };
 
   const onClickColor = React.useCallback((event) => {
-    setFillColorState(event.target.getAttribute('color'));
-  },[setFillColorState]);
+      const targetFill = event.target.getAttribute('color');
+      changePathOptionState('fill', targetFill);
+      changePathOptionState('stroke', CHECK_COLORS[COLORS.indexOf(targetFill)]);
+    },
+    [changePathOptionState]
+  );
 
   const toggleStroke = React.useCallback(() => {
-    console.log('touch')
-    setShowBorderState(!showBorder)
-  }, [setShowBorderState, showBorder]);
+    const nextValue = strokeWidth === 0 ? 3 : 0;
+    changePathOptionState('strokeWidth', nextValue);
+
+  }, [changePathOptionState, strokeWidth]);
 
   return (
     <Container>
       <IconContainerOne>
-        <IconButton sx={{ padding: '0px' }} size="medium" onTouchStart={toggleDraw} onClick={toggleDraw} onTouchTap={toggleDraw}>
+        <IconButton
+          sx={{ padding: '0px' }}
+          size="medium"
+          onTouchStart={toggleDraw}
+          onClick={toggleDraw}
+          onTouchTap={toggleDraw}
+        >
           <ModeEditIcon sx={iconStyle} />
         </IconButton>
       </IconContainerOne>
@@ -133,12 +150,15 @@ const ToolContainer = (props) => {
           <RowFlexBox>
           <PalleteContainer>
             {COLORS.map((color, index) => (
-              <ColorBox key={color} onTouchStart={onClickColor} onClick={onClickColor} color={color}>
-                {fillColor === color && (
-                  <CheckSvg color={CHECK_COLORS[index]} />
-                )}
-              </ColorBox>
-            ))}
+                <ColorBox
+                  key={color}
+                  onTouchStart={onClickColor}
+                  onClick={onClickColor}
+                  color={color}
+                >
+                  {fill === color && <CheckSvg color={CHECK_COLORS[index]} />}
+                </ColorBox>
+              ))}
           </PalleteContainer>
           {/* <IconContainerVertical>
             <IconButton sx={{ padding: '0px' }} size="medium" onTouchStart={increaseFillWidthState} onClick={increaseFillWidthState}>

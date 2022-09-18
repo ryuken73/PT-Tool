@@ -7,6 +7,13 @@ import {
   setCurrentOptionValue
 } from 'renderer/Components/Draw/drawSlice';
 
+const STROKE_COLOR = {
+  red: 'black',
+  darkblue: 'white',
+  black: 'white',
+  yellow: 'black',
+};
+
 export default function useDrawState() {
   const dispatch = useDispatch();
   const pathDatum = useSelector((state) => state.draw.pathDatum);
@@ -45,8 +52,10 @@ export default function useDrawState() {
   }, [dispatch]);
 
   const changePathOptionState = React.useCallback((key, value) => {
-    dispatch(setCurrentOptionValue({key, value}));
-  }, [dispatch]);
+    dispatch(setCurrentOptionValue({ key, value }));
+    },
+    [dispatch]
+  );
 
   return {
     pathDatum,
