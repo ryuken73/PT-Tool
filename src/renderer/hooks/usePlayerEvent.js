@@ -6,8 +6,8 @@ import {
   addPlayer,
   setPlayerStatus,
   setPlayerCurrentTime,
-  setPlayerProgress
-} from 'renderer/Components/Players/playerSlice'
+  setPlayerProgress,
+} from 'renderer/Components/Players/playerSlice';
 
 const MAX_LATENCY_SEC = 15;
 
@@ -15,10 +15,14 @@ export default function usePlayerEvent(asset, playerRef) {
   // console.log('usePlayerEvent called ')
   const dispatch = useDispatch();
   const { assetId: playerId } = asset;
-  const videoPlayer = useSelector((state) =>
-    state.player.players.find((player) => player.playerId === playerId), shallowEqual
-  ) || {};
-  const { isPlaying, currentTime, manifestLoaded, progress, duration } = videoPlayer;
+  const videoPlayer =
+    useSelector(
+      (state) =>
+        state.player.players.find((player) => player.playerId === playerId),
+      shallowEqual
+    ) || {};
+  const { isPlaying, currentTime, manifestLoaded, progress, duration } =
+    videoPlayer;
   const isLive = duration === '00:00';
   const player = playerRef.current;
   const currentTimeRef = React.useRef(null);
@@ -41,14 +45,23 @@ export default function usePlayerEvent(asset, playerRef) {
     dispatch(setPlayerStatus({ playerId, key: 'isPlaying', value: true }));
   }, [dispatch, playerId]);
 
-  // const onClickForward10 = React.useCallback(()=>{
-  //       if(!player) return;
-  //       const {currentTime} = player;
-  //       const maxCurrentTime = player.duration - MAX_LATENCY_SEC;
-  //       const forwardTime = currentTime + 10 < maxCurrentTime ? currentTime + 10 : maxCurrentTime;
-  //       if(Number.isNaN(forwardTime)) return;
-  //       player.currentTime = forwardTime;
-  //   },[player])
+  const onClickForward10 = React.useCallback(() => {
+    if (!player) return;
+    const { currentTime } = player;
+    const maxCurrentTime = player.duration;
+    const forwardTime =
+      currentTime + 10 < maxCurrentTime ? currentTime + 10 : maxCurrentTime;
+    if (Number.isNaN(forwardTime)) return;
+    player.currentTime = forwardTime;
+  }, [player]);
+
+  const onClickReplay10 = React.useCallback(() => {
+    if (!player) return;
+    const { currentTime } = player;
+    const replayTime = currentTime - 10 > 0 ? currentTime - 10 : 0;
+    if (Number.isNaN(replayTime)) return;
+    player.currentTime = replayTime;
+  }, [player]);
 
   const handlePause = React.useCallback(() => {
     dispatch(setPlayerStatus({ playerId, key: 'isPlaying', value: false }));
@@ -60,7 +73,7 @@ export default function usePlayerEvent(asset, playerRef) {
     dispatch(
       setPlayerCurrentTime({ playerId, key: 'currentTime', value: currentTime })
     );
-    const progress = ((player.currentTime/player.duration) * 100).toFixed(0);
+    const progress = ((player.currentTime / player.duration) * 100).toFixed(0);
     dispatch(setPlayerProgress({ playerId, key: 'progress', value: progress }));
   }, [dispatch, playerId, player]);
 
@@ -126,6 +139,8 @@ export default function usePlayerEvent(asset, playerRef) {
     onClickPlay,
     onClickReload,
     setPlayerSource,
+    onClickForward10,
+    onClickReplay10
     // onClickForward10
   };
 }

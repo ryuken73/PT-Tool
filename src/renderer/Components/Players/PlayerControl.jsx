@@ -70,13 +70,19 @@ const Player = (props, playerRef) => {
     asset,
     endedTime,
     repeatMode,
-    onClickReplay10 = () => {},
-    onClickForward10 = () => {},
     onClickRepeat = () => {},
   } = props;
 
-  const { manifestLoaded, isPlaying, currentTime, progress, duration, isLive } =
-    usePlayerEvent(asset, playerRef);
+  const {
+    manifestLoaded,
+    isPlaying,
+    currentTime,
+    progress,
+    duration,
+    isLive,
+    onClickForward10,
+    onClickReplay10
+  } = usePlayerEvent(asset, playerRef);
 
   // console.log('###', currentTime, progress, duration)
 
@@ -136,7 +142,7 @@ const Player = (props, playerRef) => {
 
   return (
     <Container>
-      <ProgressContainer isLive={false}>
+      <ProgressContainer isLive={isLive}>
         <Duration>
           <TextBox fontSize="11px" text={currentTime} color={colors.textMain} />
           <TextBox
@@ -163,14 +169,14 @@ const Player = (props, playerRef) => {
             <PlayArrowIcon sx={iconStyle} />
           )}
         </IconButton>
-        <IconButton
+        {/* <IconButton
           sx={iconContainerStyle}
           size="medium"
           onClick={onClickRepeat}
           onTouchStart={onClickRepeat}
         >
           <RepeatIcon sx={iconStyle} />
-        </IconButton>
+        </IconButton> */}
         <IconButton
           sx={iconContainerStyle}
           size="medium"
