@@ -12,6 +12,10 @@ import DragHandle from './Components/Draw/DragHandle';
 import useAppState from './hooks/useAppState';
 import useSyncPosition from './hooks/useSyncPosition';
 import useAssetState from './hooks/useAssetState';
+import CONSTANTS from 'renderer/config/constants';
+
+const { POSITION } = CONSTANTS;
+
 
 const INITIAL_ASSETS = [
   {
@@ -85,14 +89,14 @@ const AppContainer = styled(Container)`
 `;
 const ToolDivWithPosition = styled.div`
   position: absolute;
-  top: 200px;
-  right: 200px;
+  top: ${POSITION.toolContainer.top};
+  right: ${POSITION.toolContainer.right};
   z-index: 9999;
 `;
 const ToolDragLeader = styled.div`
   position: absolute;
-  top: 170px;
-  right: 248px;
+  top: ${POSITION.drawHandler.top};
+  right: ${POSITION.drawHandler.right};
   z-index: 9999;
   width: 40px;
   height: 40px;

@@ -12,13 +12,16 @@ import HoverButton from 'renderer/Components/Common/ButtonHover';
 import colors from 'renderer/config/colors';
 import usePlayerEvent from 'renderer/hooks/usePlayerEvent';
 import usePlayer from 'renderer/hooks/usePlayerSource';
+import CONSTANTS from 'renderer/config/constants';
+
+const { POSITION } = CONSTANTS;
 
 const Container = styled(Box)`
   display: flex;
   flex-direction: column;
   position: absolute;
-  top: 100px;
-  right: 50px;
+  top: ${POSITION.videoControl.top};
+  right: ${POSITION.videoControl.right};
   width: 300px;
 `;
 const ProgressContainer = styled(Box)`
@@ -127,7 +130,7 @@ const Player = (props, playerRef) => {
 
   return (
     <Container>
-        <ProgressContainer isLive={isLive}>
+        <ProgressContainer isLive={false}>
           <Progress>
             <SliderBar value={progress} onChange={handleMoveProgressSlider} />
           </Progress>
