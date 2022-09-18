@@ -13,6 +13,7 @@ import colors from 'renderer/config/colors';
 import usePlayerEvent from 'renderer/hooks/usePlayerEvent';
 import usePlayer from 'renderer/hooks/usePlayerSource';
 import CONSTANTS from 'renderer/config/constants';
+import { IconButton } from '@mui/material';
 
 const { POSITION } = CONSTANTS;
 
@@ -45,9 +46,21 @@ const Duration = styled(Box)`
 const ControlContainer = styled(Box)`
   display: flex;
   justify-content: center;
-  background: black;
+  background: transparent;
   position: relative;
 `;
+
+const iconContainerStyle = {
+  padding: '0px',
+  margin: '5px',
+};
+const iconStyle = {
+  background: '#140e30',
+  color: 'white',
+  borderRadius: '20%',
+  fontSize: '34px',
+  padding: '0px !important',
+};
 
 const Player = (props, playerRef) => {
   const {
@@ -62,21 +75,15 @@ const Player = (props, playerRef) => {
     onClickRepeat = () => {},
   } = props;
 
-  const {
-    manifestLoaded,
-    isPlaying,
-    currentTime,
-    progress,
-    duration,
-    isLive
-  } = usePlayerEvent(asset, playerRef)
+  const { manifestLoaded, isPlaying, currentTime, progress, duration, isLive } =
+    usePlayerEvent(asset, playerRef);
 
   // console.log('###', currentTime, progress, duration)
 
   const onClickPlay = React.useCallback(() => {
-    if(isPlaying) {
+    if (isPlaying) {
       playerRef.current.pause();
-      return
+      return;
     }
     playerRef.current.play();
   }, [playerRef, isPlaying]);
@@ -93,15 +100,14 @@ const Player = (props, playerRef) => {
     [playerRef]
   );
 
-
   React.useEffect(() => {
     const player = playerRef.current;
     if (player === undefined || player === null) return;
     if (player.duration !== player.currentTime) return;
     if (endedTime) {
       // if (repeatMode === 'all') {
-        // playNextSong();
-        // return;
+      // playNextSong();
+      // return;
       // }
       if (repeatMode === 'one') {
         player.currentTime = 0;
@@ -130,51 +136,58 @@ const Player = (props, playerRef) => {
 
   return (
     <Container>
-        <ProgressContainer isLive={false}>
-          <Progress>
-            <SliderBar value={progress} onChange={handleMoveProgressSlider} />
-          </Progress>
-          <Duration>
-            <TextBox
-              fontSize="11px"
-              text={currentTime}
-              color={colors.textMain}
-            />
-            <TextBox
-              fontSize="11px"
-              text={duration}
-              marginLeft="5px"
-              color={colors.textSub}
-            />
-          </Duration>
-        </ProgressContainer>
-        <ControlContainer>
-          <HoverButton
-            onClick={onClickRepeat}
-            fontcolor={repeatHoverButtonColor}
-            opacitynormal={repeatHoverOpacity}
-          >
-            <RepeatIcon fontSize="small" />
-          </HoverButton>
-          <HoverButton onClick={onClickReplay10}>
-            <Replay10Icon fontSize="small" />
-          </HoverButton>
-          <HoverButton
-            onClick={onClickPlay}
-            opacitynormal="0.7"
-            opacityhover="1"
-            disabled={!manifestLoaded}
-          >
-            {isPlaying ? (
-              <PauseIcon fontSize="large" />
-            ) : (
-              <PlayArrowIcon fontSize="large" />
-            )}
-          </HoverButton>
-          <HoverButton onClick={onClickForward10}>
-            <Forward10Icon fontSize="small" />
-          </HoverButton>
-        </ControlContainer>
+      <ProgressContainer isLive={false}>
+        <Duration>
+          <TextBox fontSize="11px" text={currentTime} color={colors.textMain} />
+          <TextBox
+            fontSize="11px"
+            text={duration}
+            marginLeft="5px"
+            color={colors.textSub}
+          />
+        </Duration>
+        <Progress>
+          <SliderBar value={progress} onChange={handleMoveProgressSlider} />
+        </Progress>
+      </ProgressContainer>
+      <ControlContainer>
+        <IconButton
+          sx={iconContainerStyle}
+          size="medium"
+          onClick={onClickPlay}
+          onTouchStart={onClickPlay}
+        >
+          {isPlaying ? (
+            <PauseIcon sx={iconStyle} />
+          ) : (
+            <PlayArrowIcon sx={iconStyle} />
+          )}
+        </IconButton>
+        <IconButton
+          sx={iconContainerStyle}
+          size="medium"
+          onClick={onClickRepeat}
+          onTouchStart={onClickRepeat}
+        >
+          <RepeatIcon sx={iconStyle} />
+        </IconButton>
+        <IconButton
+          sx={iconContainerStyle}
+          size="medium"
+          onClick={onClickReplay10}
+          onTouchStart={onClickReplay10}
+        >
+          <Replay10Icon sx={iconStyle} />
+        </IconButton>
+        <IconButton
+          sx={iconContainerStyle}
+          size="medium"
+          onClick={onClickForward10}
+          onTouchStart={onClickForward10}
+        >
+          <Forward10Icon sx={iconStyle} />
+        </IconButton>
+      </ControlContainer>
     </Container>
   );
 };
