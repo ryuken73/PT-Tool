@@ -4,7 +4,7 @@ import SliderUnstyled from '@mui/base/SliderUnstyled';
 
 const StyledSlider = styled(SliderUnstyled)(
   ({ theme }) => `
-  color: ${theme.palette.mode === 'light' ? '#a31700' : '#90caf9'};
+  color: ${theme.palette.mode === 'light' ? 'black' : '#90caf9'};
   height: 4px;
   width: 100%;
   padding: 5px 0;
@@ -73,9 +73,9 @@ const UnstyledSlider = props => {
     onChange(value);
   },[])
   return (
-    <Box>
+    // <Box>
       <StyledSlider defaultValue={"0"} value={value} onChange={handleChange}/>
-    </Box>
+    // </Box>
   );
 }
 

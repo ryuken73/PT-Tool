@@ -14,28 +14,30 @@ import usePlayerEvent from 'renderer/hooks/usePlayerEvent';
 import usePlayer from 'renderer/hooks/usePlayerSource';
 
 const Container = styled(Box)`
-  display: 'flex';
+  display: flex;
   flex-direction: column;
   position: absolute;
   top: 100px;
   right: 50px;
+  width: 300px;
 `;
 const ProgressContainer = styled(Box)`
   /* display: flex; */
   display: ${(props) => (props.isLive ? 'none' : 'flex')};
   flex-direction: column;
-  flex-grow: 0;
   height: 50px;
-  /* background: #14181e; */
   background: ${colors.player};
 `;
 const Progress = styled(Box)`
   margin-left: 20px;
   margin-right: 20px;
+  font-size: 15px !important;
 `;
 const Duration = styled(Box)`
   margin-left: 20px;
+  margin-right: 20px;
   display: flex;
+  justify-content: space-between;
 `;
 const ControlContainer = styled(Box)`
   display: flex;
@@ -66,7 +68,7 @@ const Player = (props, playerRef) => {
     isLive
   } = usePlayerEvent(asset, playerRef)
 
-  console.log('###', currentTime, progress, duration)
+  // console.log('###', currentTime, progress, duration)
 
   const onClickPlay = React.useCallback(() => {
     if(isPlaying) {

@@ -14,7 +14,7 @@ import usePlayerEvent from 'renderer/hooks/usePlayerEvent';
 import usePlayer from 'renderer/hooks/usePlayerSource';
 
 const Container = styled(Box)`
-  display: 'flex';
+  display: flex;
   flex-direction: column;
   position: absolute;
   top: 100px;
