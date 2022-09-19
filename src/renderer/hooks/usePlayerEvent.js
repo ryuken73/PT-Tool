@@ -21,8 +21,14 @@ export default function usePlayerEvent(asset, playerRef) {
         state.player.players.find((player) => player.playerId === playerId),
       shallowEqual
     ) || {};
-  const { isPlaying, currentTime, manifestLoaded, progress, duration } =
-    videoPlayer;
+  const {
+    isPlaying,
+    currentTime,
+    manifestLoaded,
+    progress,
+    duration,
+    canplay,
+  } = videoPlayer;
   const isLive = duration === '00:00';
   const player = playerRef.current;
   const currentTimeRef = React.useRef(null);
@@ -136,6 +142,7 @@ export default function usePlayerEvent(asset, playerRef) {
     manifestLoaded,
     duration,
     isLive,
+    canplay,
     onClickPlay,
     onClickReload,
     setPlayerSource,

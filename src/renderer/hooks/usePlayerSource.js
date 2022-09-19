@@ -15,20 +15,34 @@ export default function usePlayer(asset, mediaElementRef) {
   const { url: src } = source;
   const hlsRef = React.useRef(null);
 
-  const handleLoadedMetadata = React.useCallback((event) => {
-    console.log( 'in usePlayerSource: loadedMetadata', mediaElementRef.current.duration);
-    if (!isNaN(mediaElementRef.current.duration)) {
-      const durationSec = parseInt(mediaElementRef.current.duration, 10);
-      dispatch(
-        setPlayerStatus({
-          playerId,
-          key: 'duration',
-          value: secondsToTime(durationSec),
-        })
+  const handleLoadedMetadata = React.useCallback(
+    (event) => {
+      console.log(
+        'in usePlayerSource: loadedMetadata',
+        mediaElementRef.current.duration
       );
-      mediaElementRef.current.play();
-    }
-  }, [dispatch, mediaElementRef, playerId]);
+      if (!isNaN(mediaElementRef.current.duration)) {
+        const durationSec = parseInt(mediaElementRef.current.duration, 10);
+        dispatch(
+          setPlayerStatus({
+            playerId,
+            key: 'duration',
+            value: secondsToTime(durationSec),
+          })
+        );
+        mediaElementRef.current.play();
+      }
+    },
+    [dispatch, mediaElementRef, playerId]
+  );
+
+  const handleCanPlay = React.useCallback(() => {
+    dispatch(setPlayerStatus({
+      playerId,
+      key: 'canplay',
+      value: true
+    }));
+  }, [dispatch, playerId]);
 
   const loadHLS = React.useCallback(() => {
     console.log('!! loadHLS');
@@ -36,6 +50,7 @@ export default function usePlayer(asset, mediaElementRef) {
     dispatch(
       setPlayerStatus({ playerId, key: 'manifestLoaded', value: false })
     );
+    dispatch(setPlayerStatus({ playerId, key: 'canplay', value: false }));
 
     if (hlsRef && hlsRef.current !== null) {
       hlsRef.current.destroy();
@@ -49,7 +64,7 @@ export default function usePlayer(asset, mediaElementRef) {
       // maxBufferSize: 0,
       // maxBufferLength: 10,
       // liveSyncDurationCount: 1,
-      liveDurationInfinity: true
+      liveDurationInfinity: true,
     };
 
     hlsRef.current = new Hls(hlsOptions);
@@ -61,10 +76,13 @@ export default function usePlayer(asset, mediaElementRef) {
         'loadedmetadata',
         handleLoadedMetadata
       );
+      mediaElementRef.current.addEventListener('canplaythrough', handleCanPlay);
     });
     hlsRef.current.on(Hls.Events.MANIFEST_PARSED, (event, data) => {
       console.log('manifest loaded, found data:', data);
-      dispatch(setPlayerStatus({ playerId, key: 'manifestLoaded', value: true }));
+      dispatch(
+        setPlayerStatus({ playerId, key: 'manifestLoaded', value: true })
+      );
     });
     hlsRef.current.on(Hls.Events.ERROR, (event, error) => {
       console.log(event, error);
@@ -74,7 +92,6 @@ export default function usePlayer(asset, mediaElementRef) {
   React.useEffect(() => {
     console.log('### src changed!:', src, mediaElementRef.current);
     // initialize manifestLoaded to false for playing HLS
-
 
     // fast return if src not ready or mediaElement is null
     if (src === '') {
@@ -98,6 +115,7 @@ export default function usePlayer(asset, mediaElementRef) {
         'loadedmetadata',
         handleLoadedMetadata
       );
+      mediaElementRef.current.addEventListener('canplaythrough', handleCanPlay);
       mediaElementRef.current.src = src;
       dispatch(
         setPlayerStatus({ playerId, key: 'manifestLoaded', value: true })
@@ -116,10 +134,11 @@ export default function usePlayer(asset, mediaElementRef) {
           'loadedmetadata',
           handleLoadedMetadata
         );
+        mediaElementRef.current.removeEventListener('canplaythrough', handleCanPlay);
       }
     };
   }, [src, mediaElementRef, dispatch, playerId, handleLoadedMetadata]);
 
   // return [mediaElementRef, manifestLoaded, duration];
-  return {loadHLS};
+  return { loadHLS };
 }

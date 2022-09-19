@@ -27,7 +27,7 @@ const Container = styled(Box)`
 `;
 const ProgressContainer = styled(Box)`
   /* display: flex; */
-  display: ${(props) => (props.isLive ? 'none' : 'flex')};
+  display: ${(props) => (props.hide ? 'none' : 'flex')};
   flex-direction: column;
   height: 50px;
   background: ${colors.player};
@@ -44,7 +44,7 @@ const Duration = styled(Box)`
   justify-content: space-between;
 `;
 const ControlContainer = styled(Box)`
-  display: flex;
+  display: ${(props) => (props.hide ? 'none' : 'flex')};
   justify-content: center;
   background: transparent;
   position: relative;
@@ -80,6 +80,7 @@ const Player = (props, playerRef) => {
     progress,
     duration,
     isLive,
+    canplay,
     onClickForward10,
     onClickReplay10
   } = usePlayerEvent(asset, playerRef);
@@ -140,9 +141,11 @@ const Player = (props, playerRef) => {
   //     : `${currentPlaylistIndex + 1}/${currentPlaylist.length}`;
   // }, [repeatMode, currentPlaylistIndex, currentPlaylist]);
 
+  const hide = isLive || !canplay;
+
   return (
     <Container>
-      <ProgressContainer isLive={isLive}>
+      <ProgressContainer hide={hide}>
         <Duration>
           <TextBox fontSize="11px" text={currentTime} color={colors.textMain} />
           <TextBox
@@ -156,7 +159,7 @@ const Player = (props, playerRef) => {
           <SliderBar value={progress} onChange={handleMoveProgressSlider} />
         </Progress>
       </ProgressContainer>
-      <ControlContainer>
+      <ControlContainer hide={hide}>
         <IconButton
           sx={iconContainerStyle}
           size="medium"
