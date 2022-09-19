@@ -98,9 +98,6 @@ const ToolDragLeader = styled.div`
   top: ${POSITION.drawHandler.top};
   right: ${POSITION.drawHandler.right};
   z-index: 9999;
-  width: 40px;
-  height: 40px;
-  /* background: yellow; */
 `;
 const getInitialAssets = () => {
   return new Promise((resolve, reject) => {
@@ -131,7 +128,7 @@ export default function App() {
       <MenuContainer drawShow={drawShow} />
       <Draggable onDrag={syncPosition}>
         <ToolDragLeader>
-          <DragHandle />
+          <DragHandle size="small" />
         </ToolDragLeader>
       </Draggable>
       <Draggable position={position} onStart={() => false}>

@@ -15,7 +15,7 @@ const dev =  {
     },
     drawHandler: {
       top: `${TOOL_TOP-30}px`,
-      right: `${TOOL_RIGHT+48}px`,
+      right: `${TOOL_RIGHT+46}px`,
     },
     videoControl: {
       top: `${TOOL_TOP-150}px`,

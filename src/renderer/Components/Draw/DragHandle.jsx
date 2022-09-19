@@ -1,13 +1,16 @@
 import React from 'react'
-import DragHandleIcon from '@mui/icons-material/DragHandle';
+import DehazeIcon from '@mui/icons-material/Dehaze';
 
-const iconStyle = {
-  fontSize: '40px',
-}
-export default function DragHandle() {
-  return (
-    <DragHandleIcon
-      sx={iconStyle}
-    ></DragHandleIcon>
-  )
+export default function DragHandle(props) {
+  const { size } = props;
+  const iconStyle = {
+    fontSize: `${size === 'small' ? '40px !important' : '40px !important'}`,
+    paddingRight: '2px',
+    paddingLeft: '2px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
+
+  return <DehazeIcon sx={iconStyle} />;
 }
