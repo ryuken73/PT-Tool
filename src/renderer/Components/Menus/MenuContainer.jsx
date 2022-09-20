@@ -51,12 +51,12 @@ const MenuContainer = (props) => {
   const { assets, currentAsset, setCurrentAssetState } = useAssetState();
   return (
     <MenuDiv>
-      <Draggable onDrag={syncPosition}>
+      {/* <Draggable onDrag={syncPosition}>
         <DivDragHandler hide={drawShow}>
           <DragHandle size="small" />
         </DivDragHandler>
-      </Draggable>
-      <Draggable position={position} onStart={() => false}>
+      </Draggable> */}
+      {/* <Draggable position={position} onStart={() => false}> */}
         <Container hide={drawShow}>
           {assets.map((asset, index) => (
             // eslint-disable-next-line react/button-has-type
@@ -73,7 +73,7 @@ const MenuContainer = (props) => {
             />
           ))}
         </Container>
-      </Draggable>
+      {/* </Draggable> */}
     </MenuDiv>
   );
 };

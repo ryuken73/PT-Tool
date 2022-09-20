@@ -49,21 +49,27 @@ const INITIAL_ASSETS = [
       'https://www.weather.go.kr/wgis-nuri/html/map.html',
       'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.50,37.91,4250',
     ],
-    title: '멀티웹',
+    title: '분할지도',
   },
   {
     assetId: 5,
-    assetType: 'video',
-    source: {
-      url: 'http://61.43.246.225:1935/rtplive/cctv_86.stream/chunklist_w1471259849.m3u8',
-    },
-    fill: true,
-    fluid: false,
-    aspectRatio: '',
-    // setPlayer,
-    enableOverlay: false,
-    title: '해운대',
+    assetType: 'web',
+    src: 'http://cctvmap.sbs.co.kr/map',
+    title: 'CCTV'
   },
+  // {
+  //   assetId: 5,
+  //   assetType: 'video',
+  //   source: {
+  //     url: 'http://61.43.246.225:1935/rtplive/cctv_86.stream/chunklist_w1471259849.m3u8',
+  //   },
+  //   fill: true,
+  //   fluid: false,
+  //   aspectRatio: '',
+  //   // setPlayer,
+  //   enableOverlay: false,
+  //   title: '해운대',
+  // },
 ];
 
 const Container = styled.div`
