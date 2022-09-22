@@ -9,6 +9,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: row;
 `
+const ua = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; Touch) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.174 Electron/16.1.0 Safari/537.36"
 const WebView = (props) => {
   const { src } = props.asset;
   const srcIsArray = Array.isArray(src);
@@ -27,6 +28,7 @@ const WebView = (props) => {
           ref={webviewRefs[index]}
           style={{ width: '100%', height: '100%' }}
           src={src}
+          useragent={ua}
         />
       ))}
       <ReloadButton reload={reload} />
