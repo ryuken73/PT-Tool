@@ -13,7 +13,7 @@ const initialState = {
   pathDatum: [],
   pathRenderOptions: [],
   currentOptions: {
-    size: 10,
+    size: 12,
     strokeWidth: 0,
     thinning: 0.75,
     streamline: 0.5,
