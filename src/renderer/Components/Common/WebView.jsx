@@ -27,11 +27,9 @@ const WebView = (props) => {
     if(srcArray[0].includes(captureString)){
       console.log(webviewRefs[0].current);
       webviewRefs[0].current.addEventListener('dom-ready', () => {
-        // webviewRefs[0].current.insertCSS('div.earth-bar { right: 100 !important; }');
-        webviewRefs[0].current.insertCSS('div.earth-bar { position: relative !important; margin-left: 80%; margin-top: 10%; }');
-        webviewRefs[0].current.insertCSS('div.stack { position: relative !important; margin-left: 80%; margin-top: 10%; }');
-        webviewRefs[0].current.insertCSS('body { background: black !important; opacity: 0.5; }');
-        webviewRefs[0].current.openDevTools();
+        webviewRefs[0].current.insertCSS('div.earth-bar { position: relative !important; margin-left: 80%; margin-top: 28%; }');
+        webviewRefs[0].current.insertCSS('div.stack { position: absolute !important; margin-left: 70%; margin-top: 10%; }');
+        // webviewRefs[0].current.openDevTools();
       })
     }
   }, [srcArray, webviewRefs]);
