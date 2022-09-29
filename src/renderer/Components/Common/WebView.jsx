@@ -15,6 +15,17 @@ const Container = styled.div`
 // const ua = "Mozilla/5.0 (Linux; Android 5.0; SM-G900P Build/LRX21T) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Mobile Safari/537.36";
 // const ua = "Mozilla/5.0 (Linux; Android 11.0; Surface Duo) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Mobile Safari/537.36"
 // const ua = "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.163 Mobile Safari/537.36";
+
+const earthString = 'earth.nullschool.net';
+const weatherStrig = 'weather.go.kr';
+const earthCSS = [
+  'div.earth-bar { position: relative !important; margin-left: 80%; margin-top: 28%; }',
+  'div.stack { position: absolute !important; margin-left: 70%; margin-top: 10%; }'
+];
+const weatherCSS = [
+  '#nav > div.nav {position: relative; margin-left: auto; margin-right: 20px; margin-top: 70px; width:170px;}'
+];
+
 const WebView = (props) => {
   const { src } = props.asset;
   const srcIsArray = Array.isArray(src);
@@ -22,14 +33,16 @@ const WebView = (props) => {
   const webviewRefs = srcArray.map(() => React.useRef(null));
 
   React.useEffect(() => {
-    const captureString = 'earth.nullschool.net';
     if(srcArray.length === 0) return;
-    if(srcArray[0].includes(captureString)){
-      console.log(webviewRefs[0].current);
-      webviewRefs[0].current.addEventListener('dom-ready', () => {
-        webviewRefs[0].current.insertCSS('div.earth-bar { position: relative !important; margin-left: 80%; margin-top: 28%; }');
-        webviewRefs[0].current.insertCSS('div.stack { position: absolute !important; margin-left: 70%; margin-top: 10%; }');
-        // webviewRefs[0].current.openDevTools();
+    const firstWebview = webviewRefs[0].current;
+    if(srcArray[0].includes(earthString)){
+      firstWebview.addEventListener('dom-ready', () => {
+        earthCSS.forEach((css) => firstWebview.insertCSS(css));
+      })
+    }
+    if(srcArray[0].includes(weatherStrig)){
+      firstWebview.addEventListener('dom-ready', () => {
+        weatherCSS.forEach((css) => firstWebview.insertCSS(css));
       })
     }
   }, [srcArray, webviewRefs]);
