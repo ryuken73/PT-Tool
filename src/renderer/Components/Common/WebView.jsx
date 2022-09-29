@@ -19,11 +19,14 @@ const Container = styled.div`
 const earthString = 'earth.nullschool.net';
 const weatherStrig = 'weather.go.kr';
 const earthCSS = [
-  'div.earth-bar { position: relative !important; margin-left: 85%; margin-top: 60%; }',
-  'div.stack { position: absolute !important; margin-left: 69%; margin-bottom: 70px; }'
+  // 'div.earth-bar { position: absolute !important; margin-left: 85%; margin-top: 40%; }',
+  'div.earth-bar { position: absolute !important; right: 250px; left: auto; bottom: 30px}',
+  'div.stack { position: absolute !important; right: 250px; left: auto; bottom: 110px; }'
+  // 'div.stack { position: absolute !important; margin-left: 69%; margin-bottom: 70px; }'
 ];
 const weatherCSS = [
-  '#nav > div.nav {position: relative; margin-left: auto; margin-right: 20px; margin-top: 70px; width:170px;}'
+  '#nav > div.nav {position: relative; margin-left: auto; margin-right: 20px; margin-top: 100px; width:170px;}',
+  '#nav > div.navSum {position: relative; margin-left: auto; margin-right: 20px; margin-top: 100px; width:170px; max-width: 170px;}',
 ];
 
 const WebView = (props) => {
@@ -39,12 +42,12 @@ const WebView = (props) => {
       firstWebview.addEventListener('dom-ready', () => {
         earthCSS.forEach((css) => firstWebview.insertCSS(css));
         firstWebview.setZoomFactor(0.67);
-      })
+      });
     }
     if(srcArray[0].includes(weatherStrig)){
       firstWebview.addEventListener('dom-ready', () => {
         weatherCSS.forEach((css) => firstWebview.insertCSS(css));
-      })
+      });
     }
   }, [srcArray, webviewRefs]);
 
