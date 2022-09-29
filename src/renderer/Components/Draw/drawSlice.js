@@ -14,7 +14,7 @@ const initialState = {
   pathRenderOptions: [],
   currentOptions: {
     size: 12,
-    strokeWidth: 0,
+    strokeWidth: 3,
     thinning: 0.75,
     streamline: 0.5,
     smoothing: 0.5,
