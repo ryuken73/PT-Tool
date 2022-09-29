@@ -58,19 +58,32 @@ const INITIAL_ASSETS = [
     src: 'http://cctvmap.sbs.co.kr/map',
     title: 'CCTV'
   },
-  // {
-  //   assetId: 5,
-  //   assetType: 'video',
-  //   source: {
-  //     url: 'http://61.43.246.225:1935/rtplive/cctv_86.stream/chunklist_w1471259849.m3u8',
-  //   },
-  //   fill: true,
-  //   fluid: false,
-  //   aspectRatio: '',
-  //   // setPlayer,
-  //   enableOverlay: false,
-  //   title: '해운대',
-  // },
+  {
+    assetId: 6,
+    assetType: 'video',
+    source: {
+      url: 'http://61.43.246.225:1935/rtplive/cctv_86.stream/chunklist_w1471259849.m3u8',
+    },
+    fill: true,
+    fluid: false,
+    aspectRatio: '',
+    // setPlayer,
+    enableOverlay: false,
+    title: '해운대',
+  },
+  {
+    assetId: 7,
+    assetType: 'video',
+    source: {
+      url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+    },
+    fill: true,
+    fluid: false,
+    aspectRatio: '',
+    // setPlayer,
+    enableOverlay: false,
+    title: 'MP4',
+  },
 ];
 
 const Container = styled.div`
