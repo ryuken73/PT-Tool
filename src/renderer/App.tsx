@@ -12,6 +12,7 @@ import DragHandle from './Components/Draw/DragHandle';
 import useAppState from './hooks/useAppState';
 import useSyncPosition from './hooks/useSyncPosition';
 import useAssetState from './hooks/useAssetState';
+import useDrawState from './hooks/useDrawState';
 import CONSTANTS from 'renderer/config/constants';
 
 const { POSITION } = CONSTANTS;
