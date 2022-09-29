@@ -19,8 +19,8 @@ const Container = styled.div`
 const earthString = 'earth.nullschool.net';
 const weatherStrig = 'weather.go.kr';
 const earthCSS = [
-  'div.earth-bar { position: relative !important; margin-left: 80%; margin-top: 28%; }',
-  'div.stack { position: absolute !important; margin-left: 70%; margin-top: 10%; }'
+  'div.earth-bar { position: relative !important; margin-left: 85%; margin-top: 60%; }',
+  'div.stack { position: absolute !important; margin-left: 69%; margin-bottom: 70px; }'
 ];
 const weatherCSS = [
   '#nav > div.nav {position: relative; margin-left: auto; margin-right: 20px; margin-top: 70px; width:170px;}'
@@ -38,6 +38,7 @@ const WebView = (props) => {
     if(srcArray[0].includes(earthString)){
       firstWebview.addEventListener('dom-ready', () => {
         earthCSS.forEach((css) => firstWebview.insertCSS(css));
+        firstWebview.setZoomFactor(0.67);
       })
     }
     if(srcArray[0].includes(weatherStrig)){
