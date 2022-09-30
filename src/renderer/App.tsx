@@ -54,7 +54,7 @@ const INITIAL_ASSETS = [
         size: null,
       },
     ],
-    displayType: 1,
+    diplayMode: 1,
   },
   {
     assetId: 1,
@@ -122,7 +122,7 @@ const INITIAL_ASSETS = [
         size: null,
       },
     ],
-    displayType: 0,
+    diplayMode: 0,
   },
   {
     assetId: 6,
@@ -150,7 +150,7 @@ const INITIAL_ASSETS = [
     aspectRatio: '',
     // setPlayer,
     enableOverlay: false,
-    displayType: 1,
+    diplayMode: 1,
   },
   // {
   //   assetId: 7,
