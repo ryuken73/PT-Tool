@@ -1,10 +1,11 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable react/prop-types */
 import React from 'react';
 import styled from 'styled-components';
-import HLSPlayer from 'renderer/Components/HLSPlayer';
 import Player from 'renderer/Components/Players/Player';
 import WebView from 'renderer/Components/Common/WebView';
 import ImageBox from 'renderer/Components/Common/ImageBox';
+import useAppState from 'renderer/hooks/useAppState';
 
 const Container = styled.div`
   height: 100%;
@@ -22,26 +23,38 @@ const Container = styled.div`
   /* filter: ${(props) => props.drawOn && 'contrast(175%) brightness(103%)'}; */
   /* ${(props) => props.drawOn && 'transform: scale(1.01)'}; */
   transition: transform 0.5s;
-`
+`;
 
-const AssetMap = {
+const ViewMap = {
   web: WebView,
-  // video: HLSPlayer,
   video: Player,
   image: ImageBox,
+};
+
+const Viewer = (props) => {
+  const { srcType, ...remainOpts } = props;
+  const SrcViewer = ViewMap[srcType];
+  return <SrcViewer {...remainOpts} />
 };
 
 const AssetContainer = (props) => {
   // eslint-disable-next-line react/prop-types
   // const { options, show, drawOn } = props;
+  const { useSrcLocal } = useAppState();
   const { asset, show } = props;
-  const Asset = AssetMap[asset.assetType];
-  console.log('###',asset)
+  const { sources } = asset;
+  const srcPath = useSrcLocal ? 'srcLocal' : 'srcRemote';
 
   return (
     <Container show={show}>
-    {/* <Container show={show} drawOn={drawOn}> */}
-      <Asset asset={asset} />
+      {sources.map((source) => (
+        <Viewer
+          key={source.srcId}
+          srcType={source.srcType}
+          src={source[srcPath]}
+        />
+        // <ImageBox key={source.srcId} src={source[srcPath]} />
+      ))}
     </Container>
   )
 

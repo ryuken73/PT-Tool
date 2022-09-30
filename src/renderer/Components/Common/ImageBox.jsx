@@ -15,10 +15,11 @@ const StyledImage = styled.img`
 `
 
 const ImageBox = (props) => {
-  const { src } = props.asset;
+  console.log(props)
+  const { src } = props;
+  console.log(src)
   const srcIsArray = Array.isArray(src);
   const srcArray = srcIsArray ? src : [src];
-  console.log('###', src)
   return (
     <CustomSwiper>
     {/* <Container> */}

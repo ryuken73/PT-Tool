@@ -17,94 +17,102 @@ import CONSTANTS from 'renderer/config/constants';
 
 const { POSITION } = CONSTANTS;
 
-
 const INITIAL_ASSETS = [
   {
     assetId: 0,
-    assetType: 'image',
-    src: 'https://images.unsplash.com/photo-1626126525134-fbbc07afb32c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
-    title: '홈',
-  },
-  {
-    assetId: 1,
-    assetType: 'web',
-    src: 'https://www.weather.go.kr/wgis-nuri/html/map.html',
-    title: '날씨누리',
-  },
-  {
-    assetId: 2,
-    assetType: 'web',
-    src: 'https://www.weather.go.kr/w/typhoon/ko/weather/typhoon_02.jsp',
-    title: '태풍정보',
-  },
-  {
-    assetId: 3,
-    assetType: 'web',
-    src: 'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.50,37.91,4250',
-    title: '공기흐름',
-  },
-  {
-    assetId: 4,
-    assetType: 'web',
-    src: [
-      'https://www.weather.go.kr/wgis-nuri/html/map.html',
-      'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.50,37.91,4250',
+    assetTitle: '홈',
+    created: null,
+    updated: null,
+    sources: [
+      {
+        srcId: 0,
+        srcLocal: 'https://images.unsplash.com/photo-1626126525134-fbbc07afb32c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
+        srcRemote: 'https://images.unsplash.com/photo-1626126525134-fbbc07afb32c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
+        srcType: 'image',
+        size: null
+      },
     ],
-    title: '분할지도',
   },
-  {
-    assetId: 5,
-    assetType: 'web',
-    src: 'http://cctvmap.sbs.co.kr/map',
-    title: 'CCTV'
-  },
-  {
-    assetId: 6,
-    assetType: 'video',
-    source: {
-      url: 'http://61.43.246.225:1935/rtplive/cctv_86.stream/chunklist_w1471259849.m3u8',
-    },
-    fill: true,
-    fluid: false,
-    aspectRatio: '',
-    // setPlayer,
-    enableOverlay: false,
-    title: '해운대',
-  },
-  {
-    assetId: 7,
-    assetType: 'video',
-    source: {
-      url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
-    },
-    fill: true,
-    fluid: false,
-    aspectRatio: '',
-    // setPlayer,
-    enableOverlay: false,
-    title: 'MP4',
-  },
-  {
-    assetId: 8,
-    assetType: 'image',
-    src: [
-      'https://images.unsplash.com/photo-1663908778255-bd560e30d55e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
-    ],
-    title: 'Single',
-  },
-  {
-    assetId: 9,
-    assetType: 'image',
-    src: [
-      'https://images.unsplash.com/photo-1663908778255-bd560e30d55e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
-      'https://images.unsplash.com/photo-1663947719095-17af03c793d7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80',
-      'https://images.unsplash.com/photo-1664009369177-072a596d69c0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
-      'https://images.unsplash.com/photo-1663875942232-07e9e32555e0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
-      'https://images.unsplash.com/photo-1663875928932-3bf9dba77e26?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
-      'https://images.unsplash.com/photo-1664435916463-e6fe083d5922?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1587&q=80'
-    ],
-    title: 'Swipe',
-  },
+  // {
+  //   assetId: 1,
+  //   assetType: 'web',
+  //   src: 'https://www.weather.go.kr/wgis-nuri/html/map.html',
+  //   title: '날씨누리',
+  // },
+  // {
+  //   assetId: 2,
+  //   assetType: 'web',
+  //   src: 'https://www.weather.go.kr/w/typhoon/ko/weather/typhoon_02.jsp',
+  //   title: '태풍정보',
+  // },
+  // {
+  //   assetId: 3,
+  //   assetType: 'web',
+  //   src: 'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.50,37.91,4250',
+  //   title: '공기흐름',
+  // },
+  // {
+  //   assetId: 4,
+  //   assetType: 'web',
+  //   src: [
+  //     'https://www.weather.go.kr/wgis-nuri/html/map.html',
+  //     'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.50,37.91,4250',
+  //   ],
+  //   title: '분할지도',
+  // },
+  // {
+  //   assetId: 5,
+  //   assetType: 'web',
+  //   src: 'http://cctvmap.sbs.co.kr/map',
+  //   title: 'CCTV'
+  // },
+  // {
+  //   assetId: 6,
+  //   assetType: 'video',
+  //   source: {
+  //     url: 'http://61.43.246.225:1935/rtplive/cctv_86.stream/chunklist_w1471259849.m3u8',
+  //   },
+  //   fill: true,
+  //   fluid: false,
+  //   aspectRatio: '',
+  //   // setPlayer,
+  //   enableOverlay: false,
+  //   title: '해운대',
+  // },
+  // {
+  //   assetId: 7,
+  //   assetType: 'video',
+  //   source: {
+  //     url: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4',
+  //   },
+  //   fill: true,
+  //   fluid: false,
+  //   aspectRatio: '',
+  //   // setPlayer,
+  //   enableOverlay: false,
+  //   title: 'MP4',
+  // },
+  // {
+  //   assetId: 8,
+  //   assetType: 'image',
+  //   src: [
+  //     'https://images.unsplash.com/photo-1663908778255-bd560e30d55e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
+  //   ],
+  //   title: 'Single',
+  // },
+  // {
+  //   assetId: 9,
+  //   assetType: 'image',
+  //   src: [
+  //     'https://images.unsplash.com/photo-1663908778255-bd560e30d55e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
+  //     'https://images.unsplash.com/photo-1663947719095-17af03c793d7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80',
+  //     'https://images.unsplash.com/photo-1664009369177-072a596d69c0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
+  //     'https://images.unsplash.com/photo-1663875942232-07e9e32555e0?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
+  //     'https://images.unsplash.com/photo-1663875928932-3bf9dba77e26?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
+  //     'https://images.unsplash.com/photo-1664435916463-e6fe083d5922?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1587&q=80'
+  //   ],
+  //   title: 'Swipe',
+  // },
 ];
 
 const Container = styled.div`
@@ -148,11 +156,12 @@ const getInitialAssets = () => {
 
 
 export default function App() {
-  const { drawShow, toggleDraw } = useAppState();
+  const { drawShow, toggleDraw, setUseSrcLocalState } = useAppState();
   const { position, syncPosition } = useSyncPosition();
   const { setAssetsState } = useAssetState();
 
   React.useEffect(() => {
+    setUseSrcLocalState(false);
     getInitialAssets()
     .then((assets) => {
       setAssetsState(assets);
@@ -160,7 +169,7 @@ export default function App() {
     .catch((err) => {
       alert('fail to get asset list! try again.')
     })
-  }, [setAssetsState]);
+  }, [setAssetsState, setUseSrcLocalState]);
 
   return (
     <AppContainer>
@@ -182,11 +191,3 @@ export default function App() {
     </AppContainer>
   );
 }
-function setDroppedSrcState(droppedSrc: any) {
-  throw new Error('Function not implemented.');
-}
-
-function setDialogOpenState(arg0: boolean) {
-  throw new Error('Function not implemented.');
-}
-

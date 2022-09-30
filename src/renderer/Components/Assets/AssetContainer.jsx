@@ -23,7 +23,6 @@ const handleDragOver = (event) => {
 };
 
 const AssetContainer = () => {
-  // const { drawShow } = useAppState()
   const { setDialogOpenState, setDroppedSrcState } = useDialogState();
   const { assets, assetShowMask } = useAssetState();
 
