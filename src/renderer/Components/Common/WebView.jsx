@@ -30,45 +30,41 @@ const weatherCSS = [
 ];
 
 const WebView = (props) => {
-  const { src } = props.asset;
-  const srcIsArray = Array.isArray(src);
-  const srcArray = srcIsArray ? src : [src];
-  const webviewRefs = srcArray.map(() => React.useRef(null));
+  const { src } = props;
+  const webviewRef = React.useRef(null);
 
   React.useEffect(() => {
-    if(srcArray.length === 0) return;
-    const firstWebview = webviewRefs[0].current;
-    if(srcArray[0].includes(earthString)){
-      firstWebview.addEventListener('dom-ready', () => {
-        earthCSS.forEach((css) => firstWebview.insertCSS(css));
-        firstWebview.setZoomFactor(0.67);
+    if(src === undefined) return;
+    const webview = webviewRef.current;
+    if (src.includes(earthString)) {
+      webview.addEventListener('dom-ready', () => {
+        earthCSS.forEach((css) => webview.insertCSS(css));
+        webview.setZoomFactor(0.67);
       });
     }
-    if(srcArray[0].includes(weatherStrig)){
-      firstWebview.addEventListener('dom-ready', () => {
-        weatherCSS.forEach((css) => firstWebview.insertCSS(css));
+    if (src.includes(weatherStrig)) {
+      webview.addEventListener('dom-ready', () => {
+        weatherCSS.forEach((css) => webview.insertCSS(css));
       });
     }
-  }, [srcArray, webviewRefs]);
+  }, [src, webviewRef]);
 
   const reload = React.useCallback(() => {
-    webviewRefs.forEach(ref => ref.current.reload());
-  }, [webviewRefs]);
+    webviewRef.current.reload();
+  }, []);
 
   return (
     <Container>
-      {srcArray.map((src, index) => (
-        <webview
-          key={src}
-          ref={webviewRefs[index]}
-          style={{ width: '100%', height: '100%' }}
-          src={src}
-          // useragent={ua}
-        />
-      ))}
+      <webview
+        key={src}
+        ref={webviewRef}
+        style={{ width: '100%', height: '100%' }}
+        src={src}
+        // useragent={ua}
+      />
       <ReloadButton reload={reload} />
     </Container>
-  )
-}
+  );
+};
 
 export default React.memo(WebView);

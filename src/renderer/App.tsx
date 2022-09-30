@@ -29,55 +29,96 @@ const INITIAL_ASSETS = [
         srcLocal: 'https://images.unsplash.com/photo-1626126525134-fbbc07afb32c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
         srcRemote: 'https://images.unsplash.com/photo-1626126525134-fbbc07afb32c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
         srcType: 'image',
-        size: null
+        size: null,
+      },
+    ],
+  },
+  {
+    assetId: 1,
+    assetTitle: '날씨누리',
+    created: null,
+    updated: null,
+    sources: [
+      {
+        srcId: 0,
+        srcLocal: 'https://www.weather.go.kr/wgis-nuri/html/map.html',
+        srcRemote: 'https://www.weather.go.kr/wgis-nuri/html/map.html',
+        srcType: 'web',
+        size: null,
+      },
+    ],
+  },
+  {
+    assetId: 2,
+    assetTitle: '태풍정보',
+    created: null,
+    updated: null,
+    sources: [
+      {
+        srcId: 0,
+        srcLocal: 'https://www.weather.go.kr/w/typhoon/ko/weather/typhoon_02.jsp',
+        srcRemote: 'https://www.weather.go.kr/w/typhoon/ko/weather/typhoon_02.jsp',
+        srcType: 'web',
+        size: null,
+      },
+    ],
+  },
+  {
+    assetId: 3,
+    assetTitle: '공기흐름',
+    created: null,
+    updated: null,
+    sources: [
+      {
+        srcId: 0,
+        srcLocal: 'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.50,37.91,4250',
+        srcRemote: 'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.50,37.91,4250',
+        srcType: 'web',
+        size: null,
+      },
+    ],
+  },
+  {
+    assetId: 4,
+    assetTitle: '분할지도',
+    created: null,
+    updated: null,
+    sources: [
+      {
+        srcId: 0,
+        srcLocal: 'https://www.weather.go.kr/wgis-nuri/html/map.html',
+        srcRemote: 'https://www.weather.go.kr/wgis-nuri/html/map.html',
+        srcType: 'web',
+        size: null,
+      },
+      {
+        srcId: 1,
+        srcLocal: 'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.50,37.91,4250',
+        srcRemote: 'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.50,37.91,4250',
+        srcType: 'web',
+        size: null,
       },
     ],
   },
   // {
-  //   assetId: 1,
-  //   assetType: 'web',
-  //   src: 'https://www.weather.go.kr/wgis-nuri/html/map.html',
-  //   title: '날씨누리',
-  // },
-  // {
-  //   assetId: 2,
-  //   assetType: 'web',
-  //   src: 'https://www.weather.go.kr/w/typhoon/ko/weather/typhoon_02.jsp',
-  //   title: '태풍정보',
-  // },
-  // {
-  //   assetId: 3,
-  //   assetType: 'web',
-  //   src: 'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.50,37.91,4250',
-  //   title: '공기흐름',
-  // },
-  // {
-  //   assetId: 4,
-  //   assetType: 'web',
-  //   src: [
-  //     'https://www.weather.go.kr/wgis-nuri/html/map.html',
-  //     'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.50,37.91,4250',
-  //   ],
-  //   title: '분할지도',
-  // },
-  // {
-  //   assetId: 5,
-  //   assetType: 'web',
-  //   src: 'http://cctvmap.sbs.co.kr/map',
-  //   title: 'CCTV'
-  // },
-  // {
   //   assetId: 6,
-  //   assetType: 'video',
-  //   source: {
-  //     url: 'http://61.43.246.225:1935/rtplive/cctv_86.stream/chunklist_w1471259849.m3u8',
-  //   },
+  //   assetTitle: '해운대',
+  //   created: null,
+  //   updated: null,
+  //   sources: [
+  //     {
+  //       srcId: 0,
+  //       srcLocal: 'http://61.43.246.225:1935/rtplive/cctv_86.stream/chunklist_w1471259849.m3u8',
+  //       srcRemote: 'http://61.43.246.225:1935/rtplive/cctv_86.stream/chunklist_w1471259849.m3u8',
+  //       srcType: 'video',
+  //       size: null,
+  //     },
+  //   ],
   //   fill: true,
   //   fluid: false,
   //   aspectRatio: '',
   //   // setPlayer,
   //   enableOverlay: false,
-  //   title: '해운대',
   // },
   // {
   //   assetId: 7,

@@ -61,9 +61,9 @@ const MenuContainer = (props) => {
           {assets.map((asset, index) => (
             // eslint-disable-next-line react/button-has-type
             <MenuItem
-              key={asset.title}
+              key={asset.assetTitle}
               isCurrent={currentAsset === index}
-              menuText={asset.title}
+              menuText={asset.assetTitle}
               onClick={() => {
                 setCurrentAssetState(index);
               }}
