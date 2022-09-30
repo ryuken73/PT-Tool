@@ -15,22 +15,18 @@ const StyledImage = styled.img`
 `
 
 const ImageBox = (props) => {
-  console.log(props)
   const { src } = props;
-  console.log(src)
   const srcIsArray = Array.isArray(src);
   const srcArray = srcIsArray ? src : [src];
   return (
     <CustomSwiper>
-    {/* <Container> */}
       {srcArray.map((src) => (
         <SwiperSlide>
           <StyledImage src={src} draggable={false} />
         </SwiperSlide>
       ))}
-    {/* </Container> */}
     </CustomSwiper>
-  )
-}
+  );
+};
 
 export default React.memo(ImageBox);

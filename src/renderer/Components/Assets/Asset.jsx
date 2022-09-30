@@ -10,19 +10,19 @@ import useAppState from 'renderer/hooks/useAppState';
 const Container = styled.div`
   height: 100%;
   width: 100%;
+  display: ${(props) => (props.show ? 'block' : 'none')};
+  overflow: hidden;
+  transition: transform 0.5s;
   /* height: ${(props) => (props.show ? '100%' : '0%')}; */
   /* width: ${(props) => (props.show ? '100%' : '0%')}; */
-  display: ${(props) => (props.show ? 'block' : 'none')};
   /* visibility: ${(props) => (props.show ? 'visible' : 'hidden')}; */
   /* width: ${(props) => (props.show ? '100%' : '0%')}; */
   /* transition: all 1s; */
   /* visibility: ${(props) => (props.show ? 'visible' : 'hidden')}; */
-  overflow: hidden;
   /* filter: grayscale(100%); */
   /* filter: ${(props) => props.drawOn && 'grayscale(100%)'}; */
   /* filter: ${(props) => props.drawOn && 'contrast(175%) brightness(103%)'}; */
   /* ${(props) => props.drawOn && 'transform: scale(1.01)'}; */
-  transition: transform 0.5s;
 `;
 
 const ViewMap = {
