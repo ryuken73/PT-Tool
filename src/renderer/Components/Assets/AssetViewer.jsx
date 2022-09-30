@@ -6,13 +6,25 @@ import Player from 'renderer/Components/Players/Player';
 import WebView from 'renderer/Components/Common/WebView';
 import ImageBox from 'renderer/Components/Common/ImageBox';
 import useAppState from 'renderer/hooks/useAppState';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
 
 const Container = styled.div`
   width: 100%;
   height: 100%;
+`
+const FlexContainer = styled.div`
+  width: 100%;
+  height: 100%;
   position: relative;
-  display: flex;
-  flex-direction: row;
+  display: ${(props) => props.displayType === 0 && 'flex'};
+  flex-direction: ${(props) => props.displayType === 0 && 'row'};
+`;
+
+const StyledSwiper = styled(Swiper)`
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 `;
 
 const ViewMap = {
@@ -23,27 +35,42 @@ const ViewMap = {
 
 const Viewer = (props) => {
   const { srcType, ...remainOpts } = props;
-  console.log(srcType)
   const SrcViewer = ViewMap[srcType];
-  return <SrcViewer {...remainOpts} />
+  return <SrcViewer {...remainOpts} />;
 };
 
 const AssetContainer = (props) => {
   // eslint-disable-next-line react/prop-types
-  // const { options, show, drawOn } = props;
   const { useSrcLocal } = useAppState();
   const { displayType, sources } = props;
   const srcPath = useSrcLocal ? 'srcLocal' : 'srcRemote';
 
   return (
     <Container>
-      {sources.map((source) => (
-        <Viewer
-          key={source.srcId}
-          srcType={source.srcType}
-          src={source[srcPath]}
-        />
-      ))}
+    {displayType === 0 && (
+      <FlexContainer displayType={displayType}>
+        {sources.map((source) => (
+          <Viewer
+            key={source.srcId}
+            srcType={source.srcType}
+            src={source[srcPath]}
+          />
+        ))}
+      </FlexContainer>
+    )}
+    {displayType === 1 && (
+      <StyledSwiper>
+        {sources.map((source) => (
+          <SwiperSlide>
+            <Viewer
+              key={source.srcId}
+              srcType={source.srcType}
+              src={source[srcPath]}
+            />
+          </SwiperSlide>
+        ))}
+      </StyledSwiper>
+    )}
     </Container>
   );
 };
