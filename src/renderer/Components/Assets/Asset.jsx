@@ -36,6 +36,7 @@ const AssetContainer = (props) => {
   // const { options, show, drawOn } = props;
   const { asset, show } = props;
   const Asset = AssetMap[asset.assetType];
+  console.log('###',asset)
 
   return (
     <Container show={show}>
