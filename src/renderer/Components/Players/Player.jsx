@@ -16,24 +16,25 @@ const Container = styled.div`
 const Player = (props) => {
   // eslint-disable-next-line react/prop-types
   console.log('re-render Player props =', props);
-  const { asset } = props;
+  // const { asset } = props;
+  const { src, srcId } = props;
   const playerRef = React.useRef(null);
-  const { loadHLS } = usePlayerSource(asset, playerRef);
+  const { loadHLS } = usePlayerSource(src, srcId, playerRef);
 
   const reloadPlayer = React.useCallback(() => {
-    const src = asset.source.url;
+    // const src = asset.source.url;
     if (isHlsStream(src)) {
       loadHLS();
       return;
     }
     playerRef.current.src = src;
     playerRef.current.load();
-  }, [loadHLS, asset]);
+  }, [loadHLS, src]);
 
   return (
     <Container>
-      <VideoPlayer {...props} ref={playerRef} />
-      <PlayerControl ref={playerRef} asset={asset} />
+      <VideoPlayer src={src} ref={playerRef} />
+      <PlayerControl ref={playerRef} src={src} srcId={srcId} />
       <ReloadButton reload={reloadPlayer} />
     </Container>
   )

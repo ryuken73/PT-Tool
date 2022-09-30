@@ -8,11 +8,11 @@ import { useSelector, useDispatch } from 'react-redux';
 // import CONSTANTS from 'config/constants';
 // const {STREAM_TYPE} = CONSTANTS;
 
-export default function usePlayer(asset, mediaElementRef) {
+export default function usePlayer(src, srcId, mediaElementRef) {
   const dispatch = useDispatch();
-  const player = asset;
-  const { assetId: playerId, source } = player;
-  const { url: src } = source;
+  const playerId = srcId;
+  // const { assetId: playerId, source } = player;
+  // const { url: src } = source;
   const hlsRef = React.useRef(null);
 
   const handleLoadedMetadata = React.useCallback(

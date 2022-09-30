@@ -54,6 +54,7 @@ const AssetContainer = (props) => {
             key={source.srcId}
             srcType={source.srcType}
             src={source[srcPath]}
+            srcId={source.srcId}
           />
         ))}
       </FlexContainer>
@@ -66,6 +67,7 @@ const AssetContainer = (props) => {
               key={source.srcId}
               srcType={source.srcType}
               src={source[srcPath]}
+              srcId={source.srcId}
             />
           </SwiperSlide>
         ))}

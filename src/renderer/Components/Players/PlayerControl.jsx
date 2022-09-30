@@ -67,7 +67,9 @@ const Player = (props, playerRef) => {
     // isPlaying = false,
     // progress = '0',
     // currentTime = '00:00',
-    asset,
+    // asset,
+    src,
+    srcId,
     endedTime,
     repeatMode,
     onClickRepeat = () => {},
@@ -83,7 +85,7 @@ const Player = (props, playerRef) => {
     canplay,
     onClickForward10,
     onClickReplay10
-  } = usePlayerEvent(asset, playerRef);
+  } = usePlayerEvent(srcId, playerRef);
 
   // console.log('###', currentTime, progress, duration)
 
