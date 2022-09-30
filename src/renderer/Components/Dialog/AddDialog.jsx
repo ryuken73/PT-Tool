@@ -13,7 +13,6 @@ import useConfigState from 'hooks/useConfigState';
 import CONSTANTS from 'config/constants';
 import useAssetState from 'renderer/hooks/useAssetState';
 
-
 // const toLabelValueFormat = type => {
 //   return Object.keys(CONSTANTS[type]).map(key => {
 //     return { label: key, value: CONSTANTS[type][key] }
@@ -24,13 +23,13 @@ import useAssetState from 'renderer/hooks/useAssetState';
 // const streamTypeFormItems = toLabelValueFormat('STREAM_TYPE');
 
 const assetTypeFormItems = [
-  {label: 'video', value: 'video'},
-  {label: 'image', value: 'image'},
-  {label: 'web', value: 'web'}
+  { label: 'video', value: 'video' },
+  { label: 'image', value: 'image' },
+  { label: 'web', value: 'web' },
 ];
 
 const radioButtons = [
-  {title: 'TYPE', id: 'assetType', formItems: assetTypeFormItems}
+  { title: 'TYPE', id: 'assetType', formItems: assetTypeFormItems },
 ];
 
 const CustomDialog = styled(Dialog)`
@@ -41,37 +40,49 @@ const CustomDialog = styled(Dialog)`
       max-width: 800px;
     }
   }
-`
+`;
 const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Slide direction="down" ref={ref} {...props} />;
+  return <Slide direction="down" ref={ref} {...props} />;
 });
 
-const AddDialog = props => {
+const AddDialog = (props) => {
   const {
     dialogOpen: open,
     setDialogOpenState: setOpen,
     droppedSrc,
   } = useDialogState();
   const { addAssetState } = useAssetState();
+
   const [asset, setAsset] = React.useState({
-    src: droppedSrc,
-    assetType: 'web'
-  })
+    assetId: Date.now(),
+    created: null,
+    updated: null,
+    sources:[{}]
+  });
+
   React.useEffect(() => {
-    setAsset(asset => {
+    setAsset((asset) => {
       return {
         ...asset,
-        src: droppedSrc
-      }
-    })
-  },[droppedSrc])
-  console.log(asset.src)
-  // const {addMonitorItemToList} = useMonitorListState();
+        sources: [{
+          srcId: 0,
+          srcLocal: droppedSrc,
+          srcRemote: droppedSrc,
+          srcType: 'video'
+        }],
+      };
+    });
+  }, [droppedSrc]);
 
-  const handleClose = React.useCallback((event, reason) => {
-    if(reason === 'backdropClick') return;
-    setOpen(false);
-  },[setOpen]);
+  console.log('%%%', asset);
+
+  const handleClose = React.useCallback(
+    (event, reason) => {
+      if (reason === 'backdropClick') return;
+      setOpen(false);
+    },
+    [setOpen]
+  );
 
   const handleAddAsset = React.useCallback(() => {
     console.log(asset);
@@ -79,14 +90,43 @@ const AddDialog = props => {
     handleClose();
   }, [asset, addAssetState, handleClose]);
 
-  const onChangeOption = React.useCallback((event, idOfRadiioButton) => {
-      const key = event.target.id !== '' ? event.target.id : idOfRadiioButton;
+  const onChangeOption = React.useCallback(
+    (event) => {
       const { value } = event.target;
-      console.log(key, value)
+      setAsset((asset) => {
+        return {
+          ...asset,
+          sources: [{
+            ...asset.sources[0],
+            srcType: value
+          }],
+        }
+      });
+    },
+    [setAsset, asset]
+  );
+
+  const onChangeTitle = React.useCallback(
+    (event) => {
+      const title = event.target.value;
       setAsset({
         ...asset,
-        [key]: value
-      })
+        assetTitle: title,
+      });
+    },
+    [asset]
+  );
+
+  const onChangeSource = React.useCallback(
+    (event) => {
+      const src = event.target.value;
+      const targetSource = { ...asset.sources[0] };
+      targetSource.srcLocal = src;
+      targetSource.srcRemote = src;
+      setAsset({
+        ...asset,
+        sources: [targetSource],
+      });
     },
     [setAsset, asset]
   );
@@ -100,28 +140,28 @@ const AddDialog = props => {
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>{"Add Asset"}</DialogTitle>
+        <DialogTitle>Add Asset</DialogTitle>
         <DialogContent>
           <OptionItemText
             autoFocus
-            onChange={onChangeOption}
+            onChange={onChangeTitle}
             title="Title"
-            id="title"
+            id="assetTitle"
           />
           <OptionItemText
-            onChange={onChangeOption}
-            value={asset.src}
+            onChange={onChangeSource}
+            value={asset.sources[0].srcLocal}
             title="Source"
             id="src"
           />
           {radioButtons.map((radioButton) => (
             <OptionItemRadio
               onChange={onChangeOption}
-              title={radioButton.title}
-              id={radioButton.id}
-              selected={asset[radioButton.id]}
+              title="TYPE"
+              id="srcType"
+              selected={asset.sources[0].srcType}
               formItems={radioButton.formItems}
-             />
+            />
           ))}
         </DialogContent>
         <DialogActions>
@@ -135,6 +175,6 @@ const AddDialog = props => {
       </CustomDialog>
     </div>
   );
-}
+};
 
 export default React.memo(AddDialog);

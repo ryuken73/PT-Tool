@@ -20,6 +20,7 @@ const CustomRadio = styled(Radio)`
 `
 const OptionItemText = props => {
     const {id, title, formItems, selected, onChange} = props;
+    console.log('333', selected)
     const onChangeRadio = React.useCallback(event => {
         onChange(event, id);
     },[id, onChange])
