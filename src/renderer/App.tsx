@@ -14,8 +14,9 @@ import useSyncPosition from './hooks/useSyncPosition';
 import useAssetState from './hooks/useAssetState';
 import useDrawState from './hooks/useDrawState';
 import CONSTANTS from 'renderer/config/constants';
+import { getIpAddresses } from './lib/appUtil';
 
-const { POSITION } = CONSTANTS;
+const { POSITION, TOUCH_WORKSTATION_IP, TOUCH_WEB_SERVER_URL } = CONSTANTS;
 
 const INITIAL_ASSETS = [
   {
@@ -228,12 +229,33 @@ const ToolDragLeader = styled.div`
   right: ${POSITION.drawHandler.right};
   z-index: 9999;
 `;
+const Timeout = (time) => {
+	let controller = new AbortController();
+	setTimeout(() => controller.abort(), time * 1000);
+	return controller;
+};
 const getInitialAssets = () => {
   return new Promise((resolve, reject) => {
-    resolve(INITIAL_ASSETS);
+    fetch(`${TOUCH_WEB_SERVER_URL}/assetsActive`, {
+      signal: Timeout(5).signal
+    })
+    .then( results => {
+      return results.json();
+    })
+    .then( jsonResults => {
+      console.log('init888', jsonResults)
+      if(jsonResults.success){
+        resolve(jsonResults.assetsActive)
+      } else {
+        throw new Error('failed to get assetsActive.')
+      }
+    })
+    .catch( err => {
+      alert(`fetch from ${TOUCH_WEB_SERVER_URL} failed. use saved aseets.`);
+      resolve(INITIAL_ASSETS);
+    })
   });
 };
-
 
 export default function App() {
   const { drawShow, toggleDraw, setUseSrcLocalState } = useAppState();
@@ -241,12 +263,24 @@ export default function App() {
   const { setAssetsState } = useAssetState();
 
   React.useEffect(() => {
-    setUseSrcLocalState(false);
-    getInitialAssets()
+    // eslint-disable-next-line promise/catch-or-return
+    getIpAddresses().then((ipAddresses) => {
+      ipAddresses.some((ip) => ip === TOUCH_WORKSTATION_IP)
+        ? setUseSrcLocalState(true)
+        : setUseSrcLocalState(false);
+      console.log('init 1111')
+      return;
+    })
+    .then(() => {
+      console.log('init 2222')
+      return getInitialAssets()
+    })
     .then((assets) => {
+      console.log('init 3333')
       setAssetsState(assets);
     })
     .catch((err) => {
+      console.log('init error')
       alert('fail to get asset list! try again.')
     })
   }, [setAssetsState, setUseSrcLocalState]);

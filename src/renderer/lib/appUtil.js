@@ -5,6 +5,10 @@ const getVersion = async () => {
   return ipcRenderer.invoke('getVersion');
 };
 
+const getIpAddresses = async () => {
+  return ipcRenderer.invoke('getIpAddresses');
+}
+
 const isHlsStream = (url) => {
   const hasMediaFileExt = MEDIA_EXTENSIONS.some((ext) => url.toUpperCase().endsWith(ext));
   return !hasMediaFileExt;
@@ -70,6 +74,7 @@ const easingStrings = {
 
 module.exports = {
   getVersion,
+  getIpAddresses,
   isHlsStream,
   getSvgPathFromStroke,
   secondsToTime,
