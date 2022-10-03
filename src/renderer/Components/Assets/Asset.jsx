@@ -26,11 +26,11 @@ const AssetContainer = (props) => {
   // eslint-disable-next-line react/prop-types
   // const { options, show, drawOn } = props;
   const { asset, show } = props;
-  const { sources, diplayMode=0 } = asset;
+  const { sources, displayMode=0 } = asset;
 
   return (
     <Container show={show}>
-      <AssetViewer diplayMode={diplayMode} sources={sources} />
+      <AssetViewer displayMode={displayMode} sources={sources} />
     </Container>
   )
 

@@ -17,8 +17,8 @@ const FlexContainer = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
-  display: ${(props) => props.diplayMode === 0 && 'flex'};
-  flex-direction: ${(props) => props.diplayMode === 0 && 'row'};
+  display: ${(props) => props.displayMode === 0 && 'flex'};
+  flex-direction: ${(props) => props.displayMode === 0 && 'row'};
 `;
 
 const StyledSwiper = styled(Swiper)`
@@ -42,13 +42,13 @@ const Viewer = (props) => {
 const AssetContainer = (props) => {
   // eslint-disable-next-line react/prop-types
   const { useSrcLocal } = useAppState();
-  const { diplayMode, sources } = props;
+  const { displayMode, sources } = props;
   const srcPath = useSrcLocal ? 'srcLocal' : 'srcRemote';
 
   return (
     <Container>
-    {diplayMode === 0 && (
-      <FlexContainer diplayMode={diplayMode}>
+    {displayMode === 0 && (
+      <FlexContainer displayMode={displayMode}>
         {sources.map((source) => (
           <Viewer
             key={source.srcId}
@@ -59,7 +59,7 @@ const AssetContainer = (props) => {
         ))}
       </FlexContainer>
     )}
-    {diplayMode === 1 && (
+    {displayMode === 1 && (
       <StyledSwiper>
         {sources.map((source) => (
           <SwiperSlide>
