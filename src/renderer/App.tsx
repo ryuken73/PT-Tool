@@ -54,7 +54,7 @@ const INITIAL_ASSETS = [
         size: null,
       },
     ],
-    displayMode: 1,
+    displayMode: 'swipe',
   },
   {
     assetId: 1,
@@ -122,7 +122,7 @@ const INITIAL_ASSETS = [
         size: null,
       },
     ],
-    displayMode: 0,
+    displayMode: 'flexRow',
   },
   {
     assetId: 6,
@@ -139,8 +139,15 @@ const INITIAL_ASSETS = [
       },
       {
         srcId: 1,
-        srcLocal: 'http://61.43.246.225:1935/rtplive/cctv_86.stream/chunklist_w1471259849.m3u8',
-        srcRemote: 'http://61.43.246.225:1935/rtplive/cctv_86.stream/chunklist_w1471259849.m3u8',
+        srcLocal: 'http://210.179.218.53:1935/live/554.stream/playlist.m3u8',
+        srcRemote: 'http://210.179.218.53:1935/live/554.stream/playlist.m3u8',
+        srcType: 'video',
+        size: null,
+      },
+      {
+        srcId: 2,
+        srcLocal: 'https://topiscctv1.eseoul.go.kr/sd1/ch27.stream/playlist.m3u8',
+        srcRemote: 'https://topiscctv1.eseoul.go.kr/sd1/ch27.stream/playlist.m3u8',
         srcType: 'video',
         size: null,
       },
@@ -150,7 +157,7 @@ const INITIAL_ASSETS = [
     aspectRatio: '',
     // setPlayer,
     enableOverlay: false,
-    displayMode: 1,
+    displayMode: 'swipe',
   },
   // {
   //   assetId: 7,

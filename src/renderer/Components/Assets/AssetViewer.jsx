@@ -17,8 +17,13 @@ const FlexContainer = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
-  display: ${(props) => props.displayMode === 0 && 'flex'};
-  flex-direction: ${(props) => props.displayMode === 0 && 'row'};
+  display: ${(props) => props.displayMode.startsWith('flex') && 'flex'};
+  flex-direction: ${(props) =>
+    props.displayMode === 'flexRow'
+      ? 'row'
+      : props.displayMode === 'flexColumn'
+      ? 'column'
+      : 'row'};
 `;
 
 const StyledSwiper = styled(Swiper)`
@@ -47,7 +52,7 @@ const AssetContainer = (props) => {
 
   return (
     <Container>
-    {displayMode === 0 && (
+    {(displayMode === 'flexColumn' || displayMode === 'flexRow') && (
       <FlexContainer displayMode={displayMode}>
         {sources.map((source) => (
           <Viewer
@@ -59,7 +64,7 @@ const AssetContainer = (props) => {
         ))}
       </FlexContainer>
     )}
-    {displayMode === 1 && (
+    {displayMode === 'swipe' && (
       <StyledSwiper>
         {sources.map((source) => (
           <SwiperSlide>
