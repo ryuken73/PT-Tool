@@ -49,6 +49,7 @@ const AssetContainer = (props) => {
   const { useSrcLocal } = useAppState();
   const { displayMode, sources } = props;
   const srcPath = useSrcLocal ? 'srcLocal' : 'srcRemote';
+  console.log('#### assetContainer:', sources, srcPath)
 
   return (
     <Container>

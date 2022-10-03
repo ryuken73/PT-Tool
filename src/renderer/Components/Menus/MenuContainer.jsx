@@ -4,10 +4,11 @@ import Draggable from 'react-draggable';
 import DragHandle from 'renderer/Components/Draw/DragHandle';
 import useSyncPosition from 'renderer/hooks/useSyncPosition';
 import useAssetState from 'renderer/hooks/useAssetState';
+import useSocketClient from 'renderer/hooks/useSocketIO';
 import CONSTANTS from 'renderer/config/constants';
 import MenuItem from './MenuItem';
 
-const { POSITION } = CONSTANTS;
+const { POSITION, TOUCH_WEB_SERVER_URL } = CONSTANTS;
 const MenuDiv = styled.div`
   position: absolute;
   top: ${POSITION.menuContainer.top};
@@ -48,7 +49,19 @@ const MenuContainer = (props) => {
   // eslint-disable-next-line react/prop-types
   const { drawShow } = props;
   const { position, syncPosition } = useSyncPosition();
-  const { assets, currentAsset, setCurrentAssetState } = useAssetState();
+  const { assets, currentAsset, setAssetsState, setCurrentAssetState } = useAssetState();
+  const [ socketConnected, setSocketConnected ] = React.useState(false);
+  const handleSocketEvent = React.useCallback((eventName, args) => {
+    console.log('event received', eventName, args);
+    setAssetsState(args[0])
+  }, [setAssetsState])
+
+  const socket = useSocketClient({
+    hostAddress: TOUCH_WEB_SERVER_URL,
+    setSocketConnected,
+    handleSocketEvent
+  });
+
   return (
     <MenuDiv>
       {/* <Draggable onDrag={syncPosition}>
