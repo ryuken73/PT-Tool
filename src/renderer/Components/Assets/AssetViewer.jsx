@@ -47,9 +47,9 @@ const Viewer = (props) => {
 const AssetContainer = (props) => {
   // eslint-disable-next-line react/prop-types
   const { useSrcLocal } = useAppState();
-  const { displayMode, sources } = props;
+  const { displayMode = 'flexRow', sources } = props;
   const srcPath = useSrcLocal ? 'srcLocal' : 'srcRemote';
-  console.log('#### assetContainer:', sources, srcPath)
+  console.log('#### assetContainer:', sources, srcPath, displayMode)
 
   return (
     <Container>
@@ -78,6 +78,18 @@ const AssetContainer = (props) => {
           </SwiperSlide>
         ))}
       </StyledSwiper>
+    )}
+    {(displayMode === '' || displayMode === undefined) && (
+      <Container>
+        {sources.map((source) => (
+          <Viewer
+            key={source.srcId}
+            srcType={source.srcType}
+            src={source[srcPath]}
+            srcId={source.srcId}
+          />
+        ))}
+      </Container>
     )}
     </Container>
   );
