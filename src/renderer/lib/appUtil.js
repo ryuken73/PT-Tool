@@ -7,7 +7,11 @@ const getVersion = async () => {
 
 const getIpAddresses = async () => {
   return ipcRenderer.invoke('getIpAddresses');
-}
+};
+
+const toggleWindowMaximize = async () => {
+  return ipcRenderer.invoke('toggleWindowMaximize');
+};
 
 const isHlsStream = (url) => {
   const hasMediaFileExt = MEDIA_EXTENSIONS.some((ext) => url.toUpperCase().endsWith(ext));
@@ -75,6 +79,7 @@ const easingStrings = {
 module.exports = {
   getVersion,
   getIpAddresses,
+  toggleWindowMaximize,
   isHlsStream,
   getSvgPathFromStroke,
   secondsToTime,

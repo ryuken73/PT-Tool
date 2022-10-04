@@ -1,4 +1,4 @@
-const { ipcMain, app } = require('electron');
+const { ipcMain, app, BrowserWindow } = require('electron');
 const os = require('os');
 
 const setupIPCHandlers = () => {
@@ -9,7 +9,15 @@ const setupIPCHandlers = () => {
     const nics = os.networkInterfaces();
     const addrObjArray = Object.values(nics).flat();
     return Promise.resolve(addrObjArray.map((addrObj) => addrObj.address));
-
+  });
+  ipcMain.handle('toggleWindowMaximize', () => {
+    const currentWindow = BrowserWindow.getFocusedWindow();
+    if (currentWindow.isMaximized()) {
+      currentWindow.restore();
+    } else {
+      currentWindow.maximize();
+    }
+    return Promise.resolve();
   });
 };
 

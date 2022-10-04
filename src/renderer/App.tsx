@@ -12,9 +12,10 @@ import DragHandle from './Components/Draw/DragHandle';
 import useAppState from './hooks/useAppState';
 import useSyncPosition from './hooks/useSyncPosition';
 import useAssetState from './hooks/useAssetState';
+import { useDoubleTap } from 'use-double-tap';
 import useDrawState from './hooks/useDrawState';
 import CONSTANTS from 'renderer/config/constants';
-import { getIpAddresses } from './lib/appUtil';
+import { getIpAddresses, toggleWindowMaximize } from './lib/appUtil';
 
 const { POSITION, TOUCH_WORKSTATION_IP, TOUCH_WEB_SERVER_URL } = CONSTANTS;
 
@@ -27,8 +28,10 @@ const INITIAL_ASSETS = [
     sources: [
       {
         srcId: 0,
-        srcLocal: 'https://images.unsplash.com/photo-1626126525134-fbbc07afb32c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
-        srcRemote: 'https://images.unsplash.com/photo-1626126525134-fbbc07afb32c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
+        srcLocal:
+          'https://images.unsplash.com/photo-1626126525134-fbbc07afb32c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
+        srcRemote:
+          'https://images.unsplash.com/photo-1626126525134-fbbc07afb32c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
         srcType: 'image',
         size: null,
       },
@@ -42,15 +45,19 @@ const INITIAL_ASSETS = [
     sources: [
       {
         srcId: 0,
-        srcLocal: 'https://images.unsplash.com/photo-1663908778255-bd560e30d55e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
-        srcRemote: 'https://images.unsplash.com/photo-1663908778255-bd560e30d55e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
+        srcLocal:
+          'https://images.unsplash.com/photo-1663908778255-bd560e30d55e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
+        srcRemote:
+          'https://images.unsplash.com/photo-1663908778255-bd560e30d55e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
         srcType: 'image',
         size: null,
       },
       {
         srcId: 0,
-        srcLocal: 'https://images.unsplash.com/photo-1663947719095-17af03c793d7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80',
-        srcRemote: 'https://images.unsplash.com/photo-1663947719095-17af03c793d7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80',
+        srcLocal:
+          'https://images.unsplash.com/photo-1663947719095-17af03c793d7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80',
+        srcRemote:
+          'https://images.unsplash.com/photo-1663947719095-17af03c793d7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80',
         srcType: 'image',
         size: null,
       },
@@ -80,8 +87,10 @@ const INITIAL_ASSETS = [
     sources: [
       {
         srcId: 0,
-        srcLocal: 'https://www.weather.go.kr/w/typhoon/ko/weather/typhoon_02.jsp',
-        srcRemote: 'https://www.weather.go.kr/w/typhoon/ko/weather/typhoon_02.jsp',
+        srcLocal:
+          'https://www.weather.go.kr/w/typhoon/ko/weather/typhoon_02.jsp',
+        srcRemote:
+          'https://www.weather.go.kr/w/typhoon/ko/weather/typhoon_02.jsp',
         srcType: 'web',
         size: null,
       },
@@ -95,8 +104,10 @@ const INITIAL_ASSETS = [
     sources: [
       {
         srcId: 0,
-        srcLocal: 'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.50,37.91,4250',
-        srcRemote: 'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.50,37.91,4250',
+        srcLocal:
+          'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.50,37.91,4250',
+        srcRemote:
+          'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.50,37.91,4250',
         srcType: 'web',
         size: null,
       },
@@ -117,8 +128,10 @@ const INITIAL_ASSETS = [
       },
       {
         srcId: 1,
-        srcLocal: 'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.50,37.91,4250',
-        srcRemote: 'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.50,37.91,4250',
+        srcLocal:
+          'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.50,37.91,4250',
+        srcRemote:
+          'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.50,37.91,4250',
         srcType: 'web',
         size: null,
       },
@@ -133,8 +146,10 @@ const INITIAL_ASSETS = [
     sources: [
       {
         srcId: 0,
-        srcLocal: 'http://61.43.246.225:1935/rtplive/cctv_86.stream/chunklist_w1471259849.m3u8',
-        srcRemote: 'http://61.43.246.225:1935/rtplive/cctv_86.stream/chunklist_w1471259849.m3u8',
+        srcLocal:
+          'http://61.43.246.225:1935/rtplive/cctv_86.stream/chunklist_w1471259849.m3u8',
+        srcRemote:
+          'http://61.43.246.225:1935/rtplive/cctv_86.stream/chunklist_w1471259849.m3u8',
         srcType: 'video',
         size: null,
       },
@@ -147,8 +162,10 @@ const INITIAL_ASSETS = [
       },
       {
         srcId: 2,
-        srcLocal: 'https://topiscctv1.eseoul.go.kr/sd1/ch27.stream/playlist.m3u8',
-        srcRemote: 'https://topiscctv1.eseoul.go.kr/sd1/ch27.stream/playlist.m3u8',
+        srcLocal:
+          'https://topiscctv1.eseoul.go.kr/sd1/ch27.stream/playlist.m3u8',
+        srcRemote:
+          'https://topiscctv1.eseoul.go.kr/sd1/ch27.stream/playlist.m3u8',
         srcType: 'video',
         size: null,
       },
@@ -229,64 +246,113 @@ const ToolDragLeader = styled.div`
   right: ${POSITION.drawHandler.right};
   z-index: 9999;
 `;
+const AbsoluteBox = styled.div`
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background: transparent;
+  z-index: 9999;
+`
+const MaximizeContainer = styled(AbsoluteBox)`
+  top: 0;
+  left: 0;
+`
+const AssetReloaderContainer = styled(AbsoluteBox)`
+  bottom: 0;
+  left: 0;
+`
+
 const Timeout = (time) => {
-	let controller = new AbortController();
-	setTimeout(() => controller.abort(), time * 1000);
-	return controller;
+  let controller = new AbortController();
+  setTimeout(() => controller.abort(), time * 1000);
+  return controller;
 };
 const getInitialAssets = () => {
   return new Promise((resolve, reject) => {
     fetch(`${TOUCH_WEB_SERVER_URL}/assetsActive`, {
-      signal: Timeout(5).signal
+      signal: Timeout(5).signal,
     })
-    .then( results => {
-      return results.json();
-    })
-    .then( jsonResults => {
-      console.log('init888', jsonResults)
-      if(jsonResults.success){
-        resolve(jsonResults.assetsActive)
-      } else {
-        throw new Error('failed to get assetsActive.')
-      }
-    })
-    .catch( err => {
-      alert(`fetch from ${TOUCH_WEB_SERVER_URL} failed. use saved aseets.`);
-      resolve(INITIAL_ASSETS);
-    })
+      .then((results) => {
+        return results.json();
+      })
+      .then((jsonResults) => {
+        console.log('init888', jsonResults);
+        if (jsonResults.success) {
+          resolve(jsonResults.assetsActive);
+        } else {
+          throw new Error('failed to get assetsActive.');
+        }
+      })
+      .catch((err) => {
+        alert(`fetch from ${TOUCH_WEB_SERVER_URL} failed. use saved aseets.`);
+        resolve(INITIAL_ASSETS);
+      });
   });
 };
+const MaximizeToggler = () => {
+  const bind = useDoubleTap((event) => {
+    toggleWindowMaximize();
+  });
+  return <MaximizeContainer {...bind} />;
+}
+
 
 export default function App() {
-  const { drawShow, toggleDraw, setUseSrcLocalState } = useAppState();
+  const { drawShow, toggleDraw, setUseSrcLocalState, setModalOpenState } = useAppState();
   const { position, syncPosition } = useSyncPosition();
   const { setAssetsState } = useAssetState();
 
   React.useEffect(() => {
     // eslint-disable-next-line promise/catch-or-return
-    getIpAddresses().then((ipAddresses) => {
-      ipAddresses.some((ip) => ip === TOUCH_WORKSTATION_IP)
-        ? setUseSrcLocalState(true)
-        : setUseSrcLocalState(false);
-      console.log('init 1111')
-      return;
-    })
-    .then(() => {
-      console.log('init 2222')
-      return getInitialAssets()
-    })
-    .then((assets) => {
-      console.log('init 3333')
-      setAssetsState(assets);
-    })
-    .catch((err) => {
-      console.log('init error')
-      alert('fail to get asset list! try again.')
-    })
+    setModalOpenState(true);
+    getIpAddresses()
+      .then((ipAddresses) => {
+        ipAddresses.some((ip) => ip === TOUCH_WORKSTATION_IP)
+          ? setUseSrcLocalState(true)
+          : setUseSrcLocalState(false);
+        return;
+      })
+      .then(() => {
+        return getInitialAssets();
+      })
+      .then((assets) => {
+        if(assets.length === 0){
+          throw new Error('no assets');
+        }
+        setAssetsState(assets);
+        setModalOpenState(false);
+      })
+      .catch((err) => {
+        console.log('init error');
+        setModalOpenState(false);
+        alert('fail to get asset list! try again.');
+      });
   }, [setAssetsState, setUseSrcLocalState]);
+
+  const AssetReloader = () => {
+    const bind = useDoubleTap((event) => {
+      setModalOpenState(true);
+      getInitialAssets()
+      .then((assets) => {
+        if(assets.length === 0){
+          throw new Error('no assets');
+        }
+        setAssetsState(assets);
+        setModalOpenState(false);
+      })
+      .catch((err) => {
+        console.log('init error');
+        setModalOpenState(false);
+        alert('fail to get asset list! try again.');
+      });
+    });
+    return <AssetReloaderContainer {...bind} />;
+  };
 
   return (
     <AppContainer>
+      <MaximizeToggler />
+      <AssetReloader />
       {drawShow && <DrawSvg />}
       <Loading />
       <MenuContainer drawShow={drawShow} />
