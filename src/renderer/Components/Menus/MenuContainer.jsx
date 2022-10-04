@@ -53,7 +53,9 @@ const MenuContainer = (props) => {
   const [ socketConnected, setSocketConnected ] = React.useState(false);
   const handleSocketEvent = React.useCallback((eventName, args) => {
     console.log('event received', eventName, args);
-    setAssetsState(args[0])
+    if(eventName === 'ASSET_CHANGE'){
+      setAssetsState(args[0])
+    }
   }, [setAssetsState])
 
   const socket = useSocketClient({
