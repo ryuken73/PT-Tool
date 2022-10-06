@@ -20,7 +20,8 @@ import useDrawState from 'renderer/hooks/useDrawState';
 
 const Container = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: ${(props) =>
+    props.drawShow ? '1fr 1fr 1fr' : '. 1fr .'};
   gap: 0px 2px;
 `;
 const PalleteContainer = styled.div`
@@ -176,12 +177,16 @@ const ToolContainer = (props) => {
   const timeout = 200;
 
   return (
-    <Container>
+    <Container drawShow={drawShow}>
       {/* color changer */}
       <Zoom
         in={drawShow}
         timeout={timeout}
-        style={{ transformOrigin: 'right 50%', transitionDelay: 0 }}
+        style={{
+          transformOrigin: 'right 50%',
+          transitionDelay: 0,
+          display: drawShow ? 'flex' : 'none',
+        }}
       >
         <IconContainerOne>
           <ColorBox
@@ -208,7 +213,11 @@ const ToolContainer = (props) => {
       <Zoom
         in={drawShow}
         timeout={timeout}
-        style={{ transformOrigin: 'left 50%', transitionDelay: 400 }}
+        style={{
+          transformOrigin: 'left 50%',
+          transitionDelay: 300,
+          display: drawShow ? 'flex' : 'none',
+        }}
       >
         <IconContainerOne>
           <IconButton
@@ -222,11 +231,16 @@ const ToolContainer = (props) => {
           </IconButton>
         </IconContainerOne>
       </Zoom>
+      {/* color buttons */}
       {COLORS_3.map((color, index) => (
         <Zoom
           in={drawShow}
           timeout={timeout}
-          style={{ transformOrigin: 'right 0%', transitionDelay: 100 }}
+          style={{
+            transformOrigin: 'right 0%',
+            transitionDelay: 100 + index * 100,
+            display: drawShow ? 'flex' : 'none',
+          }}
         >
           <IconContainerOne>
             <ColorBox
@@ -244,7 +258,11 @@ const ToolContainer = (props) => {
       <Zoom
         in={drawShow}
         timeout={timeout}
-        style={{ transformOrigin: 'right 0%', transitionDelay: 100 }}
+        style={{
+          transformOrigin: 'right 0%',
+          transitionDelay: 100,
+          display: drawShow ? 'flex' : 'none',
+        }}
       >
         <IconContainerOne>
           <IconButton
@@ -262,7 +280,11 @@ const ToolContainer = (props) => {
       <Zoom
         in={drawShow}
         timeout={timeout}
-        style={{ transformOrigin: '50% top', transitionDelay: 200 }}
+        style={{
+          transformOrigin: '50% top',
+          transitionDelay: 200,
+          display: drawShow ? 'flex' : 'none',
+        }}
       >
         <IconContainerOne>
           <IconButton
@@ -279,7 +301,11 @@ const ToolContainer = (props) => {
       <Zoom
         in={drawShow}
         timeout={timeout}
-        style={{ transformOrigin: 'left 0%', transitionDelay: 300 }}
+        style={{
+          transformOrigin: 'left 0%',
+          transitionDelay: 300,
+          display: drawShow ? 'flex' : 'none',
+        }}
       >
         <IconContainerOne>
           <IconButton
