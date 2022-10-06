@@ -239,6 +239,7 @@ const ToolDivWithPosition = styled.div`
   top: ${POSITION.toolContainer.top};
   right: ${POSITION.toolContainer.right};
   z-index: 9999;
+  margin: 3px;
 `;
 const ToolDragLeader = styled.div`
   position: absolute;

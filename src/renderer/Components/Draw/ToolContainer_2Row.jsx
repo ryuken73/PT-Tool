@@ -21,7 +21,7 @@ import useDrawState from 'renderer/hooks/useDrawState';
 const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  gap: 0px 2px;
+  gap: 0px 5px;
 `;
 const PalleteContainer = styled.div`
   display: flex;
@@ -32,7 +32,7 @@ const PalleteContainer = styled.div`
   opacity: 0.8 !important;
   color: white;
   border-radius: 10px;
-  margin-top: 2px;
+  margin-top: 5px;
   padding: 2px;
   flex-wrap: wrap;
   width: 80px;
@@ -73,24 +73,22 @@ const iconStyle = {
   fontSize: '34px',
   padding: '0px !important',
 };
-const CheckSvg = (props) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 20"
-      fill={props.color}
-    >
-      <path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z" />
-    </svg>
-  );
-};
+// const CheckSvg = (props) => {
+//   return (
+//     <svg
+//       xmlns="http://www.w3.org/2000/svg"
+//       width="24"
+//       height="24"
+//       viewBox="0 0 24 20"
+//       fill={props.color}
+//     >
+//       <path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z" />
+//     </svg>
+//   );
+// };
 
-const COLORS = ['red', 'darkblue', 'black', 'yellow'];
-const CHECK_COLORS = ['black', 'white', 'white', 'black'];
-const COLORS_3 = ['darkblue', 'black', 'yellow'];
-const CHECK_COLORS_3 = ['white', 'white', 'black'];
+const COLORS = ['black', 'darkblue', 'red', 'yellow'];
+const CHECK_COLORS = ['white', 'white', 'black', 'black'];
 const getNextColor = (color) => {
   const nextIndex = COLORS.indexOf(color) + 1;
   const safeNextIndex = nextIndex === COLORS.length ? 0 : nextIndex;
@@ -148,14 +146,6 @@ const ToolContainer = (props) => {
       ? SignalWifi2BarIcon
       : SignalWifi4BarIcon;
 
-  const onClickColor = React.useCallback((event) => {
-      const targetFill = event.target.getAttribute('color');
-      changePathOptionState('fill', targetFill);
-      changePathOptionState('stroke', CHECK_COLORS[COLORS.indexOf(targetFill)]);
-    },
-    [changePathOptionState]
-  );
-
   const toggleColor = React.useCallback(() => {
     const nextColor = getNextColor(currentColor);
     changePathOptionState('fill', nextColor);
@@ -185,12 +175,10 @@ const ToolContainer = (props) => {
       >
         <IconContainerOne>
           <ColorBox
-            onTouchStart={onClickColor}
-            onClick={onClickColor}
-            color="red"
-          >
-            {fill === 'red' && <CheckSvg color="black" />}
-          </ColorBox>
+            onTouchStart={toggleColor}
+            onClick={toggleColor}
+            color={currentColor}
+           />
         </IconContainerOne>
       </Zoom>
       <IconContainerOne>
@@ -222,24 +210,58 @@ const ToolContainer = (props) => {
           </IconButton>
         </IconContainerOne>
       </Zoom>
-      {COLORS_3.map((color, index) => (
-        <Zoom
-          in={drawShow}
-          timeout={timeout}
-          style={{ transformOrigin: 'right 0%', transitionDelay: 100 }}
-        >
-          <IconContainerOne>
-            <ColorBox
-              key={color}
-              onTouchStart={onClickColor}
-              onClick={onClickColor}
-              color={color}
-            >
-              {fill === color && <CheckSvg color={CHECK_COLORS_3[index]} />}
-            </ColorBox>
-          </IconContainerOne>
-        </Zoom>
-      ))}
+      {/* toggleStrokie */}
+      <Zoom
+        in={drawShow}
+        timeout={timeout}
+        style={{ transformOrigin: 'right 0%', transitionDelay: 100 }}
+      >
+        <IconContainerOne>
+          <IconButton
+            sx={{ padding: '0px' }}
+            size="medium"
+            onTouchStart={toggleStroke}
+            onClick={toggleStroke}
+            onTouchTap={toggleStroke}
+          >
+            <PencilIcon sx={pencilStyle} />
+          </IconButton>
+        </IconContainerOne>
+      </Zoom>
+      {/* minus paths */}
+      <Zoom
+        in={drawShow}
+        timeout={timeout}
+        style={{ transformOrigin: '50% top', transitionDelay: 200 }}
+      >
+        <IconContainerOne>
+          <IconButton
+            sx={{ padding: '0px' }}
+            size="medium"
+            onTouchStart={undoPathDatumState}
+            onClick={undoPathDatumState}
+          >
+            <IndeterminateCheckBoxIcon sx={iconStyle} />
+          </IconButton>
+        </IconContainerOne>
+      </Zoom>
+      {/* clear button */}
+      <Zoom
+        in={drawShow}
+        timeout={timeout}
+        style={{ transformOrigin: 'left 0%', transitionDelay: 300 }}
+      >
+        <IconContainerOne>
+          <IconButton
+            sx={{ padding: '0px' }}
+            size="medium"
+            onTouchStart={clearPathDatumState}
+            onClick={clearPathDatumState}
+          >
+            <DeleteForeverIcon sx={iconStyle} />
+          </IconButton>
+        </IconContainerOne>
+      </Zoom>
       {/* toggleStrokie */}
       <Zoom
         in={drawShow}
