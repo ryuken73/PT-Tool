@@ -230,7 +230,7 @@ const AppContainer = styled(Container)`
   text-align: center;
   background-color: ${colors.base};
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: flex-ends;
   color: white;
   overflow: hidden;
 `;
@@ -357,12 +357,12 @@ export default function App() {
       {drawShow && <DrawSvg />}
       <Loading />
       <MenuContainer drawShow={drawShow} />
-      <Draggable onDrag={syncPosition}>
+      {/* <Draggable onDrag={syncPosition}>
         <ToolDragLeader>
           <DragHandle size="small" />
         </ToolDragLeader>
-      </Draggable>
-      <Draggable position={position} onStart={() => false}>
+      </Draggable> */}
+      <Draggable handle="strong">
         <ToolDivWithPosition>
           <ToolContainer drawShow={drawShow} toggleDraw={toggleDraw} />
         </ToolDivWithPosition>

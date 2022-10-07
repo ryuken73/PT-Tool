@@ -12,6 +12,7 @@ import PanoramaFishEyeIcon from '@mui/icons-material/PanoramaFishEye';
 import SignalWifi1BarIcon from '@mui/icons-material/SignalWifi1Bar';
 import SignalWifi2BarIcon from '@mui/icons-material/SignalWifi2Bar';
 import SignalWifi4BarIcon from '@mui/icons-material/SignalWifi4Bar';
+import DragHandle from 'renderer/Components/Draw/DragHandle';
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
@@ -19,6 +20,13 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import useDrawState from 'renderer/hooks/useDrawState';
 
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 130px;
+`
+const GridContainer = styled.div`
   display: grid;
   grid-template-columns: ${(props) =>
     props.drawShow ? '1fr 1fr 1fr' : '. 1fr .'};
@@ -177,8 +185,11 @@ const ToolContainer = (props) => {
   const timeout = 200;
 
   return (
-    <Container drawShow={drawShow}>
-      {/* color changer */}
+    <Container>
+    <strong>
+      <DragHandle className="dragHandler" size="small" />
+    </strong>
+    <GridContainer drawShow={drawShow}>
       <Zoom
         in={drawShow}
         timeout={timeout}
@@ -209,51 +220,45 @@ const ToolContainer = (props) => {
           <ModeEditIcon sx={iconStyle} />
         </IconButton>
       </IconContainerOne>
-      {/* toggle size of pen */}
       <Zoom
         in={drawShow}
         timeout={timeout}
         style={{
-          transformOrigin: 'left 50%',
-          transitionDelay: 300,
+          transformOrigin: 'right 50%',
+          transitionDelay: 0,
           display: drawShow ? 'flex' : 'none',
         }}
       >
         <IconContainerOne>
-          <IconButton
-            sx={{ padding: '0px' }}
-            size="medium"
-            onTouchStart={toggleSize}
-            onClick={toggleSize}
-            onTouchTap={toggleSize}
+          <ColorBox
+            onTouchStart={onClickColor}
+            onClick={onClickColor}
+            color="yellow"
           >
-            <SizeIcon sx={iconStyle} />
-          </IconButton>
+            {fill === 'yellow' && <CheckSvg color="black" />}
+          </ColorBox>
         </IconContainerOne>
       </Zoom>
-      {/* color buttons */}
-      {COLORS_3.map((color, index) => (
-        <Zoom
-          in={drawShow}
-          timeout={timeout}
-          style={{
-            transformOrigin: 'right 0%',
-            transitionDelay: 100 + index * 100,
-            display: drawShow ? 'flex' : 'none',
-          }}
-        >
-          <IconContainerOne>
-            <ColorBox
-              key={color}
-              onTouchStart={onClickColor}
-              onClick={onClickColor}
-              color={color}
-            >
-              {fill === color && <CheckSvg color={CHECK_COLORS_3[index]} />}
-            </ColorBox>
-          </IconContainerOne>
-        </Zoom>
-      ))}
+      {/* color changer */}
+      <Zoom
+        in={drawShow}
+        timeout={timeout}
+        style={{
+          transformOrigin: 'right 50%',
+          transitionDelay: 0,
+          display: drawShow ? 'flex' : 'none',
+        }}
+      >
+        <IconContainerOne>
+          <ColorBox
+            onTouchStart={onClickColor}
+            onClick={onClickColor}
+            color="darkblue"
+          >
+            {fill === 'darkblue' && <CheckSvg color="white" />}
+          </ColorBox>
+        </IconContainerOne>
+      </Zoom>
       {/* toggleStrokie */}
       <Zoom
         in={drawShow}
@@ -274,6 +279,25 @@ const ToolContainer = (props) => {
           >
             <PencilIcon sx={pencilStyle} />
           </IconButton>
+        </IconContainerOne>
+      </Zoom>
+      <Zoom
+        in={drawShow}
+        timeout={timeout}
+        style={{
+          transformOrigin: 'right 50%',
+          transitionDelay: 0,
+          display: drawShow ? 'flex' : 'none',
+        }}
+      >
+        <IconContainerOne>
+          <ColorBox
+            onTouchStart={onClickColor}
+            onClick={onClickColor}
+            color="black"
+          >
+            {fill === 'black' && <CheckSvg color="white" />}
+          </ColorBox>
         </IconContainerOne>
       </Zoom>
       {/* minus paths */}
@@ -315,6 +339,28 @@ const ToolContainer = (props) => {
             onClick={clearPathDatumState}
           >
             <DeleteForeverIcon sx={iconStyle} />
+          </IconButton>
+        </IconContainerOne>
+      </Zoom>
+      {/* toggle size of pen */}
+      <Zoom
+        in={drawShow}
+        timeout={timeout}
+        style={{
+          transformOrigin: 'left 50%',
+          transitionDelay: 300,
+          display: drawShow ? 'flex' : 'none',
+        }}
+      >
+        <IconContainerOne>
+          <IconButton
+            sx={{ padding: '0px' }}
+            size="medium"
+            onTouchStart={toggleSize}
+            onClick={toggleSize}
+            onTouchTap={toggleSize}
+          >
+            <SizeIcon sx={iconStyle} />
           </IconButton>
         </IconContainerOne>
       </Zoom>
@@ -372,6 +418,7 @@ const ToolContainer = (props) => {
           </IconContainer>
         </div>
       </Zoom> */}
+    </GridContainer>
     </Container>
   );
 };
