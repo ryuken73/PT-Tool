@@ -23,14 +23,18 @@ export default function usePlayer(src, srcId, mediaElementRef) {
       );
       if (!isNaN(mediaElementRef.current.duration)) {
         const durationSec = parseInt(mediaElementRef.current.duration, 10);
+        const duration = secondsToTime(durationSec);
         dispatch(
           setPlayerStatus({
             playerId,
             key: 'duration',
-            value: secondsToTime(durationSec),
+            value: duration
           })
         );
-        mediaElementRef.current.play();
+        const isLive = duration === '00:00';
+        if (isLive) {
+          mediaElementRef.current.play();
+        }
       }
     },
     [dispatch, mediaElementRef, playerId]
