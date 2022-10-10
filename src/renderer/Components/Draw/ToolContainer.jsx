@@ -177,12 +177,12 @@ const ToolContainer = (props) => {
     [changePathOptionState]
   );
 
-  const toggleColor = React.useCallback(() => {
-    const nextColor = getNextColor(currentColor);
-    changePathOptionState('fill', nextColor);
-    changePathOptionState('stroke', CHECK_COLORS[COLORS.indexOf(nextColor)]);
-    setCurrentColor(nextColor);
-  }, [changePathOptionState, currentColor]);
+  // const toggleColor = React.useCallback(() => {
+  //   const nextColor = getNextColor(currentColor);
+  //   changePathOptionState('fill', nextColor);
+  //   changePathOptionState('stroke', CHECK_COLORS[COLORS.indexOf(nextColor)]);
+  //   setCurrentColor(nextColor);
+  // }, [changePathOptionState, currentColor]);
 
   const toggleStroke = React.useCallback(() => {
     const nextValue = strokeWidth === 0 ? 3 : 0;
@@ -192,6 +192,11 @@ const ToolContainer = (props) => {
   const toggleWithArrow = React.useCallback(() => {
     const nextValue = !withArrow;
     changePathOptionState('withArrow', nextValue);
+    if (nextValue === true) {
+      changePathOptionState('strokeWidth', 0);
+    } else {
+      changePathOptionState('strokeWidth', 3);
+    }
   }, [changePathOptionState, withArrow]);
 
   const toggleSize = React.useCallback(() => {
