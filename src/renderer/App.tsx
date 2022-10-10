@@ -369,18 +369,12 @@ export default function App() {
       {drawShow && <DrawSvg />}
       <Loading />
       <MenuContainer drawShow={drawShow} />
-      {/* <Draggable onDrag={syncPosition}>
-        <ToolDragLeader>
-          <DragHandle size="small" />
-        </ToolDragLeader>
-      </Draggable> */}
       <Draggable bounds={bounds} handle="strong">
         <ToolDivWithPosition>
           <ToolContainer drawShow={drawShow} toggleDraw={toggleDraw} />
         </ToolDivWithPosition>
       </Draggable>
       <AssetContainer />
-      {/* <AddDialog /> */}
     </AppContainer>
   );
 }
