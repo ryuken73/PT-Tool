@@ -30,6 +30,65 @@ const secondsToTime = (seconds, format='mm:ss') => {
   return new Date(seconds*1000).toISOString().substr(startIndex, sliceLength)
 }
 
+const arrayAvg = (sources) => {
+  const { length } = sources;
+  const sum = sources.reduce((acct, source) => {
+    return acct + source
+  }, 0)
+  return sum / length;
+};
+
+const arrayBitWiseSum = (arrayParent) => {
+  return arrayParent.reduce((acct, arrayChild) => {
+    return arrayChild.map((value, childIndex) => {
+      return value + (acct[childIndex] === undefined ? 0 : acct[childIndex]);
+    })
+  }, []);
+};
+
+const arrayBitWiseAvg = (arrayParent) => {
+  const { length } = arrayParent;
+  const sumArray = arrayBitWiseSum(arrayParent);
+  return sumArray.map(value => value / length);
+};
+
+const pickArrayFraction = (array, from, to) => {
+  return array.slice(from, to + 1);
+};
+
+// positions = [[x0,y0], [x1,y1]....,[xx, yy]]
+const getSmoothLine = (positions, level = 5) => {
+  const fractions = positions.slice(level * 2 * -1);
+  // console.log(fractions)
+  const { length } = fractions;
+  const fromLength = Math.ceil(length / 2);
+  const fromPostions = pickArrayFraction(fractions, 0, fromLength - 1);
+  const toPositions = pickArrayFraction(fractions, fromLength, length)
+  return [arrayBitWiseAvg(fromPostions), arrayBitWiseAvg(toPositions)]
+};
+
+// console.log(arrayAvg([1,2,3,4,4]))
+// console.log(arrayBitWiseSum([[1,2],[0,2],[7,7,7]]));
+// console.log(arrayBitWiseAvg([[1,2],[0,2],[7,7,7]]));
+// const positions = [
+//   [0,0],
+//   [1,0],
+//   [2,0],
+//   [3,0],
+//   [4,0],
+//   [5,0],
+//   [6,0],
+//   [7,0],
+//   [8,0],
+//   [9,0],
+//   [10,0],
+//   [11,0],
+//   [12,0],
+//   [13,0],
+//   [14,0],
+// ]
+// console.log(getSmoothLine(positions))
+
 // Turn the points returned from perfect-freehand into SVG path data.
 const getSvgPathFromStroke = (stroke) => {
   if (!stroke.length) return '';
@@ -81,6 +140,8 @@ module.exports = {
   getIpAddresses,
   toggleWindowMaximize,
   isHlsStream,
+  arrayBitWiseAvg,
+  getSmoothLine,
   getSvgPathFromStroke,
   secondsToTime,
   easingStrings
