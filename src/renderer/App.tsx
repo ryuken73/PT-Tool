@@ -297,6 +297,7 @@ const MaximizeToggler = () => {
   return <MaximizeContainer {...bind} />;
 }
 
+const bounds='#root';
 
 export default function App() {
   const { drawShow, toggleDraw, setUseSrcLocalState, setModalOpenState } = useAppState();
@@ -362,7 +363,7 @@ export default function App() {
           <DragHandle size="small" />
         </ToolDragLeader>
       </Draggable> */}
-      <Draggable handle="strong">
+      <Draggable bounds={bounds} handle="strong">
         <ToolDivWithPosition>
           <ToolContainer drawShow={drawShow} toggleDraw={toggleDraw} />
         </ToolDivWithPosition>
