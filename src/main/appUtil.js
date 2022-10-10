@@ -12,10 +12,10 @@ const setupIPCHandlers = () => {
   });
   ipcMain.handle('toggleWindowMaximize', () => {
     const currentWindow = BrowserWindow.getFocusedWindow();
-    if (currentWindow.isMaximized()) {
-      currentWindow.restore();
+    if (currentWindow.fullScreen) {
+      currentWindow.setFullScreen(false);
     } else {
-      currentWindow.maximize();
+      currentWindow.setFullScreen(true);
     }
     return Promise.resolve();
   });
