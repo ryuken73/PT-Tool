@@ -11,6 +11,7 @@ const STROKE_COLOR = {
 const initialState = {
   drawShow: false,
   pathDatum: [],
+  pointDatum: [],
   pathRenderOptions: [],
   currentOptions: {
     size: 6,
@@ -51,6 +52,11 @@ export const drawSlice = createSlice({
       const { pathDatum } = payload;
       state.pathDatum = pathDatum;
     },
+    setPointDatum: (state, action) => {
+      const { payload } = action;
+      const { pointDatum } = payload;
+      state.pointDatum = pointDatum;
+    },
     setPathRenderOptions: (state, action) => {
       const { payload } = action;
       const { pathRenderOptions } = payload;
@@ -71,6 +77,7 @@ export const drawSlice = createSlice({
 export const {
   setDrawShow,
   setPathDatum,
+  setPointDatum,
   setPathRenderOptions,
   saveRenderOption,
   setCurrentOptionValue

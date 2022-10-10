@@ -2,10 +2,12 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   setPathDatum,
+  setPointDatum,
   setPathRenderOptions,
   saveRenderOption,
   setCurrentOptionValue
 } from 'renderer/Components/Draw/drawSlice';
+import { getSmoothLine } from 'renderer/lib/appUtil';
 
 const STROKE_COLOR = {
   red: 'black',
@@ -17,6 +19,7 @@ const STROKE_COLOR = {
 export default function useDrawState() {
   const dispatch = useDispatch();
   const pathDatum = useSelector((state) => state.draw.pathDatum);
+  const pointDatum = useSelector((state) => state.draw.pointDatum);
   const currentOptions = useSelector((state) => state.draw.currentOptions);
   const pathRenderOptions = useSelector(
     (state) => state.draw.pathRenderOptions
@@ -27,15 +30,24 @@ export default function useDrawState() {
     },
     [dispatch, pathDatum]
   );
+  const addPointDatumState = React.useCallback((newPoints) => {
+    dispatch(setPointDatum({ pointDatum: [...pointDatum, newPoints] }));
+    },
+    [dispatch, pointDatum]
+  );
 
   const clearPathDatumState = React.useCallback(() => {
     dispatch(setPathDatum({ pathDatum: [] }));
+    dispatch(setPointDatum({ pointDatum: [] }));
     dispatch(setPathRenderOptions({ pathRenderOptions: [] }));
   }, [dispatch]);
 
   const undoPathDatumState = React.useCallback(() => {
     dispatch(
       setPathDatum({ pathDatum: pathDatum.slice(0, pathDatum.length - 1) })
+    );
+    dispatch(
+      setPointDatum({ pointDatum: pointDatum.slice(0, pointDatum.length - 1) })
     );
     dispatch(
       setPathRenderOptions({
@@ -45,7 +57,7 @@ export default function useDrawState() {
         ),
       })
     );
-  }, [dispatch, pathDatum, pathRenderOptions]);
+  }, [dispatch, pathDatum, pathRenderOptions, pointDatum]);
 
   const saveRenderOptionState = React.useCallback(() => {
     dispatch(saveRenderOption());
@@ -57,14 +69,25 @@ export default function useDrawState() {
     [dispatch]
   );
 
+  const getPositionForArrow = React.useCallback((dataIndex) => {
+    const points = pointDatum[dataIndex];
+    const [[x0, y0], [x1, y1]] = getSmoothLine(points, 10);
+    return [x0, y0, x1, y1];
+    },
+    [pointDatum]
+  );
+
   return {
     pathDatum,
+    pointDatum,
     currentOptions,
     pathRenderOptions,
     addPathDatumState,
+    addPointDatumState,
     clearPathDatumState,
     undoPathDatumState,
     saveRenderOptionState,
     changePathOptionState,
+    getPositionForArrow
   };
 }
