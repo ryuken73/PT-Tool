@@ -170,7 +170,7 @@ const ToolContainer = (props) => {
       : SignalWifi4BarIcon;
 
   const onClickColor = React.useCallback((event) => {
-      const targetFill = event.target.getAttribute('color');
+      const targetFill = event.currentTarget.getAttribute('color');
       changePathOptionState('fill', targetFill);
       changePathOptionState('stroke', CHECK_COLORS[COLORS.indexOf(targetFill)]);
     },
