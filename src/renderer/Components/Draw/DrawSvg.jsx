@@ -66,6 +66,7 @@ const DrawSvg = (props) => {
       easing: easingStrings[easingEnd],
       cap: withArrow ? false : capEnd,
     },
+    simulatePressur: false
   };
 
   const handlePointerDown = React.useCallback((e) => {
@@ -91,7 +92,7 @@ const DrawSvg = (props) => {
   const outlinePoints = getStroke(points, options);
   pathData.current = getSvgPathFromStroke(outlinePoints);
 
-  const [[x0, y0], [x1, y1]] = getSmoothLine(points, 10);
+  const [[x0, y0], [x1, y1]] = getSmoothLine(points, 4);
   const arrowStrokeSize = size === 18 ? 0.2 : size === 12 ? 0.25 : 0.5;
 
   return (

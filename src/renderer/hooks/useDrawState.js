@@ -71,7 +71,7 @@ export default function useDrawState() {
 
   const getPositionForArrow = React.useCallback((dataIndex) => {
     const points = pointDatum[dataIndex];
-    const [[x0, y0], [x1, y1]] = getSmoothLine(points, 10);
+    const [[x0, y0], [x1, y1]] = getSmoothLine(points, 4);
     return [x0, y0, x1, y1];
     },
     [pointDatum]
