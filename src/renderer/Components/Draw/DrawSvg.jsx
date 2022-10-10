@@ -52,7 +52,7 @@ const DrawSvg = (props) => {
 
   const options = {
     size,
-    thinning,
+    thinning: withArrow ? 0 : thinning,
     smoothing,
     streamline,
     easing: easingStrings[easing],
@@ -64,7 +64,7 @@ const DrawSvg = (props) => {
     end: {
       taper: taperEnd,
       easing: easingStrings[easingEnd],
-      cap: capEnd,
+      cap: withArrow ? false : capEnd,
     },
   };
 
@@ -226,6 +226,7 @@ const DrawSvg = (props) => {
             strokeWidth={size * 0.4}
             markerEnd="url(#arrowHeadCurrent)"
           />
+          <use href="#arrowHeadCurrent" />
         </>
       )}
       {points && !mouseUp && strokeWidth ? (
