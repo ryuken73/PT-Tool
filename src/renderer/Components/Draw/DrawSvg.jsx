@@ -1,5 +1,6 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import ArrowDef from 'renderer/Components/Draw/ArrowDef';
 import { getStroke } from 'perfect-freehand';
 import { getSmoothLine, getSvgPathFromStroke, easingStrings } from 'renderer/lib/appUtil';
 import useDrawState from 'renderer/hooks/useDrawState';
@@ -100,28 +101,19 @@ const DrawSvg = (props) => {
       onPointerUp={handlePointerUp}
       style={{ touchAction: 'none' }}
     >
-      <defs>
-        <marker
-          id="arrowhead"
-          markerWidth="10"
-          markerHeight="7"
-          refX="0"
-          refY="3.5"
-          orient="auto"
-        >
-          <polygon
-            fill={isFilled ? fill : 'red'}
-            stroke={stroke}
-            strokeWidth={strokeWidth > 0 ? arrowStrokeSize : 0 }
-            points="0 0, 10 3.5, 0 7"
-          />
-        </marker>
-      </defs>
       {pathDatum.map((pathData, index) =>
         pathRenderOptions[index].strokeWidth ? (
           <>
             {pathRenderOptions[index].withArrow && (
               <>
+                <ArrowDef
+                  id={`arrowhead-${index}`}
+                  size={pathRenderOptions[index].size}
+                  isFilled={pathRenderOptions[index].isFilled}
+                  fill={pathRenderOptions[index].fill}
+                  stroke={pathRenderOptions[index].stroke}
+                  strokeWidth={pathRenderOptions[index].strokeWidth}
+                 />
                 <line
                   x1={getPositionForArrow(index)[0]}
                   y1={getPositionForArrow(index)[1]}
@@ -129,7 +121,7 @@ const DrawSvg = (props) => {
                   y2={getPositionForArrow(index)[3]}
                   stroke={0}
                   strokeWidth={pathRenderOptions[index].size * 0.4}
-                  markerEnd="url(#arrowhead)"
+                  markerEnd={`url(#arrowhead-${index})`}
                 />
               </>
             )}
@@ -169,15 +161,25 @@ const DrawSvg = (props) => {
         ) : (
           <>
             {pathRenderOptions[index].withArrow && (
-              <line
-                x1={getPositionForArrow(index)[0]}
-                y1={getPositionForArrow(index)[1]}
-                x2={getPositionForArrow(index)[2]}
-                y2={getPositionForArrow(index)[3]}
-                stroke={0}
-                strokeWidth={pathRenderOptions[index].size * 0.4}
-                markerEnd="url(#arrowhead)"
-              />
+              <>
+                <ArrowDef
+                  id={`arrowhead-${index}`}
+                  size={pathRenderOptions[index].size}
+                  isFilled={pathRenderOptions[index].isFilled}
+                  fill={pathRenderOptions[index].fill}
+                  stroke={pathRenderOptions[index].stroke}
+                  strokeWidth={pathRenderOptions[index].strokeWidth}
+                 />
+                <line
+                  x1={getPositionForArrow(index)[0]}
+                  y1={getPositionForArrow(index)[1]}
+                  x2={getPositionForArrow(index)[2]}
+                  y2={getPositionForArrow(index)[3]}
+                  stroke={0}
+                  strokeWidth={pathRenderOptions[index].size * 0.4}
+                  markerEnd={`url(#arrowhead-${index})`}
+                />
+              </>
             )}
             <path
               d={pathData}
@@ -207,15 +209,23 @@ const DrawSvg = (props) => {
       )}
       {!mouseUp && withArrow && (
         <>
-        <line
-          x1={x0}
-          y1={y0}
-          x2={x1}
-          y2={y1}
-          stroke={0}
-          strokeWidth={size * 0.4}
-          markerEnd="url(#arrowhead)"
-        />
+          <ArrowDef
+            id="arrowHeadCurrent"
+            size={size}
+            isFilled={isFilled}
+            fill={fill}
+            stroke={stroke}
+            strokeWidth={strokeWidth}
+          />
+          <line
+            x1={x0}
+            y1={y0}
+            x2={x1}
+            y2={y1}
+            stroke={0}
+            strokeWidth={size * 0.4}
+            markerEnd="url(#arrowHeadCurrent)"
+          />
         </>
       )}
       {points && !mouseUp && strokeWidth ? (
