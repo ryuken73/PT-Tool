@@ -13,6 +13,10 @@ const toggleWindowMaximize = async () => {
   return ipcRenderer.invoke('toggleWindowMaximize');
 };
 
+const quitApp = async () => {
+  return ipcRenderer.invoke('quitApp');
+};
+
 const isHlsStream = (url) => {
   const hasMediaFileExt = MEDIA_EXTENSIONS.some((ext) => url.toUpperCase().endsWith(ext));
   return !hasMediaFileExt;
@@ -139,6 +143,7 @@ module.exports = {
   getVersion,
   getIpAddresses,
   toggleWindowMaximize,
+  quitApp,
   isHlsStream,
   arrayBitWiseAvg,
   getSmoothLine,

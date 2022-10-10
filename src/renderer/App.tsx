@@ -15,7 +15,7 @@ import useAssetState from './hooks/useAssetState';
 import { useDoubleTap } from 'use-double-tap';
 import useDrawState from './hooks/useDrawState';
 import CONSTANTS from 'renderer/config/constants';
-import { getIpAddresses, toggleWindowMaximize } from './lib/appUtil';
+import { getIpAddresses, toggleWindowMaximize, quitApp } from './lib/appUtil';
 
 const { POSITION, TOUCH_WORKSTATION_IP, TOUCH_WEB_SERVER_URL } = CONSTANTS;
 
@@ -253,15 +253,19 @@ const AbsoluteBox = styled.div`
   height: 100px;
   background: transparent;
   z-index: 9999;
-`
+`;
 const MaximizeContainer = styled(AbsoluteBox)`
   top: 0;
   left: 0;
-`
+`;
 const AssetReloaderContainer = styled(AbsoluteBox)`
   bottom: 0;
   left: 0;
-`
+`;
+const AppQuitContainer = styled(AbsoluteBox)`
+  bottom: 0;
+  right: 0;
+`;
 
 const Timeout = (time) => {
   let controller = new AbortController();
@@ -295,7 +299,13 @@ const MaximizeToggler = () => {
     toggleWindowMaximize();
   });
   return <MaximizeContainer {...bind} />;
-}
+};
+const AppQuiter = () => {
+  const bind = useDoubleTap((event) => {
+    quitApp();
+  });
+  return <AppQuitContainer {...bind} />;
+};
 
 const bounds='#root';
 
@@ -355,6 +365,7 @@ export default function App() {
     <AppContainer>
       <MaximizeToggler />
       <AssetReloader />
+      <AppQuiter />
       {drawShow && <DrawSvg />}
       <Loading />
       <MenuContainer drawShow={drawShow} />

@@ -19,6 +19,9 @@ const setupIPCHandlers = () => {
     }
     return Promise.resolve();
   });
+  ipcMain.handle('quitApp', () => {
+    return Promise.resolve(app.quit());
+  });
 };
 
 module.exports = setupIPCHandlers;
