@@ -27,7 +27,8 @@ const initialState = {
     easingEnd: 'linear',
     isFilled: true,
     stroke: STROKE_COLOR[INITIAL_FILL_COLOR],
-    fill: INITIAL_FILL_COLOR
+    fill: INITIAL_FILL_COLOR,
+    withArrow: false
   },
   // fillWidth: 14,
   // fillColor: INITIAL_FILL_COLOR,

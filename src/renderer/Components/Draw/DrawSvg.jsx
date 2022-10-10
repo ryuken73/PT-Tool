@@ -43,6 +43,7 @@ const DrawSvg = (props) => {
     isFilled,
     stroke,
     fill,
+    withArrow
   } = currentOptions;
 
   const options = {
@@ -174,15 +175,17 @@ const DrawSvg = (props) => {
           />
         </marker>
       </defs>
-      <line
-        x1={x0}
-        y1={y0}
-        x2={x1}
-        y2={y1}
-        stroke={0}
-        strokeWidth={size * 0.4}
-        markerEnd="url(#arrowhead)"
-      />
+      {!mouseUp && withArrow && (
+        <line
+          x1={x0}
+          y1={y0}
+          x2={x1}
+          y2={y1}
+          stroke={0}
+          strokeWidth={size * 0.4}
+          markerEnd="url(#arrowhead)"
+        />
+      )}
       {points && !mouseUp && strokeWidth ? (
         <path
           d={pathData.current}
