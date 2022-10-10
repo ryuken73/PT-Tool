@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import { getStroke } from 'perfect-freehand';
-import { getSvgPathFromStroke, easingStrings } from 'renderer/lib/appUtil';
+import { getSmoothLine, getSvgPathFromStroke, easingStrings } from 'renderer/lib/appUtil';
 import useDrawState from 'renderer/hooks/useDrawState';
 
 const StyledSvg = styled.svg`
@@ -63,16 +63,18 @@ const DrawSvg = (props) => {
     },
   };
 
-  function handlePointerDown(e) {
+  const handlePointerDown = React.useCallback((e) => {
     e.target.setPointerCapture(e.pointerId);
     setMouseUP(false);
     setPoints([[e.pageX, e.pageY, e.pressure]]);
-  }
+  }, []);
 
-  function handlePointerMove(e) {
+  const handlePointerMove = React.useCallback((e) => {
     if (e.buttons !== 1) return;
     setPoints([...points, [e.pageX, e.pageY, e.pressure]]);
-  }
+    },
+    [points]
+  );
 
   const handlePointerUp = React.useCallback(() => {
     setMouseUP(true);
@@ -83,12 +85,8 @@ const DrawSvg = (props) => {
   const outlinePoints = getStroke(points, options);
   pathData.current = getSvgPathFromStroke(outlinePoints);
 
-  // const pathData = getSvgPathFromStroke(stroke);
-  // rawPathData.current = getSvgPathFromStroke(points);
-  // console.log(pathData.current);
-  // console.log(rawPathData.current);
-  // console.log(stroke);
-  // console.log(points);
+  const [[x0, y0], [x1, y1]] = getSmoothLine(points, 10);
+  const arrowStrokeSize = size === 18 ? 0.2 : size === 12 ? 0.25 : 0.5;
 
   return (
     <StyledSvg
@@ -159,6 +157,32 @@ const DrawSvg = (props) => {
           />
         )
       )}
+      <defs>
+        <marker
+          id="arrowhead"
+          markerWidth="10"
+          markerHeight="7"
+          refX="0"
+          refY="3.5"
+          orient="auto"
+        >
+          <polygon
+            fill={isFilled ? fill : 'red'}
+            stroke={stroke}
+            strokeWidth={strokeWidth > 0 ? arrowStrokeSize : 0}
+            points="0 0, 10 3.5, 0 7"
+          />
+        </marker>
+      </defs>
+      <line
+        x1={x0}
+        y1={y0}
+        x2={x1}
+        y2={y1}
+        stroke={0}
+        strokeWidth={size * 0.4}
+        markerEnd="url(#arrowhead)"
+      />
       {points && !mouseUp && strokeWidth ? (
         <path
           d={pathData.current}
