@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Draggable from 'react-draggable';
 import DragHandle from 'renderer/Components/Draw/DragHandle';
 import useSyncPosition from 'renderer/hooks/useSyncPosition';
+import useAppState from 'renderer/hooks/useAppState';
 import useAssetState from 'renderer/hooks/useAssetState';
 import useSocketClient from 'renderer/hooks/useSocketIO';
 import CONSTANTS from 'renderer/config/constants';
@@ -49,14 +50,15 @@ const MenuContainer = (props) => {
   // eslint-disable-next-line react/prop-types
   const { drawShow } = props;
   const { position, syncPosition } = useSyncPosition();
+  const { useSrcLocal } = useAppState();
   const { assets, currentAsset, setAssetsState, setCurrentAssetState } = useAssetState();
   const [ socketConnected, setSocketConnected ] = React.useState(false);
   const handleSocketEvent = React.useCallback((eventName, args) => {
     console.log('event received', eventName, args);
-    if(eventName === 'ASSET_CHANGE'){
+    if(eventName === 'ASSET_CHANGE' && !useSrcLocal){
       setAssetsState(args[0])
     }
-  }, [setAssetsState])
+  }, [setAssetsState, useSrcLocal])
 
   const socket = useSocketClient({
     hostAddress: TOUCH_WEB_SERVER_URL,

@@ -249,9 +249,9 @@ const ToolDragLeader = styled.div`
 `;
 const AbsoluteBox = styled.div`
   position: absolute;
-  width: 100px;
-  height: 100px;
-  background: transparent;
+  width: 20px;
+  height: 20px;
+  background: yellow;
   z-index: 9999;
 `;
 const MaximizeContainer = styled(AbsoluteBox)`
