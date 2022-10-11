@@ -251,7 +251,7 @@ const AbsoluteBox = styled.div`
   position: absolute;
   width: 20px;
   height: 20px;
-  background: yellow;
+  background: transparent;
   z-index: 9999;
 `;
 const MaximizeContainer = styled(AbsoluteBox)`
