@@ -213,9 +213,9 @@ const ToolContainer = (props) => {
         <IconButton
           sx={{ padding: '0px' }}
           size="medium"
-          onTouchStart={toggleDraw}
+          // onTouchStart={toggleDraw}
           onClick={toggleDraw}
-          onTouchTap={toggleDraw}
+          // onTouchTap={toggleDraw}
         >
           <ModeEditIcon sx={iconStyle} />
         </IconButton>
@@ -277,9 +277,9 @@ const ToolContainer = (props) => {
             <IconButton
               sx={{ padding: '0px' }}
               size="medium"
-              onTouchStart={toggleWithArrow}
+              // onTouchStart={toggleWithArrow}
               onClick={toggleWithArrow}
-              onTouchTap={toggleWithArrow}
+              // onTouchTap={toggleWithArrow}
             >
               <ArrowIcon sx={iconStyle} />
             </IconButton>
@@ -338,9 +338,9 @@ const ToolContainer = (props) => {
             <IconButton
               sx={{ padding: '0px' }}
               size="medium"
-              onTouchStart={toggleStroke}
+              // onTouchStart={toggleStroke}
               onClick={toggleStroke}
-              onTouchTap={toggleStroke}
+              // onTouchTap={toggleStroke}
             >
               <PencilIcon sx={pencilStyle} />
             </IconButton>
@@ -402,9 +402,9 @@ const ToolContainer = (props) => {
             <IconButton
               sx={{ padding: '0px' }}
               size="medium"
-              onTouchStart={toggleSize}
+              // onTouchStart={toggleSize}
               onClick={toggleSize}
-              onTouchTap={toggleSize}
+              // onTouchTap={toggleSize}
             >
               <SizeIcon sx={iconStyle} />
             </IconButton>
