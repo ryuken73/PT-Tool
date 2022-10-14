@@ -166,8 +166,8 @@ const Player = (props, playerRef) => {
           sx={iconContainerStyle}
           size="medium"
           onClick={onClickPlay}
-          onTouchStart={onClickPlay}
-          onTouchTap={onClickPlay}
+          // onTouchStart={onClickPlay}
+          // onTouchTap={onClickPlay}
         >
           {isPlaying ? (
             <PauseIcon sx={iconStyle} />
@@ -187,8 +187,8 @@ const Player = (props, playerRef) => {
           sx={iconContainerStyle}
           size="medium"
           onClick={onClickReplay10}
-          onTouchStart={onClickReplay10}
-          onTouchTap={onClickReplay10}
+          // onTouchStart={onClickReplay10}
+          // onTouchTap={onClickReplay10}
         >
           <Replay10Icon sx={iconStyle} />
         </IconButton>
@@ -196,8 +196,8 @@ const Player = (props, playerRef) => {
           sx={iconContainerStyle}
           size="medium"
           onClick={onClickForward10}
-          onTouchStart={onClickForward10}
-          onTouchTap={onClickForward10}
+          // onTouchStart={onClickForward10}
+          // onTouchTap={onClickForward10}
         >
           <Forward10Icon sx={iconStyle} />
         </IconButton>
