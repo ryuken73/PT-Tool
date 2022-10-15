@@ -21,6 +21,7 @@ export default function usePlayerEvent(srcId, playerRef) {
         state.player.players.find((player) => player.playerId === playerId),
       shallowEqual
     ) || {};
+  console.log('#### videoPlayer?', videoPlayer)
   const {
     isPlaying,
     currentTime,
@@ -29,7 +30,9 @@ export default function usePlayerEvent(srcId, playerRef) {
     duration,
     canplay,
   } = videoPlayer;
+
   const isLive = duration === '00:00';
+
   const player = playerRef.current;
   const currentTimeRef = React.useRef(null);
   const currentDurationRef = React.useRef(null);
@@ -79,6 +82,7 @@ export default function usePlayerEvent(srcId, playerRef) {
     dispatch(
       setPlayerCurrentTime({ playerId, key: 'currentTime', value: currentTime })
     );
+    console.log('### from player:', player, player.currentTime, player.duration);
     const progress = ((player.currentTime / player.duration) * 100).toFixed(0);
     dispatch(setPlayerProgress({ playerId, key: 'progress', value: progress }));
   }, [dispatch, playerId, player]);

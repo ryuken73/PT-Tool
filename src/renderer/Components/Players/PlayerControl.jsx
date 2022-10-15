@@ -87,7 +87,7 @@ const Player = (props, playerRef) => {
     onClickReplay10
   } = usePlayerEvent(srcId, playerRef);
 
-  // console.log('###', currentTime, progress, duration)
+  console.log('###', currentTime, progress, duration)
 
   const onClickPlay = React.useCallback(() => {
     if (isPlaying) {
@@ -158,7 +158,14 @@ const Player = (props, playerRef) => {
           />
         </Duration>
         <Progress>
-          <SliderBar value={progress} onChange={handleMoveProgressSlider} />
+          {/* <SliderBar value={progress} onChange={handleMoveProgressSlider} /> */}
+          <input
+            type="range"
+            value={progress}
+            onChange={handleMoveProgressSlider}
+            min="0"
+            max="100"
+          />
         </Progress>
       </ProgressContainer>
       <ControlContainer hide={hide}>
