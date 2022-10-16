@@ -79,15 +79,19 @@ const Player = (props, playerRef) => {
     manifestLoaded,
     isPlaying,
     currentTime,
-    progress,
-    duration,
+    // progress,
+    durationTime,
+    durationSec,
     isLive,
     canplay,
     onClickForward10,
     onClickReplay10
   } = usePlayerEvent(srcId, playerRef);
 
-  console.log('###', currentTime, progress, duration)
+  const playerCurrentTime = playerRef.current ? playerRef.current.currentTime : 0;
+  const currentTimeSec = parseInt(playerCurrentTime, 10);
+  const progress = ((currentTimeSec / durationSec) * 100).toFixed(0);
+  // console.log('###', currentTime, progress, durationTime, durationSec)
 
   const onClickPlay = React.useCallback(() => {
     if (isPlaying) {
@@ -98,7 +102,9 @@ const Player = (props, playerRef) => {
   }, [playerRef, isPlaying]);
 
   const handleMoveProgressSlider = React.useCallback(
-    (progressPercent) => {
+    (event) => {
+      // console.log('move progress:', event.currentTarget.value)
+      const progressPercent = event.currentTarget.value;
       const player = playerRef.current;
       const duration = player?.duration;
       if (duration === undefined || duration === null) return;
@@ -152,7 +158,7 @@ const Player = (props, playerRef) => {
           <TextBox fontSize="11px" text={currentTime} color={colors.textMain} />
           <TextBox
             fontSize="11px"
-            text={duration}
+            text={durationTime}
             marginLeft="5px"
             color={colors.textSub}
           />

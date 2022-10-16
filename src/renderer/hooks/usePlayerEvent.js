@@ -21,17 +21,18 @@ export default function usePlayerEvent(srcId, playerRef) {
         state.player.players.find((player) => player.playerId === playerId),
       shallowEqual
     ) || {};
-  console.log('#### videoPlayer?', videoPlayer)
+  // console.log('#### videoPlayer?', videoPlayer)
   const {
     isPlaying,
     currentTime,
     manifestLoaded,
     progress,
-    duration,
+    durationTime,
+    durationSec,
     canplay,
   } = videoPlayer;
 
-  const isLive = duration === '00:00';
+  const isLive = durationTime === '00:00';
 
   const player = playerRef.current;
   const currentTimeRef = React.useRef(null);
@@ -82,16 +83,21 @@ export default function usePlayerEvent(srcId, playerRef) {
     dispatch(
       setPlayerCurrentTime({ playerId, key: 'currentTime', value: currentTime })
     );
-    console.log('### from player:', player, player.currentTime, player.duration);
-    const progress = ((player.currentTime / player.duration) * 100).toFixed(0);
-    dispatch(setPlayerProgress({ playerId, key: 'progress', value: progress }));
+    // console.log('### from player:', player, player.currentTime, player.duration);
+    // const progress = ((player.currentTime / player.duration) * 100).toFixed(0);
+    // dispatch(setPlayerProgress({ playerId, key: 'progress', value: progress }));
   }, [dispatch, playerId, player]);
 
   const handleDurationChange = React.useCallback(() => {
-    const { duration } = player;
-    const durationSec = secondsToTime(parseInt(duration, 10));
+    // const { duration } = player;
+    const durationSec = parseInt(player.duration, 10);
+    const durationTime = secondsToTime(parseInt(durationSec, 10));
+    // console.log(`in usePlayerEvent : durationSec: ${durationSec}, duration: ${durationTime}`)
     currentDurationRef.current = durationSec;
-    dispatch(setPlayerStatus({ playerId, key: 'duration', value: duration }));
+    dispatch(setPlayerStatus({ playerId, key: 'durationTime', value: durationTime }));
+    dispatch(
+      setPlayerStatus({ playerId, key: 'durationSec', value: durationSec })
+    );
   }, [dispatch, player, playerId]);
 
   const onClickPlay = React.useCallback(() => {
@@ -144,7 +150,8 @@ export default function usePlayerEvent(srcId, playerRef) {
     progress,
     currentTime,
     manifestLoaded,
-    duration,
+    durationTime,
+    durationSec,
     isLive,
     canplay,
     onClickPlay,

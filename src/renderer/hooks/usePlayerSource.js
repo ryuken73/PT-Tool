@@ -23,15 +23,23 @@ export default function usePlayer(src, srcId, mediaElementRef) {
       );
       if (!isNaN(mediaElementRef.current.duration)) {
         const durationSec = parseInt(mediaElementRef.current.duration, 10);
-        const duration = secondsToTime(durationSec);
+        const durationTime = secondsToTime(durationSec);
+        console.log(`in usePlayerSource : durationSec: ${durationSec}, duration: ${durationTime}`)
         dispatch(
           setPlayerStatus({
             playerId,
-            key: 'duration',
-            value: duration
+            key: 'durationTime',
+            value: durationTime,
           })
         );
-        const isLive = duration === '00:00';
+        dispatch(
+          setPlayerStatus({
+            playerId,
+            key: 'durationSec',
+            value: durationSec,
+          })
+        );
+        const isLive = durationTime === '00:00';
         if (isLive) {
           mediaElementRef.current.play();
         }
