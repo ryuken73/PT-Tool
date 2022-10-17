@@ -3,6 +3,7 @@ import React from 'react';
 import AssetContainer from 'renderer/Components/Assets/AssetContainer';
 import DrawSvg from 'renderer/Components/Draw/DrawSvg';
 import MenuContainer from 'renderer/Components/Menus/MenuContainer';
+import ConfirmDialog from './Components/Dialog/ConfirmDialog';
 import styled from 'styled-components';
 import colors from 'renderer/config/colors';
 import Draggable from 'react-draggable';
@@ -300,12 +301,6 @@ const MaximizeToggler = () => {
   });
   return <MaximizeContainer {...bind} />;
 };
-const AppQuiter = () => {
-  const bind = useDoubleTap((event) => {
-    quitApp();
-  });
-  return <AppQuitContainer {...bind} />;
-};
 
 const bounds='#root';
 
@@ -313,6 +308,7 @@ export default function App() {
   const { drawShow, toggleDraw, setUseSrcLocalState, setModalOpenState } = useAppState();
   const { position, syncPosition } = useSyncPosition();
   const { setAssetsState } = useAssetState();
+  const [ quitConfirmOpen, setQuitConfirmOpen ] = React.useState(false);
 
   React.useEffect(() => {
     // eslint-disable-next-line promise/catch-or-return
@@ -361,6 +357,22 @@ export default function App() {
     return <AssetReloaderContainer {...bind} />;
   };
 
+  const AppQuiter = () => {
+    const bind = useDoubleTap((event) => {
+      setQuitConfirmOpen(true);
+      // quitApp();
+    });
+    return <AppQuitContainer {...bind} />;
+  };
+
+  const handleYes = React.useCallback(() => {
+    quitApp();
+  }, [])
+
+  const handleNo = React.useCallback(() => {
+    setQuitConfirmOpen(false);
+  }, [])
+
   return (
     <AppContainer>
       <MaximizeToggler />
@@ -374,6 +386,12 @@ export default function App() {
           <ToolContainer drawShow={drawShow} toggleDraw={toggleDraw} />
         </ToolDivWithPosition>
       </Draggable>
+      <ConfirmDialog
+        open={quitConfirmOpen}
+        handleYes={handleYes}
+        handleNo={handleNo}
+        title="Quit?"
+      ></ConfirmDialog>
       <AssetContainer />
     </AppContainer>
   );

@@ -10,9 +10,13 @@ import DialogTitle from '@mui/material/DialogTitle';
 const CustomDialog = styled(Dialog)`
   div.MuiDialog-container {
     div.MuiPaper-root {
-      background: #9f7f7f;
-      width: 300px;
+      background: black;
+      opacity: 0.5;
+      color: white;
+      width: 200px;
       max-width: 800px;
+      border: 1px white solid;
+      border-radius: 10px;
     }
   }
 `
@@ -30,13 +34,13 @@ const ConfirmDialog = props => {
           {"Confirm"}
         </DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-              {`delete ${title}?`}
+          <DialogContentText sx={{color: 'white'}} id="alert-dialog-description">
+              {title}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button sx={{color: 'black'}} onClick={handleNo}>No</Button>
-          <Button sx={{color: 'black'}} onClick={handleYes} autoFocus>Yes</Button>
+          <Button sx={{color: 'white'}} onClick={handleNo}>No</Button>
+          <Button sx={{color: 'white'}} onClick={handleYes} autoFocus>Yes</Button>
         </DialogActions>
       </CustomDialog>
     </div>
