@@ -1,5 +1,6 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, {css} from 'styled-components';
+import { keyframes } from '@emotion/react'
 import Zoom from '@mui/material/Zoom';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
@@ -20,6 +21,7 @@ import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import useDrawState from 'renderer/hooks/useDrawState';
+import { red } from '@mui/material/colors';
 
 const Container = styled.div`
   display: flex;
@@ -90,8 +92,24 @@ const iconStyle = {
   color: 'white',
   borderRadius: '20%',
   fontSize: '34px',
-  padding: '0px !important',
+ padding: '0px !important',
 };
+const blink = keyframes`
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+    color: grey;
+  }
+  100% {
+    opacity: 1;
+`;
+const iconStyleBlink = {
+  ...iconStyle,
+  animation: `${blink} 2s infinite`,
+};
+
 const CheckSvg = (props) => {
   return (
     <svg
@@ -217,7 +235,7 @@ const ToolContainer = (props) => {
           onClick={toggleDraw}
           // onTouchTap={toggleDraw}
         >
-          <ModeEditIcon sx={iconStyle} />
+          <ModeEditIcon sx={drawShow ? iconStyleBlink : iconStyle} />
         </IconButton>
       </IconContainerOne>
       <strong>
