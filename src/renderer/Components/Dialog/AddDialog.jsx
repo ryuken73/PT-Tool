@@ -65,7 +65,7 @@ const AddDialog = (props) => {
       return {
         ...asset,
         sources: [{
-          srcId: 0,
+          srcId: Date.now(),
           srcLocal: droppedSrc,
           srcRemote: droppedSrc,
           srcType: 'video'
