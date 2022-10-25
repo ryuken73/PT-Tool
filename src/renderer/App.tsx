@@ -63,7 +63,7 @@ const INITIAL_ASSETS = [
         size: null,
       },
     ],
-    displayMode: 'swipe',
+    displayMode: 'overlay',
   },
   {
     assetId: 1,
@@ -137,7 +137,7 @@ const INITIAL_ASSETS = [
         size: null,
       },
     ],
-    displayMode: 'flexRow',
+    displayMode: 'overlay',
   },
   {
     assetId: 6,
