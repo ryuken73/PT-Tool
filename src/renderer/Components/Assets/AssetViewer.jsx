@@ -31,7 +31,7 @@ const AbsoluteBox = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
-  clip-path: ${(props) => props.index === 1 && 'polygon(50% 0, 100% 0, 100% 100%, 50% 100%)'};
+  clip-path: ${(props) => props.index === 1 && `polygon(${props.percentX}% 0, 100% 0, 100% 100%, ${props.percentX}% 100%)`};
 `;
 const DragDivWithPosition = styled.div`
   position: absolute;
@@ -60,13 +60,14 @@ const Viewer = (props) => {
 
 const AssetContainer = (props) => {
   // eslint-disable-next-line react/prop-types
+  const [ percentX, setPercentX ] = React.useState('0');
   const { useSrcLocal } = useAppState();
   const { displayMode = 'flexRow', sources } = props;
   const srcPath = useSrcLocal ? 'srcLocal' : 'srcRemote';
   console.log('#### assetContainer:', sources, srcPath, displayMode)
   const onDragSplitter = React.useCallback((e, data) => {
-    console.log('Event:',e);
-    console.log('Data:',data);
+    const percentX = (e.clientX / window.innerWidth) * 100;
+    setPercentX(percentX);
   },[])
 
   return (
@@ -82,7 +83,7 @@ const AssetContainer = (props) => {
             </DragDivWithPosition>
           </Draggable>
           {sources.map((source, index) => (
-            <AbsoluteBox key={source.srcId} index={index}>
+            <AbsoluteBox percentX={percentX} key={source.srcId} index={index}>
               <Viewer
                 key={source.srcId}
                 srcType={source.srcType}
