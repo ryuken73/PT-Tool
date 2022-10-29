@@ -2,6 +2,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import styled from 'styled-components';
+import SwapHorizontalCircleIcon from '@mui/icons-material/SwapHorizontalCircle';
 import Player from 'renderer/Components/Players/Player';
 import WebView from 'renderer/Components/Common/WebView';
 import ImageBox from 'renderer/Components/Common/ImageBox';
@@ -63,6 +64,7 @@ const MiddleLayer = styled(Container)`
   background: transparent;
   z-index: 8888;
 `
+
 const AssetContainer = (props) => {
   // eslint-disable-next-line react/prop-types
   const [percentX, setPercentX] = React.useState(50);
@@ -70,12 +72,16 @@ const AssetContainer = (props) => {
   const { useSrcLocal } = useAppState();
   const { displayMode = 'flexRow', sources } = props;
   const srcPath = useSrcLocal ? 'srcLocal' : 'srcRemote';
-  console.log('#### assetContainer:', sources, srcPath, displayMode);
+  const overlayLeadRef = React.useRef(null);
+  console.log('#### assetContainer:', sources, srcPath, displayMode)
   const onDragSplitter = React.useCallback((e, data) => {
-    const currentPercentX = (e.clientX / window.innerWidth) * 100;
+    const elementWidth = overlayLeadRef.current.offsetWidth;
+    // const centerX = e.clientX - e.offsetX + e.target.offsetWidth / 2;
+    const centerX = e.clientX - e.offsetX + elementWidth / 2;
+    const currentPercentX = (centerX / window.innerWidth) * 100;
     setPercentX(currentPercentX);
     setPosition({ x: data.x, y: data.y });
-  },[])
+  }, []);
 
   return (
     <Container>
@@ -87,8 +93,8 @@ const AssetContainer = (props) => {
             position={position}
             positionOffset={{x: "-50%", y: 10}}
           >
-            <DragDivWithPosition>
-              Drag me
+            <DragDivWithPosition ref={overlayLeadRef}>
+              Drag Me
             </DragDivWithPosition>
           </Draggable>
           <MiddleLayer />

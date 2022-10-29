@@ -54,7 +54,7 @@ const INITIAL_ASSETS = [
         size: null,
       },
       {
-        srcId: 0,
+        srcId: 1,
         srcLocal:
           'https://images.unsplash.com/photo-1663947719095-17af03c793d7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80',
         srcRemote:
@@ -145,15 +145,15 @@ const INITIAL_ASSETS = [
     created: null,
     updated: null,
     sources: [
-      {
-        srcId: 0,
-        srcLocal:
-          'http://61.43.246.225:1935/rtplive/cctv_86.stream/chunklist_w1471259849.m3u8',
-        srcRemote:
-          'http://61.43.246.225:1935/rtplive/cctv_86.stream/chunklist_w1471259849.m3u8',
-        srcType: 'video',
-        size: null,
-      },
+      // {
+      //   srcId: 0,
+      //   srcLocal:
+      //     'http://61.43.246.225:1935/rtplive/cctv_86.stream/chunklist_w1471259849.m3u8',
+      //   srcRemote:
+      //     'http://61.43.246.225:1935/rtplive/cctv_86.stream/chunklist_w1471259849.m3u8',
+      //   srcType: 'video',
+      //   size: null,
+      // },
       {
         srcId: 1,
         srcLocal: 'http://210.179.218.53:1935/live/554.stream/playlist.m3u8',
@@ -176,7 +176,7 @@ const INITIAL_ASSETS = [
     aspectRatio: '',
     // setPlayer,
     enableOverlay: false,
-    displayMode: 'swipe',
+    displayMode: 'overlay',
   },
   // {
   //   assetId: 7,
