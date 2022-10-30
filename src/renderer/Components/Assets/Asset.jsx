@@ -30,7 +30,7 @@ const AssetContainer = (props) => {
 
   return (
     <Container show={show}>
-      <AssetViewer displayMode={displayMode} sources={sources} />
+      <AssetViewer displayMode={displayMode} sources={sources} show={show} />
     </Container>
   )
 

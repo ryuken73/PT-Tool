@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 // import CONSTANTS from 'config/constants';
 // const {STREAM_TYPE} = CONSTANTS;
 
-export default function usePlayer(src, srcId, mediaElementRef) {
+export default function usePlayer(src, srcId, mediaElementRef, show, srcIndex) {
   const dispatch = useDispatch();
   const playerId = srcId;
   // const { assetId: playerId, source } = player;
@@ -43,9 +43,12 @@ export default function usePlayer(src, srcId, mediaElementRef) {
         if (isLive) {
           mediaElementRef.current.play();
         }
+        if (!isLive && show && srcIndex === 0){
+          mediaElementRef.current.play();
+        }
       }
     },
-    [dispatch, mediaElementRef, playerId]
+    [dispatch, mediaElementRef, playerId, show, srcIndex]
   );
 
   const handleCanPlay = React.useCallback(() => {

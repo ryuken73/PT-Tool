@@ -18,9 +18,9 @@ const Player = (props) => {
   // eslint-disable-next-line react/prop-types
   console.log('re-render Player props =', props);
   // const { asset } = props;
-  const { src, srcId } = props;
+  const { src, srcId, show, srcIndex } = props;
   const playerRef = React.useRef(null);
-  const { loadHLS } = usePlayerSource(src, srcId, playerRef);
+  const { loadHLS } = usePlayerSource(src, srcId, playerRef, show, srcIndex);
 
   const reloadPlayer = React.useCallback(() => {
     // const src = asset.source.url;

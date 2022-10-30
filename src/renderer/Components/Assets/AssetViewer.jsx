@@ -68,11 +68,13 @@ const AssetContainer = (props) => {
   const [percentX, setPercentX] = React.useState(50);
   const [position, setPosition] = React.useState({ x: 0, y: 0 });
   const { useSrcLocal } = useAppState();
-  const { displayMode = 'flexRow', sources } = props;
+  const { displayMode = 'flexRow', sources, show } = props;
   const srcPath = useSrcLocal ? 'srcLocal' : 'srcRemote';
-  console.log('#### assetContainer:', sources, srcPath, displayMode);
+  // console.log('#### assetContainer:', sources, srcPath, displayMode);
   const onDragSplitter = React.useCallback((e, data) => {
+    // const centerX = e.clientX - e.offsetX + e.target.offsetWidth / 2;
     const currentPercentX = (e.clientX / window.innerWidth) * 100;
+    // console.log('###', centerX, e.clientX, e.offsetX, e.target.offsetWidth, e);
     setPercentX(currentPercentX);
     setPosition({ x: data.x, y: data.y });
   },[])
@@ -99,6 +101,8 @@ const AssetContainer = (props) => {
                 srcType={source.srcType}
                 src={source[srcPath]}
                 srcId={source.srcId}
+                show={show}
+                srcIndex={index}
               />
             </AbsoluteBox>
           ))}
@@ -106,25 +110,29 @@ const AssetContainer = (props) => {
       )}
       {(displayMode === 'flexColumn' || displayMode === 'flexRow') && (
         <FlexContainer displayMode={displayMode}>
-          {sources.map((source) => (
+          {sources.map((source, index) => (
             <Viewer
               key={source.srcId}
               srcType={source.srcType}
               src={source[srcPath]}
               srcId={source.srcId}
+              show={show}
+              srcIndex={index}
             />
           ))}
         </FlexContainer>
       )}
       {displayMode === 'swipe' && (
         <StyledSwiper>
-          {sources.map((source) => (
+          {sources.map((source, index) => (
             <SwiperSlide>
               <Viewer
                 key={source.srcId}
                 srcType={source.srcType}
                 src={source[srcPath]}
                 srcId={source.srcId}
+                show={show}
+                srcIndex={index}
               />
             </SwiperSlide>
           ))}
@@ -132,12 +140,14 @@ const AssetContainer = (props) => {
       )}
       {(displayMode === '' || displayMode === undefined) && (
         <Container>
-          {sources.map((source) => (
+          {sources.map((source, index) => (
             <Viewer
               key={source.srcId}
               srcType={source.srcType}
               src={source[srcPath]}
               srcId={source.srcId}
+              show={show}
+              srcIndex={index}
             />
           ))}
         </Container>
