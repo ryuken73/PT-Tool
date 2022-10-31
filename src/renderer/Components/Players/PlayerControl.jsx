@@ -37,6 +37,29 @@ const Progress = styled(Box)`
   margin-right: 20px;
   font-size: 15px !important;
 `;
+const InputProgress = styled.input`
+  /* -webkit-appearance: none; */
+  /* &::-webkit-slider-runnable-track {
+    width: 300px;
+    height: 5px;
+    border-radius: 3px;
+  }
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    border: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: black;
+    margin-top: -4px;
+  }
+  &:focus {
+    outline: none;
+  }
+  &:focus::-webkit-slider-runnable-track {
+    background: #ccc;
+  } */
+`
 const Duration = styled(Box)`
   margin-left: 20px;
   margin-right: 20px;
@@ -165,7 +188,7 @@ const Player = (props, playerRef) => {
         </Duration>
         <Progress>
           {/* <SliderBar value={progress} onChange={handleMoveProgressSlider} /> */}
-          <input
+          <InputProgress
             type="range"
             value={progress}
             onChange={handleMoveProgressSlider}
