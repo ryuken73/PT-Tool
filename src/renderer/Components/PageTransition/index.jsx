@@ -7,20 +7,24 @@ const changeAnimation = keyframes`
   0% {
     height: 100%;
     opacity: 1;
+    clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%, 0 0, 0 50%, 100% 50%, 100% 100%, 0 100%, 0 50%);
   }
-  20% {
+  50% {
     height: 100%;
     opacity: 1;
+    /* clip-path: polygon(0 0, 100% 0, 100% 25%, 0 25%, 0 0, 0 75%, 100% 75%, 100% 100%, 0 100%, 0 75%); */
   }
   100% {
-    height: 0%;
+    height: 100%;
     opacity: 0.7;
+    clip-path: polygon(0 0, 100% 0, 100% 1%, 0 1%, 0 0, 0 99%, 100% 99%, 100% 100%, 0 100%, 0 99%);
   }
 `;
 
 const animation = css`
-  ${changeAnimation} 1.2s cubic-bezier(.78,.01,1,-0.08);
+  /* ${changeAnimation} 1s cubic-bezier(.78,.01,1,-0.08); */
   /* ${changeAnimation} 2s cubic-bezier(.25,.41,.74,-0.65); */
+  ${changeAnimation} 1s cubic-bezier(.73,.15,.96,.14);
 `;
 
 const Container = styled.div`
@@ -30,6 +34,7 @@ const Container = styled.div`
   width: 100%;
   z-index: 10000;
   animation: ${(props) => props.assetChanged && animation};
+  animation-delay: 1s;
   transform-origin: 0% 100%;
   display: flex;
   justify-content: center;
