@@ -10,6 +10,7 @@ import Draggable from 'react-draggable';
 import Loading from './Components/Common/Loading';
 import ToolContainer from './Components/Draw/ToolContainer';
 import PageTransition from 'renderer/Components/PageTransition';
+import DisplayControl from 'renderer/Components/DisplayControl';
 import DragHandle from './Components/Draw/DragHandle';
 import useAppState from './hooks/useAppState';
 import useSyncPosition from './hooks/useSyncPosition';
@@ -394,6 +395,7 @@ export default function App() {
         title="Quit?"
       />
       <PageTransition />
+      <DisplayControl />
       <AssetContainer />
     </AppContainer>
   );
