@@ -9,6 +9,7 @@ import colors from 'renderer/config/colors';
 import Draggable from 'react-draggable';
 import Loading from './Components/Common/Loading';
 import ToolContainer from './Components/Draw/ToolContainer';
+import PageTransition from 'renderer/Components/PageTransition';
 import DragHandle from './Components/Draw/DragHandle';
 import useAppState from './hooks/useAppState';
 import useSyncPosition from './hooks/useSyncPosition';
@@ -391,7 +392,8 @@ export default function App() {
         handleYes={handleYes}
         handleNo={handleNo}
         title="Quit?"
-      ></ConfirmDialog>
+      />
+      <PageTransition />
       <AssetContainer />
     </AppContainer>
   );
