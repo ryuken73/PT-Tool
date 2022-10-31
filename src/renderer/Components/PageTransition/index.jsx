@@ -5,22 +5,21 @@ import useAssetState from 'renderer/hooks/useAssetState';
 
 const changeAnimation = keyframes`
   0% {
-    background: maroon;
     height: 100%;
     opacity: 1;
   }
-  50% {
-    background: maroon;
+  20% {
+    height: 100%;
+    opacity: 1;
   }
   100% {
-    background: maroon;
     height: 0%;
-    opacity: 0;
+    opacity: 0.7;
   }
 `;
 
 const animation = css`
-  ${changeAnimation} 1s cubic-bezier(.78,.01,1,-0.08);
+  ${changeAnimation} 1.2s cubic-bezier(.78,.01,1,-0.08);
   /* ${changeAnimation} 2s cubic-bezier(.25,.41,.74,-0.65); */
 `;
 
@@ -32,6 +31,41 @@ const Container = styled.div`
   z-index: 10000;
   animation: ${(props) => props.assetChanged && animation};
   transform-origin: 0% 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #141E30;
+  /* background: linear-gradient(to right, #24243e, #141E30, #0f0c29); } */
+  background: linear-gradient(to right, #24243e, #141E30); }
+`;
+
+const ThickText = styled.h1`
+  display: ${(props) => !props.assetChanged && 'none'};
+  position: relative;
+  /* background: linear-gradient(to right, #24243e, #141E30, #0f0c29); */
+  background: linear-gradient(to right, #24243e, #141E30);
+  text-transform: Uppercase;
+  margin-bottom: .5em;
+  font-family: 'Rubik', sans-serif;
+  font-size: 12rem;
+  color: #E4E5E6;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  &:before, &:after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  &:before {
+    z-index: -1;
+    text-shadow: -0.001em -0.001em 1px rgba(255,255,255,.15)}
+  }
+  &:after {
+    z-index: -2;
+    text-shadow: 10px 10px 10px rgba(0,0,0,.5), 20px 20px 20px rgba(0,0,0,.4), 30px 30px 30px rgba(0,0,0,.1);
+    mix-blend-mode: multiply;
+  }
 `;
 
 const PageTransition = () => {
@@ -47,7 +81,7 @@ const PageTransition = () => {
   }, []);
   return (
     <Container onAnimationEnd={onAnimationEnd} assetChanged={assetChanged}>
-      <h1 data-text="SBS News">SBS News</h1>
+      <ThickText assetChanged={assetChanged} data-text="SBS News">SBS News</ThickText>
     </Container>
   );
 }
