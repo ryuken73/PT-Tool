@@ -14,7 +14,7 @@ const initialState = {
   pointDatum: [],
   pathRenderOptions: [],
   currentOptions: {
-    size: 6,
+    size: 12,
     strokeWidth: 3,
     thinning: 0.75,
     streamline: 0.5,
