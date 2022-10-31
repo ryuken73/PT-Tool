@@ -8,6 +8,7 @@ import ImageBox from 'renderer/Components/Common/ImageBox';
 import useAppState from 'renderer/hooks/useAppState';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Draggable from 'react-draggable';
+import SwapHorizontalCircleIcon from '@mui/icons-material/SwapHorizontalCircle';
 import 'swiper/css';
 
 const Container = styled.div`
@@ -58,15 +59,23 @@ const Viewer = (props) => {
   return <SrcViewer {...remainOpts} />;
 };
 
-const MiddleLayer = styled(Container)`
+const ProtectLayer = styled(Container)`
+  display: ${(props) => (props.isDragging ? 'block' : 'none')};
   position: absolute;
   background: transparent;
   z-index: 8888;
+`
+const Splitter = styled(SwapHorizontalCircleIcon)`
+  background: white;
+  color: #140e30;
+  border-radius: 10px;
+  border: 1px solid black;
 `
 const AssetContainer = (props) => {
   // eslint-disable-next-line react/prop-types
   const [percentX, setPercentX] = React.useState(50);
   const [position, setPosition] = React.useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = React.useState(false);
   const { useSrcLocal } = useAppState();
   const { displayMode = 'flexRow', sources, show } = props;
   const srcPath = useSrcLocal ? 'srcLocal' : 'srcRemote';
@@ -77,7 +86,11 @@ const AssetContainer = (props) => {
     // console.log('###', centerX, e.clientX, e.offsetX, e.target.offsetWidth, e);
     setPercentX(currentPercentX);
     setPosition({ x: data.x, y: data.y });
-  },[])
+    setIsDragging(true);
+  }, []);
+  const onDragStop = React.useCallback(() => {
+    setIsDragging(false);
+  }, []);
 
   return (
     <Container>
@@ -85,15 +98,17 @@ const AssetContainer = (props) => {
         <OverlayContainer>
           <Draggable
             axis="x"
+            bounds="parent"
             onDrag={onDragSplitter}
+            onStop={onDragStop}
             position={position}
             positionOffset={{x: "-50%", y: 10}}
           >
             <DragDivWithPosition>
-              Drag me
+              <Splitter background="maroon" fontSize="large" />
             </DragDivWithPosition>
           </Draggable>
-          <MiddleLayer />
+          <ProtectLayer isDragging={isDragging} />
           {sources.map((source, index) => (
             <AbsoluteBox percentX={percentX} key={source.srcId} index={index}>
               <Viewer
