@@ -77,7 +77,7 @@ const AssetContainer = (props) => {
   const [position, setPosition] = React.useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = React.useState(false);
   const { useSrcLocal } = useAppState();
-  const { displayMode = 'flexRow', sources, show } = props;
+  const { displayMode = 'flexRow', assetId, sources, show } = props;
   const srcPath = useSrcLocal ? 'srcLocal' : 'srcRemote';
   // console.log('#### assetContainer:', sources, srcPath, displayMode);
   const onDragSplitter = React.useCallback((e, data) => {
@@ -112,7 +112,8 @@ const AssetContainer = (props) => {
           {sources.map((source, index) => (
             <AbsoluteBox percentX={percentX} key={source.srcId} index={index}>
               <Viewer
-                key={source.srcId}
+                key={`${assetId}-${source.srcId}`}
+                assetId={assetId}
                 srcType={source.srcType}
                 src={source[srcPath]}
                 srcId={source.srcId}
@@ -127,7 +128,8 @@ const AssetContainer = (props) => {
         <FlexContainer displayMode={displayMode}>
           {sources.map((source, index) => (
             <Viewer
-              key={source.srcId}
+              key={`${assetId}-${source.srcId}`}
+              assetId={assetId}
               srcType={source.srcType}
               src={source[srcPath]}
               srcId={source.srcId}
@@ -142,7 +144,8 @@ const AssetContainer = (props) => {
           {sources.map((source, index) => (
             <SwiperSlide>
               <Viewer
-                key={source.srcId}
+                key={`${assetId}-${source.srcId}`}
+                assetId={assetId}
                 srcType={source.srcType}
                 src={source[srcPath]}
                 srcId={source.srcId}
@@ -157,7 +160,8 @@ const AssetContainer = (props) => {
         <Container>
           {sources.map((source, index) => (
             <Viewer
-              key={source.srcId}
+              key={`${assetId}-${source.srcId}`}
+              assetId={assetId}
               srcType={source.srcType}
               src={source[srcPath]}
               srcId={source.srcId}

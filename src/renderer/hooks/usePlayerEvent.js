@@ -10,17 +10,19 @@ import {
 
 const MAX_LATENCY_SEC = 15;
 
-export default function usePlayerEvent(srcId, playerRef) {
+export default function usePlayerEvent(assetId, srcId, playerRef) {
   // console.log('usePlayerEvent called ')
   const dispatch = useDispatch();
   const playerId = srcId;
   const videoPlayer =
     useSelector(
       (state) =>
-        state.player.players.find((player) => player.playerId === playerId),
+        state.player.players.find(
+          (player) => player.assetId === assetId && player.playerId === playerId
+        ),
       shallowEqual
     ) || {};
-  console.log('#### videoPlayer?', playerId, videoPlayer, playerRef.current)
+  console.log('#### videoPlayer?', assetId, playerId, videoPlayer, playerRef.current)
   const {
     isPlaying,
     currentTime,
@@ -45,14 +47,14 @@ export default function usePlayerEvent(srcId, playerRef) {
 
   const setPlayerSource = React.useCallback(
     (src) => {
-      dispatch(setPlayerStatus({ playerId, key: 'currentSrc', value: src }));
+      dispatch(setPlayerStatus({ assetId, playerId, key: 'currentSrc', value: src }));
     },
-    [dispatch, playerId]
+    [dispatch, assetId, playerId]
   );
 
   const handlePlaying = React.useCallback(() => {
-    dispatch(setPlayerStatus({ playerId, key: 'isPlaying', value: true }));
-  }, [dispatch, playerId]);
+    dispatch(setPlayerStatus({ assetId, playerId, key: 'isPlaying', value: true }));
+  }, [dispatch, assetId, playerId]);
 
   const onClickForward10 = React.useCallback(() => {
     if (!playerRef.current) return;
@@ -73,20 +75,20 @@ export default function usePlayerEvent(srcId, playerRef) {
   }, [playerRef]);
 
   const handlePause = React.useCallback(() => {
-    dispatch(setPlayerStatus({ playerId, key: 'isPlaying', value: false }));
-  }, [dispatch, playerId]);
+    dispatch(setPlayerStatus({ assetId, playerId, key: 'isPlaying', value: false }));
+  }, [dispatch, assetId, playerId]);
 
   const handleTimeupdate = React.useCallback(() => {
     if (!playerRef.current) return;
     const currentTime = secondsToTime(parseInt(playerRef.current.currentTime, 10));
     currentTimeRef.current = currentTime;
     dispatch(
-      setPlayerCurrentTime({ playerId, key: 'currentTime', value: currentTime })
+      setPlayerCurrentTime({ assetId, playerId, key: 'currentTime', value: currentTime })
     );
     // console.log('### from player:', player, player.currentTime, player.duration);
     // const progress = ((player.currentTime / player.duration) * 100).toFixed(0);
     // dispatch(setPlayerProgress({ playerId, key: 'progress', value: progress }));
-  }, [dispatch, playerId, playerRef]);
+  }, [dispatch, assetId, playerId, playerRef]);
 
   const handleDurationChange = React.useCallback(() => {
     // const { duration } = player;
@@ -95,14 +97,14 @@ export default function usePlayerEvent(srcId, playerRef) {
     const durationTime = secondsToTime(parseInt(durationSec, 10));
     // console.log(`in usePlayerEvent : durationSec: ${durationSec}, duration: ${durationTime}`)
     currentDurationRef.current = durationSec;
-    dispatch(setPlayerStatus({ playerId, key: 'durationTime', value: durationTime }));
+    dispatch(setPlayerStatus({ assetId, playerId, key: 'durationTime', value: durationTime }));
     dispatch(
-      setPlayerStatus({ playerId, key: 'durationSec', value: durationSec })
+      setPlayerStatus({ assetId, playerId, key: 'durationSec', value: durationSec })
     );
-  }, [playerRef, dispatch, playerId]);
+  }, [playerRef, dispatch, assetId, playerId]);
 
   const onClickPlay = React.useCallback(() => {
-    console.log(playerId, isPlaying);
+    console.log(assetId, playerId, isPlaying);
     if (!playerRef.current) return;
     if (isPlaying) {
       playerRef.current.pause();
@@ -119,7 +121,7 @@ export default function usePlayerEvent(srcId, playerRef) {
   React.useEffect(() => {
     if (manifestLoaded === false) return [];
     if (playerRef.current === null || playerRef.current === undefined) {
-      dispatch(setPlayerStatus({ playerId, key: 'isPlaying', value: false }));
+      dispatch(setPlayerStatus({ assetId, playerId, key: 'isPlaying', value: false }));
       return [];
     }
     console.log('attach player event handlers', playerRef.current);
@@ -149,6 +151,7 @@ export default function usePlayerEvent(srcId, playerRef) {
     handleTimeupdate,
     handleDurationChange,
     dispatch,
+    assetId,
     playerId,
     playerRef,
   ]);
