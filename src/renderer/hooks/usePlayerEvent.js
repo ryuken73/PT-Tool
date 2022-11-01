@@ -3,7 +3,6 @@ import React from 'react';
 import { secondsToTime } from 'renderer/lib/appUtil';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import {
-  addPlayer,
   setPlayerStatus,
   setPlayerCurrentTime,
   setPlayerProgress,

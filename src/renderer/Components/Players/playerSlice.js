@@ -8,11 +8,6 @@ export const playerSlice = createSlice({
   name: 'playerSlice',
   initialState,
   reducers: {
-    addPlayer: (state, action) => {
-      const { payload } = action;
-      const { player } = payload;
-      state.players.push(player);
-    },
     setPlayerStatus: (state, action) => {
       const { payload } = action;
       const { playerId, key, value } = payload;
@@ -56,7 +51,6 @@ export const playerSlice = createSlice({
 })
 
 export const {
-  addPlayer,
   setPlayerStatus,
   setPlayerCurrentTime,
   setPlayerProgress,
