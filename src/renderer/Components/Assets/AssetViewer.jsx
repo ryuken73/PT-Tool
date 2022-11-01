@@ -9,6 +9,7 @@ import useAppState from 'renderer/hooks/useAppState';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import Draggable from 'react-draggable';
 import SwapHorizontalCircleIcon from '@mui/icons-material/SwapHorizontalCircle';
+import HeightIcon from '@mui/icons-material/Height';
 import 'swiper/css';
 
 const Container = styled.div`
@@ -65,11 +66,16 @@ const ProtectLayer = styled(Container)`
   background: transparent;
   z-index: 8888;
 `
-const Splitter = styled(SwapHorizontalCircleIcon)`
+const Splitter = styled(HeightIcon)`
   background: white;
   color: #140e30;
   border-radius: 10px;
   border: 1px solid black;
+  transform: rotate(90deg);
+  height: 1em;
+  width:  0.7em;
+  font-size: 3em;
+  box-shadow: 0.03em -0.03em 0.1em 0.01em black;
 `
 const AssetContainer = (props) => {
   // eslint-disable-next-line react/prop-types
