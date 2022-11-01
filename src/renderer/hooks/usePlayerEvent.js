@@ -21,7 +21,7 @@ export default function usePlayerEvent(srcId, playerRef) {
         state.player.players.find((player) => player.playerId === playerId),
       shallowEqual
     ) || {};
-  // console.log('#### videoPlayer?', videoPlayer)
+  console.log('#### videoPlayer?', playerId, videoPlayer, playerRef.current)
   const {
     isPlaying,
     currentTime,
@@ -39,10 +39,10 @@ export default function usePlayerEvent(srcId, playerRef) {
   const currentDurationRef = React.useRef(null);
 
   React.useEffect(() => {
-    if (player === null) return;
+    if (playerRef.current === null) return;
     // autoplay
     // player.play();
-  }, [player]);
+  }, [playerRef]);
 
   const setPlayerSource = React.useCallback(
     (src) => {
@@ -56,29 +56,30 @@ export default function usePlayerEvent(srcId, playerRef) {
   }, [dispatch, playerId]);
 
   const onClickForward10 = React.useCallback(() => {
-    if (!player) return;
-    const { currentTime } = player;
-    const maxCurrentTime = player.duration;
+    if (!playerRef.current) return;
+    const { currentTime } = playerRef.current;
+    const maxCurrentTime = playerRef.current.duration;
     const forwardTime =
       currentTime + 10 < maxCurrentTime ? currentTime + 10 : maxCurrentTime;
     if (Number.isNaN(forwardTime)) return;
-    player.currentTime = forwardTime;
-  }, [player]);
+    playerRef.current.currentTime = forwardTime;
+  }, [playerRef]);
 
   const onClickReplay10 = React.useCallback(() => {
-    if (!player) return;
-    const { currentTime } = player;
+    if (!playerRef.current) return;
+    const { currentTime } = playerRef.current;
     const replayTime = currentTime - 10 > 0 ? currentTime - 10 : 0;
     if (Number.isNaN(replayTime)) return;
-    player.currentTime = replayTime;
-  }, [player]);
+    playerRef.current.currentTime = replayTime;
+  }, [playerRef]);
 
   const handlePause = React.useCallback(() => {
     dispatch(setPlayerStatus({ playerId, key: 'isPlaying', value: false }));
   }, [dispatch, playerId]);
 
   const handleTimeupdate = React.useCallback(() => {
-    const currentTime = secondsToTime(parseInt(player.currentTime, 10));
+    if (!playerRef.current) return;
+    const currentTime = secondsToTime(parseInt(playerRef.current.currentTime, 10));
     currentTimeRef.current = currentTime;
     dispatch(
       setPlayerCurrentTime({ playerId, key: 'currentTime', value: currentTime })
@@ -86,11 +87,12 @@ export default function usePlayerEvent(srcId, playerRef) {
     // console.log('### from player:', player, player.currentTime, player.duration);
     // const progress = ((player.currentTime / player.duration) * 100).toFixed(0);
     // dispatch(setPlayerProgress({ playerId, key: 'progress', value: progress }));
-  }, [dispatch, playerId, player]);
+  }, [dispatch, playerId, playerRef]);
 
   const handleDurationChange = React.useCallback(() => {
     // const { duration } = player;
-    const durationSec = parseInt(player.duration, 10);
+    if (!playerRef.current) return;
+    const durationSec = parseInt(playerRef.current.duration, 10);
     const durationTime = secondsToTime(parseInt(durationSec, 10));
     // console.log(`in usePlayerEvent : durationSec: ${durationSec}, duration: ${durationTime}`)
     currentDurationRef.current = durationSec;
@@ -98,50 +100,58 @@ export default function usePlayerEvent(srcId, playerRef) {
     dispatch(
       setPlayerStatus({ playerId, key: 'durationSec', value: durationSec })
     );
-  }, [dispatch, player, playerId]);
+  }, [playerRef, dispatch, playerId]);
 
   const onClickPlay = React.useCallback(() => {
     console.log(playerId, isPlaying);
+    if (!playerRef.current) return;
     if (isPlaying) {
-      player.pause();
+      playerRef.current.pause();
       return;
     }
-    player.play();
-  }, [playerId, isPlaying, player]);
+    playerRef.current.play();
+  }, [playerId, isPlaying, playerRef]);
 
   const onClickReload = React.useCallback(() => {
-    player.load();
-  }, [player]);
+    if (!playerRef.current) return;
+    playerRef.current.load();
+  }, [playerRef]);
 
   React.useEffect(() => {
     if (manifestLoaded === false) return [];
-    if (player === null || player === undefined) {
+    if (playerRef.current === null || playerRef.current === undefined) {
       dispatch(setPlayerStatus({ playerId, key: 'isPlaying', value: false }));
       return [];
     }
-    console.log('attach player event handlers', player);
-    player.addEventListener('playing', handlePlaying);
-    player.addEventListener('pause', handlePause);
-    player.addEventListener('timeupdate', handleTimeupdate);
-    player.addEventListener('durationchange', handleDurationChange);
+    console.log('attach player event handlers', playerRef.current);
+    playerRef.current.addEventListener('playing', handlePlaying);
+    playerRef.current.addEventListener('pause', handlePause);
+    playerRef.current.addEventListener('timeupdate', handleTimeupdate);
+    playerRef.current.addEventListener('durationchange', handleDurationChange);
 
     return () => {
-      console.log('detach player event handlers', player);
-      player.removeEventListener('playing', handlePlaying);
-      player.removeEventListener('pause', handlePause);
-      player.removeEventListener('timeupdate', handleTimeupdate);
-      player.removeEventListener('durationchange', handleDurationChange);
-      player.pause();
+      console.log('detach player event handlers', playerRef.current);
+      if (playerRef.current === null || playerRef.current === undefined) {
+        return;
+      }
+      playerRef.current.removeEventListener('playing', handlePlaying);
+      playerRef.current.removeEventListener('pause', handlePause);
+      playerRef.current.removeEventListener('timeupdate', handleTimeupdate);
+      playerRef.current.removeEventListener(
+        'durationchange',
+        handleDurationChange
+      );
+      playerRef.current.pause();
     };
   }, [
     manifestLoaded,
-    player,
     handlePlaying,
     handlePause,
     handleTimeupdate,
     handleDurationChange,
     dispatch,
     playerId,
+    playerRef,
   ]);
 
   return {
