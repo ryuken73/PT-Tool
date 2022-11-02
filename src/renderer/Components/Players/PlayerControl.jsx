@@ -22,7 +22,7 @@ const Container = styled(Box)`
   position: absolute;
   top: ${POSITION.videoControl.top};
   right: ${POSITION.videoControl.right};
-  width: 300px;
+  width: 180px;
 `;
 const ProgressContainer = styled(Box)`
   /* display: flex; */
