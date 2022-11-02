@@ -50,6 +50,9 @@ export default function usePlayer(
             value: durationSec,
           })
         );
+        dispatch(
+          setPlayerStatus({ assetId, playerId, key: 'isPlaying', value: false })
+        );
         const isLive = durationTime === '00:00';
         if (isLive) {
           mediaElementRef.current.play();

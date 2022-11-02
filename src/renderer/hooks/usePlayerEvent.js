@@ -10,6 +10,15 @@ import {
 
 const MAX_LATENCY_SEC = 15;
 
+const isPlayerPlaying = (player) => {
+  return (
+    player.currentTime > 0 &&
+    !player.paused &&
+    !player.ended &&
+    player.readyState > 2
+  );
+};
+
 export default function usePlayerEvent(assetId, srcId, playerRef) {
   // console.log('usePlayerEvent called ')
   const dispatch = useDispatch();
@@ -22,7 +31,7 @@ export default function usePlayerEvent(assetId, srcId, playerRef) {
         ),
       shallowEqual
     ) || {};
-  console.log('#### videoPlayer?', assetId, playerId, videoPlayer, playerRef.current)
+  // console.log('#### videoPlayer?', assetId, playerId, videoPlayer, playerRef.current)
   const {
     isPlaying,
     currentTime,
@@ -104,14 +113,14 @@ export default function usePlayerEvent(assetId, srcId, playerRef) {
   }, [playerRef, dispatch, assetId, playerId]);
 
   const onClickPlay = React.useCallback(() => {
-    console.log(assetId, playerId, isPlaying);
     if (!playerRef.current) return;
-    if (isPlaying) {
-      playerRef.current.pause();
+    const player = playerRef.current;
+    if(isPlayerPlaying(player)) {
+      player.pause();
       return;
     }
-    playerRef.current.play();
-  }, [playerId, isPlaying, playerRef]);
+    player.play();
+  }, [playerRef]);
 
   const onClickReload = React.useCallback(() => {
     if (!playerRef.current) return;

@@ -107,6 +107,7 @@ const Player = (props, playerRef) => {
     durationSec,
     isLive,
     canplay,
+    onClickPlay,
     onClickForward10,
     onClickReplay10
   } = usePlayerEvent(assetId, srcId, playerRef);
@@ -115,14 +116,6 @@ const Player = (props, playerRef) => {
   const currentTimeSec = parseInt(playerCurrentTime, 10);
   const progress = ((currentTimeSec / durationSec) * 100).toFixed(0);
   // console.log('###', currentTime, progress, durationTime, durationSec)
-
-  const onClickPlay = React.useCallback(() => {
-    if (isPlaying) {
-      playerRef.current.pause();
-      return;
-    }
-    playerRef.current.play();
-  }, [playerRef, isPlaying]);
 
   const handleMoveProgressSlider = React.useCallback(
     (event) => {
