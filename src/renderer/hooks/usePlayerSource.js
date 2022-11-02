@@ -3,10 +3,7 @@ import Hls from 'hls.js';
 import { secondsToTime, isHlsStream } from 'renderer/lib/appUtil';
 import { setItemValue } from 'renderer/Components/Assets/assetSlice';
 import { setPlayerStatus } from 'renderer/Components/Players/playerSlice';
-// import { setItemValue, setDownloadingStatus, pushError} from 'renderer/Components//monitorListSlice';
 import { useSelector, useDispatch } from 'react-redux';
-// import CONSTANTS from 'config/constants';
-// const {STREAM_TYPE} = CONSTANTS;
 
 export default function usePlayer(
   assetId,
@@ -18,9 +15,11 @@ export default function usePlayer(
 ) {
   const dispatch = useDispatch();
   const playerId = srcId;
-  // const { assetId: playerId, source } = player;
-  // const { url: src } = source;
   const hlsRef = React.useRef(null);
+  const asset = useSelector((state) =>
+    state.asset.assets.find((asset) => asset.assetId === assetId)
+  );
+  const { displayMode } = asset;
 
   const handleLoadedMetadata = React.useCallback(
     (event) => {
@@ -57,7 +56,10 @@ export default function usePlayer(
         if (isLive) {
           mediaElementRef.current.play();
         }
-        if (!isLive && show && srcIndex === 0) {
+        if (!isLive && show && srcIndex === 0 && displayMode === 'swipe') {
+          mediaElementRef.current.play();
+        }
+        if (!isLive && displayMode !== 'swipe') {
           mediaElementRef.current.play();
         }
       }
