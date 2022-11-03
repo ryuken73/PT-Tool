@@ -59,7 +59,7 @@ export default function usePlayer(
         if (!isLive && show && srcIndex === 0 && displayMode === 'swipe') {
           mediaElementRef.current.play();
         }
-        if (!isLive && displayMode !== 'swipe') {
+        if (!isLive && show && displayMode !== 'swipe') {
           mediaElementRef.current.play();
         }
       }
