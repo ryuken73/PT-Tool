@@ -88,8 +88,10 @@ const AssetContainer = (props) => {
   // console.log('#### assetContainer:', sources, srcPath, displayMode);
   const onDragSplitter = React.useCallback((e, data) => {
     // const centerX = e.clientX - e.offsetX + e.target.offsetWidth / 2;
-    const currentPercentX = (e.clientX / window.innerWidth) * 100;
+    // const currentPercentX = (e.clientX / window.innerWidth) * 100;
     // console.log('###', centerX, e.clientX, e.offsetX, e.target.offsetWidth, e);
+    const clientX = e.clientX || e.touches[0].clientX;
+    const currentPercentX = (clientX / window.innerWidth) * 100;
     setPercentX(currentPercentX);
     setPosition({ x: data.x, y: data.y });
     setIsDragging(true);
