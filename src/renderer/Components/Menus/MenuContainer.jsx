@@ -21,12 +21,17 @@ const VerticalDiv = styled.div`
   justify-content: space-around;
   align-items: center;
   z-index: 9999;
+  padding: 5px;
+  border-radius: 5px;
+  border: ${props => props.isDragging && "2px dashed"};
+  opacity: ${props => props.isDragging && "0.5"};
 `;
 
 const MenuContainer = (props) => {
   // eslint-disable-next-line react/prop-types
   const { drawShow  } = props;
   const { useSrcLocal } = useAppState();
+  const [isDragging, setIsDragging] = React.useState(false);
   const { assets, currentAsset, setAssetsState, setCurrentAssetState } = useAssetState();
   const [ socketConnected, setSocketConnected ] = React.useState(false);
   const handleSocketEvent = React.useCallback((eventName, args) => {
@@ -42,11 +47,19 @@ const MenuContainer = (props) => {
     handleSocketEvent
   });
 
+  const onStartDrag = React.useCallback(() => {
+    setIsDragging(true);
+  }, [setIsDragging])
+
+  const onStopDrag = React.useCallback(() => {
+    setIsDragging(false);
+  }, [setIsDragging])
+
   return (
     <>
       {ENABLE_V_MENU ? (
-        <Draggable bounds="#root" handle="#handle">
-          <VerticalDiv>
+        <Draggable bounds="#root" handle="#handle" onStart={onStartDrag} onStop={onStopDrag}>
+          <VerticalDiv isDragging={isDragging}>
             <div id="handle">
               <DragHandle />
             </div>

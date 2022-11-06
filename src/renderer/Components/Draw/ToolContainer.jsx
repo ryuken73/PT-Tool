@@ -42,6 +42,10 @@ const ToolDivWithPosition = styled.div`
   right: ${POSITION.toolContainer.right};
   z-index: 9999;
   margin: 3px;
+  padding: 5px;
+  border-radius: 5px;
+  border: ${props => props.isDragging && "2px dashed"};
+  opacity: ${props => props.isDragging && "0.5"};
 `;
 
 const FlexContainer = styled.div`
@@ -163,6 +167,7 @@ const ToolContainer = (props) => {
   // eslint-disable-next-line react/prop-types
   const { drawShow, toggleDraw } = props;
   const [currentColor, setCurrentColor] = React.useState('red');
+  const [isDragging, setIsDragging] = React.useState(false);
   const {
     currentOptions,
     changePathOptionState,
@@ -240,11 +245,19 @@ const ToolContainer = (props) => {
     changePathOptionState('size', nextValue);
   }, [changePathOptionState, size]);
 
+  const onStartDrag = React.useCallback(() => {
+    setIsDragging(true);
+  }, [setIsDragging])
+
+  const onStopDrag = React.useCallback(() => {
+    setIsDragging(false);
+  }, [setIsDragging])
+
   const timeout = 200;
 
   return (
-    <Draggable bounds="#root" handle="strong">
-    <ToolDivWithPosition>
+    <Draggable bounds="#root" handle="strong" onStart={onStartDrag} onStop={onStopDrag}>
+    <ToolDivWithPosition isDragging={isDragging}>
     <Container>
       <FlexContainer>
       <IconContainerOne>
