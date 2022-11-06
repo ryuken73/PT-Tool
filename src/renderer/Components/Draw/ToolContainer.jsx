@@ -24,6 +24,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import useDrawState from 'renderer/hooks/useDrawState';
 import CONSTANTS from 'renderer/config/constants';
 import { red } from '@mui/material/colors';
+import { moveMessagePortToContext } from 'worker_threads';
 
 const { POSITION } = CONSTANTS;
 
@@ -122,6 +123,10 @@ const iconStyleBlink = {
   ...iconStyle,
   animation: `${blink} 2s infinite`,
 };
+const iconStyleRed = {
+  ...iconStyle,
+  background: 'maroon'
+}
 
 const CheckSvg = (props) => {
   return (
@@ -250,7 +255,7 @@ const ToolContainer = (props) => {
           onClick={toggleDraw}
           // onTouchTap={toggleDraw}
         >
-          <ModeEditIcon sx={drawShow ? iconStyleBlink : iconStyle} />
+          <ModeEditIcon sx={drawShow ? iconStyleRed : iconStyle} />
         </IconButton>
       </IconContainerOne>
       <strong>
