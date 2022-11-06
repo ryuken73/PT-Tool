@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import React from 'react';
 import AssetContainer from 'renderer/Components/Assets/AssetContainer';
+import AssetTitle from 'renderer/Components/Assets/AssetTitle';
 import DrawSvg from 'renderer/Components/Draw/DrawSvg';
 import MenuContainer from 'renderer/Components/Menus/MenuContainer';
 import ConfirmDialog from './Components/Dialog/ConfirmDialog';
@@ -376,6 +377,7 @@ export default function App() {
       <AppQuiter />
       {drawShow && <DrawSvg />}
       <Loading />
+      {ENABLE_V_MENU && <AssetTitle />}
       <MenuContainer showVertical={ENABLE_V_MENU} drawShow={drawShow} />
       <Draggable bounds={bounds} handle="strong">
         <ToolDivWithPosition>

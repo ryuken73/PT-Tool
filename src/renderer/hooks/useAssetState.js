@@ -35,6 +35,11 @@ export default function useAssetState() {
     })
   }, [assets, currentAsset])
 
+  const currentAssetTitle = React.useMemo(() => {
+    const asset = assets.find((asset, index) => index === currentAsset) || null;
+    return asset ? asset.assetTitle : '...';
+  }, [assets, currentAsset]);
+
   const addAssetState = React.useCallback(
     (asset) => {
       console.log('addAssetsState:', asset)
@@ -59,6 +64,7 @@ export default function useAssetState() {
   return {
     assets,
     currentAsset,
+    currentAssetTitle,
     assetShowMask,
     addAssetState,
     setAssetsState,
