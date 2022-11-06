@@ -22,7 +22,10 @@ import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import useDrawState from 'renderer/hooks/useDrawState';
+import CONSTANTS from 'renderer/config/constants';
 import { red } from '@mui/material/colors';
+
+const { POSITION } = CONSTANTS;
 
 const Container = styled.div`
   display: flex;
@@ -34,8 +37,8 @@ const Container = styled.div`
 
 const ToolDivWithPosition = styled.div`
   position: absolute;
-  top: 150px;
-  right: 20px;
+  top: ${POSITION.toolContainer.top};
+  right: ${POSITION.toolContainer.right};
   z-index: 9999;
   margin: 3px;
 `;

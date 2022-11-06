@@ -14,8 +14,8 @@ const { TOUCH_WEB_SERVER_URL, ENABLE_V_MENU } = CONSTANTS;
 
 const VerticalDiv = styled.div`
   position: absolute;
-  bottom: 50px;
-  right: 120px;
+  bottom: 120px;
+  right: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -46,7 +46,7 @@ const MenuContainer = (props) => {
     <>
       {ENABLE_V_MENU ? (
         <Draggable bounds="#root" handle="#handle">
-          <VerticalDiv> 
+          <VerticalDiv>
             <div id="handle">
               <DragHandle />
             </div>

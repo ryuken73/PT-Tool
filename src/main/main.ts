@@ -89,12 +89,14 @@ const createWindow = async () => {
     },
   });
 
+
   mainWindow.loadURL(resolveHtmlPath('index.html'));
 
   mainWindow.on('ready-to-show', () => {
     if (!mainWindow) {
       throw new Error('"mainWindow" is not defined');
     }
+    mainWindow.setFullScreen(true);
     if (process.env.START_MINIMIZED) {
       mainWindow.minimize();
     } else {

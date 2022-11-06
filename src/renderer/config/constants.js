@@ -1,5 +1,5 @@
 const TOOL_TOP = 300;
-const TOOL_RIGHT = 200;
+const TOOL_RIGHT = 20;
 const MENU_TOP = 10;
 const MENU_RIGHT = 50;
 
@@ -21,7 +21,7 @@ const dev =  {
     },
     videoControl: {
       top: `${TOOL_TOP-150}px`,
-      right: `${TOOL_RIGHT-150}px`,
+      right: `${TOOL_RIGHT}px`,
     },
     menuContainer: {
       top: `${MENU_TOP}px`,
