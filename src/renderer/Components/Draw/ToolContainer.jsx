@@ -2,6 +2,7 @@ import React from 'react';
 import styled, {css} from 'styled-components';
 import { keyframes } from '@emotion/react'
 import Zoom from '@mui/material/Zoom';
+import Draggable from 'react-draggable';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
 import IconButton from '@mui/material/IconButton';
@@ -30,6 +31,15 @@ const Container = styled.div`
   align-items: center;
   /* min-width: 130px; */
 `
+
+const ToolDivWithPosition = styled.div`
+  position: absolute;
+  top: 150px;
+  right: 20px;
+  z-index: 9999;
+  margin: 3px;
+`;
+
 const FlexContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -225,6 +235,8 @@ const ToolContainer = (props) => {
   const timeout = 200;
 
   return (
+    <Draggable bounds="#root" handle="strong">
+    <ToolDivWithPosition>
     <Container>
       <FlexContainer>
       <IconContainerOne>
@@ -484,6 +496,8 @@ const ToolContainer = (props) => {
         </Zoom> */}
       </GridContainer>
     </Container>
+    </ToolDivWithPosition>
+    </Draggable>
   );
 };
 

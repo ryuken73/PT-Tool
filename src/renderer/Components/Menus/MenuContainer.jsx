@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Draggable from 'react-draggable';
+import DragHandle from 'renderer/Components/Draw/DragHandle';
 import useSyncPosition from 'renderer/hooks/useSyncPosition';
 import useAppState from 'renderer/hooks/useAppState';
 import useAssetState from 'renderer/hooks/useAssetState';
@@ -44,8 +45,11 @@ const MenuContainer = (props) => {
   return (
     <>
       {ENABLE_V_MENU ? (
-        <Draggable>
-          <VerticalDiv>
+        <Draggable bounds="#root" handle="#handle">
+          <VerticalDiv> 
+            <div id="handle">
+              <DragHandle />
+            </div>
             <MenuVertical
               drawShow={drawShow}
               assets={assets}
@@ -55,16 +59,12 @@ const MenuContainer = (props) => {
           </VerticalDiv>
         </Draggable>
       ) : (
-        <Draggable>
-          <div>
-          <MenuHorizontal
-            drawShow={drawShow}
-            assets={assets}
-            currentAsset={currentAsset}
-            setCurrentAssetState={setCurrentAssetState}
-          />
-          </div>
-        </Draggable>
+      <MenuHorizontal
+        drawShow={drawShow}
+        assets={assets}
+        currentAsset={currentAsset}
+        setCurrentAssetState={setCurrentAssetState}
+      />
       )}
     </>
   );

@@ -7,12 +7,10 @@ import MenuContainer from 'renderer/Components/Menus/MenuContainer';
 import ConfirmDialog from './Components/Dialog/ConfirmDialog';
 import styled from 'styled-components';
 import colors from 'renderer/config/colors';
-import Draggable from 'react-draggable';
 import Loading from './Components/Common/Loading';
 import ToolContainer from './Components/Draw/ToolContainer';
 import PageTransition from 'renderer/Components/PageTransition';
 import DisplayControl from 'renderer/Components/DisplayControl';
-import DragHandle from './Components/Draw/DragHandle';
 import useAppState from './hooks/useAppState';
 import useSyncPosition from './hooks/useSyncPosition';
 import useAssetState from './hooks/useAssetState';
@@ -232,19 +230,6 @@ const AppContainer = styled(Container)`
   color: white;
   overflow: hidden;
 `;
-const ToolDivWithPosition = styled.div`
-  position: absolute;
-  top: ${POSITION.toolContainer.top};
-  right: ${POSITION.toolContainer.right};
-  z-index: 9999;
-  margin: 3px;
-`;
-const ToolDragLeader = styled.div`
-  position: absolute;
-  top: ${POSITION.drawHandler.top};
-  right: ${POSITION.drawHandler.right};
-  z-index: 9999;
-`;
 const AbsoluteBox = styled.div`
   position: absolute;
   width: 20px;
@@ -379,11 +364,7 @@ export default function App() {
       <Loading />
       {ENABLE_V_MENU && <AssetTitle />}
       <MenuContainer showVertical={ENABLE_V_MENU} drawShow={drawShow} />
-      <Draggable bounds={bounds} handle="strong">
-        <ToolDivWithPosition>
-          <ToolContainer drawShow={drawShow} toggleDraw={toggleDraw} />
-        </ToolDivWithPosition>
-      </Draggable>
+      <ToolContainer drawShow={drawShow} toggleDraw={toggleDraw} />
       <ConfirmDialog
         open={quitConfirmOpen}
         handleYes={handleYes}

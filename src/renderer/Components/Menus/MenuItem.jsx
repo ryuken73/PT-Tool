@@ -16,7 +16,7 @@ const MenuItem = (props) => {
   // eslint-disable-next-line react/prop-types
   const { menuText, isCurrent, onClick, mode="horizontal" } = props;
   return (
-    <Container isCurrent={isCurrent} onClick={onClick} mode={mode}>
+    <Container className="menuItem" isCurrent={isCurrent} onClick={onClick} mode={mode}>
       {menuText}
     </Container>
   );
