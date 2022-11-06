@@ -1,4 +1,6 @@
 import React from 'react';
+import styled from 'styled-components';
+import Draggable from 'react-draggable';
 import useSyncPosition from 'renderer/hooks/useSyncPosition';
 import useAppState from 'renderer/hooks/useAppState';
 import useAssetState from 'renderer/hooks/useAssetState';
@@ -8,6 +10,17 @@ import MenuVertical from 'renderer/Components/Menus/MenuVertical';
 import MenuHorizontal from 'renderer/Components/Menus/MenuHorizontal';
 
 const { TOUCH_WEB_SERVER_URL, ENABLE_V_MENU } = CONSTANTS;
+
+const VerticalDiv = styled.div`
+  position: absolute;
+  bottom: 50px;
+  right: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 9999;
+`;
 
 const MenuContainer = (props) => {
   // eslint-disable-next-line react/prop-types
@@ -31,19 +44,27 @@ const MenuContainer = (props) => {
   return (
     <>
       {ENABLE_V_MENU ? (
-        <MenuVertical
-          drawShow={drawShow}
-          assets={assets}
-          currentAsset={currentAsset}
-          setCurrentAssetState={setCurrentAssetState}
-         />
+        <Draggable>
+          <VerticalDiv>
+            <MenuVertical
+              drawShow={drawShow}
+              assets={assets}
+              currentAsset={currentAsset}
+              setCurrentAssetState={setCurrentAssetState}
+            />
+          </VerticalDiv>
+        </Draggable>
       ) : (
-        <MenuHorizontal
-          drawShow={drawShow}
-          assets={assets}
-          currentAsset={currentAsset}
-          setCurrentAssetState={setCurrentAssetState}
-         />
+        <Draggable>
+          <div>
+          <MenuHorizontal
+            drawShow={drawShow}
+            assets={assets}
+            currentAsset={currentAsset}
+            setCurrentAssetState={setCurrentAssetState}
+          />
+          </div>
+        </Draggable>
       )}
     </>
   );
