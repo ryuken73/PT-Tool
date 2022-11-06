@@ -39,9 +39,11 @@ const AbsoluteBox = styled.div`
 const DragDivWithPosition = styled.div`
   position: absolute;
   bottom: 10%;
-  left: 50%;
+  left: calc(50% - 17.5px);
   z-index: 9999;
-`
+  touch-action: none;
+  user-select: none;
+`;
 
 const StyledSwiper = styled(Swiper)`
   width: 100%;
@@ -89,10 +91,6 @@ const AssetContainer = (props) => {
   const srcPath = useSrcLocal ? 'srcLocal' : 'srcRemote';
   // console.log('#### assetContainer:', sources, srcPath, displayMode);
   const onDragSplitter = React.useCallback((e, data) => {
-    // const centerX = e.clientX - e.offsetX + e.target.offsetWidth / 2;
-    // const currentPercentX = (e.clientX / window.innerWidth) * 100;
-    // console.log('###', centerX, e.clientX, e.offsetX, e.target.offsetWidth, e);
-    console.log(e)
     const clientX = e.clientX || e.touches[0].clientX;
     const currentPercentX = (clientX / window.innerWidth) * 100;
     setPercentX(currentPercentX);
@@ -100,19 +98,14 @@ const AssetContainer = (props) => {
     setIsDragging(true);
   }, []);
   const syncSplitter = React.useCallback((clientX) => {
-    // const centerX = e.clientX - e.offsetX + e.target.offsetWidth / 2;
-    // const currentPercentX = (e.clientX / window.innerWidth) * 100;
-    // console.log('###', centerX, e.clientX, e.offsetX, e.target.offsetWidth, e);
-    // const clientX = e.clientX || e.touches[0].clientX;
     const currentPercentX = (clientX / window.innerWidth) * 100;
     setPercentX(currentPercentX);
-    // setPosition({ x: data.x, y: data.y });
     setIsDragging(true);
   }, []);
   const onDragStop = React.useCallback(() => {
     setIsDragging(false);
   }, []);
-  const offsetX = window.innerWidth/2 + 15;
+  const offsetX = window.innerWidth/2;
   React.useEffect(() => {
     const position = { x: 0, y: 0 };
     if(dragRef.current === null) return;
