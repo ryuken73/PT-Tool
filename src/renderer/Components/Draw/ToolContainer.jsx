@@ -254,7 +254,7 @@ const ToolContainer = (props) => {
         >
           <IconContainerOne>
             <ColorBox
-              onTouchStart={onClickColor}
+              // onTouchStart={onClickColor}
               onClick={onClickColor}
               color="red"
             >
@@ -273,7 +273,7 @@ const ToolContainer = (props) => {
         >
           <IconContainerOne>
             <ColorBox
-              onTouchStart={onClickColor}
+              // onTouchStart={onClickColor}
               onClick={onClickColor}
               color="yellow"
             >
@@ -315,7 +315,7 @@ const ToolContainer = (props) => {
         >
           <IconContainerOne>
             <ColorBox
-              onTouchStart={onClickColor}
+              // onTouchStart={onClickColor}
               onClick={onClickColor}
               color="darkblue"
             >
@@ -334,7 +334,7 @@ const ToolContainer = (props) => {
         >
           <IconContainerOne>
             <ColorBox
-              onTouchStart={onClickColor}
+              // onTouchStart={onClickColor}
               onClick={onClickColor}
               color="black"
             >
@@ -378,7 +378,7 @@ const ToolContainer = (props) => {
             <IconButton
               sx={{ padding: '0px' }}
               size="medium"
-              onTouchStart={undoPathDatumState}
+              // onTouchStart={undoPathDatumState}
               onClick={undoPathDatumState}
             >
               <IndeterminateCheckBoxIcon sx={iconStyle} />
@@ -399,7 +399,7 @@ const ToolContainer = (props) => {
             <IconButton
               sx={{ padding: '0px' }}
               size="medium"
-              onTouchStart={clearPathDatumState}
+              // onTouchStart={clearPathDatumState}
               onClick={clearPathDatumState}
             >
               <DeleteForeverIcon sx={iconStyle} />
