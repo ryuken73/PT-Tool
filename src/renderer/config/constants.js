@@ -31,7 +31,8 @@ const dev =  {
       top: `${MENU_TOP+10}px`,
       right: `${MENU_RIGHT-30}px`,
     },
-  }
+  },
+  ENABLE_V_MENU: true,
 }
 
 const prd = {

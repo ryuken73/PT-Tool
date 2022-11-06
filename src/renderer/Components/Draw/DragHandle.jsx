@@ -9,7 +9,7 @@ export default function DragHandle(props) {
     paddingLeft: '2px',
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   }
 
   return <DehazeIcon sx={iconStyle} />;

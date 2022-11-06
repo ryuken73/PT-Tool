@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 const Container = styled.div`
   cursor: pointer;
+  font-size: ${(props) => props.mode === 'vertical' && '20px'};
   margin-left: 20px;
   margin-right: 20px;
   margin-top: 10px;
@@ -13,9 +14,9 @@ const Container = styled.div`
 
 const MenuItem = (props) => {
   // eslint-disable-next-line react/prop-types
-  const { menuText, isCurrent, onClick } = props;
+  const { menuText, isCurrent, onClick, mode="horizontal" } = props;
   return (
-    <Container isCurrent={isCurrent} onClick={onClick}>
+    <Container isCurrent={isCurrent} onClick={onClick} mode={mode}>
       {menuText}
     </Container>
   );

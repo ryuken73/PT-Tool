@@ -20,7 +20,7 @@ import useDrawState from './hooks/useDrawState';
 import CONSTANTS from 'renderer/config/constants';
 import { getIpAddresses, toggleWindowMaximize, quitApp } from './lib/appUtil';
 
-const { POSITION, TOUCH_WORKSTATION_IP, TOUCH_WEB_SERVER_URL } = CONSTANTS;
+const { POSITION, TOUCH_WORKSTATION_IP, TOUCH_WEB_SERVER_URL, ENABLE_V_MENU } = CONSTANTS;
 
 const INITIAL_ASSETS = [
   {
@@ -376,7 +376,7 @@ export default function App() {
       <AppQuiter />
       {drawShow && <DrawSvg />}
       <Loading />
-      <MenuContainer drawShow={drawShow} />
+      <MenuContainer showVertical={ENABLE_V_MENU} drawShow={drawShow} />
       <Draggable bounds={bounds} handle="strong">
         <ToolDivWithPosition>
           <ToolContainer drawShow={drawShow} toggleDraw={toggleDraw} />
