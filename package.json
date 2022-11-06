@@ -238,6 +238,7 @@
     "electron-updater": "^4.6.5",
     "history": "^5.3.0",
     "hls.js": "^1.2.3",
+    "interactjs": "^1.10.17",
     "perfect-freehand": "^1.2.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

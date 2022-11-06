@@ -2,13 +2,12 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import styled from 'styled-components';
-import interact from 'interactjs';
 import Player from 'renderer/Components/Players/Player';
 import WebView from 'renderer/Components/Common/WebView';
 import ImageBox from 'renderer/Components/Common/ImageBox';
 import useAppState from 'renderer/hooks/useAppState';
 import { Swiper, SwiperSlide } from 'swiper/react';
-// import Draggable from 'react-draggable';
+import Draggable from 'react-draggable';
 import SwapHorizontalCircleIcon from '@mui/icons-material/SwapHorizontalCircle';
 import HeightIcon from '@mui/icons-material/Height';
 import 'swiper/css';
@@ -81,9 +80,8 @@ const Splitter = styled(HeightIcon)`
 const AssetContainer = (props) => {
   // eslint-disable-next-line react/prop-types
   const [percentX, setPercentX] = React.useState(50);
-  // const [position, setPosition] = React.useState({ x: 0, y: 0 });
+  const [position, setPosition] = React.useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = React.useState(false);
-  const dragRef = React.useRef(null);
   const { useSrcLocal } = useAppState();
   const { displayMode = 'flexRow', assetId, sources, show } = props;
   const srcPath = useSrcLocal ? 'srcLocal' : 'srcRemote';
@@ -92,70 +90,32 @@ const AssetContainer = (props) => {
     // const centerX = e.clientX - e.offsetX + e.target.offsetWidth / 2;
     // const currentPercentX = (e.clientX / window.innerWidth) * 100;
     // console.log('###', centerX, e.clientX, e.offsetX, e.target.offsetWidth, e);
-    console.log(e)
     const clientX = e.clientX || e.touches[0].clientX;
     const currentPercentX = (clientX / window.innerWidth) * 100;
     setPercentX(currentPercentX);
     setPosition({ x: data.x, y: data.y });
     setIsDragging(true);
   }, []);
-  const syncSplitter = React.useCallback((clientX) => {
-    // const centerX = e.clientX - e.offsetX + e.target.offsetWidth / 2;
-    // const currentPercentX = (e.clientX / window.innerWidth) * 100;
-    // console.log('###', centerX, e.clientX, e.offsetX, e.target.offsetWidth, e);
-    // const clientX = e.clientX || e.touches[0].clientX;
-    const currentPercentX = (clientX / window.innerWidth) * 100;
-    setPercentX(currentPercentX);
-    // setPosition({ x: data.x, y: data.y });
-    setIsDragging(true);
-  }, []);
   const onDragStop = React.useCallback(() => {
     setIsDragging(false);
   }, []);
-  const offsetX = window.innerWidth/2 + 15;
-  React.useEffect(() => {
-    const position = { x: 0, y: 0 };
-    if(dragRef.current === null) return;
-    interact(dragRef.current).draggable({
-      inertia: true,
-      modifiers: [
-        interact.modifiers.restrictRect({
-          restriction: 'parent'
-        })
-      ],
-      listeners: {
-        start (event) {
-          console.log(event, event.target)
-        },
-        move (event) {
-          position.x += event.dx;
-          position.y += event.dy;
-          syncSplitter(position.x + offsetX);
-          event.target.style.transform = `translate(${position.x}px, ${position.y}px)`;
-        },
-        end (event) {
-          onDragStop();
-        }
-      }
-    })
-  }, [dragRef, offsetX, onDragStop, syncSplitter]);
 
   return (
     <Container>
       {displayMode === 'overlay' && (
         <OverlayContainer>
-          {/* <Draggable
+          <Draggable
             axis="x"
             bounds="parent"
             onDrag={onDragSplitter}
             onStop={onDragStop}
             position={position}
             positionOffset={{x: "-50%", y: 10}}
-          > */}
-            <DragDivWithPosition ref={dragRef}>
+          >
+            <DragDivWithPosition>
               <Splitter background="maroon" fontSize="large" />
             </DragDivWithPosition>
-          {/* </Draggable> */}
+          </Draggable>
           <ProtectLayer isDragging={isDragging} />
           {sources.map((source, index) => (
             <AbsoluteBox percentX={percentX} key={source.srcId} index={index}>
