@@ -77,6 +77,7 @@ const DrawSvg = (props) => {
 
   const handlePointerMove = React.useCallback((e) => {
     if (e.buttons !== 1) return;
+    if (e.isPrimary === false) return;
     setPoints([...points, [e.pageX, e.pageY, e.pressure]]);
     },
     [points]
