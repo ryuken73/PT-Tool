@@ -107,6 +107,7 @@ const AssetContainer = (props) => {
   }, []);
   const offsetX = window.innerWidth/2;
   React.useEffect(() => {
+    if(displayMode !== 'overlay') return;
     const position = { x: 0, y: 0 };
     if(dragRef.current === null) return;
     interact(dragRef.current).draggable({
@@ -131,7 +132,7 @@ const AssetContainer = (props) => {
         }
       }
     })
-  }, [dragRef, offsetX, onDragStop, syncSplitter]);
+  }, [dragRef, offsetX, onDragStop, syncSplitter, displayMode]);
 
   return (
     <Container>
