@@ -4,7 +4,7 @@ import {
   setAssets,
   setCurrentAsset,
 } from 'renderer/Components/Assets/assetSlice';
-
+import useDrawState from 'renderer/hooks/useDrawState';
 
 const addExtAttr = (videoAsset) => {
   const type = videoAsset.src.toUpperCase().endsWith('MP4') ? 'video/mp4' : 'application/x-mpegURL';
@@ -28,6 +28,7 @@ export default function useAssetState() {
   const dispatch = useDispatch();
   const assets = useSelector((state) => state.asset.assets);
   const currentAsset = useSelector((state) => state.asset.currentAsset);
+  const { clearPathDatumState } = useDrawState();
 
   const assetShowMask = React.useMemo(() => {
     return assets.map((asset, index) => {
@@ -57,6 +58,7 @@ export default function useAssetState() {
   );
 
   const setCurrentAssetState = React.useCallback((assetIndex) => {
+    clearPathDatumState();
     dispatch(setCurrentAsset({ currentAsset: assetIndex }));
     },
     [dispatch]
