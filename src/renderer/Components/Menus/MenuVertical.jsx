@@ -21,7 +21,7 @@ function MenuVertical(props) {
   // eslint-disable-next-line react/prop-types
   const { drawShow, assets, currentAsset, setCurrentAssetState } = props;
   return (
-    <Container hide={drawShow}>
+    <Container hide={false}>
       {assets.map((asset, index) => (
         <MenuItem
           key={asset.assetTitle}
