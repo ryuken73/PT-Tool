@@ -245,7 +245,7 @@ const ToolContainer = (props) => {
     changePathOptionState('size', nextValue);
   }, [changePathOptionState, size]);
 
-  const onStartDrag = React.useCallback(() => {
+  const onStartDrag = React.useCallback((event) => {
     setIsDragging(true);
   }, [setIsDragging])
 

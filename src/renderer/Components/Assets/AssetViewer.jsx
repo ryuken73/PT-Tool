@@ -29,6 +29,9 @@ const FlexContainer = styled(Container)`
 `;
 
 const OverlayContainer = styled(Container)`
+  position: relative;
+  width: 100%;
+  height: 100%;
 `;
 const AbsoluteBox = styled.div`
   position: absolute;

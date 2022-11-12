@@ -30,7 +30,7 @@ const VerticalDiv = styled.div`
 const MenuContainer = (props) => {
   // eslint-disable-next-line react/prop-types
   const { drawShow  } = props;
-  const { useSrcLocal } = useAppState();
+  const { useSrcLocal, setDraggableDockState } = useAppState();
   const [isDragging, setIsDragging] = React.useState(false);
   const { assets, currentAsset, setAssetsState, setCurrentAssetState } = useAssetState();
   const [ socketConnected, setSocketConnected ] = React.useState(false);
@@ -47,18 +47,31 @@ const MenuContainer = (props) => {
     handleSocketEvent
   });
 
-  const onStartDrag = React.useCallback(() => {
+  const onStartDrag = React.useCallback((e) => {
     setIsDragging(true);
   }, [setIsDragging])
 
-  const onStopDrag = React.useCallback(() => {
+  const onStopDrag = React.useCallback((e, data) => {
+    console.log(e, data)
     setIsDragging(false);
   }, [setIsDragging])
+
+  const onDrag = React.useCallback((e,data) => {
+    const {x} = data;
+    const {clientWidth} = data.node;
+    console.log(x, clientWidth);
+    const RIGHT_SIDE_STICKED = x === 22;
+    if(RIGHT_SIDE_STICKED) {
+      setDraggableDockState(true, `${clientWidth + 10}`)
+    } else {
+      setDraggableDockState(false, `0`)
+    }
+  }, [])
 
   return (
     <>
       {ENABLE_V_MENU ? (
-        <Draggable bounds="#root" handle="#handle" onStart={onStartDrag} onStop={onStopDrag}>
+        <Draggable bounds="#root" handle="#handle" onStart={onStartDrag} onDrag={onDrag} onStop={onStopDrag}>
           <VerticalDiv isDragging={isDragging}>
             <div id="handle">
               <DragHandle />

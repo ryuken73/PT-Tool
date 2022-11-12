@@ -163,7 +163,7 @@ const INITIAL_ASSETS = [
         size: null,
       },
       {
-        srcId: 2,
+        srcId: 2, 
         srcLocal:
           'https://topiscctv1.eseoul.go.kr/sd1/ch27.stream/playlist.m3u8',
         srcRemote:
@@ -225,7 +225,7 @@ const AppContainer = styled(Container)`
   position: relative;
   text-align: center;
   background-color: ${colors.base};
-  flex-direction: column;
+  flex-direction: row;
   justify-content: flex-ends;
   color: white;
   overflow: hidden;
@@ -249,6 +249,12 @@ const AppQuitContainer = styled(AbsoluteBox)`
   bottom: 0;
   right: 0;
 `;
+const ToolDockContainer = styled.div`
+  height: 100%;
+  border: ${props => props.show && '1px solid grey' };
+  width: ${props => props.show ? `${props.docWidth}px` : '0px'};
+  transition: 0.5s all;
+`
 
 const Timeout = (time) => {
   let controller = new AbortController();
@@ -287,10 +293,18 @@ const MaximizeToggler = () => {
 const bounds='#root';
 
 export default function App() {
-  const { drawShow, toggleDraw, setUseSrcLocalState, setModalOpenState } = useAppState();
+  const { 
+    drawShow, 
+    draggableDock, 
+    dockWidth, 
+    toggleDraw, 
+    setUseSrcLocalState, 
+    setModalOpenState } = useAppState();
   const { position, syncPosition } = useSyncPosition();
   const { setAssetsState } = useAssetState();
   const [ quitConfirmOpen, setQuitConfirmOpen ] = React.useState(false);
+
+  console.log('^^^^^^', draggableDock, dockWidth)
 
   React.useEffect(() => {
     // eslint-disable-next-line promise/catch-or-return
@@ -374,6 +388,7 @@ export default function App() {
       <PageTransition />
       <DisplayControl />
       <AssetContainer />
+      <ToolDockContainer show={draggableDock} docWidth={dockWidth} />
     </AppContainer>
   );
 }

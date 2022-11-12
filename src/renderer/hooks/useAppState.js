@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setDrawShow, setUseSrcLocal, setModalOpen } from 'renderer/appSlice';
+import { setDrawShow, setUseSrcLocal, setModalOpen, setDraggableDock } from 'renderer/appSlice';
 import {
   setPathDatum,
   setPointDatum,
@@ -11,6 +11,8 @@ import useDrawState from 'renderer/hooks/useDrawState';
 export default function useAppState() {
   const dispatch = useDispatch();
   const drawShow = useSelector((state) => state.app.drawShow);
+  const draggableDock = useSelector((state) => state.app.draggableDock);
+  const dockWidth = useSelector((state) => state.app.dockWidth);
   const useSrcLocal = useSelector((state) => state.app.useSrcLocal);
   const modalOpen = useSelector((state) => state.app.modalOpen);
   const { clearPathDatumState } = useDrawState();
@@ -36,11 +38,20 @@ export default function useAppState() {
     [dispatch]
   );
 
+  const setDraggableDockState = React.useCallback((draggableDock, dockWidth="0px") => {
+    dispatch(setDraggableDock({draggableDock, dockWidth}));
+    },
+    [dispatch]
+  );
+
   return {
     drawShow,
     useSrcLocal,
+    draggableDock,
+    dockWidth,
     toggleDraw,
     setUseSrcLocalState,
-    setModalOpenState
+    setModalOpenState,
+    setDraggableDockState
   };
 }
