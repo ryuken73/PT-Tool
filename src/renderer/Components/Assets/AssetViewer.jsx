@@ -9,7 +9,6 @@ import ImageBox from 'renderer/Components/Common/ImageBox';
 import useAppState from 'renderer/hooks/useAppState';
 import useWindowSize from 'renderer/hooks/useWindowSize';
 import { Swiper, SwiperSlide } from 'swiper/react';
-// import Draggable from 'react-draggable';
 import SwapHorizontalCircleIcon from '@mui/icons-material/SwapHorizontalCircle';
 import HeightIcon from '@mui/icons-material/Height';
 import 'swiper/css';
@@ -96,18 +95,10 @@ const AssetContainer = (props) => {
   const { displayMode = 'flexRow', assetId, sources, show } = props;
   const srcPath = useSrcLocal ? 'srcLocal' : 'srcRemote';
   // console.log('#### assetContainer:', sources, srcPath, displayMode);
-  // const viewWidth = containerRef.current ? containerRef.current.offsetWidth : window.innerWidth;
   const viewWidth = React.useMemo(() => {
     if(!draggableDock) return window.innerWidth;
     return window.innerWidth - dockWidth;
   }, [containerRef, draggableDock, dockWidth, size, dragRef])
-  // const onDragSplitter = React.useCallback((e, data) => {
-  //   const clientX = e.clientX || e.touches[0].clientX;
-  //   const currentPercentX = (clientX / viewWidth) * 100;
-  //   setPercentX(currentPercentX);
-  //   setPosition({ x: data.x, y: data.y });
-  //   setIsDragging(true);
-  // }, [viewWidth]);
   const syncSplitter = React.useCallback((clientX) => {
     const currentPercentX = (clientX / viewWidth) * 100;
     setPercentX(currentPercentX);
@@ -132,6 +123,7 @@ const AssetContainer = (props) => {
     const {x, y} = draggerPosition.current;
     const position = { x, y };
     if(dragRef.current === null) return;
+    // set previous position of dragger
     dragRef.current.style.transform = `translate(${position.x}px, ${position.y}px)`;
     interact(dragRef.current).draggable({
       inertia: {
@@ -151,6 +143,7 @@ const AssetContainer = (props) => {
           position.x += event.dx;
           position.y += event.dy;
           syncSplitter(position.x + offsetX);
+          // keep last position of dragger
           draggerPosition.current.x = position.x;
           draggerPosition.current.y = position.y;
           event.target.style.transform = `translate(${position.x}px, ${position.y}px)`;
