@@ -88,27 +88,29 @@ const AssetContainer = (props) => {
   const [percentX, setPercentX] = React.useState(50);
   // const [position, setPosition] = React.useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = React.useState(false);
+  const containerRef = React.useRef(null);
   const dragRef = React.useRef(null);
   const { useSrcLocal } = useAppState();
   const { displayMode = 'flexRow', assetId, sources, show } = props;
   const srcPath = useSrcLocal ? 'srcLocal' : 'srcRemote';
   // console.log('#### assetContainer:', sources, srcPath, displayMode);
+  const viewWidth = containerRef.current ? containerRef.current.offsetWidth : window.innerWidth;
   const onDragSplitter = React.useCallback((e, data) => {
     const clientX = e.clientX || e.touches[0].clientX;
-    const currentPercentX = (clientX / window.innerWidth) * 100;
+    const currentPercentX = (clientX / viewWidth) * 100;
     setPercentX(currentPercentX);
     setPosition({ x: data.x, y: data.y });
     setIsDragging(true);
-  }, []);
+  }, [viewWidth]);
   const syncSplitter = React.useCallback((clientX) => {
-    const currentPercentX = (clientX / window.innerWidth) * 100;
+    const currentPercentX = (clientX / viewWidth) * 100;
     setPercentX(currentPercentX);
     setIsDragging(true);
-  }, []);
+  }, [viewWidth]);
   const onDragStop = React.useCallback(() => {
     setIsDragging(false);
   }, []);
-  const offsetX = window.innerWidth/2;
+  const offsetX = viewWidth/2;
   React.useEffect(() => {
     if(displayMode !== 'overlay') return;
     const position = { x: 0, y: 0 };
@@ -138,7 +140,7 @@ const AssetContainer = (props) => {
   }, [dragRef, offsetX, onDragStop, syncSplitter, displayMode]);
 
   return (
-    <Container>
+    <Container ref={containerRef}>
       {displayMode === 'overlay' && (
         <OverlayContainer>
           {/* <Draggable
