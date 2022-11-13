@@ -95,27 +95,32 @@ const AssetContainer = (props) => {
   const { displayMode = 'flexRow', assetId, sources, show } = props;
   const srcPath = useSrcLocal ? 'srcLocal' : 'srcRemote';
   // console.log('#### assetContainer:', sources, srcPath, displayMode);
+
   const viewWidth = React.useMemo(() => {
     if(!draggableDock) return window.innerWidth;
     return window.innerWidth - dockWidth;
   }, [containerRef, draggableDock, dockWidth, size, dragRef])
+  const offsetX = viewWidth/2;
+
   const syncSplitter = React.useCallback((clientX) => {
     const currentPercentX = (clientX / viewWidth) * 100;
     setPercentX(currentPercentX);
     setIsDragging(true);
   }, [viewWidth]);
+
   const onDragStop = React.useCallback(() => {
     setIsDragging(false);
   }, []);
-  const offsetX = React.useMemo(() => {
-    return viewWidth/2;
-  }, [viewWidth])
-  React.useEffect(() => {
-    console.log('^^^ mounted:', dragRef.current)
-    if(dragRef.current === null) return;
-    const {x, y} = draggerPosition.current;
-    dragRef.current.style.transform = `translate(${x}px, ${y}px)`;
-  }, [])
+  // const offsetX = React.useMemo(() => {
+  //   return viewWidth/2;
+  // }, [viewWidth])
+
+  // React.useEffect(() => {
+  //   if(dragRef.current === null) return;
+  //   const {x, y} = draggerPosition.current;
+  //   dragRef.current.style.transform = `translate(${x}px, ${y}px)`;
+  // }, [draggableDock])
+
   React.useEffect(() => {
     console.log('^^^: redifine interactjs draggable', draggerPosition.current, offsetX, displayMode)
     if(displayMode !== 'overlay') return;
