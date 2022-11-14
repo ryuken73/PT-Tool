@@ -87,7 +87,7 @@ const AssetContainer = (props) => {
   // eslint-disable-next-line react/prop-types
   const [percentX, setPercentX] = React.useState(50);
   const [isDragging, setIsDragging] = React.useState(false);
-  const draggerPosition = React.useRef({x:0, y:0});
+  const draggerOffset = React.useRef({ x: 0, y: 0 });
   const containerRef = React.useRef(null);
   const dragRef = React.useRef(null);
   const { useSrcLocal, draggableDock, dockWidth } = useAppState();
@@ -96,40 +96,61 @@ const AssetContainer = (props) => {
   const srcPath = useSrcLocal ? 'srcLocal' : 'srcRemote';
   // console.log('#### assetContainer:', sources, srcPath, displayMode);
 
+
   const viewWidth = React.useMemo(() => {
     if(!draggableDock) return window.innerWidth;
     return window.innerWidth - dockWidth;
-  }, [containerRef, draggableDock, dockWidth, size, dragRef])
-  const offsetX = viewWidth/2;
+  }, [draggableDock, dockWidth, size])
+
+  const offsetX = viewWidth / 2;
+
+  const draggerPosition = React.useMemo(() => {
+    return { x: draggerOffset.current.x + offsetX, y: draggerOffset.current.y }
+  }, [offsetX]);
 
   const syncSplitter = React.useCallback((clientX) => {
     const currentPercentX = (clientX / viewWidth) * 100;
     setPercentX(currentPercentX);
     setIsDragging(true);
-  }, [viewWidth]);
+    },
+    [viewWidth]
+  );
 
   const onDragStop = React.useCallback(() => {
     setIsDragging(false);
   }, []);
+
   // const offsetX = React.useMemo(() => {
   //   return viewWidth/2;
   // }, [viewWidth])
 
   // React.useEffect(() => {
   //   if(dragRef.current === null) return;
-  //   const {x, y} = draggerPosition.current;
+  //   const {x, y} = draggerOffset.current;
   //   dragRef.current.style.transform = `translate(${x}px, ${y}px)`;
   // }, [draggableDock])
 
+  // set previous position of dragger between displayMode changing.
   React.useEffect(() => {
-    console.log('^^^: redifine interactjs draggable', draggerPosition.current, offsetX, displayMode)
     if(displayMode !== 'overlay') return;
-    // const position = { x: 0, y: 0 };
-    const {x, y} = draggerPosition.current;
+    const { x, y } = draggerOffset.current;
     const position = { x, y };
     if(dragRef.current === null) return;
-    // set previous position of dragger
     dragRef.current.style.transform = `translate(${position.x}px, ${position.y}px)`;
+  }, [displayMode]);
+
+  // adjust splitter position(sync)
+  React.useEffect(() => {
+    syncSplitter(draggerPosition.x);
+  }, [draggerPosition, draggableDock, syncSplitter])
+
+  React.useEffect(() => {
+    console.log('^^^: redifine interactjs draggable', draggerOffset.current, offsetX, displayMode)
+    if(displayMode !== 'overlay') return;
+    // const position = { x: 0, y: 0 };
+    const { x, y } = draggerOffset.current;
+    const position = { x, y };
+    if(dragRef.current === null) return;
     interact(dragRef.current).draggable({
       inertia: {
         resistance: 3,
@@ -148,9 +169,9 @@ const AssetContainer = (props) => {
           position.x += event.dx;
           position.y += event.dy;
           syncSplitter(position.x + offsetX);
-          // keep last position of dragger
-          draggerPosition.current.x = position.x;
-          draggerPosition.current.y = position.y;
+          // keep last offset of dragger
+          draggerOffset.current.x = position.x;
+          draggerOffset.current.y = position.y;
           event.target.style.transform = `translate(${position.x}px, ${position.y}px)`;
         },
         end (event) {
@@ -158,7 +179,7 @@ const AssetContainer = (props) => {
         }
       }
     })
-  }, [dragRef, offsetX, onDragStop, syncSplitter, displayMode, draggerPosition]);
+  }, [dragRef, offsetX, onDragStop, syncSplitter, displayMode, draggerOffset]);
 
   return (
     <Container ref={containerRef}>
