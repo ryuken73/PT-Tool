@@ -108,10 +108,10 @@ const AssetContainer = (props) => {
     return { x: draggerOffset.current.x + offsetX, y: draggerOffset.current.y }
   }, [offsetX]);
 
-  const syncSplitter = React.useCallback((clientX) => {
+  const syncSplitter = React.useCallback((clientX, byDragging=true) => {
     const currentPercentX = (clientX / viewWidth) * 100;
     setPercentX(currentPercentX);
-    setIsDragging(true);
+    if(byDragging) setIsDragging(true);
     },
     [viewWidth]
   );
@@ -141,7 +141,7 @@ const AssetContainer = (props) => {
 
   // adjust splitter position(sync)
   React.useEffect(() => {
-    syncSplitter(draggerPosition.x);
+    syncSplitter(draggerPosition.x, false);
   }, [draggerPosition, draggableDock, syncSplitter])
 
   React.useEffect(() => {
