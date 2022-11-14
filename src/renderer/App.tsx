@@ -107,9 +107,9 @@ const INITIAL_ASSETS = [
       {
         srcId: 0,
         srcLocal:
-          'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.69,36.80,4650',
+          'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.59,36.90,6750',
         srcRemote:
-          'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.69,36.80,4650',
+          'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.59,36.90,6750',
         srcType: 'web',
         size: null,
       },
@@ -131,9 +131,9 @@ const INITIAL_ASSETS = [
       {
         srcId: 1,
         srcLocal:
-          'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.69,36.80,4650',
+          'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.59,36.90,6750',
         srcRemote:
-          'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.69,36.80,4650',
+          'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.59,36.90,6750',
           // 'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.50,37.91,4250',
         srcType: 'web',
         size: null,
