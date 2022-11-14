@@ -16,6 +16,8 @@ import 'swiper/css';
 const Container = styled.div`
   width: 100%;
   height: 100%;
+  touch-action: none;
+  user-select: none;
 `
 const FlexContainer = styled(Container)`
   position: relative;
@@ -180,6 +182,29 @@ const AssetContainer = (props) => {
       }
     })
   }, [dragRef, offsetX, onDragStop, syncSplitter, displayMode, draggerOffset]);
+
+  React.useEffect(() => {
+    if(displayMode !== 'overlay') return;
+    if(containerRef.current === null) return;
+    const { x, y } = draggerOffset.current;
+    const position = { x, y };
+    interact(containerRef.current).gesturable({
+      listeners: {
+        move (event) {
+          position.x += event.dx;
+          position.y += event.dy;
+          syncSplitter(position.x + offsetX);
+          // keep last offset of dragger
+          draggerOffset.current.x = position.x;
+          draggerOffset.current.y = position.y;
+          dragRef.current.style.transform = `translate(${position.x}px, ${position.y}px)`;
+        },
+        end (event) {
+          onDragStop();
+        }
+      }
+    })
+  },[containerRef, offsetX, onDragStop, syncSplitter, displayMode, draggerOffset])
 
   return (
     <Container ref={containerRef}>
