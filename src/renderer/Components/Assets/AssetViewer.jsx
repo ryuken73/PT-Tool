@@ -150,8 +150,6 @@ const AssetContainer = (props) => {
     console.log('^^^: redifine interactjs draggable', draggerOffset.current, offsetX, displayMode)
     if(displayMode !== 'overlay') return;
     // const position = { x: 0, y: 0 };
-    const { x, y } = draggerOffset.current;
-    const position = { x, y };
     if(dragRef.current === null) return;
     interact(dragRef.current).draggable({
       inertia: {
@@ -168,13 +166,10 @@ const AssetContainer = (props) => {
           console.log(event, event.target)
         },
         move (event) {
-          position.x += event.dx;
-          position.y += event.dy;
-          syncSplitter(position.x + offsetX);
-          // keep last offset of dragger
-          draggerOffset.current.x = position.x;
-          draggerOffset.current.y = position.y;
-          event.target.style.transform = `translate(${position.x}px, ${position.y}px)`;
+          draggerOffset.current.x += event.dx;
+          draggerOffset.current.y += event.dy;
+          syncSplitter(draggerOffset.current.x + offsetX);
+          event.target.style.transform = `translate(${draggerOffset.current.x}px, ${draggerOffset.current.y}px)`;
         },
         end (event) {
           onDragStop();
@@ -186,18 +181,15 @@ const AssetContainer = (props) => {
   React.useEffect(() => {
     if(displayMode !== 'overlay') return;
     if(containerRef.current === null) return;
-    const { x, y } = draggerOffset.current;
-    const position = { x, y };
+    // const { x, y } = draggerOffset.current;
+    // const position = { x, y };
     interact(containerRef.current).gesturable({
       listeners: {
         move (event) {
-          position.x += event.dx;
-          position.y += event.dy;
-          syncSplitter(position.x + offsetX);
-          // keep last offset of dragger
-          draggerOffset.current.x = position.x;
-          draggerOffset.current.y = position.y;
-          dragRef.current.style.transform = `translate(${position.x}px, ${position.y}px)`;
+          draggerOffset.current.x += event.dx;
+          draggerOffset.current.y += event.dy;
+          syncSplitter(draggerOffset.current.x + offsetX);
+          dragRef.current.style.transform = `translate(${draggerOffset.current.x}px, ${draggerOffset.current.y}px)`;
         },
         end (event) {
           onDragStop();
