@@ -107,9 +107,9 @@ const INITIAL_ASSETS = [
       {
         srcId: 0,
         srcLocal:
-          'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.50,37.91,4250',
+          'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.69,36.80,4650',
         srcRemote:
-          'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.50,37.91,4250',
+          'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.69,36.80,4650',
         srcType: 'web',
         size: null,
       },
@@ -131,9 +131,10 @@ const INITIAL_ASSETS = [
       {
         srcId: 1,
         srcLocal:
-          'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.50,37.91,4250',
+          'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.69,36.80,4650',
         srcRemote:
-          'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.50,37.91,4250',
+          'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.69,36.80,4650',
+          // 'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.50,37.91,4250',
         srcType: 'web',
         size: null,
       },
@@ -163,7 +164,7 @@ const INITIAL_ASSETS = [
         size: null,
       },
       {
-        srcId: 2, 
+        srcId: 2,
         srcLocal:
           'https://topiscctv1.eseoul.go.kr/sd1/ch27.stream/playlist.m3u8',
         srcRemote:
@@ -293,12 +294,12 @@ const MaximizeToggler = () => {
 const bounds='#root';
 
 export default function App() {
-  const { 
-    drawShow, 
-    draggableDock, 
-    dockWidth, 
-    toggleDraw, 
-    setUseSrcLocalState, 
+  const {
+    drawShow,
+    draggableDock,
+    dockWidth,
+    toggleDraw,
+    setUseSrcLocalState,
     setModalOpenState } = useAppState();
   const { position, syncPosition } = useSyncPosition();
   const { setAssetsState } = useAssetState();
