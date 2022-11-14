@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import useAppState from 'renderer/hooks/useAppState';
 
 const Container = styled.div`
   cursor: pointer;
@@ -9,14 +10,21 @@ const Container = styled.div`
   margin-top: 10px;
   margin-bottom: 10px;
   text-shadow: 0px 0 black, 0 0px black, 1px 0 black, 0 1px black;
-  opacity: ${(props) => !props.isCurrent && 0.2};
+  opacity: ${(props) => !props.isCurrent ? props.draggableDock ? 0.5 : 0.2 : 1};
 `
 
 const MenuItem = (props) => {
   // eslint-disable-next-line react/prop-types
   const { menuText, isCurrent, onClick, mode="horizontal" } = props;
+  const { draggableDock } = useAppState();
   return (
-    <Container className="menuItem" isCurrent={isCurrent} onClick={onClick} mode={mode}>
+    <Container
+      className="menuItem"
+      isCurrent={isCurrent}
+      onClick={onClick}
+      draggableDock={draggableDock}
+      mode={mode}
+    >
       {menuText}
     </Container>
   );
