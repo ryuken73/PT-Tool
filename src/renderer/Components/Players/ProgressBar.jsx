@@ -51,7 +51,12 @@ const Progress = styled.div`
 `;
 
 const ProgressBar = (props) => {
+  const { progress, onChangeProgress } = props;
   const progressRef = React.useRef(null);
+  React.useEffect(() => {
+    if (progressRef.current === null) return;
+    progressRef.current.style.paddingLeft = `${progress}%`;
+  }, [progress])
   React.useEffect(() => {
     if (progressRef.current === null) return;
     console.log('progressRef', progressRef.current)
@@ -64,26 +69,27 @@ const ProgressBar = (props) => {
       ],
       listeners: {
         start(event) {
-          event.target.style.background = "red";
+          event.target.style.background = 'red';
         },
         move(event) {
-          event.target.style.background = "darkslategrey";
-          event.target.style.border = "1px dashed white";
+          event.target.style.background = 'darkslategrey';
+          event.target.style.border = '1px dashed white';
           const sliderWidth = interact.getElementRect(event.target).width;
           const value = event.pageX / sliderWidth;
           event.target.style.paddingLeft = `${value * 100}%`;
+          onChangeProgress(value * 100);
         },
         end(event) {
-          event.target.style.background = "black";
-          event.target.style.border = "1px solid white";
+          event.target.style.background = 'black';
+          event.target.style.border = '1px solid white';
         }
       },
     });
-  }, [progressRef]);
+  }, [onChangeProgress, progressRef]);
 
   return (
     <Container>
-      <Progress ref={progressRef} />
+      <Progress progress={progress} ref={progressRef} />
     </Container>
   );
 };

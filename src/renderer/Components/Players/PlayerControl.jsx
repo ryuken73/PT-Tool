@@ -38,7 +38,7 @@ const ProgressContainer = styled(Box)`
 //   font-size: 15px !important;
 // `;
 
-const InputProgress = styled.input`
+// const InputProgress = styled.input`
   /* -webkit-appearance: none; */
   /* &::-webkit-slider-runnable-track {
     width: 300px;
@@ -60,7 +60,8 @@ const InputProgress = styled.input`
   &:focus::-webkit-slider-runnable-track {
     background: #ccc;
   } */
-`
+// `
+
 const Duration = styled(Box)`
   margin-top: 10px;
   // margin-left: 20px;
@@ -73,7 +74,7 @@ const ControlContainer = styled(Box)`
   justify-content: space-around;
   background: transparent;
   position: relative;
-  margin-top: 10px
+  margin-top: 10px;
 `;
 
 const iconContainerStyle = {
@@ -122,9 +123,8 @@ const Player = (props, playerRef) => {
   // console.log('###', currentTime, progress, durationTime, durationSec)
 
   const handleMoveProgressSlider = React.useCallback(
-    (event) => {
+    (progressPercent) => {
       // console.log('move progress:', event.currentTarget.value)
-      const progressPercent = event.currentTarget.value;
       const player = playerRef.current;
       const duration = player?.duration;
       if (duration === undefined || duration === null) return;
@@ -174,7 +174,7 @@ const Player = (props, playerRef) => {
   return (
     <Container>
       <ProgressContainer hide={hide}>
-        <ProgressBar>
+        <ProgressBar progress={progress} onChangeProgress={handleMoveProgressSlider}>
           {/* <SliderBar value={progress} onChange={handleMoveProgressSlider} /> */}
           {/* <InputProgress
             type="range"
