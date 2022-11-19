@@ -17,8 +17,9 @@ const Progress = styled.div`
   width: 100%;
   height: ${heightBar}px;
   margin-top: 10px;
-  background-color: black;
-  border: 1px solid white;
+  background-color: ${(props) => (props.dragging ? 'darkred' : 'black')};
+  border: ${(props) =>
+    props.dragging ? '1px dashed white' : '1px solid white'};
   border-radius: ${BarBorderRadius}px;
   box-sizing: border-box;
   font-size: 20px;
@@ -28,11 +29,11 @@ const Progress = styled.div`
     content: "";
     display: block;
     position: relative;
-    top: -6px;
+    top: -7px;
     width: ${heightBall}px;
     height: ${heightBall}px;
     margin-left: -5px;
-    border: solid 2px #fff;
+    border: ${(props) => props.dragging ? '2px dashed white' : '2px solid white'};
     border-radius: ${BallBorderRadius}px;
     background-color: inherit;
     box-sizing: border-box;
@@ -52,6 +53,7 @@ const Progress = styled.div`
 
 const ProgressBar = (props) => {
   const { progress, onChangeProgress } = props;
+  const [ dragging, setDragging] = React.useState(false);
   const progressRef = React.useRef(null);
   React.useEffect(() => {
     if (progressRef.current === null) return;
@@ -59,7 +61,6 @@ const ProgressBar = (props) => {
   }, [progress])
   React.useEffect(() => {
     if (progressRef.current === null) return;
-    console.log('progressRef', progressRef.current)
     interact(progressRef.current).draggable({
       origin: 'self',
       modifiers: [
@@ -69,19 +70,22 @@ const ProgressBar = (props) => {
       ],
       listeners: {
         start(event) {
-          event.target.style.background = 'red';
+          // event.target.style.background = 'red';
+          setDragging(true);
         },
         move(event) {
-          event.target.style.background = 'darkslategrey';
-          event.target.style.border = '1px dashed white';
+          setDragging(true);
+          // event.target.style.background = 'darkslategrey';
+          // event.target.style.border = '1px dashed white';
           const sliderWidth = interact.getElementRect(event.target).width;
           const value = event.pageX / sliderWidth;
           event.target.style.paddingLeft = `${value * 100}%`;
           onChangeProgress(value * 100);
         },
         end(event) {
-          event.target.style.background = 'black';
-          event.target.style.border = '1px solid white';
+          setDragging(false);
+          // event.target.style.background = 'black';
+          // event.target.style.border = '1px solid white';
         }
       },
     });
@@ -89,7 +93,7 @@ const ProgressBar = (props) => {
 
   return (
     <Container>
-      <Progress progress={progress} ref={progressRef} />
+      <Progress progress={progress} dragging={dragging} ref={progressRef} />
     </Container>
   );
 };
