@@ -29,7 +29,7 @@ export default function usePlayer(
       );
       if (!isNaN(mediaElementRef.current.duration)) {
         const durationSec = parseInt(mediaElementRef.current.duration, 10);
-        const durationTime = secondsToTime(durationSec);
+        const durationTime = secondsToTime(durationSec, 'hh:mm:ss');
         console.log(
           `in usePlayerSource : durationSec: ${durationSec}, duration: ${durationTime}`
         );

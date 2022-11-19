@@ -84,12 +84,17 @@ export default function usePlayerEvent(assetId, srcId, playerRef) {
   }, [playerRef]);
 
   const handlePause = React.useCallback(() => {
-    dispatch(setPlayerStatus({ assetId, playerId, key: 'isPlaying', value: false }));
+    dispatch(
+      setPlayerStatus({ assetId, playerId, key: 'isPlaying', value: false })
+    );
   }, [dispatch, assetId, playerId]);
 
   const handleTimeupdate = React.useCallback(() => {
     if (!playerRef.current) return;
-    const currentTime = secondsToTime(parseInt(playerRef.current.currentTime, 10));
+    const currentTime = secondsToTime(
+      parseInt(playerRef.current.currentTime, 10),
+      'hh:mm:ss'
+    );
     currentTimeRef.current = currentTime;
     dispatch(
       setPlayerCurrentTime({ assetId, playerId, key: 'currentTime', value: currentTime })
@@ -103,7 +108,7 @@ export default function usePlayerEvent(assetId, srcId, playerRef) {
     // const { duration } = player;
     if (!playerRef.current) return;
     const durationSec = parseInt(playerRef.current.duration, 10);
-    const durationTime = secondsToTime(parseInt(durationSec, 10));
+    const durationTime = secondsToTime(parseInt(durationSec, 10), 'hh:mm:ss');
     // console.log(`in usePlayerEvent : durationSec: ${durationSec}, duration: ${durationTime}`)
     currentDurationRef.current = durationSec;
     dispatch(setPlayerStatus({ assetId, playerId, key: 'durationTime', value: durationTime }));
