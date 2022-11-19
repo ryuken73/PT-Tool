@@ -9,6 +9,7 @@ import RepeatIcon from '@mui/icons-material/Repeat';
 import TextBox from 'renderer/Components/Common/TextBox';
 import SliderBar from 'renderer/Components/Common/SliderBar';
 import HoverButton from 'renderer/Components/Common/ButtonHover';
+import ProgressBar from 'renderer/Components/Players/ProgressBar';
 import colors from 'renderer/config/colors';
 import usePlayerEvent from 'renderer/hooks/usePlayerEvent';
 import CONSTANTS from 'renderer/config/constants';
@@ -31,11 +32,12 @@ const ProgressContainer = styled(Box)`
   height: 50px;
   background: ${colors.player};
 `;
-const Progress = styled(Box)`
-  margin-left: 20px;
-  margin-right: 20px;
-  font-size: 15px !important;
-`;
+// const Progress = styled(Box)`
+//   margin-left: 20px;
+//   margin-right: 20px;
+//   font-size: 15px !important;
+// `;
+
 const InputProgress = styled.input`
   /* -webkit-appearance: none; */
   /* &::-webkit-slider-runnable-track {
@@ -179,16 +181,16 @@ const Player = (props, playerRef) => {
             color={colors.textSub}
           />
         </Duration>
-        <Progress>
+        <ProgressBar>
           {/* <SliderBar value={progress} onChange={handleMoveProgressSlider} /> */}
-          <InputProgress
+          {/* <InputProgress
             type="range"
             value={progress}
             onChange={handleMoveProgressSlider}
             min="0"
             max="100"
-          />
-        </Progress>
+          /> */}
+        </ProgressBar>
       </ProgressContainer>
       <ControlContainer hide={hide}>
         <IconButton
