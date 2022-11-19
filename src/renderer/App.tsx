@@ -64,7 +64,7 @@ const INITIAL_ASSETS = [
         size: null,
       },
     ],
-    displayMode: 'overlay',
+    displayMode: 'overlaySplit',
   },
   {
     assetId: 1,
@@ -139,7 +139,7 @@ const INITIAL_ASSETS = [
         size: null,
       },
     ],
-    displayMode: 'overlay',
+    displayMode: 'overlaySplit',
   },
   {
     assetId: 6,
@@ -178,7 +178,7 @@ const INITIAL_ASSETS = [
     aspectRatio: '',
     // setPlayer,
     enableOverlay: false,
-    displayMode: 'overlay',
+    displayMode: 'overlaySplit',
   },
   {
     assetId: 7,
@@ -206,7 +206,7 @@ const INITIAL_ASSETS = [
     aspectRatio: '',
     // setPlayer,
     enableOverlay: false,
-    displayMode: 'overlay',
+    displayMode: 'overlaySplit',
   },
 ];
 

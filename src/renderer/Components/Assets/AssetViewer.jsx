@@ -134,7 +134,7 @@ const AssetContainer = (props) => {
 
   // set previous position of dragger between displayMode changing.
   React.useEffect(() => {
-    if(displayMode !== 'overlay') return;
+    if(displayMode !== 'overlaySplit') return;
     const { x, y } = draggerOffset.current;
     const position = { x, y };
     if(dragRef.current === null) return;
@@ -148,7 +148,7 @@ const AssetContainer = (props) => {
 
   React.useEffect(() => {
     // console.log('^^^: redifine interactjs draggable', draggerOffset.current, offsetX, displayMode)
-    if(displayMode !== 'overlay') return;
+    if(displayMode !== 'overlaySplit') return;
     // const position = { x: 0, y: 0 };
     if(dragRef.current === null) return;
     interact(dragRef.current).draggable({
@@ -179,7 +179,7 @@ const AssetContainer = (props) => {
   }, [dragRef, offsetX, onDragStop, syncSplitter, displayMode, draggerOffset]);
 
   React.useEffect(() => {
-    if(displayMode !== 'overlay') return;
+    if(displayMode !== 'overlaySplit') return;
     if(containerRef.current === null) return;
     // const { x, y } = draggerOffset.current;
     // const position = { x, y };
@@ -200,7 +200,7 @@ const AssetContainer = (props) => {
 
   return (
     <Container ref={containerRef}>
-      {displayMode === 'overlay' && (
+      {displayMode === 'overlaySplit' && (
         <OverlayContainer>
           <DragDivWithPosition ref={dragRef}>
             <Splitter background="maroon" fontSize="large" />

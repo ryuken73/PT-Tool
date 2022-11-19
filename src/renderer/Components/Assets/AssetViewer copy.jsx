@@ -85,7 +85,7 @@ const AssetContainer = (props) => {
 
   return (
     <Container>
-      {displayMode === 'overlay' && (
+      {displayMode === 'overlaySplit' && (
         <OverlayContainer>
           <Draggable
             axis="x"

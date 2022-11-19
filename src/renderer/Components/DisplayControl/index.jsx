@@ -28,7 +28,7 @@ const DisplayControl = () => {
       <button value="flexRow" onClick={changeDisplayMode}>Split R</button>
       <button value="flexColumn" onClick={changeDisplayMode}>Split W</button>
       <button value="swipe" onClick={changeDisplayMode}>Swipe</button>
-      <button value="overlay" onClick={changeDisplayMode}>Overlay</button>
+      <button value="overlaySplit" onClick={changeDisplayMode}>Overlay-Split</button>
     </Container>
   )
 }
