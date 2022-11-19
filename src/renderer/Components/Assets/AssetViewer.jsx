@@ -147,7 +147,7 @@ const AssetContainer = (props) => {
   }, [draggerPosition, draggableDock, syncSplitter])
 
   React.useEffect(() => {
-    console.log('^^^: redifine interactjs draggable', draggerOffset.current, offsetX, displayMode)
+    // console.log('^^^: redifine interactjs draggable', draggerOffset.current, offsetX, displayMode)
     if(displayMode !== 'overlay') return;
     // const position = { x: 0, y: 0 };
     if(dragRef.current === null) return;
@@ -207,7 +207,11 @@ const AssetContainer = (props) => {
           </DragDivWithPosition>
           <ProtectLayer isDragging={isDragging} />
           {sources.map((source, index) => (
-            <AbsoluteBox percentX={percentX} key={source.srcId} index={index}>
+            <AbsoluteBox
+              percentX={percentX}
+              key={`${assetId}-${source.srcId}`}
+              index={index}
+            >
               <Viewer
                 key={`${assetId}-${source.srcId}`}
                 assetId={assetId}
