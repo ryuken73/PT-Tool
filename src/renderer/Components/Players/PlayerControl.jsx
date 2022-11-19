@@ -23,7 +23,7 @@ const Container = styled(Box)`
   position: absolute;
   top: ${POSITION.videoControl.top};
   right: ${POSITION.videoControl.right};
-  width: 180px;
+  width: 300px;
 `;
 const ProgressContainer = styled(Box)`
   /* display: flex; */
@@ -62,16 +62,18 @@ const InputProgress = styled.input`
   } */
 `
 const Duration = styled(Box)`
-  margin-left: 20px;
-  margin-right: 20px;
+  margin-top: 10px;
+  // margin-left: 20px;
+  // margin-right: 20px;
   display: flex;
   justify-content: space-between;
 `;
 const ControlContainer = styled(Box)`
   display: ${(props) => (props.hide ? 'none' : 'flex')};
-  justify-content: center;
+  justify-content: space-around;
   background: transparent;
   position: relative;
+  margin-top: 10px
 `;
 
 const iconContainerStyle = {
@@ -172,15 +174,6 @@ const Player = (props, playerRef) => {
   return (
     <Container>
       <ProgressContainer hide={hide}>
-        <Duration>
-          <TextBox fontSize="11px" text={currentTime} color={colors.textMain} />
-          <TextBox
-            fontSize="11px"
-            text={durationTime}
-            marginLeft="5px"
-            color={colors.textSub}
-          />
-        </Duration>
         <ProgressBar>
           {/* <SliderBar value={progress} onChange={handleMoveProgressSlider} /> */}
           {/* <InputProgress
@@ -191,6 +184,15 @@ const Player = (props, playerRef) => {
             max="100"
           /> */}
         </ProgressBar>
+        <Duration>
+          <TextBox fontSize="11px" text={currentTime} color={colors.textMain} />
+          <TextBox
+            fontSize="11px"
+            text={durationTime}
+            marginLeft="5px"
+            color={colors.textSub}
+          />
+        </Duration>
       </ProgressContainer>
       <ControlContainer hide={hide}>
         <IconButton

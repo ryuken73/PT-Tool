@@ -6,16 +6,20 @@ const Container = styled.div`
   touch-action: none;
   user-select: none;
 `;
+
+const heightBar = 15;
+const heightBall = heightBar * 1.7;
+const BarBorderRadius = heightBar * 0.4;
+const BallBorderRadius = heightBall * 0.8;
+
 const Progress = styled.div`
   position: relative;
   width: 100%;
-  /* height: 0.5em; */
-  /* margin: 1.5em auto; */
-  height: 5px;
+  height: ${heightBar}px;
   margin-top: 10px;
   background-color: black;
   border: 1px solid white;
-  border-radius: 3px;
+  border-radius: ${BarBorderRadius}px;
   box-sizing: border-box;
   font-size: 20px;
   -ms-touch-action: none;
@@ -25,23 +29,25 @@ const Progress = styled.div`
     display: block;
     position: relative;
     top: -6px;
-    width: 15px;
-    height: 15px;
+    width: ${heightBall}px;
+    height: ${heightBall}px;
     margin-left: -5px;
     border: solid 2px #fff;
-    border-radius: 10px;
+    border-radius: ${BallBorderRadius}px;
     background-color: inherit;
     box-sizing: border-box;
   }
-  /* &:after {
-    content: attr(data-value);
+  &:after {
+    content: "";
     position: absolute;
-    top: -1.5em;
-    width: 2em;
+    top: ${heightBar * -1}px;
+    left: 0px;
+    height: ${heightBall * 2}px;
+    width: 100%;
     line-height:1em;
-    margin-left: -0.5em;
+    // margin-left: -0.5em;
     text-align: center;
-  } */
+  }
 `;
 
 const ProgressBar = (props) => {
@@ -49,7 +55,7 @@ const ProgressBar = (props) => {
   React.useEffect(() => {
     if (progressRef.current === null) return;
     console.log('progressRef', progressRef.current)
-    interact(progressRef.current).gesturable({
+    interact(progressRef.current).draggable({
       origin: 'self',
       modifiers: [
         interact.modifiers.restrict({
@@ -57,11 +63,20 @@ const ProgressBar = (props) => {
         })
       ],
       listeners: {
+        start(event) {
+          event.target.style.background = "red";
+        },
         move(event) {
+          event.target.style.background = "darkslategrey";
+          event.target.style.border = "1px dashed white";
           const sliderWidth = interact.getElementRect(event.target).width;
           const value = event.pageX / sliderWidth;
           event.target.style.paddingLeft = `${value * 100}%`;
         },
+        end(event) {
+          event.target.style.background = "black";
+          event.target.style.border = "1px solid white";
+        }
       },
     });
   }, [progressRef]);
