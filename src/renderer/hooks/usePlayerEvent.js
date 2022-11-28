@@ -117,6 +117,13 @@ export default function usePlayerEvent(assetId, srcId, playerRef) {
     );
   }, [playerRef, dispatch, assetId, playerId]);
 
+  const handleEnded = React.useCallback(() => {
+    if (!isLive) {
+      playerRef.current.currentTime = 0;
+      playerRef.current.play();
+    };
+  }, [isLive, playerRef]);
+
   const onClickPlay = React.useCallback(() => {
     if (!playerRef.current) return;
     const player = playerRef.current;
@@ -142,6 +149,7 @@ export default function usePlayerEvent(assetId, srcId, playerRef) {
     playerRef.current.addEventListener('playing', handlePlaying);
     playerRef.current.addEventListener('pause', handlePause);
     playerRef.current.addEventListener('timeupdate', handleTimeupdate);
+    playerRef.current.addEventListener('ended', handleEnded);
     playerRef.current.addEventListener('durationchange', handleDurationChange);
 
     return () => {
@@ -152,6 +160,7 @@ export default function usePlayerEvent(assetId, srcId, playerRef) {
       playerRef.current.removeEventListener('playing', handlePlaying);
       playerRef.current.removeEventListener('pause', handlePause);
       playerRef.current.removeEventListener('timeupdate', handleTimeupdate);
+      playerRef.current.removeEventListener('ended', handleEnded);
       playerRef.current.removeEventListener(
         'durationchange',
         handleDurationChange
