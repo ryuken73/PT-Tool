@@ -16,6 +16,8 @@ const Container = styled.div`
   padding-bottom: 5px;
   border-radius: 10px;
   text-shadow: 0px 0 black, 0 0px black, 1px 0 black, 0 1px black;
+  backdrop-filter: blur(5px);
+  font-size: calc(10px + 4vmin) !important;
 `
 
 export default function AssetTitle() {
