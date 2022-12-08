@@ -7,7 +7,7 @@ const Container = styled.div`
   user-select: none;
 `;
 
-const heightBar = 15;
+const heightBar = 8;
 const heightBall = heightBar * 1.7;
 const BarBorderRadius = heightBar * 0.4;
 const BallBorderRadius = heightBall * 0.8;
@@ -29,7 +29,7 @@ const Progress = styled.div`
     content: "";
     display: block;
     position: relative;
-    top: -7px;
+    top: -4px;
     width: ${heightBall}px;
     height: ${heightBall}px;
     margin-left: -5px;
@@ -90,10 +90,21 @@ const ProgressBar = (props) => {
       },
     });
   }, [onChangeProgress, progressRef]);
+  const onClickProgressBar = React.useCallback((event) => {
+    // alert(event.nativeEvent.offsetX);
+    const percentX = (event.nativeEvent.offsetX / event.target.offsetWidth) * 100;
+    onChangeProgress(percentX);
+  }, [onChangeProgress]);
 
   return (
     <Container>
-      <Progress progress={progress} dragging={dragging} ref={progressRef} />
+      <Progress
+        progress={progress}
+        dragging={dragging}
+        ref={progressRef}
+        onClick={onClickProgressBar}
+        onTouchStart={onClickProgressBar}
+      />
     </Container>
   );
 };
