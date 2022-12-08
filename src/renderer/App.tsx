@@ -216,9 +216,12 @@ const Container = styled.div`
   justify-content: center;
   height: 100%;
   width: 100%;
-  border: grey 1px solid;
+  /* border: grey 1px solid; */
+  border-width: 1px 0 0 1px;
+  border-style: solid;
+  border-color: grey;
   box-sizing: border-box;
-  border-collapse: collapse;
+  /* border-collapse: collapse; */
   font-size: calc(10px + 2vmin);
   overflow: hidden;
 `;
@@ -252,7 +255,11 @@ const AppQuitContainer = styled(AbsoluteBox)`
 `;
 const ToolDockContainer = styled.div`
   height: 100%;
-  border: ${props => props.show && '1px solid grey' };
+  /* border: ${props => props.show && '1px solid grey' }; */
+  border-width: 0 1px 1px 0;
+  border-style: solid;
+  border-color: grey;
+  box-sizing: border-box;
   width: ${props => props.show ? `${props.docWidth}px` : '0px'};
   transition: 0.5s all;
 `

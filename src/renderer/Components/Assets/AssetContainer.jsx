@@ -11,9 +11,12 @@ const Container = styled.div`
   justify-content: center;
   height: 100%;
   width: 100%;
-  border: grey 1px solid;
+  /* border: grey 1px solid; */
+  border-width: 0 1px 1px 0;
+  border-style: solid;
+  border-color: grey;
   box-sizing: border-box;
-  border-collapse: collapse;
+  /* border-collapse: collapse; */
   font-size: calc(10px + 2vmin);
   overflow: hidden;
 `;

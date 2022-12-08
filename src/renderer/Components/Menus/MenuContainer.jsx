@@ -33,7 +33,7 @@ const MenuContainer = (props) => {
   const { useSrcLocal, setDraggableDockState } = useAppState();
   const [isDragging, setIsDragging] = React.useState(false);
   const { assets, currentAsset, setAssetsState, setCurrentAssetState } = useAssetState();
-  const [ socketConnected, setSocketConnected ] = React.useState(false);
+  const [socketConnected, setSocketConnected] = React.useState(false);
   const handleSocketEvent = React.useCallback((eventName, args) => {
     console.log('event received', eventName, args);
     if(eventName === 'ASSET_CHANGE' && !useSrcLocal){
@@ -56,11 +56,11 @@ const MenuContainer = (props) => {
     setIsDragging(false);
   }, [setIsDragging])
 
-  const onDrag = React.useCallback((e,data) => {
+  const onDrag = React.useCallback((e, data) => {
     const {x} = data;
     const {clientWidth} = data.node;
     console.log(x, clientWidth);
-    const RIGHT_SIDE_STICKED = x === 22;
+    const RIGHT_SIDE_STICKED = x === 21;
     if(RIGHT_SIDE_STICKED) {
       setDraggableDockState(true, `${clientWidth + 10}`)
     } else {
