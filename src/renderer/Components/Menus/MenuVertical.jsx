@@ -14,6 +14,7 @@ const Container = styled.div`
   justify-content: space-around;
   align-items: center;
   border-radius: 20px;
+  backdrop-filter: blur(2px);
 `;
 
 

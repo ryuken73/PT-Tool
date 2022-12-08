@@ -61,6 +61,7 @@ const GridContainer = styled.div`
   grid-template-columns: ${(props) =>
     props.drawShow ? '1fr 1fr 1fr' : '. 1fr .'};
   gap: 0px 2px;
+  backdrop-filter: blur(5px);
 `;
 const PalleteContainer = styled.div`
   display: flex;
