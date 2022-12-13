@@ -394,7 +394,7 @@ export default function App() {
         title="Quit?"
       />
       <PageTransition />
-      <DisplayControl />
+      {/* <DisplayControl /> */}
       <AssetContainer />
       <ToolDockContainer show={draggableDock} docWidth={dockWidth} />
     </AppContainer>
