@@ -11,6 +11,9 @@ const Container = styled.div`
   margin-bottom: 10px;
   text-shadow: 0px 0 black, 0 0px black, 1px 0 black, 0 1px black;
   opacity: ${(props) => !props.isCurrent ? props.draggableDock ? 0.5 : 0.2 : 1};
+  /* box-sizing: border-box;
+  border: ${props => props.isCurrent && '1px solid white'};
+  width: 100%; */
 `
 
 const MenuItem = (props) => {
