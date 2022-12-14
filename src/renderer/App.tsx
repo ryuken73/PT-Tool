@@ -309,7 +309,7 @@ export default function App() {
     setUseSrcLocalState,
     setModalOpenState } = useAppState();
   const { position, syncPosition } = useSyncPosition();
-  const { setAssetsState } = useAssetState();
+  const { currentAssetSrcCount, setAssetsState } = useAssetState();
   const [ quitConfirmOpen, setQuitConfirmOpen ] = React.useState(false);
 
   console.log('^^^^^^', draggableDock, dockWidth)
@@ -394,7 +394,7 @@ export default function App() {
         title="Quit?"
       />
       <PageTransition />
-      {/* <DisplayControl /> */}
+      {currentAssetSrcCount !== 1 && <DisplayControl />}
       <AssetContainer />
       <ToolDockContainer show={draggableDock} docWidth={dockWidth} />
     </AppContainer>
