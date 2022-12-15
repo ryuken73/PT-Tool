@@ -41,7 +41,7 @@ export default function useAssetState() {
     return asset ? asset.assetTitle : '...';
   }, [assets, currentAsset]);
 
-  const currentAssetSrcCount = assets[currentAsset].sources.length;
+  const currentAssetSrcCount = assets[currentAsset]?.sources?.length || 1;
 
   const addAssetState = React.useCallback(
     (asset) => {

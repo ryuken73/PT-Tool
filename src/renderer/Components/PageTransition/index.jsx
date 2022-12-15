@@ -34,7 +34,7 @@ const Container = styled.div`
   width: 100%;
   z-index: 10000;
   animation: ${(props) => props.assetChanged && animation};
-  animation-delay: 0.8s;
+  animation-delay: 0.2s;
   transform-origin: 0% 100%;
   display: flex;
   justify-content: center;
