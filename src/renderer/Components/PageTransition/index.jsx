@@ -24,7 +24,7 @@ const changeAnimation = keyframes`
 const animation = css`
   /* ${changeAnimation} 1s cubic-bezier(.78,.01,1,-0.08); */
   /* ${changeAnimation} 2s cubic-bezier(.25,.41,.74,-0.65); */
-  ${changeAnimation} 0.4s cubic-bezier(.73,.15,.96,.14);
+  ${changeAnimation} 0.2s cubic-bezier(.73,.15,.96,.14);
 `;
 
 const Container = styled.div`
@@ -34,7 +34,7 @@ const Container = styled.div`
   width: 100%;
   z-index: 10000;
   animation: ${(props) => props.assetChanged && animation};
-  animation-delay: 0.2s;
+  animation-delay: 0.1s;
   transform-origin: 0% 100%;
   display: flex;
   justify-content: center;
