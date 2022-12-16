@@ -118,10 +118,10 @@ export default function usePlayerEvent(assetId, srcId, playerRef) {
   }, [playerRef, dispatch, assetId, playerId]);
 
   const handleEnded = React.useCallback(() => {
-    if (!isLive) {
-      playerRef.current.currentTime = 0;
+    // if (!isLive) {
+      // playerRef.current.currentTime = 0;
       // playerRef.current.play();
-    };
+    // };
   }, [isLive, playerRef]);
 
   const onClickPlay = React.useCallback(() => {
