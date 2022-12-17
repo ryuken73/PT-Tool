@@ -5,6 +5,7 @@ import { CircleMenu, CircleMenuItem } from 'react-circular-menu';
 import SplitscreenIcon from '@mui/icons-material/Splitscreen';
 import SwipeIcon from '@mui/icons-material/Swipe';
 import HeightIcon from '@mui/icons-material/Height';
+import CompareIcon from '@mui/icons-material/Compare';
 import useAssetState from 'renderer/hooks/useAssetState';
 import useDisplayModeState from 'renderer/hooks/useDisplayControlState';
 
@@ -25,8 +26,8 @@ const SplitColumnIcon = styled(SplitscreenIcon)`
   font-size: 4em;
   /* box-shadow: 0.03em -0.03em 0.1em 0.01em black; */
 `
-const OverlayIcon = styled(HeightIcon)`
-  transform: rotate(90deg);
+const OverlayIcon = styled(CompareIcon)`
+  /* transform: rotate(90deg); */
   height: 1em;
   font-size: 4em;
   /* box-shadow: 0.03em -0.03em 0.1em 0.01em black; */
