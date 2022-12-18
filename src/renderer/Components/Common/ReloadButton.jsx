@@ -5,7 +5,7 @@ import RefreshIcon from '@mui/icons-material/Refresh';
 
 const Container = styled.div`
   position: absolute;
-  bottom: 50px;
+  bottom: 70px;
   right: 50px;
 `
 
@@ -15,7 +15,15 @@ export default function ReloadButton(props) {
   return (
     <Container>
       <IconButton size="large" onClick={reload}>
-        <RefreshIcon sx={{ fontSize: 40, color: 'maroon', background: 'white', opacity: 0.5, borderRadius: '50%' }}></RefreshIcon>
+        <RefreshIcon
+          sx={{
+            fontSize: 35,
+            color: 'maroon',
+            background: 'white',
+            opacity: 0.2,
+            borderRadius: '50%',
+          }}
+        />
       </IconButton>
     </Container>
   )
