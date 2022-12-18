@@ -8,7 +8,6 @@ import interact from 'interactjs';
 // import ImageBox from 'renderer/Components/Common/ImageBox';
 import SrcViewer from 'renderer/Components/Assets/SrcViewer';
 import useAppState from 'renderer/hooks/useAppState';
-import useAssetState from 'renderer/hooks/useDisplayControlState';
 import useWindowSize from 'renderer/hooks/useWindowSize';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwapHorizontalCircleIcon from '@mui/icons-material/SwapHorizontalCircle';
@@ -89,7 +88,6 @@ const AssetContainer = (props) => {
   const containerRef = React.useRef(null);
   const dragRef = React.useRef(null);
   const { useSrcLocal, draggableDock, dockWidth } = useAppState();
-  const { updateCurrentAssetSrc } = useAssetState();
   const size = useWindowSize();
   const { displayMode = 'flexRow', assetId, sources, show } = props;
   const srcPath = useSrcLocal ? 'srcLocal' : 'srcRemote';

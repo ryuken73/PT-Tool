@@ -9,18 +9,24 @@ const Container = styled.div`
 const StyledImage = styled.img`
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: ${props => props.objectFit};
   /* -webkit-mask-image: ${(props) =>
     !props.isFirstImage &&
     'linear-gradient(to right, transparent 10%, blue 67%)'}; */
 `
 
 const ImageBox = (props) => {
-  const { src, srcIndex } = props;
+  // eslint-disable-next-line react/prop-types
+  const { src, srcIndex, objectFit='cover' } = props;
   const isFirstImage = srcIndex === 0;
   return (
     <Container>
-      <StyledImage src={src} draggable={false} isFirstImage={isFirstImage}/>
+      <StyledImage
+        src={src}
+        objectFit={objectFit}
+        draggable={false}
+        isFirstImage={isFirstImage}
+      />
     </Container>
   );
 };

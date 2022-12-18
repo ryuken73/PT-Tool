@@ -17,7 +17,7 @@ const Player = (props) => {
   // eslint-disable-next-line react/prop-types
   console.log('re-render Player props =', props);
   // const { asset } = props;
-  const { assetId, src, srcId, show, srcIndex } = props;
+  const { assetId, src, srcId, show, srcIndex, objectFit } = props;
   const playerRef = React.useRef(null);
   const { loadHLS } = usePlayerSource(assetId, src, srcId, playerRef, show, srcIndex);
 
@@ -33,7 +33,7 @@ const Player = (props) => {
 
   return (
     <Container>
-      <VideoPlayer src={src} ref={playerRef} />
+      <VideoPlayer src={src} objectFit={objectFit} ref={playerRef} />
       <PlayerControl
         ref={playerRef}
         assetId={assetId}
