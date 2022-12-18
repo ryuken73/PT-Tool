@@ -4,16 +4,17 @@ import styled from 'styled-components';
 import Player from 'renderer/Components/Players/Player';
 import WebView from 'renderer/Components/Common/WebView';
 import ImageBox from 'renderer/Components/Common/ImageBox';
+import IconButton from '@mui/material/IconButton';
+import AspectRatioIcon from '@mui/icons-material/AspectRatio';
 import useAssetState from 'renderer/hooks/useAssetState';
 
-const ToggleButton = styled.button`
+const ButtonContainer = styled.div`
   position: absolute;
   top: 20px;
   left: ${(props) => !props.isRightSide && '20px'};
   right: ${(props) => props.isRightSide && '20px'};
   z-index: 10000;
-`
-
+`;
 const ViewMap = {
   web: WebView,
   video: Player,
@@ -44,12 +45,19 @@ function SrcViewer(props) {
   return (
     <>
       {srcType !== 'web' && (
-        <ToggleButton
-          onClick={toggleObjectFit}
-          isRightSide={isToggleBtnRightSide}
-        >
-          {objectFit}
-        </ToggleButton>
+        <ButtonContainer isRightSide={isToggleBtnRightSide}>
+          <IconButton onClick={toggleObjectFit}>
+            <AspectRatioIcon
+              sx={{
+                fontSize: 30,
+                // color: 'maroon',
+                // background: 'white',
+                opacity: 0.1,
+                borderRadius: '5px',
+              }}
+            />
+          </IconButton>
+        </ButtonContainer>
       )}
       <Viewer
         key={`${assetId}-${srcId}`}
