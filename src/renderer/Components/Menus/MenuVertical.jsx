@@ -20,20 +20,20 @@ const Container = styled.div`
 
 function MenuVertical(props) {
   // eslint-disable-next-line react/prop-types
-  const { drawShow, assets, currentAsset, setCurrentAssetState } = props;
+  const { drawShow, assets, currentAssetIndex, setCurrentAssetIndexState } = props;
   return (
     <Container hide={false}>
       {assets.map((asset, index) => (
         <MenuItem
           key={asset.assetTitle}
-          isCurrent={currentAsset === index}
+          isCurrent={currentAssetIndex === index}
           menuText={asset.assetTitle}
           mode="vertical"
           onClick={() => {
-            setCurrentAssetState(index);
+            setCurrentAssetIndexState(index);
           }}
           onTouchStart={() => {
-            setCurrentAssetState(index);
+            setCurrentAssetIndexState(index);
           }}
         />
       ))}

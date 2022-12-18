@@ -32,20 +32,20 @@ const Container = styled.div`
 
 function MenuHorizontal(props) {
   // eslint-disable-next-line react/prop-types
-  const { drawShow, assets, currentAsset, setCurrentAssetState } = props;
+  const { drawShow, assets, currentAssetIndex, setCurrentAssetIndexState } = props;
   return (
     <MenuDiv>
       <Container hide={drawShow}>
         {assets.map((asset, index) => (
           <MenuItem
             key={asset.assetTitle}
-            isCurrent={currentAsset === index}
+            isCurrent={currentAssetIndex === index}
             menuText={asset.assetTitle}
             onClick={() => {
-              setCurrentAssetState(index);
+              setCurrentAssetIndexState(index);
             }}
             onTouchStart={() => {
-              setCurrentAssetState(index);
+              setCurrentAssetIndexState(index);
             }}
           />
         ))}

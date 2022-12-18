@@ -74,12 +74,12 @@ const ThickText = styled.h1`
 `;
 
 const PageTransition = () => {
-  const { currentAsset } = useAssetState();
+  const { currentAssetIndex } = useAssetState();
   const [assetChanged, setAssetChanged] = React.useState(false);
 
   React.useEffect(() => {
     setAssetChanged(true);
-  }, [currentAsset]);
+  }, [currentAssetIndex]);
 
   const onAnimationEnd = React.useCallback(() => {
     setAssetChanged(false);

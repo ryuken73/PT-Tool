@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
   setAssets,
-  setCurrentAsset,
+  setCurrentAssetIndex,
 } from 'renderer/Components/Assets/assetSlice';
 import useDrawState from 'renderer/hooks/useDrawState';
 
@@ -27,21 +27,23 @@ const addExtAttr = (videoAsset) => {
 export default function useAssetState() {
   const dispatch = useDispatch();
   const assets = useSelector((state) => state.asset.assets);
-  const currentAsset = useSelector((state) => state.asset.currentAsset);
+  const currentAssetIndex = useSelector(
+    (state) => state.asset.currentAssetIndex
+  );
   const { clearPathDatumState } = useDrawState();
 
   const assetShowMask = React.useMemo(() => {
     return assets.map((asset, index) => {
-      return index === currentAsset;
+      return index === currentAssetIndex;
     })
-  }, [assets, currentAsset])
+  }, [assets, currentAssetIndex])
 
   const currentAssetTitle = React.useMemo(() => {
-    const asset = assets.find((asset, index) => index === currentAsset) || null;
+    const asset = assets.find((asset, index) => index === currentAssetIndex) || null;
     return asset ? asset.assetTitle : '...';
-  }, [assets, currentAsset]);
+  }, [assets, currentAssetIndex]);
 
-  const currentAssetSrcCount = assets[currentAsset]?.sources?.length || 1;
+  const currentAssetSrcCount = assets[currentAssetIndex]?.sources?.length || 1;
 
   const addAssetState = React.useCallback(
     (asset) => {
@@ -59,20 +61,33 @@ export default function useAssetState() {
     [dispatch]
   );
 
-  const setCurrentAssetState = React.useCallback((assetIndex) => {
+  const setCurrentAssetIndexState = React.useCallback((assetIndex) => {
     clearPathDatumState();
-    dispatch(setCurrentAsset({ currentAsset: assetIndex }));
+    dispatch(setCurrentAssetIndex({ currentAssetIndex: assetIndex }));
     },
-    [dispatch]
+    [clearPathDatumState, dispatch]
   );
+
+  const updateCurrentAssetSrc = React.useCallback((srcId, key, value) => {
+    const asset = assets.find((asset, index) => index === currentAssetIndex) || null;
+    if(asset === null) return;
+    const targetSrc = asset.sources.find((source) => source.srcId === srcId);
+    if(targetSrc === undefined) return;
+    const newSrc = {
+      ...targetSrc,
+      [key]: value
+    }
+  })
+
   return {
     assets,
-    currentAsset,
+    currentAssetIndex,
     currentAssetTitle,
     currentAssetSrcCount,
     assetShowMask,
     addAssetState,
     setAssetsState,
-    setCurrentAssetState,
+    setCurrentAssetIndexState,
+    updateCurrentAssetSrc
   };
 }

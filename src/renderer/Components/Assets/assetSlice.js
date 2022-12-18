@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const FIRST_ASSET_INDEX = 0;
 const initialState = {
   assets: [],
-  currentAsset: FIRST_ASSET_INDEX
+  currentAssetIndex: FIRST_ASSET_INDEX
 };
 
 export const assetSlice = createSlice({
@@ -15,10 +15,10 @@ export const assetSlice = createSlice({
       const { assets } = payload;
       state.assets = assets;
     },
-    setCurrentAsset: (state, action) => {
+    setCurrentAssetIndex: (state, action) => {
       const { payload } = action;
-      const { currentAsset } = payload;
-      state.currentAsset = currentAsset
+      const { currentAssetIndex } = payload;
+      state.currentAssetIndex = currentAssetIndex
     },
     setItemValue: (state, action) => {
       const { payload } = action;
@@ -43,7 +43,7 @@ export const assetSlice = createSlice({
 
 export const {
   setAssets,
-  setCurrentAsset,
+  setCurrentAssetIndex,
   setItemValue,
   setVideoCurrentTime,
   setVideoProgress,

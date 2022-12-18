@@ -51,7 +51,7 @@ const MenuContainer = (props) => {
   const { drawShow, showVertical } = props;
   const { position, syncPosition } = useSyncPosition();
   const { useSrcLocal } = useAppState();
-  const { assets, currentAsset, setAssetsState, setCurrentAssetState } = useAssetState();
+  const { assets, currentAssetIndex, setAssetsState, setCurrentAssetIndexState } = useAssetState();
   const [ socketConnected, setSocketConnected ] = React.useState(false);
   const handleSocketEvent = React.useCallback((eventName, args) => {
     console.log('event received', eventName, args);
@@ -79,13 +79,13 @@ const MenuContainer = (props) => {
             // eslint-disable-next-line react/button-has-type
             <MenuItem
               key={asset.assetTitle}
-              isCurrent={currentAsset === index}
+              isCurrent={currentAssetIndex === index}
               menuText={asset.assetTitle}
               onClick={() => {
-                setCurrentAssetState(index);
+                setCurrentAssetIndexState(index);
               }}
               onTouchStart={() => {
-                setCurrentAssetState(index);
+                setCurrentAssetIndexState(index);
               }}
             />
           ))}

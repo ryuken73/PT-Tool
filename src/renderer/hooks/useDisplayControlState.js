@@ -5,7 +5,9 @@ import { setItemValue } from 'renderer/Components/Assets/assetSlice';
 export default function useAssetState() {
   const dispatch = useDispatch();
   const assets = useSelector((state) => state.asset.assets);
-  const currentAssetIndex = useSelector((state) => state.asset.currentAsset);
+  const currentAssetIndex = useSelector(
+    (state) => state.asset.currentAssetIndex
+  );
   const currentAsset = assets[currentAssetIndex] || {};
   const currentAssetId = currentAsset.assetId;
 

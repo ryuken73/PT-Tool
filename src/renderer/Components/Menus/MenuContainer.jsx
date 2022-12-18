@@ -32,7 +32,7 @@ const MenuContainer = (props) => {
   const { drawShow  } = props;
   const { useSrcLocal, setDraggableDockState } = useAppState();
   const [isDragging, setIsDragging] = React.useState(false);
-  const { assets, currentAsset, setAssetsState, setCurrentAssetState } = useAssetState();
+  const { assets, currentAssetIndex, setAssetsState, setCurrentAssetIndexState } = useAssetState();
   const [socketConnected, setSocketConnected] = React.useState(false);
   const handleSocketEvent = React.useCallback((eventName, args) => {
     console.log('event received', eventName, args);
@@ -79,18 +79,18 @@ const MenuContainer = (props) => {
             <MenuVertical
               drawShow={drawShow}
               assets={assets}
-              currentAsset={currentAsset}
-              setCurrentAssetState={setCurrentAssetState}
+              currentAssetIndex={currentAssetIndex}
+              setCurrentAssetIndexState={setCurrentAssetIndexState}
             />
           </VerticalDiv>
         </Draggable>
       ) : (
-      <MenuHorizontal
-        drawShow={drawShow}
-        assets={assets}
-        currentAsset={currentAsset}
-        setCurrentAssetState={setCurrentAssetState}
-      />
+        <MenuHorizontal
+          drawShow={drawShow}
+          assets={assets}
+          currentAssetIndex={currentAssetIndex}
+          setCurrentAssetIndexState={setCurrentAssetIndexState}
+        />
       )}
     </>
   );
