@@ -39,6 +39,7 @@ const Player = (props) => {
         assetId={assetId}
         src={src}
         srcId={srcId}
+        srcIndex={srcIndex}
       />
       <ReloadButton reload={reloadPlayer} />
     </Container>

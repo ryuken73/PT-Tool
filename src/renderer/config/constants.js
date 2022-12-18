@@ -22,6 +22,7 @@ const dev =  {
     videoControl: {
       top: `${TOOL_TOP-150}px`,
       right: `${TOOL_RIGHT}px`,
+      left: `${TOOL_RIGHT}px`,
     },
     menuContainer: {
       top: `${MENU_TOP}px`,

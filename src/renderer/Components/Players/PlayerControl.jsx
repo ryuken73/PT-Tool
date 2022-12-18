@@ -18,18 +18,20 @@ import { IconButton } from '@mui/material';
 const { POSITION } = CONSTANTS;
 
 const Container = styled(Box)`
-  display: none;
+  display: flex;
   flex-direction: column;
   position: absolute;
   top: ${POSITION.videoControl.top};
-  right: ${POSITION.videoControl.right};
-  width: 300px;
+  right: ${(props) => props.isRightSide && POSITION.videoControl.right};
+  left: ${(props) => !props.isRightSide && POSITION.videoControl.left};
+  width: 150px;
+  opacity: 0.4;
 `;
 const ProgressContainer = styled(Box)`
   /* display: flex; */
   display: ${(props) => (props.hide ? 'none' : 'flex')};
   flex-direction: column;
-  height: 50px;
+  height: 35px;
   background: ${colors.player};
 `;
 // const Progress = styled(Box)`
@@ -76,6 +78,8 @@ const ControlContainer = styled(Box)`
   position: relative;
   margin-top: 10px;
 `;
+const HideIcon = styled.div`
+`
 
 const iconContainerStyle = {
   padding: '0px',
@@ -85,7 +89,7 @@ const iconStyle = {
   background: '#140e30',
   color: 'white',
   borderRadius: '20%',
-  fontSize: '34px',
+  fontSize: '25px',
   padding: '0px !important',
 };
 
@@ -100,6 +104,7 @@ const Player = (props, playerRef) => {
     srcId,
     endedTime,
     repeatMode,
+    srcIndex,
     onClickRepeat = () => {},
   } = props;
 
@@ -117,6 +122,7 @@ const Player = (props, playerRef) => {
     onClickReplay10
   } = usePlayerEvent(assetId, srcId, playerRef);
 
+  const isRightSide = srcIndex > 0;
   const playerCurrentTime = playerRef.current ? playerRef.current.currentTime : 0;
   const currentTimeSec = parseInt(playerCurrentTime, 10);
   const progress = ((currentTimeSec / durationSec) * 100).toFixed(0);
@@ -172,7 +178,7 @@ const Player = (props, playerRef) => {
   const hide = isLive || !canplay;
 
   return (
-    <Container>
+    <Container isRightSide={isRightSide}>
       <ProgressContainer hide={hide}>
         <ProgressBar progress={progress} onChangeProgress={handleMoveProgressSlider}>
           {/* <SliderBar value={progress} onChange={handleMoveProgressSlider} /> */}
@@ -185,9 +191,9 @@ const Player = (props, playerRef) => {
           /> */}
         </ProgressBar>
         <Duration>
-          <TextBox fontSize="11px" text={currentTime} color={colors.textMain} />
+          <TextBox fontSize="9px" text={currentTime} color={colors.textMain} />
           <TextBox
-            fontSize="11px"
+            fontSize="9px"
             text={durationTime}
             marginLeft="5px"
             color={colors.textSub}
