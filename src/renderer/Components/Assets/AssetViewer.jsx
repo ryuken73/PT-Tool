@@ -62,12 +62,6 @@ const ViewMap = {
   image: ImageBox,
 };
 
-const Viewer = (props) => {
-  const { srcType, ...remainOpts } = props;
-  const SrcViewer = ViewMap[srcType];
-  return <SrcViewer {...remainOpts} />;
-};
-
 const ProtectLayer = styled(Container)`
   display: ${(props) => (props.isDragging ? 'block' : 'none')};
   position: absolute;
@@ -98,7 +92,6 @@ const AssetContainer = (props) => {
   const srcPath = useSrcLocal ? 'srcLocal' : 'srcRemote';
   // console.log('#### assetContainer:', sources, srcPath, displayMode);
 
-
   const viewWidth = React.useMemo(() => {
     if(!draggableDock) return window.innerWidth;
     return window.innerWidth - dockWidth;
@@ -122,6 +115,25 @@ const AssetContainer = (props) => {
     setIsDragging(false);
   }, []);
 
+  const Viewer = React.useCallback((props) => {
+      const { source, srcIndex, ...remainOpts } = props;
+      const { srcId, srcType } = source;
+      const SrcViewer = ViewMap[srcType];
+      return (
+        <SrcViewer
+          key={`${assetId}-${srcId}`}
+          assetId={assetId}
+          srcType={srcType}
+          src={source[srcPath]}
+          srcId={srcId}
+          show={show}
+          srcIndex={srcIndex}
+          {...remainOpts}
+        />
+      );
+    },
+    [assetId, show, srcPath]
+  );
   // const offsetX = React.useMemo(() => {
   //   return viewWidth/2;
   // }, [viewWidth])
@@ -212,15 +224,7 @@ const AssetContainer = (props) => {
               key={`${assetId}-${source.srcId}`}
               index={index}
             >
-              <Viewer
-                key={`${assetId}-${source.srcId}`}
-                assetId={assetId}
-                srcType={source.srcType}
-                src={source[srcPath]}
-                srcId={source.srcId}
-                show={show}
-                srcIndex={index}
-              />
+              <Viewer source={source} srcIndex={index} />
             </AbsoluteBox>
           ))}
         </OverlayContainer>
@@ -228,15 +232,7 @@ const AssetContainer = (props) => {
       {(displayMode === 'flexColumn' || displayMode === 'flexRow') && (
         <FlexContainer displayMode={displayMode}>
           {sources.map((source, index) => (
-            <Viewer
-              key={`${assetId}-${source.srcId}`}
-              assetId={assetId}
-              srcType={source.srcType}
-              src={source[srcPath]}
-              srcId={source.srcId}
-              show={show}
-              srcIndex={index}
-            />
+            <Viewer source={source} srcIndex={index} />
           ))}
         </FlexContainer>
       )}
@@ -244,15 +240,7 @@ const AssetContainer = (props) => {
         <StyledSwiper>
           {sources.map((source, index) => (
             <SwiperSlide>
-              <Viewer
-                key={`${assetId}-${source.srcId}`}
-                assetId={assetId}
-                srcType={source.srcType}
-                src={source[srcPath]}
-                srcId={source.srcId}
-                show={show}
-                srcIndex={index}
-              />
+              <Viewer source={source} srcIndex={index} />
             </SwiperSlide>
           ))}
         </StyledSwiper>
@@ -260,15 +248,7 @@ const AssetContainer = (props) => {
       {(displayMode === '' || displayMode === undefined) && (
         <Container>
           {sources.map((source, index) => (
-            <Viewer
-              key={`${assetId}-${source.srcId}`}
-              assetId={assetId}
-              srcType={source.srcType}
-              src={source[srcPath]}
-              srcId={source.srcId}
-              show={show}
-              srcIndex={index}
-            />
+            <Viewer source={source} srcIndex={index} />
           ))}
         </Container>
       )}
