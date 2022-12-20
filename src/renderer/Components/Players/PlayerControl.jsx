@@ -18,7 +18,7 @@ import { IconButton } from '@mui/material';
 const { POSITION } = CONSTANTS;
 
 const Container = styled(Box)`
-  display: flex;
+  display: none;
   flex-direction: column;
   position: absolute;
   top: ${POSITION.videoControl.top};
