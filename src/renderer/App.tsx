@@ -5,11 +5,13 @@ import AssetTitle from 'renderer/Components/Assets/AssetTitle';
 import DrawSvg from 'renderer/Components/Draw/DrawSvg';
 import MenuContainer from 'renderer/Components/Menus/MenuContainer';
 import ConfirmDialog from './Components/Dialog/ConfirmDialog';
+import ToolDocker from 'renderer/Components/ToolDocker';
 import styled from 'styled-components';
 import colors from 'renderer/config/colors';
 import Loading from './Components/Common/Loading';
 import ToolContainer from './Components/Draw/ToolContainer';
 import PageTransition from 'renderer/Components/PageTransition';
+// import PageTransition from 'renderer/Components/PageTransition/ImageTransition';
 import DisplayControl from 'renderer/Components/DisplayControl';
 import useAppState from './hooks/useAppState';
 import useSyncPosition from './hooks/useSyncPosition';
@@ -396,7 +398,7 @@ export default function App() {
       <PageTransition />
       {currentAssetSrcCount !== 1 && <DisplayControl />}
       <AssetContainer />
-      <ToolDockContainer show={draggableDock} docWidth={dockWidth} />
+      <ToolDocker show={draggableDock} docWidth={dockWidth} />
     </AppContainer>
   );
 }
