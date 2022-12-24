@@ -341,7 +341,7 @@ export default function App() {
         setModalOpenState(false);
         alert('fail to get asset list! try again.');
       });
-  }, [setAssetsState, setUseSrcLocalState]);
+  }, [setAssetsState, setModalOpenState, setUseSrcLocalState]);
 
   const AssetReloader = () => {
     const bind = useDoubleTap((event) => {
