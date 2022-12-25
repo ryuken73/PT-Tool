@@ -7,32 +7,53 @@ import Snow1 from 'renderer/assets/snow_1.jpg';
 import Snow2 from 'renderer/assets/snow_2.jpg';
 import Snow3 from 'renderer/assets/snow_3.jpg';
 
-const DockContainer = styled.canvas`
+const HIDE_BLUR_BORDER_MARGIN = 20;
+const DockContainer = styled.div`
   height: 100%;
   border-width: 0 1px 1px 0;
   border-style: solid;
   border-color: grey;
   box-sizing: border-box;
-  width: ${(props) => (props.show ? `${props.docWidth}px` : '0px')};
-  transition: 0.5s all;
-  background-image: linear-gradient(
-      to right,
-      rgba(0, 0, 0, 1),
-      rgba(0, 0, 0, 0.5)
-    ),
-    url(${RainDrop});
+  width: ${(props) =>
+    props.show
+      ? `${parseInt(props.docWidth, 10) + HIDE_BLUR_BORDER_MARGIN*2.1}px`
+      : '0px'};
+  transition: 0.2s all;
   background-size: cover;
+  background-repeat: no-repeat;
+  filter: blur(20px);
+  transform: scale(1.05);
+  margin: ${HIDE_BLUR_BORDER_MARGIN * -1}px;
 `;
 
 // const { captureScreen } = appUtil;
 function ToolDocker(props) {
   // eslint-disable-next-line react/prop-types
   const { show, docWidth } = props;
+  const [dataUrls, setDataUrls] = React.useState([]);
   const { currentAssetIndex } = useAssetState();
-  React.useEffect(() => {
+  const docRef = React.useRef(null);
 
-  }, [currentAssetIndex])
-  return <DockContainer show={show} docWidth={docWidth} />;
+  const prevDataUrl = React.useMemo(() => {
+    return dataUrls[currentAssetIndex] || RainDrop;
+  }, [currentAssetIndex]);
+  // remove dataUrls from dependency to reduce re-render
+
+  React.useEffect(() => {
+    if(docRef.current === null) return;
+    docRef.current.style.backgroundImage = `url(${prevDataUrl})`;
+    setTimeout(async () => {
+      const currentDataUrl = await window.getCaptureImg(docRef.current);
+      docRef.current.style.backgroundImage = `url(${currentDataUrl})`;
+      // eslint-disable-next-line @typescript-eslint/no-shadow
+      setDataUrls((dataUrls) => {
+        const newDataUrls = [...dataUrls];
+        newDataUrls[currentAssetIndex] = currentDataUrl;
+        return newDataUrls;
+      })
+    }, 400);
+  }, [currentAssetIndex, prevDataUrl]);
+  return <DockContainer ref={docRef} show={show} docWidth={docWidth} />;
 }
 
 export default React.memo(ToolDocker);

@@ -82,10 +82,10 @@ const createWindow = async () => {
       nodeIntegration: true,
       contextIsolation: false,
       webviewTag: true,
-      webSecurity: false
-      // preload: app.isPackaged
-      //   ? path.join(__dirname, 'preload.js')
-      //   : path.join(__dirname, '../../.erb/dll/preload.js'),
+      webSecurity: false,
+      preload: app.isPackaged
+        ? path.join(__dirname, 'preload.js')
+        : path.join(__dirname, '../../.erb/dll/preload.js'),
     },
   });
 
@@ -116,6 +116,10 @@ const createWindow = async () => {
     shell.openExternal(edata.url);
     return { action: 'deny' };
   });
+
+  mainWindow.webContents.addListener('did-frame-navigate', () => {
+    console.log('^^ did frame navigated');
+  })
 
   // Remove this if your app does not use auto updates
   // eslint-disable-next-line

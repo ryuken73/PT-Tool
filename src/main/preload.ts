@@ -1,6 +1,17 @@
-import { contextBridge, ipcRenderer } from 'electron';
+import { contextBridge, ipcRenderer, BrowserWindow } from 'electron';
 const tcpp = require('tcp-ping');
 const os = require('os');
+// if contextIsolation is false, attach method to window object.
+// and use window.methon in renderer
+
+window.getCaptureImg = async (docElement) => {
+  const img = await ipcRenderer.invoke('captureScreen');
+  if (img === undefined) {
+    return null;
+  }
+  const dataUrl = img.toDataURL();
+  return dataUrl;
+};
 
 contextBridge.exposeInMainWorld('electron', {
   util: {
@@ -16,6 +27,7 @@ contextBridge.exposeInMainWorld('electron', {
       });
     },
     getHostInfo() {
+      console.log(os.hostname());
       return {
         hostname: os.hostname(),
         ipAddresses: os.networkInterfaces()

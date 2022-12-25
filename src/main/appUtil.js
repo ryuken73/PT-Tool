@@ -20,14 +20,18 @@ const setupIPCHandlers = () => {
     }
     return Promise.resolve();
   });
-  // ipcMain.handle('captureScreen', () => {
-  //   desktopCapturer.getSources({
-  //     types: ['screen'],
-  //   })
-  //   .then(sources => {
-  //     console.log("^^", sources);
-  //   })
-  // })
+  ipcMain.handle('captureScreen', () => {
+    const currentWindow = BrowserWindow.getFocusedWindow();
+    if (currentWindow === null) return;
+    const [width, height] = currentWindow.getSize();
+    // eslint-disable-next-line consistent-return
+    return currentWindow.webContents.capturePage({
+      x: width * 0.8,
+      y: 0,
+      width,
+      height,
+    });
+  });
   ipcMain.handle('quitApp', () => {
     return Promise.resolve(app.quit());
   });
