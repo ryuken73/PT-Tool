@@ -25,6 +25,7 @@ const VerticalDiv = styled.div`
   border-radius: 5px;
   border: ${props => props.isDragging && "2px dashed"};
   opacity: ${props => props.isDragging && "0.5"};
+  box-sizing: border-box;
 `;
 
 const MenuContainer = (props) => {
@@ -62,7 +63,7 @@ const MenuContainer = (props) => {
     console.log(x, clientWidth);
     const RIGHT_SIDE_STICKED = x === 21;
     if(RIGHT_SIDE_STICKED) {
-      setDraggableDockState(true, `${clientWidth + 10}`)
+      setDraggableDockState(true, `${clientWidth - 2 }`)
     } else {
       setDraggableDockState(false, `0`)
     }

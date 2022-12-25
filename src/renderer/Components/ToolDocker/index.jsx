@@ -9,21 +9,32 @@ import Snow3 from 'renderer/assets/snow_3.jpg';
 
 const HIDE_BLUR_BORDER_MARGIN = 20;
 const DockContainer = styled.div`
+  position: relative;
   height: 100%;
   border-width: 0 1px 1px 0;
   border-style: solid;
   border-color: grey;
   box-sizing: border-box;
-  width: ${(props) =>
-    props.show
-      ? `${parseInt(props.docWidth, 10) + HIDE_BLUR_BORDER_MARGIN*2.1}px`
-      : '0px'};
+`;
+const InnerBox = styled.div`
+  height: 100%;
+  width: 100%;
+  // filter: blur(20px);
   transition: 0.2s all;
   background-size: cover;
   background-repeat: no-repeat;
-  filter: blur(20px);
-  transform: scale(1.05);
-  margin: ${HIDE_BLUR_BORDER_MARGIN * -1}px;
+  box-sizing: border-box;
+  width: ${(props) =>
+    props.show ? `${parseInt(props.docWidth, 10)}px` : '0px'};
+  &:before {
+    content: '';
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    backdrop-filter: blur(20px);
+  }
 `;
 
 // const { captureScreen } = appUtil;
@@ -53,7 +64,11 @@ function ToolDocker(props) {
       })
     }, 400);
   }, [currentAssetIndex, prevDataUrl]);
-  return <DockContainer ref={docRef} show={show} docWidth={docWidth} />;
+  return (
+    <DockContainer>
+      <InnerBox ref={docRef} show={show} docWidth={docWidth} />
+    </DockContainer>
+  );
 }
 
 export default React.memo(ToolDocker);
