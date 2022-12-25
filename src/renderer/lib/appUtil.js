@@ -9,6 +9,10 @@ const getIpAddresses = async () => {
   return ipcRenderer.invoke('getIpAddresses');
 };
 
+// const captureScreen = async () => {
+//   return ipcRenderer.invoke('captureScreen');
+// };
+
 const toggleWindowMaximize = async () => {
   return ipcRenderer.invoke('toggleWindowMaximize');
 };
@@ -143,6 +147,7 @@ module.exports = {
   getVersion,
   getIpAddresses,
   toggleWindowMaximize,
+  // captureScreen,
   quitApp,
   isHlsStream,
   arrayBitWiseAvg,

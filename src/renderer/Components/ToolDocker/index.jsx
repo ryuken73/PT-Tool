@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import useAssetState from 'renderer/hooks/useAssetState';
+// import appUtil from 'renderer/lib/appUtil';
 import RainDrop from 'renderer/assets/rain_drop1.jpg';
 import Snow1 from 'renderer/assets/snow_1.jpg';
 import Snow2 from 'renderer/assets/snow_2.jpg';
@@ -22,9 +24,14 @@ const DockContainer = styled.canvas`
   background-size: cover;
 `;
 
+// const { captureScreen } = appUtil;
 function ToolDocker(props) {
   // eslint-disable-next-line react/prop-types
   const { show, docWidth } = props;
+  const { currentAssetIndex } = useAssetState();
+  React.useEffect(() => {
+
+  }, [currentAssetIndex])
   return <DockContainer show={show} docWidth={docWidth} />;
 }
 

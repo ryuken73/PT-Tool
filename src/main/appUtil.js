@@ -1,3 +1,4 @@
+// const { ipcMain, app, BrowserWindow, desktopCapturer } = require('electron');
 const { ipcMain, app, BrowserWindow } = require('electron');
 const os = require('os');
 
@@ -19,6 +20,14 @@ const setupIPCHandlers = () => {
     }
     return Promise.resolve();
   });
+  // ipcMain.handle('captureScreen', () => {
+  //   desktopCapturer.getSources({
+  //     types: ['screen'],
+  //   })
+  //   .then(sources => {
+  //     console.log("^^", sources);
+  //   })
+  // })
   ipcMain.handle('quitApp', () => {
     return Promise.resolve(app.quit());
   });
