@@ -31,7 +31,7 @@ const VerticalDiv = styled.div`
 const MenuContainer = (props) => {
   // eslint-disable-next-line react/prop-types
   const { drawShow  } = props;
-  const { useSrcLocal, setDraggableDockState } = useAppState();
+  const { useSrcLocal, draggableDock, setDraggableDockState } = useAppState();
   const [isDragging, setIsDragging] = React.useState(false);
   const { assets, currentAssetIndex, setAssetsState, setCurrentAssetIndexState } = useAssetState();
   const [socketConnected, setSocketConnected] = React.useState(false);
@@ -79,6 +79,7 @@ const MenuContainer = (props) => {
             </div>
             <MenuVertical
               drawShow={drawShow}
+              draggableDock={draggableDock}
               assets={assets}
               currentAssetIndex={currentAssetIndex}
               setCurrentAssetIndexState={setCurrentAssetIndexState}

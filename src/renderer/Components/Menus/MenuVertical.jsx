@@ -9,7 +9,7 @@ const Container = styled.div`
   font-weight: bold;
   font-size: 2vw;
   color: white;
-  background: rgb(0, 0, 0, 0.5);
+  background: ${(props) => props.draggableDock ? 'rgb(0, 0, 0, 0)':'rgb(0,0,0,0.5)'};
   padding: 5px;
   justify-content: space-around;
   align-items: center;
@@ -20,9 +20,15 @@ const Container = styled.div`
 
 function MenuVertical(props) {
   // eslint-disable-next-line react/prop-types
-  const { drawShow, assets, currentAssetIndex, setCurrentAssetIndexState } = props;
+  const {
+    drawShow,
+    draggableDock,
+    assets,
+    currentAssetIndex,
+    setCurrentAssetIndexState,
+  } = props;
   return (
-    <Container hide={false}>
+    <Container hide={false} draggableDock={draggableDock}>
       {assets.map((asset, index) => (
         <MenuItem
           key={asset.assetTitle}
