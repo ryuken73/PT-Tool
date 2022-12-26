@@ -21,7 +21,8 @@ import useDrawState from './hooks/useDrawState';
 import CONSTANTS from 'renderer/config/constants';
 import { getIpAddresses, toggleWindowMaximize, quitApp } from './lib/appUtil';
 
-const { POSITION, TOUCH_WORKSTATION_IP, TOUCH_WEB_SERVER_URL, ENABLE_V_MENU } = CONSTANTS;
+const { POSITION, TOUCH_WORKSTATION_IP, TOUCH_WEB_SERVER_URL, ENABLE_V_MENU } =
+  CONSTANTS;
 
 const INITIAL_ASSETS = [
   {
@@ -136,7 +137,7 @@ const INITIAL_ASSETS = [
           'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.59,36.90,6750',
         srcRemote:
           'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.59,36.90,6750',
-          // 'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.50,37.91,4250',
+        // 'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.50,37.91,4250',
         srcType: 'web',
         size: null,
       },
@@ -257,14 +258,14 @@ const AppQuitContainer = styled(AbsoluteBox)`
 `;
 const ToolDockContainer = styled.div`
   height: 100%;
-  /* border: ${props => props.show && '1px solid grey' }; */
+  /* border: ${(props) => props.show && '1px solid grey'}; */
   border-width: 0 1px 1px 0;
   border-style: solid;
   border-color: grey;
   box-sizing: border-box;
-  width: ${props => props.show ? `${props.docWidth}px` : '0px'};
+  width: ${(props) => (props.show ? `${props.docWidth}px` : '0px')};
   transition: 0.5s all;
-`
+`;
 
 const Timeout = (time) => {
   let controller = new AbortController();
@@ -300,7 +301,7 @@ const MaximizeToggler = () => {
   return <MaximizeContainer {...bind} />;
 };
 
-const bounds='#root';
+const bounds = '#root';
 
 export default function App() {
   const {
@@ -309,56 +310,52 @@ export default function App() {
     dockWidth,
     toggleDraw,
     setUseSrcLocalState,
-    setModalOpenState } = useAppState();
+    setModalOpenState,
+  } = useAppState();
   const { position, syncPosition } = useSyncPosition();
   const { currentAssetSrcCount, setAssetsState } = useAssetState();
-  const [ quitConfirmOpen, setQuitConfirmOpen ] = React.useState(false);
+  const [quitConfirmOpen, setQuitConfirmOpen] = React.useState(false);
 
-  console.log('^^^^^^', draggableDock, dockWidth)
+  console.log('^^^^^^', draggableDock, dockWidth);
+
+  const setAssetsFromServer = React.useCallback(() => {
+    getInitialAssets()
+      // eslint-disable-next-line promise/always-return
+      .then((assets) => {
+        setAssetsState(assets);
+        setModalOpenState(false);
+      })
+      .catch((err) => {
+        setModalOpenState(false);
+        alert('fail to get asset list! try again.');
+      });
+  }, [setAssetsState, setModalOpenState]);
 
   React.useEffect(() => {
     // eslint-disable-next-line promise/catch-or-return
     setModalOpenState(true);
+    // eslint-disable-next-line promise/catch-or-return
     getIpAddresses()
       .then((ipAddresses) => {
+        // eslint-disable-next-line promise/always-return, @typescript-eslint/no-unused-expressions
         ipAddresses.some((ip) => ip === TOUCH_WORKSTATION_IP)
           ? setUseSrcLocalState(true)
           : setUseSrcLocalState(false);
-        return;
       })
       .then(() => {
-        return getInitialAssets();
-      })
-      .then((assets) => {
-        if(assets.length === 0){
-          throw new Error('no assets');
-        }
-        setAssetsState(assets);
-        setModalOpenState(false);
-      })
-      .catch((err) => {
-        console.log('init error');
-        setModalOpenState(false);
-        alert('fail to get asset list! try again.');
+        return setAssetsFromServer();
       });
-  }, [setAssetsState, setModalOpenState, setUseSrcLocalState]);
+  }, [
+    setAssetsFromServer,
+    setAssetsState,
+    setModalOpenState,
+    setUseSrcLocalState,
+  ]);
 
   const AssetReloader = () => {
     const bind = useDoubleTap((event) => {
       setModalOpenState(true);
-      getInitialAssets()
-      .then((assets) => {
-        if(assets.length === 0){
-          throw new Error('no assets');
-        }
-        setAssetsState(assets);
-        setModalOpenState(false);
-      })
-      .catch((err) => {
-        console.log('init error');
-        setModalOpenState(false);
-        alert('fail to get asset list! try again.');
-      });
+      setAssetsFromServer();
     });
     return <AssetReloaderContainer {...bind} />;
   };
@@ -373,11 +370,11 @@ export default function App() {
 
   const handleYes = React.useCallback(() => {
     quitApp();
-  }, [])
+  }, []);
 
   const handleNo = React.useCallback(() => {
     setQuitConfirmOpen(false);
-  }, [])
+  }, []);
 
   return (
     <AppContainer>
@@ -398,7 +395,12 @@ export default function App() {
       <PageTransition />
       {currentAssetSrcCount !== 1 && <DisplayControl />}
       <AssetContainer />
-      <ToolDocker show={draggableDock} docWidth={dockWidth} />
+      <ToolDocker
+        quitApp={quitApp}
+        setAssetsFromServer={setAssetsFromServer}
+        show={draggableDock}
+        docWidth={dockWidth}
+      />
     </AppContainer>
   );
 }

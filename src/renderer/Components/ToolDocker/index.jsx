@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import AppControlMenu from 'renderer/Components/AppControlMenu';
 import useAssetState from 'renderer/hooks/useAssetState';
 // import appUtil from 'renderer/lib/appUtil';
 import RainDrop from 'renderer/assets/rain_drop1.jpg';
@@ -40,7 +41,7 @@ const InnerBox = styled.div`
 // const { captureScreen } = appUtil;
 function ToolDocker(props) {
   // eslint-disable-next-line react/prop-types
-  const { show, docWidth } = props;
+  const { show, docWidth, quitApp, setAssetsFromServer } = props;
   const [dataUrls, setDataUrls] = React.useState([]);
   const { currentAssetIndex } = useAssetState();
   const docRef = React.useRef(null);
@@ -67,6 +68,11 @@ function ToolDocker(props) {
   return (
     <DockContainer>
       <InnerBox ref={docRef} show={show} docWidth={docWidth} />
+      <AppControlMenu
+        show={show}
+        quitApp={quitApp}
+        setAssetsFromServer={setAssetsFromServer}
+      />
     </DockContainer>
   );
 }
