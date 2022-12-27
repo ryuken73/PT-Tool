@@ -6,11 +6,13 @@ import interact from 'interactjs';
 // import Player from 'renderer/Components/Players/Player';
 // import WebView from 'renderer/Components/Common/WebView';
 // import ImageBox from 'renderer/Components/Common/ImageBox';
+import ImageIcon from 'renderer/Components/Common/ImageIcon';
 import SrcViewer from 'renderer/Components/Assets/SrcViewer';
 import useAppState from 'renderer/hooks/useAppState';
 import useWindowSize from 'renderer/hooks/useWindowSize';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import SwapHorizontalCircleIcon from '@mui/icons-material/SwapHorizontalCircle';
+import SplitIcon from 'renderer/assets/Split.svg';
 import HeightIcon from '@mui/icons-material/Height';
 import 'swiper/css';
 
@@ -45,7 +47,7 @@ const AbsoluteBox = styled.div`
 const DragDivWithPosition = styled.div`
   position: absolute;
   bottom: 10%;
-  left: calc(50% - 17.5px);
+  left: calc(50% - 25.5px);
   z-index: 9999;
   touch-action: none;
   user-select: none;
@@ -69,17 +71,21 @@ const ProtectLayer = styled(Container)`
   background: transparent;
   z-index: 8888;
 `
-const Splitter = styled(HeightIcon)`
-  background: white;
-  color: #140e30;
-  border-radius: 10px;
-  border: 1px solid black;
-  transform: rotate(90deg);
-  height: 1em;
-  width:  0.7em;
-  font-size: 3em;
-  box-shadow: 0.03em -0.03em 0.1em 0.01em black;
-`
+// const Splitter = styled(HeightIcon)`
+//   background: white;
+//   color: #140e30;
+//   border-radius: 10px;
+//   border: 1px solid black;
+//   transform: rotate(90deg);
+//   height: 1em;
+//   width:  0.7em;
+//   font-size: 3em;
+//   box-shadow: 0.03em -0.03em 0.1em 0.01em black;
+// `
+const SplitSvg = () => {
+  return <ImageIcon src={SplitIcon} />;
+};
+
 const AssetContainer = (props) => {
   // eslint-disable-next-line react/prop-types
   const [percentX, setPercentX] = React.useState(50);
@@ -217,7 +223,7 @@ const AssetContainer = (props) => {
       {displayMode === 'overlaySplit' && (
         <OverlayContainer>
           <DragDivWithPosition ref={dragRef}>
-            <Splitter background="maroon" fontSize="large" />
+            <SplitSvg />
           </DragDivWithPosition>
           <ProtectLayer isDragging={isDragging} />
           {sources.map((source, index) => (
