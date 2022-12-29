@@ -8,7 +8,7 @@ const Container = styled.div`
   width: 100%;
   z-index: 10000;
   border: 3px red solid;
-  background: maroon;
+  background: ${(props) => (props.debug === 'yes' ? 'maroon' : 'transparent')};
 `;
 
 const CustomImg = styled.img`
@@ -18,9 +18,9 @@ const CustomImg = styled.img`
 
 function ImageSelfTransition(props) {
   // eslint-disable-next-line react/prop-types
-  const { img } = props;
+  const { img, debugTransition } = props;
   return (
-    <Container>
+    <Container debug={debugTransition}>
       <CustomImg src={img} />
     </Container>
   );

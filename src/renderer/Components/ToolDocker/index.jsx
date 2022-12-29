@@ -1,7 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
+import IconButton from '@mui/material/IconButton';
+import SettingsIcon from '@mui/icons-material/Settings';
 import AppControlMenu from 'renderer/Components/AppControlMenu';
 import useAssetState from 'renderer/hooks/useAssetState';
+import useConfigState from 'renderer/hooks/useConfigState';
 import CONSTANTS from 'renderer/config/constants';
 // import appUtil from 'renderer/lib/appUtil';
 import RainDrop from 'renderer/assets/rain_drop1.jpg';
@@ -12,6 +15,8 @@ import Snow3 from 'renderer/assets/snow_3.jpg';
 const HIDE_BLUR_BORDER_MARGIN = 20;
 const { TRANSITIONS } = CONSTANTS;
 const DockContainer = styled.div`
+  display: flex;
+  flex-direction: column;
   position: relative;
   height: 100%;
   border-width: 0 1px 1px 0;
@@ -39,12 +44,25 @@ const InnerBox = styled.div`
     backdrop-filter: blur(20px);
   }
 `;
+const IconContainer = styled.div`
+  display: ${(props) => (props.show ? 'flex' : 'none')};
+  justify-content: center;
+  align-items: center;
+  margin-top: auto;
+`
+const CustomSettingIcon = styled(SettingsIcon)`
+  margin: 10px;
+  z-index: 9999;
+  opacity: 0.2;
+  display: ${(props) => !props.show && 'none'};
+`
 
 // const { captureScreen } = appUtil;
 function ToolDocker(props) {
   // eslint-disable-next-line react/prop-types
   const { show, docWidth, quitApp, setAssetsFromServer, transitionName } = props;
   const [dataUrls, setDataUrls] = React.useState([]);
+  const { toggleConfigModalState } = useConfigState();
   const { currentAssetIndex } = useAssetState();
   const docRef = React.useRef(null);
 
@@ -68,6 +86,11 @@ function ToolDocker(props) {
       })
     }, transition.timeout/2);
   }, [currentAssetIndex, prevDataUrl]);
+
+  const onClickSetting = React.useCallback(() => {
+    toggleConfigModalState();
+  }, [toggleConfigModalState])
+
   return (
     <DockContainer>
       <InnerBox ref={docRef} show={show} docWidth={docWidth} />
@@ -76,6 +99,9 @@ function ToolDocker(props) {
         quitApp={quitApp}
         setAssetsFromServer={setAssetsFromServer}
       />
+      <IconContainer show={show} docWidth={docWidth}>
+        <CustomSettingIcon show={show} onClick={onClickSetting} />
+      </IconContainer>
     </DockContainer>
   );
 }

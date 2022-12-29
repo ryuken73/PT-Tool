@@ -5,6 +5,7 @@ import AssetTitle from 'renderer/Components/Assets/AssetTitle';
 import DrawSvg from 'renderer/Components/Draw/DrawSvg';
 import MenuContainer from 'renderer/Components/Menus/MenuContainer';
 import ConfirmDialog from './Components/Dialog/ConfirmDialog';
+import ConfigDialog from './Components/Config/ConfigDialog';
 import ToolDocker from 'renderer/Components/ToolDocker';
 import styled from 'styled-components';
 import colors from 'renderer/config/colors';
@@ -323,9 +324,10 @@ export default function App() {
   } = useAppState();
   const { position, syncPosition } = useSyncPosition();
   const { currentAssetSrcCount, setAssetsState } = useAssetState();
-  const { transitionName } = useConfigState();
+  const { transitionName, config } = useConfigState();
   const [quitConfirmOpen, setQuitConfirmOpen] = React.useState(false);
 
+  const { debugTransition } = config;
   const transition = TRANSITIONS[transitionName];
 
   const setAssetsFromServer = React.useCallback(() => {
@@ -410,13 +412,19 @@ export default function App() {
       {ENABLE_V_MENU && <AssetTitle />}
       <MenuContainer showVertical={ENABLE_V_MENU} drawShow={drawShow} />
       <ToolContainer drawShow={drawShow} toggleDraw={toggleDraw} />
+      <ConfigDialog />
       <ConfirmDialog
         open={quitConfirmOpen}
         handleYes={handleYes}
         handleNo={handleNo}
         title="Quit?"
       />
-      {showTransition && <PageTransition img={transition.img} />}
+      {showTransition && (
+        <PageTransition
+          img={transition.img}
+          debugTransition={debugTransition}
+        />
+      )}
       {currentAssetSrcCount !== 1 && <DisplayControl />}
       <AssetContainer />
       <ToolDocker
