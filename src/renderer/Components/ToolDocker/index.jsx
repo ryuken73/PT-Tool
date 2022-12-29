@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import AppControlMenu from 'renderer/Components/AppControlMenu';
 import useAssetState from 'renderer/hooks/useAssetState';
+import CONSTANTS from 'renderer/config/constants';
 // import appUtil from 'renderer/lib/appUtil';
 import RainDrop from 'renderer/assets/rain_drop1.jpg';
 import Snow1 from 'renderer/assets/snow_1.jpg';
@@ -9,6 +10,7 @@ import Snow2 from 'renderer/assets/snow_2.jpg';
 import Snow3 from 'renderer/assets/snow_3.jpg';
 
 const HIDE_BLUR_BORDER_MARGIN = 20;
+const { TRANSITIONS } = CONSTANTS;
 const DockContainer = styled.div`
   position: relative;
   height: 100%;
@@ -41,11 +43,12 @@ const InnerBox = styled.div`
 // const { captureScreen } = appUtil;
 function ToolDocker(props) {
   // eslint-disable-next-line react/prop-types
-  const { show, docWidth, quitApp, setAssetsFromServer } = props;
+  const { show, docWidth, quitApp, setAssetsFromServer, transitionName } = props;
   const [dataUrls, setDataUrls] = React.useState([]);
   const { currentAssetIndex } = useAssetState();
   const docRef = React.useRef(null);
 
+  const transition = TRANSITIONS[transitionName]
   const prevDataUrl = React.useMemo(() => {
     return dataUrls[currentAssetIndex] || RainDrop;
   }, [currentAssetIndex]);
@@ -63,7 +66,7 @@ function ToolDocker(props) {
         newDataUrls[currentAssetIndex] = currentDataUrl;
         return newDataUrls;
       })
-    }, 400);
+    }, transition.timeout/2);
   }, [currentAssetIndex, prevDataUrl]);
   return (
     <DockContainer>

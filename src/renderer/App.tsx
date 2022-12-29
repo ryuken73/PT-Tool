@@ -10,10 +10,12 @@ import styled from 'styled-components';
 import colors from 'renderer/config/colors';
 import Loading from './Components/Common/Loading';
 import ToolContainer from './Components/Draw/ToolContainer';
-import PageTransition from 'renderer/Components/PageTransition';
+// import PageTransition from 'renderer/Components/PageTransition';
 // import PageTransition from 'renderer/Components/PageTransition/ImageTransition';
+import PageTransition from 'renderer/Components/PageTransition/ImageSelfTransition';
 import DisplayControl from 'renderer/Components/DisplayControl';
 import useAppState from './hooks/useAppState';
+import useConfigState from './hooks/useConfigState';
 import useSyncPosition from './hooks/useSyncPosition';
 import useAssetState from './hooks/useAssetState';
 import { useDoubleTap } from 'use-double-tap';
@@ -21,8 +23,13 @@ import useDrawState from './hooks/useDrawState';
 import CONSTANTS from 'renderer/config/constants';
 import { getIpAddresses, toggleWindowMaximize, quitApp } from './lib/appUtil';
 
-const { POSITION, TOUCH_WORKSTATION_IP, TOUCH_WEB_SERVER_URL, ENABLE_V_MENU } =
-  CONSTANTS;
+const {
+  POSITION,
+  TOUCH_WORKSTATION_IP,
+  TOUCH_WEB_SERVER_URL,
+  ENABLE_V_MENU,
+  TRANSITIONS,
+} = CONSTANTS;
 
 const INITIAL_ASSETS = [
   {
@@ -308,15 +315,18 @@ export default function App() {
     drawShow,
     draggableDock,
     dockWidth,
+    showTransition,
     toggleDraw,
     setUseSrcLocalState,
     setModalOpenState,
+    setShowTransitionState,
   } = useAppState();
   const { position, syncPosition } = useSyncPosition();
   const { currentAssetSrcCount, setAssetsState } = useAssetState();
+  const { transitionName } = useConfigState();
   const [quitConfirmOpen, setQuitConfirmOpen] = React.useState(false);
 
-  console.log('^^^^^^', draggableDock, dockWidth);
+  const transition = TRANSITIONS[transitionName];
 
   const setAssetsFromServer = React.useCallback(() => {
     getInitialAssets()
@@ -351,6 +361,20 @@ export default function App() {
     setModalOpenState,
     setUseSrcLocalState,
   ]);
+
+  React.useEffect(() => {
+    let timer;
+    if (showTransition === true) {
+      timer = setTimeout(() => {
+        setShowTransitionState(false)
+      }, transition.timeout);
+    }
+    return () => {
+      if(timer) {
+        clearTimeout(timer);
+      }
+    };
+  }, [setShowTransitionState, showTransition, transition.timeout])
 
   const AssetReloader = () => {
     const bind = useDoubleTap((event) => {
@@ -392,7 +416,7 @@ export default function App() {
         handleNo={handleNo}
         title="Quit?"
       />
-      <PageTransition />
+      {showTransition && <PageTransition img={transition.img} />}
       {currentAssetSrcCount !== 1 && <DisplayControl />}
       <AssetContainer />
       <ToolDocker
@@ -400,6 +424,7 @@ export default function App() {
         setAssetsFromServer={setAssetsFromServer}
         show={draggableDock}
         docWidth={dockWidth}
+        transitionName={transitionName}
       />
     </AppContainer>
   );

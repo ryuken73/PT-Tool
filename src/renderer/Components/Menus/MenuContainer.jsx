@@ -4,6 +4,7 @@ import Draggable from 'react-draggable';
 import DragHandle from 'renderer/Components/Draw/DragHandle';
 import useSyncPosition from 'renderer/hooks/useSyncPosition';
 import useAppState from 'renderer/hooks/useAppState';
+import useConfigState from 'renderer/hooks/useConfigState';
 import useAssetState from 'renderer/hooks/useAssetState';
 import useSocketClient from 'renderer/hooks/useSocketIO';
 import CONSTANTS from 'renderer/config/constants';
@@ -31,9 +32,20 @@ const VerticalDiv = styled.div`
 const MenuContainer = (props) => {
   // eslint-disable-next-line react/prop-types
   const { drawShow  } = props;
-  const { useSrcLocal, draggableDock, setDraggableDockState } = useAppState();
+  const {
+    useSrcLocal,
+    draggableDock,
+    setDraggableDockState,
+    setShowTransitionState,
+  } = useAppState();
+  const { transitionName } = useConfigState();
   const [isDragging, setIsDragging] = React.useState(false);
-  const { assets, currentAssetIndex, setAssetsState, setCurrentAssetIndexState } = useAssetState();
+  const {
+    assets,
+    currentAssetIndex,
+    setAssetsState,
+    setCurrentAssetIndexState,
+  } = useAssetState();
   const [socketConnected, setSocketConnected] = React.useState(false);
   const handleSocketEvent = React.useCallback((eventName, args) => {
     console.log('event received', eventName, args);
@@ -82,7 +94,9 @@ const MenuContainer = (props) => {
               draggableDock={draggableDock}
               assets={assets}
               currentAssetIndex={currentAssetIndex}
+              transitionName={transitionName}
               setCurrentAssetIndexState={setCurrentAssetIndexState}
+              setShowTransitionState={setShowTransitionState}
             />
           </VerticalDiv>
         </Draggable>

@@ -5,7 +5,8 @@ const initialState = {
   useSrcLocal: false,
   modalOpen: false,
   draggableDock: false,
-  dockWidth: '0'
+  dockWidth: '0',
+  showTransition: false
 };
 
 export const appSlice = createSlice({
@@ -33,9 +34,20 @@ export const appSlice = createSlice({
       state.draggableDock = draggableDock;
       state.dockWidth = dockWidth;
     },
+    setShowTransition: (state, action) => {
+      const { payload } = action;
+      const { showTransition } = payload;
+      state.showTransition = showTransition;
+    },
   },
 })
 
-export const { setDrawShow, setUseSrcLocal, setModalOpen, setDraggableDock } = appSlice.actions;
+export const {
+  setDrawShow,
+  setUseSrcLocal,
+  setModalOpen,
+  setDraggableDock,
+  setShowTransition,
+} = appSlice.actions;
 
 export default appSlice.reducer;

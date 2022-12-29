@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import MenuItem from 'renderer/Components/Menus/MenuItem';
+import CONSTANTS from 'renderer/config/constants';
 
 const Container = styled.div`
   display: ${(props) => (props.hide ? 'none' : 'flex')};
@@ -17,6 +18,7 @@ const Container = styled.div`
   backdrop-filter: blur(2px);
 `;
 
+const { TRANSITIONS } = CONSTANTS;
 
 function MenuVertical(props) {
   // eslint-disable-next-line react/prop-types
@@ -25,8 +27,12 @@ function MenuVertical(props) {
     draggableDock,
     assets,
     currentAssetIndex,
+    transitionName,
     setCurrentAssetIndexState,
+    setShowTransitionState
   } = props;
+  const transition = TRANSITIONS[transitionName];
+
   return (
     <Container hide={false} draggableDock={draggableDock}>
       {assets.map((asset, index) => (
@@ -36,10 +42,18 @@ function MenuVertical(props) {
           menuText={asset.assetTitle}
           mode="vertical"
           onClick={() => {
-            setCurrentAssetIndexState(index);
+            // setCurrentAssetIndexState(index);
+            setShowTransitionState(true);
+            setTimeout(() => {
+              setCurrentAssetIndexState(index);
+            }, transition.timeout / 2);
           }}
           onTouchStart={() => {
-            setCurrentAssetIndexState(index);
+            // setCurrentAssetIndexState(index);
+            setShowTransitionState(true);
+            setTimeout(() => {
+              setCurrentAssetIndexState(index);
+            }, transition.timeout / 2);
           }}
         />
       ))}
