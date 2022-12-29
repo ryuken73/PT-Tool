@@ -7,7 +7,7 @@ const Container = styled.div`
   height: 100%;
   width: 100%;
   z-index: 10000;
-  border: ${(props) => props.debug && '3px red solid'};
+  border: ${(props) => (props.debug === 'yes' ? '3px red solid' : 'none')};
   background: ${(props) => (props.debug === 'yes' ? 'maroon' : 'transparent')};
 `;
 
