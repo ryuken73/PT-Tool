@@ -18,7 +18,7 @@ function RowRadioButtonsGroup() {
   return (
     <FormControl>
       <FormLabel
-        sx={{ color: 'purple' }}
+        sx={{ color: 'yellow' }}
         id="demo-row-radio-buttons-group-label"
       >
         Enable Debug

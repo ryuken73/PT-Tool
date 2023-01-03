@@ -11,6 +11,7 @@ import RainDrop from 'renderer/assets/rain_drop1.jpg';
 import Snow1 from 'renderer/assets/snow_1.jpg';
 import Snow2 from 'renderer/assets/snow_2.jpg';
 import Snow3 from 'renderer/assets/snow_3.jpg';
+import { doc } from 'prettier';
 
 const HIDE_BLUR_BORDER_MARGIN = 20;
 const { TRANSITIONS } = CONSTANTS;
@@ -29,6 +30,7 @@ const InnerBox = styled.div`
   width: 100%;
   // filter: blur(20px);
   transition: 0.2s all;
+  background-color: ${props => !props.backgroundCapture && 'black'};
   background-size: cover;
   background-repeat: no-repeat;
   box-sizing: border-box;
@@ -62,10 +64,11 @@ function ToolDocker(props) {
   // eslint-disable-next-line react/prop-types
   const { show, docWidth, quitApp, setAssetsFromServer, transitionName } = props;
   const [dataUrls, setDataUrls] = React.useState([]);
-  const { toggleConfigModalState } = useConfigState();
+  const { toggleConfigModalState, config } = useConfigState();
   const { currentAssetIndex } = useAssetState();
   const docRef = React.useRef(null);
 
+  const { backgroundCapture } = config;
   const transition = TRANSITIONS[transitionName];
   const prevDataUrl = React.useMemo(() => {
     return dataUrls[currentAssetIndex] || RainDrop;
@@ -73,7 +76,11 @@ function ToolDocker(props) {
   // remove dataUrls from dependency to reduce re-render
 
   React.useEffect(() => {
-    if(docRef.current === null) return;
+    if (docRef.current === null) return;
+    if (!backgroundCapture) {
+      docRef.current.style.backgroundImage = "none";
+      return;
+    }
     docRef.current.style.backgroundImage = `url(${prevDataUrl})`;
     setTimeout(async () => {
       const currentDataUrl = await window.getCaptureImg(docRef.current);
@@ -93,7 +100,12 @@ function ToolDocker(props) {
 
   return (
     <DockContainer>
-      <InnerBox ref={docRef} show={show} docWidth={docWidth} />
+      <InnerBox
+        ref={docRef}
+        show={show}
+        docWidth={docWidth}
+        backgroundCapture={backgroundCapture}
+      />
       <AppControlMenu
         show={show}
         quitApp={quitApp}

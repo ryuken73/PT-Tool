@@ -9,6 +9,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import useConfigState from 'renderer/hooks/useConfigState';
 import SelectTransition from './SelectTransition';
 import SelectDebugTransition from './SelectDebugTransition';
+import SetBackgroundCapture from './SetBackgroundCapture';
 import SetTransitionFull from './SetTransitionFull';
 
 const CustomDialog = styled(Dialog)`
@@ -48,6 +49,12 @@ const ConfigDialog = props => {
             id="alert-dialog-description"
           >
             <SetTransitionFull />
+          </DialogContentText>
+          <DialogContentText
+            sx={{ color: 'white' }}
+            id="alert-dialog-description"
+          >
+            <SetBackgroundCapture />
           </DialogContentText>
           <DialogContentText
             sx={{ color: 'white' }}

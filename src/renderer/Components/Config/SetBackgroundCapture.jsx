@@ -6,13 +6,14 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import useConfigState from 'renderer/hooks/useConfigState';
 
-function SetTransitionFull() {
-  const { isTransitionFull, setIsTransitionFullState } = useConfigState();
+function SetBackgroundCapture() {
+  const { config, setConfigValueState } = useConfigState();
+  const { backgroundCapture } = config;
   const onChange = React.useCallback((event) => {
       const { value } = event.target;
-      setIsTransitionFullState(value === 'yes');
+      setConfigValueState('backgroundCapture', value === 'yes');
     },
-    [setIsTransitionFullState]
+    [setConfigValueState]
   );
   return (
     <FormControl>
@@ -20,13 +21,13 @@ function SetTransitionFull() {
         sx={{ color: 'yellow' }}
         id="demo-row-radio-buttons-group-label"
       >
-        Transition Full
+        Use Captured Background
       </FormLabel>
       <RadioGroup
         row
         aria-labelledby="demo-row-radio-buttons-group-label"
         name="row-radio-buttons-group"
-        value={isTransitionFull ? 'yes' : 'no'}
+        value={backgroundCapture ? 'yes' : 'no'}
         onChange={onChange}
       >
         <FormControlLabel value="yes" control={<Radio />} label="True" />
@@ -36,4 +37,4 @@ function SetTransitionFull() {
   );
 }
 
-export default React.memo(SetTransitionFull);
+export default React.memo(SetBackgroundCapture);

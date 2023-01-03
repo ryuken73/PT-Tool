@@ -5,7 +5,8 @@ const initialState = {
   transitionName: 'videoTransition',
   isTransitionFull: false,
   config: {
-    debugTransition: 'yes',
+    debugTransition: 'no',
+    backgroundCapture: true,
   },
 };
 
