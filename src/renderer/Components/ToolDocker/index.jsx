@@ -66,7 +66,7 @@ function ToolDocker(props) {
   const { currentAssetIndex } = useAssetState();
   const docRef = React.useRef(null);
 
-  const transition = TRANSITIONS[transitionName]
+  const transition = TRANSITIONS[transitionName];
   const prevDataUrl = React.useMemo(() => {
     return dataUrls[currentAssetIndex] || RainDrop;
   }, [currentAssetIndex]);
@@ -84,8 +84,8 @@ function ToolDocker(props) {
         newDataUrls[currentAssetIndex] = currentDataUrl;
         return newDataUrls;
       })
-    }, transition.timeout/2);
-  }, [currentAssetIndex, prevDataUrl]);
+    }, transition.delay * 2);
+  }, [currentAssetIndex, prevDataUrl, transition.delay]);
 
   const onClickSetting = React.useCallback(() => {
     toggleConfigModalState();

@@ -46,14 +46,14 @@ function MenuVertical(props) {
             setShowTransitionState(true);
             setTimeout(() => {
               setCurrentAssetIndexState(index);
-            }, transition.loadDelay);
+            }, transition.delay);
           }}
           onTouchStart={() => {
             // setCurrentAssetIndexState(index);
             setShowTransitionState(true);
             setTimeout(() => {
               setCurrentAssetIndexState(index);
-            }, transition.loadDelay);
+            }, transition.delay);
           }}
         />
       ))}

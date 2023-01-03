@@ -1,12 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
+import useAppState from 'renderer/hooks/useAppState';
 import useAssetState from 'renderer/hooks/useAssetState';
 import useDialogState from 'renderer/hooks/useDialogState';
+import useConfigState from 'renderer/hooks/useConfigState';
+import VideoTransition from 'renderer/Components/PageTransition/VideoTransition';
+import CONSTANTS from 'renderer/config/constants';
 import Asset from './Asset';
 import AddDialog from '../Dialog/AddDialog';
 
+const { TRANSITIONS } = CONSTANTS;
+
 const Container = styled.div`
   display: flex;
+  position: relative;
   align-items: center;
   justify-content: center;
   height: 100%;
@@ -28,6 +35,10 @@ const handleDragOver = (event) => {
 const AssetContainer = () => {
   const { setDialogOpenState, setDroppedSrcState } = useDialogState();
   const { assets, assetShowMask } = useAssetState();
+  const { transitionName } = useConfigState();
+  const { showTransition, setShowTransitionState } = useAppState();
+  const transition = TRANSITIONS[transitionName];
+  const isFullTransition = transition.isFull;
 
   const handleDrop = React.useCallback((event) => {
     const url = event.dataTransfer.getData('url');
@@ -39,8 +50,15 @@ const AssetContainer = () => {
     [setDialogOpenState, setDroppedSrcState]
   );
 
+  const handleVideoEnded = React.useCallback(() => {
+    setShowTransitionState(false);
+  }, [setShowTransitionState])
+
   return (
     <Container onDrop={handleDrop} onDragOver={handleDragOver}>
+      {showTransition && !isFullTransition && (
+        <VideoTransition handleVideoEnded={handleVideoEnded} />
+      )}
       {assets.map((asset, index) => (
         // <Asset options={asset} drawOn={drawShow} show={assetShowMask[index]} />
         <Asset key={asset.assetId} asset={asset} show={assetShowMask[index]} />

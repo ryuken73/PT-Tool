@@ -4,22 +4,20 @@ import AssetContainer from 'renderer/Components/Assets/AssetContainer';
 import AssetTitle from 'renderer/Components/Assets/AssetTitle';
 import DrawSvg from 'renderer/Components/Draw/DrawSvg';
 import MenuContainer from 'renderer/Components/Menus/MenuContainer';
-import ConfirmDialog from './Components/Dialog/ConfirmDialog';
-import ConfigDialog from './Components/Config/ConfigDialog';
 import ToolDocker from 'renderer/Components/ToolDocker';
 import styled from 'styled-components';
 import colors from 'renderer/config/colors';
-import Loading from './Components/Common/Loading';
-import ToolContainer from './Components/Draw/ToolContainer';
 import DisplayControl from 'renderer/Components/DisplayControl';
 import VideoTransition from 'renderer/Components/PageTransition/VideoTransition';
+import { useDoubleTap } from 'use-double-tap';
+import CONSTANTS from 'renderer/config/constants';
+import ConfirmDialog from './Components/Dialog/ConfirmDialog';
+import ConfigDialog from './Components/Config/ConfigDialog';
+import Loading from './Components/Common/Loading';
+import ToolContainer from './Components/Draw/ToolContainer';
 import useAppState from './hooks/useAppState';
 import useConfigState from './hooks/useConfigState';
-import useSyncPosition from './hooks/useSyncPosition';
 import useAssetState from './hooks/useAssetState';
-import { useDoubleTap } from 'use-double-tap';
-import useDrawState from './hooks/useDrawState';
-import CONSTANTS from 'renderer/config/constants';
 import { getIpAddresses, toggleWindowMaximize, quitApp } from './lib/appUtil';
 
 const {
@@ -262,16 +260,6 @@ const AppQuitContainer = styled(AbsoluteBox)`
   bottom: 0;
   right: 0;
 `;
-const ToolDockContainer = styled.div`
-  height: 100%;
-  /* border: ${(props) => props.show && '1px solid grey'}; */
-  border-width: 0 1px 1px 0;
-  border-style: solid;
-  border-color: grey;
-  box-sizing: border-box;
-  width: ${(props) => (props.show ? `${props.docWidth}px` : '0px')};
-  transition: 0.5s all;
-`;
 
 const Timeout = (time) => {
   let controller = new AbortController();
@@ -320,13 +308,11 @@ export default function App() {
     setModalOpenState,
     setShowTransitionState,
   } = useAppState();
-  const { position, syncPosition } = useSyncPosition();
   const { currentAssetSrcCount, setAssetsState } = useAssetState();
   const { transitionName, config } = useConfigState();
   const [quitConfirmOpen, setQuitConfirmOpen] = React.useState(false);
-
-  const { debugTransition } = config;
   const transition = TRANSITIONS[transitionName];
+  const isFullTransition = transition.isFull;
 
   const setAssetsFromServer = React.useCallback(() => {
     getInitialAssets()
@@ -362,19 +348,6 @@ export default function App() {
     setUseSrcLocalState,
   ]);
 
-  // React.useEffect(() => {
-  //   let timer;
-  //   if (showTransition === true) {
-  //     timer = setTimeout(() => {
-  //       setShowTransitionState(false)
-  //     }, transition.timeout);
-  //   }
-  //   return () => {
-  //     if(timer) {
-  //       clearTimeout(timer);
-  //     }
-  //   };
-  // }, [setShowTransitionState, showTransition, transition.timeout])
   const handleVideoEnded = React.useCallback(() => {
     setShowTransitionState(false);
   }, [setShowTransitionState])
@@ -420,7 +393,7 @@ export default function App() {
         handleNo={handleNo}
         title="Quit?"
       />
-      {showTransition && (
+      {showTransition && isFullTransition && (
         <VideoTransition handleVideoEnded={handleVideoEnded} />
       )}
       {currentAssetSrcCount !== 1 && <DisplayControl />}

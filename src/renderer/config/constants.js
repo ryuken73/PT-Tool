@@ -1,6 +1,3 @@
-import ImageBlur from 'renderer/assets/blur-in.gif'
-import ImageToLeft from 'renderer/assets/to-left.gif'
-import ImageToLeftNews from 'renderer/assets/to-left-news.gif'
 const TOOL_TOP = 300;
 const TOOL_RIGHT = 20;
 const MENU_TOP = 10;
@@ -38,22 +35,13 @@ const dev =  {
   },
   ENABLE_V_MENU: true,
   TRANSITIONS: {
-    blur: {
-      img: ImageBlur,
-      timeout: 2000,
-    },
-    toLeft: {
-      img: ImageToLeft,
-      timeout: 2000,
-    },
-    toLeftNews: {
-      img: ImageToLeftNews,
-      timeout: 2500,
-    },
     videoTransition: {
-      img: ImageToLeftNews,
-      timeout: 2500,
-      loadDelay: 500,
+      isFull: true,
+      delay: 500,
+    },
+    videoTransitionInner: {
+      isFull: false,
+      delay: 500,
     },
   },
 }

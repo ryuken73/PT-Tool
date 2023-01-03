@@ -16,7 +16,10 @@ function RowRadioButtonsGroup() {
   );
   return (
     <FormControl>
-      <FormLabel sx={{ color: 'purple' }} id="demo-row-radio-buttons-group-label">
+      <FormLabel
+        sx={{ color: 'purple' }}
+        id="demo-row-radio-buttons-group-label"
+      >
         Transition
       </FormLabel>
       <RadioGroup
@@ -26,9 +29,16 @@ function RowRadioButtonsGroup() {
         value={transitionName}
         onChange={onChange}
       >
-        <FormControlLabel value="toLeftNews" control={<Radio />} label="News" />
-        <FormControlLabel value="toLeft" control={<Radio />} label="재난1" />
-        <FormControlLabel value="blur" control={<Radio />} label="재난2" />
+        <FormControlLabel
+          value="videoTransition"
+          control={<Radio />}
+          label="News"
+        />
+        <FormControlLabel
+          value="videoTransitionInner"
+          control={<Radio />}
+          label="News(inner)"
+        />
       </RadioGroup>
     </FormControl>
   );
