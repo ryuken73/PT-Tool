@@ -6,13 +6,13 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import useConfigState from 'renderer/hooks/useConfigState';
 
-function RowRadioButtonsGroup() {
-  const { transitionName, setTransitionNameState } = useConfigState();
+function SetTransitionFull() {
+  const { isTransitionFull, setIsTransitionFullState } = useConfigState();
   const onChange = React.useCallback((event) => {
       const { value } = event.target;
-      setTransitionNameState(value);
+      setIsTransitionFullState(value === 'yes');
     },
-    [setTransitionNameState]
+    [setIsTransitionFullState]
   );
   return (
     <FormControl>
@@ -20,23 +20,20 @@ function RowRadioButtonsGroup() {
         sx={{ color: 'purple' }}
         id="demo-row-radio-buttons-group-label"
       >
-        Transition
+        Is Transition Full?
       </FormLabel>
       <RadioGroup
         row
         aria-labelledby="demo-row-radio-buttons-group-label"
         name="row-radio-buttons-group"
-        value={transitionName}
+        value={isTransitionFull ? 'yes' : 'no'}
         onChange={onChange}
       >
-        <FormControlLabel
-          value="videoTransition"
-          control={<Radio />}
-          label="News"
-        />
+        <FormControlLabel value="yes" control={<Radio />} label="True" />
+        <FormControlLabel value="no" control={<Radio />} label="False" />
       </RadioGroup>
     </FormControl>
   );
 }
 
-export default React.memo(RowRadioButtonsGroup);
+export default React.memo(SetTransitionFull);

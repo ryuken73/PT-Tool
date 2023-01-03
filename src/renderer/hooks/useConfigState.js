@@ -3,12 +3,14 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   setTransitionName,
   setConfigDialogOpen,
+  setIsTransitionFull,
   setConfigValue,
 } from 'renderer/Components/Config/configSlice';
 
 export default function useAppState() {
   const dispatch = useDispatch();
   const transitionName = useSelector((state) => state.config.transitionName);
+  const isTransitionFull = useSelector((state) => state.config.isTransitionFull);
   const configDialogOpen = useSelector(
     (state) => state.config.configDialogOpen
   );
@@ -22,6 +24,13 @@ export default function useAppState() {
     [dispatch]
   );
 
+  const setIsTransitionFullState = React.useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    (isTransitionFull) => {
+      dispatch(setIsTransitionFull({ isTransitionFull }));
+    },
+    [dispatch]
+  );
   const toggleConfigModalState = React.useCallback(() => {
     dispatch(setConfigDialogOpen({ configDialogOpen: !configDialogOpen }));
   }, [configDialogOpen, dispatch]);
@@ -35,9 +44,11 @@ export default function useAppState() {
 
   return {
     transitionName,
+    isTransitionFull,
     configDialogOpen,
     config,
     setTransitionNameState,
+    setIsTransitionFullState,
     setConfigValueState,
     toggleConfigModalState,
   };

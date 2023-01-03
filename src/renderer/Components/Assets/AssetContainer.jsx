@@ -35,10 +35,10 @@ const handleDragOver = (event) => {
 const AssetContainer = () => {
   const { setDialogOpenState, setDroppedSrcState } = useDialogState();
   const { assets, assetShowMask } = useAssetState();
-  const { transitionName } = useConfigState();
+  const { isTransitionFull } = useConfigState();
   const { showTransition, setShowTransitionState } = useAppState();
-  const transition = TRANSITIONS[transitionName];
-  const isFullTransition = transition.isFull;
+  // const transition = TRANSITIONS[transitionName];
+  // const isFullTransition = transition.isFull;
 
   const handleDrop = React.useCallback((event) => {
     const url = event.dataTransfer.getData('url');
@@ -56,7 +56,7 @@ const AssetContainer = () => {
 
   return (
     <Container onDrop={handleDrop} onDragOver={handleDragOver}>
-      {showTransition && !isFullTransition && (
+      {showTransition && !isTransitionFull && (
         <VideoTransition handleVideoEnded={handleVideoEnded} />
       )}
       {assets.map((asset, index) => (

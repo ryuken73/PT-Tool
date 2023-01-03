@@ -6,9 +6,9 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import SelectTransition from './SelectTransition';
-import SelectDebugTransition from './SelectDebugTransition';
 import useConfigState from 'renderer/hooks/useConfigState';
+import SelectTransition from './SelectTransition';
+import SetTransitionFull from './SetTransitionFull';
 
 const CustomDialog = styled(Dialog)`
   div.MuiDialog-container {
@@ -46,7 +46,7 @@ const ConfigDialog = props => {
             sx={{ color: 'white' }}
             id="alert-dialog-description"
           >
-            <SelectDebugTransition />
+            <SetTransitionFull />
           </DialogContentText>
         </DialogContent>
         <DialogActions>

@@ -309,10 +309,10 @@ export default function App() {
     setShowTransitionState,
   } = useAppState();
   const { currentAssetSrcCount, setAssetsState } = useAssetState();
-  const { transitionName, config } = useConfigState();
+  const { transitionName, isTransitionFull, config } = useConfigState();
   const [quitConfirmOpen, setQuitConfirmOpen] = React.useState(false);
-  const transition = TRANSITIONS[transitionName];
-  const isFullTransition = transition.isFull;
+  // const transition = TRANSITIONS[transitionName];
+  // const isFullTransition = transition.isFull;
 
   const setAssetsFromServer = React.useCallback(() => {
     getInitialAssets()
@@ -393,7 +393,7 @@ export default function App() {
         handleNo={handleNo}
         title="Quit?"
       />
-      {showTransition && isFullTransition && (
+      {showTransition && isTransitionFull && (
         <VideoTransition handleVideoEnded={handleVideoEnded} />
       )}
       {currentAssetSrcCount !== 1 && <DisplayControl />}

@@ -36,14 +36,10 @@ const dev =  {
   ENABLE_V_MENU: true,
   TRANSITIONS: {
     videoTransition: {
-      isFull: true,
-      delay: 500,
-    },
-    videoTransitionInner: {
-      isFull: false,
       delay: 500,
     },
   },
+  IS_TRANSITION_FULL: false
 }
 
 const prd = {
