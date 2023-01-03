@@ -11,10 +11,8 @@ import styled from 'styled-components';
 import colors from 'renderer/config/colors';
 import Loading from './Components/Common/Loading';
 import ToolContainer from './Components/Draw/ToolContainer';
-// import PageTransition from 'renderer/Components/PageTransition';
-// import PageTransition from 'renderer/Components/PageTransition/ImageTransition';
-import PageTransition from 'renderer/Components/PageTransition/ImageSelfTransition';
 import DisplayControl from 'renderer/Components/DisplayControl';
+import VideoTransition from 'renderer/Components/PageTransition/VideoTransition';
 import useAppState from './hooks/useAppState';
 import useConfigState from './hooks/useConfigState';
 import useSyncPosition from './hooks/useSyncPosition';
@@ -364,19 +362,22 @@ export default function App() {
     setUseSrcLocalState,
   ]);
 
-  React.useEffect(() => {
-    let timer;
-    if (showTransition === true) {
-      timer = setTimeout(() => {
-        setShowTransitionState(false)
-      }, transition.timeout);
-    }
-    return () => {
-      if(timer) {
-        clearTimeout(timer);
-      }
-    };
-  }, [setShowTransitionState, showTransition, transition.timeout])
+  // React.useEffect(() => {
+  //   let timer;
+  //   if (showTransition === true) {
+  //     timer = setTimeout(() => {
+  //       setShowTransitionState(false)
+  //     }, transition.timeout);
+  //   }
+  //   return () => {
+  //     if(timer) {
+  //       clearTimeout(timer);
+  //     }
+  //   };
+  // }, [setShowTransitionState, showTransition, transition.timeout])
+  const handleVideoEnded = React.useCallback(() => {
+    setShowTransitionState(false);
+  }, [setShowTransitionState])
 
   const AssetReloader = () => {
     const bind = useDoubleTap((event) => {
@@ -420,10 +421,7 @@ export default function App() {
         title="Quit?"
       />
       {showTransition && (
-        <PageTransition
-          img={transition.img}
-          debugTransition={debugTransition}
-        />
+        <VideoTransition handleVideoEnded={handleVideoEnded} />
       )}
       {currentAssetSrcCount !== 1 && <DisplayControl />}
       <AssetContainer />

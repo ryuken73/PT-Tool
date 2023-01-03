@@ -50,6 +50,11 @@ const dev =  {
       img: ImageToLeftNews,
       timeout: 2500,
     },
+    videoTransition: {
+      img: ImageToLeftNews,
+      timeout: 2500,
+      loadDelay: 500,
+    },
   },
 }
 
