@@ -21,7 +21,7 @@ function RowRadioButtonsGroup() {
         sx={{ color: 'purple' }}
         id="demo-row-radio-buttons-group-label"
       >
-        Debug Transition
+        Enable Debug
       </FormLabel>
       <RadioGroup
         row

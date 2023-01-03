@@ -38,7 +38,8 @@ const MenuContainer = (props) => {
     setDraggableDockState,
     setShowTransitionState,
   } = useAppState();
-  const { transitionName } = useConfigState();
+  const { transitionName, config } = useConfigState();
+  const { debugTransition } = config;
   const [isDragging, setIsDragging] = React.useState(false);
   const {
     assets,
@@ -47,6 +48,7 @@ const MenuContainer = (props) => {
     setCurrentAssetIndexState,
   } = useAssetState();
   const [socketConnected, setSocketConnected] = React.useState(false);
+  const [valueX, setValueX] = React.useState(0);
   const handleSocketEvent = React.useCallback((eventName, args) => {
     console.log('event received', eventName, args);
     if(eventName === 'ASSET_CHANGE' && !useSrcLocal){
@@ -73,19 +75,21 @@ const MenuContainer = (props) => {
     const {x} = data;
     const {clientWidth} = data.node;
     console.log(x, clientWidth);
-    const RIGHT_SIDE_STICKED = x === 21;
+    const RIGHT_SIDE_STICKED = x >= 10;
     if(RIGHT_SIDE_STICKED) {
       setDraggableDockState(true, `${clientWidth - 2 }`)
     } else {
       setDraggableDockState(false, `0`)
     }
-  }, [])
+    debugTransition === 'yes' && setValueX(x);
+  }, [debugTransition, setDraggableDockState])
 
   return (
     <>
       {ENABLE_V_MENU ? (
         <Draggable bounds="#root" handle="#handle" onStart={onStartDrag} onDrag={onDrag} onStop={onStopDrag}>
           <VerticalDiv isDragging={isDragging}>
+            {debugTransition === 'yes' && <div>{valueX}</div>}
             <div id="handle">
               <DragHandle />
             </div>
