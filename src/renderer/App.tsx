@@ -15,6 +15,7 @@ import ConfirmDialog from './Components/Dialog/ConfirmDialog';
 import ConfigDialog from './Components/Config/ConfigDialog';
 import Loading from './Components/Common/Loading';
 import ToolContainer from './Components/Draw/ToolContainer';
+import PageTransition from './Components/PageTransition';
 import useAppState from './hooks/useAppState';
 import useConfigState from './hooks/useConfigState';
 import useAssetState from './hooks/useAssetState';
@@ -394,7 +395,7 @@ export default function App() {
         title="Quit?"
       />
       {showTransition && isTransitionFull && (
-        <VideoTransition handleVideoEnded={handleVideoEnded} />
+        <PageTransition handleVideoEnded={handleVideoEnded} />
       )}
       {currentAssetSrcCount !== 1 && <DisplayControl />}
       <AssetContainer />

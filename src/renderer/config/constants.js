@@ -35,6 +35,9 @@ const dev =  {
   },
   ENABLE_V_MENU: true,
   TRANSITIONS: {
+    cssTransition: {
+      delay: 500,
+    },
     videoTransition: {
       delay: 500,
     },
