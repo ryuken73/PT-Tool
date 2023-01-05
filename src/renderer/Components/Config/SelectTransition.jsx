@@ -39,6 +39,11 @@ function RowRadioButtonsGroup() {
           control={<Radio />}
           label="H-Split"
         />
+        <FormControlLabel
+          value="noTransition"
+          control={<Radio />}
+          label="Nothing"
+        />
       </RadioGroup>
     </FormControl>
   );
