@@ -14,6 +14,10 @@ const StyledSvg = styled.svg`
   z-index: 9999;
 `;
 
+const INITIAL_POSITIONS = [
+  [-1000, -1000, 0.5],
+  [-1001, -1001, 0.5],
+]
 const DrawSvg = (props) => {
   const {
     pathDatum,
@@ -25,7 +29,7 @@ const DrawSvg = (props) => {
     saveRenderOptionState,
     getPositionForArrow
   } = useDrawState();
-  const [points, setPoints] = React.useState([]);
+  const [points, setPoints] = React.useState([...INITIAL_POSITIONS]);
   const [mouseUp, setMouseUP] = React.useState(false);
 
   const pathData = React.useRef([]);

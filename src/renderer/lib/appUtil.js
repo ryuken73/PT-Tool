@@ -57,7 +57,7 @@ const arrayBitWiseSum = (arrayParent) => {
 const arrayBitWiseAvg = (arrayParent) => {
   const { length } = arrayParent;
   const sumArray = arrayBitWiseSum(arrayParent);
-  return sumArray.map(value => value / length);
+  return sumArray.map((value) => value / length);
 };
 
 const pickArrayFraction = (array, from, to) => {
