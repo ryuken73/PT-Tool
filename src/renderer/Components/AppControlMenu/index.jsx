@@ -5,7 +5,11 @@ import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import CloseIcon from '@mui/icons-material/Close';
 import RefreshIcon from '@mui/icons-material/Refresh';
 
-import { getIpAddresses, toggleWindowMaximize, quitApp } from 'renderer/lib/appUtil';
+import {
+  getIpAddresses,
+  toggleWindowMaximize,
+  quitApp,
+} from 'renderer/lib/appUtil';
 
 import useAssetState from 'renderer/hooks/useAssetState';
 import useDisplayModeState from 'renderer/hooks/useDisplayControlState';
@@ -20,14 +24,15 @@ const Container = styled.div`
   align-items: center;
   z-index: 9999;
   opacity: 0.08;
-`
+`;
 const AppControlMenu = (props) => {
   const { show, quitApp, setAssetsFromServer } = props;
   const { setDisplayModeState } = useDisplayModeState();
 
-  const changeDisplayMode = React.useCallback((event) => {
-    const displayMode = event.currentTarget.value;
-    setDisplayModeState(displayMode);
+  const changeDisplayMode = React.useCallback(
+    (event) => {
+      const displayMode = event.currentTarget.value;
+      setDisplayModeState(displayMode);
     },
     [setDisplayModeState]
   );
@@ -41,8 +46,26 @@ const AppControlMenu = (props) => {
     console.log(event);
   }, []);
 
+  const menuRef = React.useRef(null);
+
+  const withClose = React.useCallback(
+    (callback) => {
+      return () => {
+        if (menuRef.current !== null) {
+          menuRef.current.children[1].children[0].click();
+        }
+        callback();
+      };
+    },
+    [menuRef.current]
+  );
+
+  const openQuitConfirmNClose = withClose(openQuitConfirm);
+  const setAssetsFromServerNClose = withClose(setAssetsFromServer);
+  const toggleWindowMaximizeNClose = withClose(toggleWindowMaximize);
+
   return (
-    <Container show={show}>
+    <Container ref={menuRef} show={show}>
       <CircleMenu
         startAngle={90}
         rotationAngle={90}
@@ -51,18 +74,18 @@ const AppControlMenu = (props) => {
         rotationAngleInclusive={true}
         onMenuToggle={onToggleMenu}
       >
-        <CircleMenuItem value="swipe" onClick={openQuitConfirm}>
+        <CircleMenuItem value="swipe" onClick={openQuitConfirmNClose}>
           <CloseIcon />
         </CircleMenuItem>
-        <CircleMenuItem value="flexColumn" onClick={setAssetsFromServer}>
+        <CircleMenuItem value="flexColumn" onClick={setAssetsFromServerNClose}>
           <RefreshIcon />
         </CircleMenuItem>
-        <CircleMenuItem value="flexRow" onClick={toggleWindowMaximize}>
+        <CircleMenuItem value="flexRow" onClick={toggleWindowMaximizeNClose}>
           <FullscreenIcon />
         </CircleMenuItem>
       </CircleMenu>
     </Container>
-  )
-}
+  );
+};
 
 export default React.memo(AppControlMenu);
