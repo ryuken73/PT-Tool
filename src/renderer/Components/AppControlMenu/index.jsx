@@ -5,14 +5,7 @@ import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import CloseIcon from '@mui/icons-material/Close';
 import RefreshIcon from '@mui/icons-material/Refresh';
 
-import {
-  getIpAddresses,
-  toggleWindowMaximize,
-  quitApp,
-} from 'renderer/lib/appUtil';
-
-import useAssetState from 'renderer/hooks/useAssetState';
-import useDisplayModeState from 'renderer/hooks/useDisplayControlState';
+import { toggleWindowMaximize } from 'renderer/lib/appUtil';
 
 const Container = styled.div`
   display: ${(props) => (props.show ? 'flex' : 'none')};
@@ -26,16 +19,9 @@ const Container = styled.div`
   opacity: 0.08;
 `;
 const AppControlMenu = (props) => {
+  // eslint-disable-next-line react/prop-types
   const { show, quitApp, setAssetsFromServer } = props;
-  const { setDisplayModeState } = useDisplayModeState();
-
-  const changeDisplayMode = React.useCallback(
-    (event) => {
-      const displayMode = event.currentTarget.value;
-      setDisplayModeState(displayMode);
-    },
-    [setDisplayModeState]
-  );
+  const menuRef = React.useRef(null);
 
   const openQuitConfirm = React.useCallback(() => {
     quitApp();
@@ -45,8 +31,6 @@ const AppControlMenu = (props) => {
     // eslint-disable-next-line no-console
     console.log(event);
   }, []);
-
-  const menuRef = React.useRef(null);
 
   const withClose = React.useCallback(
     (callback) => {
