@@ -35,6 +35,7 @@ const OverlayIcon = styled(CompareIcon)`
 
 const DisplayControl = () => {
   const { setDisplayModeState } = useDisplayModeState();
+  const menuRef = React.useRef(null);
 
   const changeDisplayMode = React.useCallback((event) => {
     const displayMode = event.currentTarget.value;
@@ -43,6 +44,20 @@ const DisplayControl = () => {
     [setDisplayModeState]
   );
 
+  const withClose = React.useCallback(
+    (callback) => {
+      return (event) => {
+        if (menuRef.current !== null) {
+          menuRef.current.children[1].children[0].click();
+        }
+        callback(event);
+      };
+    },
+    [menuRef.current]
+  );
+
+  const changeDisplayModeNClose = withClose(changeDisplayMode);
+
   const onToggleMenu = React.useCallback((event) => {
     // eslint-disable-next-line no-console
     console.log(event);
@@ -50,7 +65,7 @@ const DisplayControl = () => {
 
   return (
     // <Draggable bounds="#root">
-      <Container>
+      <Container ref={menuRef}>
         <CircleMenu
           startAngle={-90}
           rotationAngle={180}
@@ -59,16 +74,16 @@ const DisplayControl = () => {
           rotationAngleInclusive={true}
           onMenuToggle={onToggleMenu}
         >
-          <CircleMenuItem value="flexRow" onClick={changeDisplayMode}>
+          <CircleMenuItem value="flexRow" onClick={changeDisplayModeNClose}>
             <SplitColumnIcon />
           </CircleMenuItem>
-          <CircleMenuItem value="flexColumn" onClick={changeDisplayMode}>
+          <CircleMenuItem value="flexColumn" onClick={changeDisplayModeNClose}>
             <SplitscreenIcon />
           </CircleMenuItem>
-          <CircleMenuItem value="swipe" onClick={changeDisplayMode}>
+          <CircleMenuItem value="swipe" onClick={changeDisplayModeNClose}>
             <SwipeIcon />
           </CircleMenuItem>
-          <CircleMenuItem value="overlaySplit" onClick={changeDisplayMode}>
+          <CircleMenuItem value="overlaySplit" onClick={changeDisplayModeNClose}>
             <OverlayIcon />
           </CircleMenuItem>
         </CircleMenu>
