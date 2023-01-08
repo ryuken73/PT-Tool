@@ -3,9 +3,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import interact from 'interactjs';
-// import Player from 'renderer/Components/Players/Player';
-// import WebView from 'renderer/Components/Common/WebView';
-// import ImageBox from 'renderer/Components/Common/ImageBox';
 import ImageIcon from 'renderer/Components/Common/ImageIcon';
 import SrcViewer from 'renderer/Components/Assets/SrcViewer';
 import useAppState from 'renderer/hooks/useAppState';
@@ -59,29 +56,13 @@ const StyledSwiper = styled(Swiper)`
   overflow: hidden;
 `;
 
-// const ViewMap = {
-//   web: WebView,
-//   video: Player,
-//   image: ImageBox,
-// };
-
 const ProtectLayer = styled(Container)`
   display: ${(props) => (props.isDragging ? 'block' : 'none')};
   position: absolute;
   background: transparent;
   z-index: 8888;
-`
-// const Splitter = styled(HeightIcon)`
-//   background: white;
-//   color: #140e30;
-//   border-radius: 10px;
-//   border: 1px solid black;
-//   transform: rotate(90deg);
-//   height: 1em;
-//   width:  0.7em;
-//   font-size: 3em;
-//   box-shadow: 0.03em -0.03em 0.1em 0.01em black;
-// `
+`;
+
 const SplitSvg = () => {
   return <ImageIcon src={SplitIcon} />;
 };
@@ -122,37 +103,6 @@ const AssetContainer = (props) => {
     setIsDragging(false);
   }, []);
 
-  // const Viewer = React.useCallback((props) => {
-  //     const { source, srcIndex, ...remainOpts } = props;
-  //     const { srcId, srcType, objectFit } = source;
-  //     const SrcViewer = ViewMap[srcType];
-  //     return (
-  //       <SrcViewer
-  //         key={`${assetId}-${srcId}`}
-  //         assetId={assetId}
-  //         srcType={srcType}
-  //         src={source[srcPath]}
-  //         srcId={srcId}
-  //         show={show}
-  //         srcIndex={srcIndex}
-  //         objectFit={objectFit}
-  //         {...remainOpts}
-  //       />
-  //     );
-  //   },
-  //   [assetId, show, srcPath]
-  // );
-  // const offsetX = React.useMemo(() => {
-  //   return viewWidth/2;
-  // }, [viewWidth])
-
-  // React.useEffect(() => {
-  //   if(dragRef.current === null) return;
-  //   const {x, y} = draggerOffset.current;
-  //   dragRef.current.style.transform = `translate(${x}px, ${y}px)`;
-  // }, [draggableDock])
-
-  // set previous position of dragger between displayMode changing.
   React.useEffect(() => {
     if(displayMode !== 'overlaySplit') return;
     const { x, y } = draggerOffset.current;
@@ -201,8 +151,6 @@ const AssetContainer = (props) => {
   React.useEffect(() => {
     if(displayMode !== 'overlaySplit') return;
     if(containerRef.current === null) return;
-    // const { x, y } = draggerOffset.current;
-    // const position = { x, y };
     interact(containerRef.current).gesturable({
       listeners: {
         move (event) {
