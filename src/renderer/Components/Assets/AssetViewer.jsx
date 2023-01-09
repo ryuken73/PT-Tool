@@ -205,7 +205,7 @@ const AssetContainer = (props) => {
         </FlexContainer>
       )}
       {displayMode === 'swipe' && (
-        <StyledSwiper>
+        <StyledSwiper threshold={100}>
           {sources.map((source, index) => (
             <SwiperSlide>
               <SrcViewer
