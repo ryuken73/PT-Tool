@@ -54,7 +54,7 @@ const INITIAL_ASSETS = [
     updated: null,
     sources: [
       {
-        srcId: 0,
+        srcId: 1,
         srcLocal:
           'https://images.unsplash.com/photo-1663908778255-bd560e30d55e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
         srcRemote:
@@ -63,7 +63,7 @@ const INITIAL_ASSETS = [
         size: null,
       },
       {
-        srcId: 1,
+        srcId: 2,
         srcLocal:
           'https://images.unsplash.com/photo-1663947719095-17af03c793d7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1171&q=80',
         srcRemote:
@@ -81,7 +81,7 @@ const INITIAL_ASSETS = [
     updated: null,
     sources: [
       {
-        srcId: 0,
+        srcId: 3,
         srcLocal: 'https://www.weather.go.kr/wgis-nuri/html/map.html',
         srcRemote: 'https://www.weather.go.kr/wgis-nuri/html/map.html',
         srcType: 'web',
@@ -96,7 +96,7 @@ const INITIAL_ASSETS = [
     updated: null,
     sources: [
       {
-        srcId: 0,
+        srcId: 4,
         srcLocal:
           'https://www.weather.go.kr/w/typhoon/ko/weather/typhoon_02.jsp',
         srcRemote:
@@ -113,7 +113,7 @@ const INITIAL_ASSETS = [
     updated: null,
     sources: [
       {
-        srcId: 0,
+        srcId: 5,
         srcLocal:
           'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.59,36.90,6750',
         srcRemote:
@@ -130,14 +130,14 @@ const INITIAL_ASSETS = [
     updated: null,
     sources: [
       {
-        srcId: 0,
+        srcId: 6,
         srcLocal: 'https://www.weather.go.kr/wgis-nuri/html/map.html',
         srcRemote: 'https://www.weather.go.kr/wgis-nuri/html/map.html',
         srcType: 'web',
         size: null,
       },
       {
-        srcId: 1,
+        srcId: 7,
         srcLocal:
           'https://earth.nullschool.net/#current/wind/surface/level/orthographic=-232.59,36.90,6750',
         srcRemote:
@@ -165,14 +165,14 @@ const INITIAL_ASSETS = [
       //   size: null,
       // },
       {
-        srcId: 1,
+        srcId: 8,
         srcLocal: 'http://210.179.218.53:1935/live/554.stream/playlist.m3u8',
         srcRemote: 'http://210.179.218.53:1935/live/554.stream/playlist.m3u8',
         srcType: 'video',
         size: null,
       },
       {
-        srcId: 2,
+        srcId: 9,
         srcLocal:
           'https://topiscctv1.eseoul.go.kr/sd1/ch27.stream/playlist.m3u8',
         srcRemote:
@@ -195,14 +195,14 @@ const INITIAL_ASSETS = [
     updated: null,
     sources: [
       {
-        srcId: 3,
+        srcId: 10,
         srcLocal: 'D:/동영상강의/MAH00008.MP4',
         srcRemote: 'D:/동영상강의/MAH00008.MP4',
         srcType: 'video',
         size: null,
       },
       {
-        srcId: 4,
+        srcId: 11,
         srcLocal: 'D:/동영상강의/MAH00007.MP4',
         srcRemote: 'D:/동영상강의/MAH00007.MP4',
         srcType: 'video',
