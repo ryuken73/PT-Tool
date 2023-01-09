@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import CSSToggleMenuImage from 'renderer/Components/Menus/CSSToggleMenuImage';
 
 const Container = styled.div`
   width: 100%;
@@ -17,10 +18,25 @@ const StyledImage = styled.img`
 
 const ImageBox = (props) => {
   // eslint-disable-next-line react/prop-types
-  const { src, srcIndex, objectFit='cover' } = props;
+  const {
+    src,
+    srcId,
+    show,
+    srcIndex,
+    objectFit = 'cover',
+    displayMode,
+  } = props;
   const isFirstImage = srcIndex === 0;
   return (
     <Container>
+      {show && (
+        <CSSToggleMenuImage
+          srcId={srcId}
+          objectFit={objectFit}
+          isFirstImage={isFirstImage}
+          displayMode={displayMode}
+        />
+      )}
       <StyledImage
         src={src}
         objectFit={objectFit}

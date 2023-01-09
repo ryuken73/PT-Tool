@@ -8,10 +8,12 @@ import SrcViewer from 'renderer/Components/Assets/SrcViewer';
 import useAppState from 'renderer/hooks/useAppState';
 import useWindowSize from 'renderer/hooks/useWindowSize';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation } from 'swiper';
 import SwapHorizontalCircleIcon from '@mui/icons-material/SwapHorizontalCircle';
 import SplitIcon from 'renderer/assets/Split.svg';
 import HeightIcon from '@mui/icons-material/Height';
 import 'swiper/css';
+import 'swiper/css/navigation';
 
 const Container = styled.div`
   width: 100%;
@@ -186,6 +188,7 @@ const AssetContainer = (props) => {
                 show={show}
                 source={source}
                 srcIndex={index}
+                displayMode={displayMode}
               />
             </AbsoluteBox>
           ))}
@@ -200,12 +203,13 @@ const AssetContainer = (props) => {
               show={show}
               source={source}
               srcIndex={index}
+              displayMode={displayMode}
             />
           ))}
         </FlexContainer>
       )}
       {displayMode === 'swipe' && (
-        <StyledSwiper threshold={100}>
+        <StyledSwiper loop threshold={100} modules={[Navigation]}>
           {sources.map((source, index) => (
             <SwiperSlide>
               <SrcViewer
