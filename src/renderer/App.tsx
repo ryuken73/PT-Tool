@@ -312,6 +312,7 @@ export default function App() {
   const { transitionType, isTransitionFull, config } = useConfigState();
   const [quitConfirmOpen, setQuitConfirmOpen] = React.useState(false);
 
+  const { showTitle } = config;
   const setAssetsFromServer = React.useCallback(() => {
     getInitialAssets()
       // eslint-disable-next-line promise/always-return
@@ -381,7 +382,7 @@ export default function App() {
       <AppQuiter />
       {drawShow && <DrawSvg />}
       <Loading />
-      {ENABLE_V_MENU && <AssetTitle />}
+      {ENABLE_V_MENU && showTitle === 'yes' && <AssetTitle />}
       <MenuContainer showVertical={ENABLE_V_MENU} drawShow={drawShow} />
       <ToolContainer drawShow={drawShow} toggleDraw={toggleDraw} />
       <ConfigDialog />

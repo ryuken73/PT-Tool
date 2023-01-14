@@ -8,6 +8,7 @@ const initialState = {
   config: {
     debugTransition: 'no',
     backgroundCapture: true,
+    showTitle: 'yes',
   },
 };
 

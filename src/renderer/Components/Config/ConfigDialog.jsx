@@ -11,6 +11,7 @@ import SelectTransition from './SelectTransition';
 import SelectDebugTransition from './SelectDebugTransition';
 import SetBackgroundCapture from './SetBackgroundCapture';
 import SetTransitionFull from './SetTransitionFull';
+import SetTitleShown from './SetTitleShown';
 
 const CustomDialog = styled(Dialog)`
   div.MuiDialog-container {
@@ -55,6 +56,12 @@ const ConfigDialog = props => {
             id="alert-dialog-description"
           >
             <SetBackgroundCapture />
+          </DialogContentText>
+          <DialogContentText
+            sx={{ color: 'white' }}
+            id="alert-dialog-description"
+          >
+            <SetTitleShown />
           </DialogContentText>
           <DialogContentText
             sx={{ color: 'white' }}
