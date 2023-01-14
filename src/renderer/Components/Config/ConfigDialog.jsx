@@ -26,7 +26,7 @@ const CustomDialog = styled(Dialog)`
 `
 
 const ConfigDialog = props => {
-  const { transitionName, configDialogOpen, config, toggleConfigModalState } = useConfigState();
+  const { configDialogOpen, config, toggleConfigModalState } = useConfigState();
   const { debugTransition } = config;
 
   const handleYes = React.useCallback(() => {

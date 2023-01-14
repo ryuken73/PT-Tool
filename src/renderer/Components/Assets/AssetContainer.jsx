@@ -37,8 +37,6 @@ const AssetContainer = () => {
   const { assets, assetShowMask } = useAssetState();
   const { isTransitionFull } = useConfigState();
   const { showTransition, setShowTransitionState } = useAppState();
-  // const transition = TRANSITIONS[transitionName];
-  // const isFullTransition = transition.isFull;
 
   const handleDrop = React.useCallback((event) => {
     const url = event.dataTransfer.getData('url');
