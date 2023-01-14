@@ -8,7 +8,6 @@ import ToolDocker from 'renderer/Components/ToolDocker';
 import styled from 'styled-components';
 import colors from 'renderer/config/colors';
 import DisplayControl from 'renderer/Components/DisplayControl';
-import VideoTransition from 'renderer/Components/PageTransition/VideoTransition';
 import { useDoubleTap } from 'use-double-tap';
 import CONSTANTS from 'renderer/config/constants';
 import ConfirmDialog from './Components/Dialog/ConfirmDialog';

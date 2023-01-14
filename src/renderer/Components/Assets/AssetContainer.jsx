@@ -4,7 +4,6 @@ import useAppState from 'renderer/hooks/useAppState';
 import useAssetState from 'renderer/hooks/useAssetState';
 import useDialogState from 'renderer/hooks/useDialogState';
 import useConfigState from 'renderer/hooks/useConfigState';
-// import VideoTransition from 'renderer/Components/PageTransition/VideoTransition';
 import PageTransition from 'renderer/Components/PageTransition';
 import CONSTANTS from 'renderer/config/constants';
 import Asset from './Asset';
