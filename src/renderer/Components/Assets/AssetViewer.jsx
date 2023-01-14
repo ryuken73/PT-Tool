@@ -209,7 +209,7 @@ const AssetContainer = (props) => {
         </FlexContainer>
       )}
       {displayMode === 'swipe' && (
-        <StyledSwiper loop threshold={100} modules={[Navigation]}>
+        <StyledSwiper threshold={100}>
           {sources.map((source, index) => (
             <SwiperSlide>
               <SrcViewer

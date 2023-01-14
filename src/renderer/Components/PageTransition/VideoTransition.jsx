@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import TransitionVideo from 'renderer/assets/SBS_Transition.mp4';
+// import TransitionVideo from 'renderer/assets/SBS_Transition.mp4';
+import TransitionVideo from 'renderer/assets/toLeft.webm';
 
 const Container = styled.div`
   position: absolute;
