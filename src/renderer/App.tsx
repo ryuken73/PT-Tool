@@ -309,10 +309,8 @@ export default function App() {
     setShowTransitionState,
   } = useAppState();
   const { currentAssetSrcCount, setAssetsState } = useAssetState();
-  const { transitionName, isTransitionFull, config } = useConfigState();
+  const { transitionType, isTransitionFull, config } = useConfigState();
   const [quitConfirmOpen, setQuitConfirmOpen] = React.useState(false);
-  // const transition = TRANSITIONS[transitionName];
-  // const isFullTransition = transition.isFull;
 
   const setAssetsFromServer = React.useCallback(() => {
     getInitialAssets()
@@ -403,7 +401,7 @@ export default function App() {
         setAssetsFromServer={setAssetsFromServer}
         show={draggableDock}
         docWidth={dockWidth}
-        transitionName={transitionName}
+        transitionType={transitionType}
       />
     </AppContainer>
   );

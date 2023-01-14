@@ -1,7 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 // import TransitionVideo from 'renderer/assets/SBS_Transition.mp4';
-import TransitionVideo from 'renderer/assets/toLeft.webm';
+import ToRight from 'renderer/assets/toRight.webm';
+import ToLeft from 'renderer/assets/toLeft.webm';
+import Blur from 'renderer/assets/blur.webm';
+import SplitUp from 'renderer/assets/splitUp.webm';
 
 const Container = styled.div`
   position: absolute;
@@ -14,11 +17,19 @@ const Container = styled.div`
 `;
 const CustomVideo = styled.video`
   background: transparent;
-`
+`;
+const recourceMap = {
+  toRight: ToRight,
+  toLeft: ToLeft,
+  blur: Blur,
+  splitUp: SplitUp
+};
 
 function VideoTransition(props) {
-  const {handleVideoEnded} = props;
+  // eslint-disable-next-line react/prop-types
+  const { handleVideoEnded, transitionResource } = props;
   const videoRef = React.useRef(null);
+  const src = recourceMap[transitionResource];
   React.useEffect(() => {
     if (videoRef.current === null) {
       return;
@@ -30,7 +41,7 @@ function VideoTransition(props) {
     <Container>
       <CustomVideo
         ref={videoRef}
-        src={TransitionVideo}
+        src={src}
         onEnded={handleVideoEnded}
         controls={false}
       />

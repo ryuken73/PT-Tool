@@ -62,14 +62,14 @@ const CustomSettingIcon = styled(SettingsIcon)`
 // const { captureScreen } = appUtil;
 function ToolDocker(props) {
   // eslint-disable-next-line react/prop-types
-  const { show, docWidth, quitApp, setAssetsFromServer, transitionName } = props;
+  const { show, docWidth, quitApp, setAssetsFromServer, transitionType } = props;
   const [dataUrls, setDataUrls] = React.useState([]);
   const { toggleConfigModalState, config } = useConfigState();
   const { currentAssetIndex } = useAssetState();
   const docRef = React.useRef(null);
 
   const { backgroundCapture } = config;
-  const transition = TRANSITIONS[transitionName];
+  const transition = TRANSITIONS[transitionType];
   const prevDataUrl = React.useMemo(() => {
     return dataUrls[currentAssetIndex] || RainDrop;
   }, [currentAssetIndex]);

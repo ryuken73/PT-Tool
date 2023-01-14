@@ -8,14 +8,19 @@ const transitionMap = {
   videoTransition: VideoTransition,
   cssTransition: CSSTransition,
   noTransition: NoTransition,
-}
+};
 
 function PageTransition(props) {
   // eslint-disable-next-line react/prop-types
   const { handleVideoEnded } = props;
-  const { transitionName } = useConfigState();
-  const Transition = transitionMap[transitionName];
-  return <Transition handleVideoEnded={handleVideoEnded} />
+  const { transitionType, transitionResource } = useConfigState();
+  const Transition = transitionMap[transitionType];
+  return (
+    <Transition
+      handleVideoEnded={handleVideoEnded}
+      transitionResource={transitionResource}
+    />
+  );
 }
 
 export default React.memo(PageTransition);

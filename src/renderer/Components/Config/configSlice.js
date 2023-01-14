@@ -2,7 +2,8 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   configDialogOpen: false,
-  transitionName: 'videoTransition',
+  transitionType: 'videoTransition',
+  transitionResource: 'toRight',
   isTransitionFull: false,
   config: {
     debugTransition: 'no',
@@ -19,10 +20,15 @@ export const configSlice = createSlice({
       const { configDialogOpen } = payload;
       state.configDialogOpen = configDialogOpen;
     },
-    setTransitionName: (state, action) => {
+    setTransitionType: (state, action) => {
       const { payload } = action;
-      const { transitionName } = payload;
-      state.transitionName = transitionName;
+      const { transitionType } = payload;
+      state.transitionType = transitionType;
+    },
+    setTransitionResource: (state, action) => {
+      const { payload } = action;
+      const { transitionResource } = payload;
+      state.transitionResource = transitionResource;
     },
     setIsTransitionFull: (state, action) => {
       const { payload } = action;
@@ -38,7 +44,8 @@ export const configSlice = createSlice({
 })
 
 export const {
-  setTransitionName,
+  setTransitionType,
+  setTransitionResource,
   setIsTransitionFull,
   setConfigDialogOpen,
   setConfigValue,

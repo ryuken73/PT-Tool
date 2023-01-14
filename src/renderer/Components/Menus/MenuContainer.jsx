@@ -38,7 +38,7 @@ const MenuContainer = (props) => {
     setDraggableDockState,
     setShowTransitionState,
   } = useAppState();
-  const { transitionName, config } = useConfigState();
+  const { transitionType, config } = useConfigState();
   const { debugTransition } = config;
   const [isDragging, setIsDragging] = React.useState(false);
   const {
@@ -98,7 +98,7 @@ const MenuContainer = (props) => {
               draggableDock={draggableDock}
               assets={assets}
               currentAssetIndex={currentAssetIndex}
-              transitionName={transitionName}
+              transitionType={transitionType}
               setCurrentAssetIndexState={setCurrentAssetIndexState}
               setShowTransitionState={setShowTransitionState}
             />

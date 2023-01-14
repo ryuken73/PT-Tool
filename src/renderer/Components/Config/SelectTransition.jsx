@@ -7,12 +7,20 @@ import FormLabel from '@mui/material/FormLabel';
 import useConfigState from 'renderer/hooks/useConfigState';
 
 function RowRadioButtonsGroup() {
-  const { transitionName, setTransitionNameState } = useConfigState();
+  const {
+    transitionType,
+    transitionResource,
+    setTransitionTypeState,
+    setTransitionResourceState,
+  } = useConfigState();
   const onChange = React.useCallback((event) => {
       const { value } = event.target;
-      setTransitionNameState(value);
+      const type = value.split('-')[0];
+      const resource = value.split('-')[1] || 'none';
+      setTransitionTypeState(type);
+      setTransitionResourceState(resource);
     },
-    [setTransitionNameState]
+    [setTransitionTypeState, setTransitionResourceState]
   );
   return (
     <FormControl>
@@ -26,23 +34,38 @@ function RowRadioButtonsGroup() {
         row
         aria-labelledby="demo-row-radio-buttons-group-label"
         name="row-radio-buttons-group"
-        value={transitionName}
+        value={`${transitionType}-${transitionResource}`}
         onChange={onChange}
       >
         <FormControlLabel
-          value="videoTransition"
+          value="videoTransition-toRight"
           control={<Radio />}
-          label="News"
+          label="To-Right"
         />
         <FormControlLabel
-          value="cssTransition"
+          value="videoTransition-toLeft"
+          control={<Radio />}
+          label="To-Left"
+        />
+        <FormControlLabel
+          value="videoTransition-blur"
+          control={<Radio />}
+          label="Blur"
+        />
+        <FormControlLabel
+          value="videoTransition-splitUp"
+          control={<Radio />}
+          label="Split Up"
+        />
+        {/* <FormControlLabel
+          value="cssTransition-none"
           control={<Radio />}
           label="H-Split"
-        />
+        /> */}
         <FormControlLabel
-          value="noTransition"
+          value="noTransition-none"
           control={<Radio />}
-          label="Nothing"
+          label="None"
         />
       </RadioGroup>
     </FormControl>

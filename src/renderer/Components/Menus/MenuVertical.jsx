@@ -27,11 +27,11 @@ function MenuVertical(props) {
     draggableDock,
     assets,
     currentAssetIndex,
-    transitionName,
+    transitionType,
     setCurrentAssetIndexState,
     setShowTransitionState
   } = props;
-  const transition = TRANSITIONS[transitionName];
+  const transition = TRANSITIONS[transitionType];
 
   return (
     <Container hide={false} draggableDock={draggableDock}>

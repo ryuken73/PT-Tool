@@ -1,7 +1,8 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  setTransitionName,
+  setTransitionType,
+  setTransitionResource,
   setConfigDialogOpen,
   setIsTransitionFull,
   setConfigValue,
@@ -9,17 +10,29 @@ import {
 
 export default function useAppState() {
   const dispatch = useDispatch();
-  const transitionName = useSelector((state) => state.config.transitionName);
-  const isTransitionFull = useSelector((state) => state.config.isTransitionFull);
+  const transitionType = useSelector((state) => state.config.transitionType);
+  const transitionResource = useSelector(
+    (state) => state.config.transitionResource
+  );
+  const isTransitionFull = useSelector(
+    (state) => state.config.isTransitionFull
+  );
   const configDialogOpen = useSelector(
     (state) => state.config.configDialogOpen
   );
   const config = useSelector((state) => state.config.config);
 
-  const setTransitionNameState = React.useCallback(
+  const setTransitionTypeState = React.useCallback(
     // eslint-disable-next-line @typescript-eslint/no-shadow
-    (transitionName) => {
-      dispatch(setTransitionName({ transitionName }));
+    (transitionType) => {
+      dispatch(setTransitionType({ transitionType }));
+    },
+    [dispatch]
+  );
+  const setTransitionResourceState = React.useCallback(
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    (transitionResource) => {
+      dispatch(setTransitionResource({ transitionResource }));
     },
     [dispatch]
   );
@@ -43,11 +56,13 @@ export default function useAppState() {
   );
 
   return {
-    transitionName,
+    transitionType,
+    transitionResource,
     isTransitionFull,
     configDialogOpen,
     config,
-    setTransitionNameState,
+    setTransitionTypeState,
+    setTransitionResourceState,
     setIsTransitionFullState,
     setConfigValueState,
     toggleConfigModalState,
