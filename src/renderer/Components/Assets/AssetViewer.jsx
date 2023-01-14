@@ -212,13 +212,16 @@ const AssetContainer = (props) => {
         <StyledSwiper threshold={100}>
           {sources.map((source, index) => (
             <SwiperSlide>
-              <SrcViewer
-                assetId={assetId}
-                srcPath={srcPath}
-                show={show}
-                source={source}
-                srcIndex={index}
-              />
+              {({ isActive }) => (
+                <SrcViewer
+                  assetId={assetId}
+                  srcPath={srcPath}
+                  show={show}
+                  source={source}
+                  srcIndex={index}
+                  isSwipeActive={isActive}
+                />
+              )}
             </SwiperSlide>
           ))}
         </StyledSwiper>

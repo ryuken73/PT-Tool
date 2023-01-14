@@ -18,6 +18,7 @@ function SrcViewer(props) {
     source,
     srcIndex,
     displayMode,
+    isSwipeActive,
     ...remainOpts
   } = props;
   const { srcId, srcType, objectFit='cover' } = source;
@@ -33,6 +34,7 @@ function SrcViewer(props) {
       srcIndex={srcIndex}
       objectFit={objectFit}
       displayMode={displayMode}
+      isSwipeActive={isSwipeActive}
       {...remainOpts}
     />
   );

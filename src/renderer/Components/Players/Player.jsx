@@ -17,9 +17,28 @@ const Player = (props) => {
   // eslint-disable-next-line react/prop-types
   console.log('re-render Player props =', props);
   // const { asset } = props;
-  const { assetId, src, srcId, show, srcIndex, objectFit } = props;
+  // eslint-disable-next-line react/prop-types
+  const { assetId, src, srcId, show, srcIndex, objectFit, isSwipeActive } = props;
   const playerRef = React.useRef(null);
-  const { loadHLS } = usePlayerSource(assetId, src, srcId, playerRef, show, srcIndex);
+  const { loadHLS } = usePlayerSource(
+    assetId,
+    src,
+    srcId,
+    playerRef,
+    show,
+    srcIndex
+  );
+
+  React.useEffect(() => {
+    console.log('$$$$$',srcIndex, isSwipeActive);
+    if (playerRef.current === null) return;
+    if (isSwipeActive) {
+      playerRef.current.play();
+    } else {
+      playerRef.current.pause();
+      playerRef.current.currentTime = 0;
+    }
+  }, [isSwipeActive, playerRef]);
 
   const reloadPlayer = React.useCallback(() => {
     // const src = asset.source.url;
