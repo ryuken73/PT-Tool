@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import interact from 'interactjs';
 import ImageIcon from 'renderer/Components/Common/ImageIcon';
 import SrcViewer from 'renderer/Components/Assets/SrcViewer';
+import SwipeButton from './SwipeButton';
 import useAppState from 'renderer/hooks/useAppState';
 import useWindowSize from 'renderer/hooks/useWindowSize';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -213,6 +214,7 @@ const AssetContainer = (props) => {
           {sources.map((source, index) => (
             <SwiperSlide>
               {({ isActive }) => (
+                <>
                 <SrcViewer
                   assetId={assetId}
                   srcPath={srcPath}
@@ -221,6 +223,8 @@ const AssetContainer = (props) => {
                   srcIndex={index}
                   isSwipeActive={isActive}
                 />
+                <SwipeButton />
+                </>
               )}
             </SwiperSlide>
           ))}
