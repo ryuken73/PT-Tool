@@ -38,7 +38,9 @@ function MenuVertical(props) {
     (index) => {
       return () => {
         if (showTransition) return;
-        setShowTransitionState(true);
+        if (transitionType !== 'noTransition'){
+          setShowTransitionState(true);
+        }
         setTimeout(() => {
           setCurrentAssetIndexState(index);
         }, transition.delay);
@@ -49,6 +51,7 @@ function MenuVertical(props) {
       setShowTransitionState,
       showTransition,
       transition.delay,
+      transitionType,
     ]
   );
 
