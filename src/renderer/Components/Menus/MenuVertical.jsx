@@ -10,7 +10,8 @@ const Container = styled.div`
   font-weight: bold;
   font-size: 2vw;
   color: white;
-  background: ${(props) => props.draggableDock ? 'rgb(0, 0, 0, 0)':'rgb(0,0,0,0.5)'};
+  background: ${(props) =>
+    props.draggableDock ? 'rgb(0, 0, 0, 0)' : 'rgb(0,0,0,0.5)'};
   padding: 5px;
   justify-content: space-around;
   align-items: center;
@@ -27,11 +28,29 @@ function MenuVertical(props) {
     draggableDock,
     assets,
     currentAssetIndex,
+    showTransition,
     transitionType,
     setCurrentAssetIndexState,
-    setShowTransitionState
+    setShowTransitionState,
   } = props;
   const transition = TRANSITIONS[transitionType];
+  const onClickMenu = React.useCallback(
+    (index) => {
+      return () => {
+        if (showTransition) return;
+        setShowTransitionState(true);
+        setTimeout(() => {
+          setCurrentAssetIndexState(index);
+        }, transition.delay);
+      };
+    },
+    [
+      setCurrentAssetIndexState,
+      setShowTransitionState,
+      showTransition,
+      transition.delay,
+    ]
+  );
 
   return (
     <Container hide={false} draggableDock={draggableDock}>
@@ -41,24 +60,12 @@ function MenuVertical(props) {
           isCurrent={currentAssetIndex === index}
           menuText={asset.assetTitle}
           mode="vertical"
-          onClick={() => {
-            // setCurrentAssetIndexState(index);
-            setShowTransitionState(true);
-            setTimeout(() => {
-              setCurrentAssetIndexState(index);
-            }, transition.delay);
-          }}
-          onTouchStart={() => {
-            // setCurrentAssetIndexState(index);
-            setShowTransitionState(true);
-            setTimeout(() => {
-              setCurrentAssetIndexState(index);
-            }, transition.delay);
-          }}
+          onClick={onClickMenu(index)}
+          onTouchStart={onClickMenu(index)}
         />
       ))}
     </Container>
-  )
+  );
 }
 
 export default React.memo(MenuVertical);

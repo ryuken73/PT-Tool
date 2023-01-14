@@ -33,6 +33,7 @@ const MenuContainer = (props) => {
   // eslint-disable-next-line react/prop-types
   const { drawShow  } = props;
   const {
+    showTransition,
     useSrcLocal,
     draggableDock,
     setDraggableDockState,
@@ -98,6 +99,7 @@ const MenuContainer = (props) => {
               draggableDock={draggableDock}
               assets={assets}
               currentAssetIndex={currentAssetIndex}
+              showTransition={showTransition}
               transitionType={transitionType}
               setCurrentAssetIndexState={setCurrentAssetIndexState}
               setShowTransitionState={setShowTransitionState}
