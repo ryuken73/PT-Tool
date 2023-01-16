@@ -2,13 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   configDialogOpen: false,
-  transitionType: 'videoTransition',
-  transitionResource: 'toRight',
+  transitionType: 'noTransition',
+  transitionResource: 'none',
   isTransitionFull: false,
   config: {
     debugTransition: 'no',
     backgroundCapture: true,
-    showTitle: 'yes',
+    showTitle: 'no',
   },
 };
 
