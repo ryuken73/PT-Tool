@@ -333,6 +333,7 @@ export default function App() {
     getIpAddresses()
       .then((ipAddresses) => {
         // eslint-disable-next-line promise/always-return, @typescript-eslint/no-unused-expressions
+        console.log('$$$$', ipAddresses)
         ipAddresses.some((ip) => ip === TOUCH_WORKSTATION_IP)
           ? setUseSrcLocalState(true)
           : setUseSrcLocalState(false);

@@ -6,6 +6,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import useAppState from 'renderer/hooks/useAppState';
 import useConfigState from 'renderer/hooks/useConfigState';
 import SelectTransition from './SelectTransition';
 import SelectDebugTransition from './SelectDebugTransition';
@@ -26,7 +27,12 @@ const CustomDialog = styled(Dialog)`
   }
 `
 
+const InfoBox = styled.div`
+  font-size: 12px;
+`
+
 const ConfigDialog = props => {
+  const { useSrcLocal } = useAppState();
   const { configDialogOpen, config, toggleConfigModalState } = useConfigState();
   const { debugTransition } = config;
 
@@ -69,6 +75,7 @@ const ConfigDialog = props => {
           >
             <SelectDebugTransition />
           </DialogContentText>
+          <InfoBox>Mode: {useSrcLocal ? 'Local' : 'Remote'}</InfoBox>
         </DialogContent>
         <DialogActions>
           <Button sx={{ color: 'white' }} onClick={handleYes} autoFocus>
