@@ -66,9 +66,6 @@ const ProtectLayer = styled(Container)`
   z-index: 8888;
 `;
 
-const SplitSvg = () => {
-  return <ImageIcon src={SplitIcon} />;
-};
 
 const AssetContainer = (props) => {
   // eslint-disable-next-line react/prop-types
@@ -82,6 +79,8 @@ const AssetContainer = (props) => {
   const { displayMode = 'flexRow', assetId, sources, show } = props;
   const srcPath = useSrcLocal ? 'srcLocal' : 'srcRemote';
   // console.log('#### assetContainer:', sources, srcPath, displayMode);
+
+  const LEFT_OFFSET = 0;
 
   const viewWidth = React.useMemo(() => {
     if(!draggableDock) return window.innerWidth;
@@ -104,6 +103,14 @@ const AssetContainer = (props) => {
 
   const onDragStop = React.useCallback(() => {
     setIsDragging(false);
+  }, []);
+
+  const SplitSvg = React.useCallback(() => {
+    return <ImageIcon src={SplitIcon} />;
+  }, []);
+
+  const SplitLeftSvg = React.useCallback(() => {
+    return <ImageIcon width="40px" src={SplitIcon} />;
   }, []);
 
   React.useEffect(() => {
@@ -131,7 +138,9 @@ const AssetContainer = (props) => {
       },
       modifiers: [
         interact.modifiers.restrictRect({
-          restriction: 'parent'
+          // restriction: '#topContainer',
+          restriction: 'parent',
+          endOnly: true
         })
       ],
       listeners: {
@@ -141,7 +150,7 @@ const AssetContainer = (props) => {
         move (event) {
           draggerOffset.current.x += event.dx;
           draggerOffset.current.y += event.dy;
-          syncSplitter(draggerOffset.current.x + offsetX);
+          syncSplitter(draggerOffset.current.x + offsetX + LEFT_OFFSET);
           event.target.style.transform = `translate(${draggerOffset.current.x}px, ${draggerOffset.current.y}px)`;
         },
         end (event) {
@@ -170,7 +179,7 @@ const AssetContainer = (props) => {
   },[containerRef, offsetX, onDragStop, syncSplitter, displayMode, draggerOffset])
 
   return (
-    <Container ref={containerRef}>
+    <Container id="xxx" ref={containerRef}>
       {displayMode === 'overlaySplit' && (
         <OverlayContainer>
           <DragDivWithPosition ref={dragRef}>
