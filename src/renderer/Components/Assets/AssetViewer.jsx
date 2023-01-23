@@ -83,7 +83,7 @@ const AssetContainer = (props) => {
   const srcPath = useSrcLocal ? 'srcLocal' : 'srcRemote';
   // console.log('#### assetContainer:', sources, srcPath, displayMode);
 
-  const LEFT_OFFSET = fillSplitter ? 26 : 0;
+  const FILL_OFFSET = fillSplitter ? 26 : 0;
 
   const viewWidth = React.useMemo(() => {
     if(!draggableDock) return window.innerWidth;
@@ -153,6 +153,7 @@ const AssetContainer = (props) => {
         move (event) {
           draggerOffset.current.x += event.dx;
           draggerOffset.current.y += event.dy;
+          const LEFT_OFFSET = draggerOffset.current.x > 0 ? FILL_OFFSET : FILL_OFFSET * -1;
           syncSplitter(draggerOffset.current.x + offsetX + LEFT_OFFSET);
           event.target.style.transform = `translate(${draggerOffset.current.x}px, ${draggerOffset.current.y}px)`;
         },
@@ -161,7 +162,7 @@ const AssetContainer = (props) => {
         }
       }
     })
-  }, [dragRef, offsetX, onDragStop, syncSplitter, displayMode, draggerOffset, LEFT_OFFSET]);
+  }, [dragRef, offsetX, onDragStop, syncSplitter, displayMode, draggerOffset, FILL_OFFSET]);
 
   React.useEffect(() => {
     if(displayMode !== 'overlaySplit') return;
