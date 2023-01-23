@@ -13,6 +13,7 @@ import SelectDebugTransition from './SelectDebugTransition';
 import SetBackgroundCapture from './SetBackgroundCapture';
 import SetTransitionFull from './SetTransitionFull';
 import SetTitleShown from './SetTitleShown';
+import SetFillSplitter from './SetFillSplitter';
 
 const CustomDialog = styled(Dialog)`
   div.MuiDialog-container {
@@ -73,8 +74,14 @@ const ConfigDialog = props => {
             sx={{ color: 'white' }}
             id="alert-dialog-description"
           >
-            <SelectDebugTransition />
+            <SetFillSplitter />
           </DialogContentText>
+          {/* <DialogContentText
+            sx={{ color: 'white' }}
+            id="alert-dialog-description"
+          >
+            <SelectDebugTransition />
+          </DialogContentText> */}
           <InfoBox>Mode: {useSrcLocal ? 'Local' : 'Remote'}</InfoBox>
         </DialogContent>
         <DialogActions>

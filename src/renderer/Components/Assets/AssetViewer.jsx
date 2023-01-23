@@ -7,6 +7,7 @@ import ImageIcon from 'renderer/Components/Common/ImageIcon';
 import SrcViewer from 'renderer/Components/Assets/SrcViewer';
 import SwipeButton from './SwipeButton';
 import useAppState from 'renderer/hooks/useAppState';
+import useConfigState from 'renderer/hooks/useConfigState';
 import useWindowSize from 'renderer/hooks/useWindowSize';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation } from 'swiper';
@@ -75,12 +76,14 @@ const AssetContainer = (props) => {
   const containerRef = React.useRef(null);
   const dragRef = React.useRef(null);
   const { useSrcLocal, draggableDock, dockWidth } = useAppState();
+  const { config } = useConfigState();
+  const { fillSplitter } = config;
   const size = useWindowSize();
   const { displayMode = 'flexRow', assetId, sources, show } = props;
   const srcPath = useSrcLocal ? 'srcLocal' : 'srcRemote';
   // console.log('#### assetContainer:', sources, srcPath, displayMode);
 
-  const LEFT_OFFSET = 0;
+  const LEFT_OFFSET = fillSplitter ? 26 : 0;
 
   const viewWidth = React.useMemo(() => {
     if(!draggableDock) return window.innerWidth;
@@ -158,7 +161,7 @@ const AssetContainer = (props) => {
         }
       }
     })
-  }, [dragRef, offsetX, onDragStop, syncSplitter, displayMode, draggerOffset]);
+  }, [dragRef, offsetX, onDragStop, syncSplitter, displayMode, draggerOffset, LEFT_OFFSET]);
 
   React.useEffect(() => {
     if(displayMode !== 'overlaySplit') return;

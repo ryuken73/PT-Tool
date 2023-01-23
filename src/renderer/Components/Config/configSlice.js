@@ -9,6 +9,7 @@ const initialState = {
     debugTransition: 'no',
     backgroundCapture: true,
     showTitle: 'no',
+    fillSplitter: true,
   },
 };
 
