@@ -64,7 +64,7 @@ export default function usePlayer(
         }
       }
     },
-    [dispatch, mediaElementRef, assetId, playerId, show, srcIndex]
+    [dispatch, mediaElementRef, assetId, playerId, srcIndex]
   );
 
   const handleCanPlay = React.useCallback(() => {
