@@ -40,7 +40,6 @@ const ImageBox = (props) => {
         src={src}
         objectFit={objectFit}
         draggable={false}
-        isFirstImage={isFirstImage}
         scale={scale}
       />
     </Container>
