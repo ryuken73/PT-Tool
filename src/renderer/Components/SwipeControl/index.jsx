@@ -35,9 +35,18 @@ function SwipeControl(props) {
   const toggleSwipeMode = React.useCallback(() => {
     setSwipeModeState(getNextMode(swipeMode));
   }, [setSwipeModeState, swipeMode]);
+  const onTouchStart = React.useCallback((event) => {
+    event.preventDefault();
+    event.target.click();
+  }, []);
   return (
     <Container>
-      <StyledLetter onTouchStart={toggleSwipeMode} onClick={toggleSwipeMode}>{swipeMode[0]}</StyledLetter>
+      <StyledLetter
+        onClick={toggleSwipeMode}
+        onTouchStartPassive={onTouchStart}
+      >
+        {swipeMode[0]}
+      </StyledLetter>
     </Container>
   )
 }
