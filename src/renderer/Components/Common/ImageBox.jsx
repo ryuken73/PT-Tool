@@ -11,6 +11,7 @@ const StyledImage = styled.img`
   width: 100%;
   height: 100%;
   object-fit: ${props => props.objectFit};
+  transform: ${(props) => `scale(${props.scale})`};
   /* -webkit-mask-image: ${(props) =>
     !props.isFirstImage &&
     'linear-gradient(to right, transparent 10%, blue 67%)'}; */
@@ -24,6 +25,7 @@ const ImageBox = (props) => {
     show,
     srcIndex,
     objectFit = 'cover',
+    scale=1,
     displayMode,
   } = props;
   const isFirstImage = srcIndex === 0;
@@ -33,6 +35,7 @@ const ImageBox = (props) => {
         <CSSToggleMenuImage
           srcId={srcId}
           objectFit={objectFit}
+          scale={scale}
           isFirstImage={isFirstImage}
           displayMode={displayMode}
         />
@@ -42,6 +45,7 @@ const ImageBox = (props) => {
         objectFit={objectFit}
         draggable={false}
         isFirstImage={isFirstImage}
+        scale={scale}
       />
     </Container>
   );

@@ -2,7 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import IconButton from '@mui/material/IconButton';
 import AspectRatioIcon from '@mui/icons-material/AspectRatio';
+import AddIcon from '@mui/icons-material/AddCircleOutline';
+import RemoveIcon from '@mui/icons-material/RemoveCircleOutline';
 import useAssetState from 'renderer/hooks/useAssetState';
+const { webFrame } = require('electron');
 
 const Container = styled.div`
   position: absolute;
@@ -36,7 +39,7 @@ const ToggleButton = styled.input`
   top: 0;
   left: 0;
   &:checked ~ ul {
-    width: 50px;
+    width: 150px;
     // background-position: 0px -50px;
   }
 `;
@@ -67,7 +70,7 @@ const CustomButton = styled.li`
 
 function CSSToggleMenuImage(props) {
   // eslint-disable-next-line react/prop-types
-  const { srcId, objectFit, isFirstImage, displayMode } = props;
+  const { srcId, objectFit, isFirstImage, displayMode, scale } = props;
   const { updateCurrentAssetSrc } = useAssetState();
   const isToggleBtnRightSide =
     !isFirstImage &&
@@ -95,6 +98,14 @@ function CSSToggleMenuImage(props) {
   const onClickOpen = React.useCallback(() => {
   }, [srcId])
 
+  const zoomIn = React.useCallback(() => {
+    updateCurrentAssetSrc(srcId, 'scale', scale + 0.05);
+  }, [scale, srcId, updateCurrentAssetSrc]);
+
+  const zoomOut = React.useCallback(() => {
+    updateCurrentAssetSrc(srcId, 'scale', scale - 0.05);
+  }, [scale, srcId, updateCurrentAssetSrc]);
+
   return (
     <Container
       isRightSide={isToggleBtnRightSide}
@@ -105,6 +116,32 @@ function CSSToggleMenuImage(props) {
         <CustomButton>
           <IconButton onClick={toggleObjectFit}>
             <AspectRatioIcon
+              sx={{
+                fontSize: 30,
+                color: 'white',
+                // background: 'white',
+                opacity: 1,
+                borderRadius: '5px',
+              }}
+            />
+          </IconButton>
+        </CustomButton>
+        <CustomButton>
+          <IconButton onClick={zoomIn}>
+            <AddIcon
+              sx={{
+                fontSize: 30,
+                color: 'white',
+                // background: 'white',
+                opacity: 1,
+                borderRadius: '5px',
+              }}
+            />
+          </IconButton>
+        </CustomButton>
+        <CustomButton>
+          <IconButton onClick={zoomOut}>
+            <RemoveIcon
               sx={{
                 fontSize: 30,
                 color: 'white',
