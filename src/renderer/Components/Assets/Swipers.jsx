@@ -25,7 +25,11 @@ const StyledSwiper = styled(Swiper)`
 const Normal = (props) => {
   // eslint-disable-next-line react/prop-types
   const { children } = props;
-  return <StyledSwiper threshold={100}>{children}</StyledSwiper>;
+  return (
+    <StyledSwiper threshold={100} pagination modules={[Navigation, Pagination]}>
+      {children}
+    </StyledSwiper>
+  );
 }
 const Creative = (props) => {
   // eslint-disable-next-line react/prop-types
@@ -35,6 +39,7 @@ const Creative = (props) => {
       grabCursor
       threshold={100}
       effect="creative"
+      pagination
       creativeEffect={{
         prev: {
           shadow: true,
@@ -44,7 +49,7 @@ const Creative = (props) => {
           translate: ['100%', 0, 0],
         },
       }}
-      modules={[EffectCreative]}
+      modules={[EffectCreative, Pagination]}
     >
       {children}
     </StyledSwiper>
@@ -58,11 +63,8 @@ const Fade = (props) => {
       spaceBetween={30}
       threshold={100}
       effect="fade"
-      navigation
-      pagination={{
-        clickable: true,
-      }}
-      modules={[EffectFade, Navigation, Pagination]}
+      pagination
+      modules={[EffectFade, Pagination]}
     >
       {children}
     </StyledSwiper>
@@ -77,8 +79,7 @@ const Flip = (props) => {
       threshold={100}
       grabCursor
       pagination
-      navigation
-      modules={[EffectFlip, Pagination, Navigation]}
+      modules={[EffectFlip, Pagination]}
     >
       {children}
     </StyledSwiper>
