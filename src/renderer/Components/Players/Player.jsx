@@ -5,6 +5,7 @@ import PlayerControl from 'renderer/Components/Players/PlayerControl';
 import ReloadButton from 'renderer/Components/Common/ReloadButton';
 import usePlayerSource from 'renderer/hooks/usePlayerSource';
 import { isHlsStream } from 'renderer/lib/appUtil';
+import CSSToggleMenuWebView from '../Menus/CSSToggleMenuWebView';
 
 const Container = styled.div`
   width: 100%;
@@ -18,7 +19,18 @@ const Player = (props) => {
   console.log('re-render Player props =', props);
   // const { asset } = props;
   // eslint-disable-next-line react/prop-types
-  const { assetId, src, srcId, show, srcIndex, objectFit, isSwipeActive } = props;
+  const {
+    assetId,
+    src,
+    srcId,
+    show,
+    srcIndex,
+    objectFit,
+    scale = 1,
+    displayMode,
+    isSwipeActive,
+  } = props;
+  const isFirstImage = srcIndex === 0;
   const playerRef = React.useRef(null);
   const { loadHLS } = usePlayerSource(
     assetId,
@@ -52,7 +64,20 @@ const Player = (props) => {
 
   return (
     <Container>
-      <VideoPlayer src={src} objectFit={objectFit} ref={playerRef} />
+      {show && (
+        <CSSToggleMenuWebView
+          srcId={srcId}
+          scale={scale}
+          isFirstImage={isFirstImage}
+          displayMode={displayMode}
+        />
+      )}
+      <VideoPlayer
+        src={src}
+        objectFit={objectFit}
+        scale={scale}
+        ref={playerRef}
+      />
       <PlayerControl
         ref={playerRef}
         assetId={assetId}
