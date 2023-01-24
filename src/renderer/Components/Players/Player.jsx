@@ -42,15 +42,16 @@ const Player = (props) => {
   );
 
   React.useEffect(() => {
-    console.log('$$$$$',srcIndex, isSwipeActive);
     if (playerRef.current === null) return;
-    if (isSwipeActive) {
-      playerRef.current.play();
-    } else {
-      playerRef.current.pause();
+    if (isSwipeActive && displayMode === 'swipe' && show) {
       playerRef.current.currentTime = 0;
-    }
-  }, [isSwipeActive, playerRef]);
+      playerRef.current.play();
+    };
+    if (!isSwipeActive && displayMode === 'swipe' && show) {
+      playerRef.current.currentTime = 0;
+      playerRef.current.pause();
+    };
+  }, [isSwipeActive, playerRef, displayMode, show]);
 
   const reloadPlayer = React.useCallback(() => {
     // const src = asset.source.url;

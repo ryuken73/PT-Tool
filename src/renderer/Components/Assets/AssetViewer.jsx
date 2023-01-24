@@ -273,6 +273,7 @@ const AssetContainer = (props) => {
                   source={source}
                   srcIndex={index}
                   isSwipeActive={isActive}
+                  displayMode={displayMode}
                 />
                 <SwipeButton />
                 </>

@@ -56,12 +56,12 @@ export default function usePlayer(
         if (isLive) {
           mediaElementRef.current.play();
         }
-        if (!isLive && show && srcIndex === 0 && displayMode === 'swipe') {
-          mediaElementRef.current.play();
-        }
-        if (!isLive && show && displayMode !== 'swipe') {
-          mediaElementRef.current.play();
-        }
+        // if (!isLive && show && srcIndex === 0 && displayMode === 'swipe') {
+        //   mediaElementRef.current.play();
+        // }
+        // if (!isLive && show && displayMode !== 'swipe') {
+        //   mediaElementRef.current.play();
+        // }
       }
     },
     [dispatch, mediaElementRef, assetId, playerId, srcIndex]
@@ -182,6 +182,23 @@ export default function usePlayer(
       }
     };
   }, [src, mediaElementRef, dispatch, assetId, playerId, handleLoadedMetadata]);
+
+  React.useEffect(() => {
+    if (mediaElementRef.current === null) return;
+    const durationSec = parseInt(mediaElementRef.current.duration, 10);
+    const isLive = durationSec === 0;
+    // if (!isLive && show && srcIndex === 0 && displayMode === 'swipe') {
+    //   mediaElementRef.current.currentTime = 0;
+    //   mediaElementRef.current.play();
+    // }
+    if (!isLive && show && displayMode !== 'swipe') {
+      mediaElementRef.current.currentTime = 0;
+      mediaElementRef.current.play();
+    }
+    if (!isLive && !show){
+      mediaElementRef.current.pause();
+    }
+  }, [displayMode, mediaElementRef, show, srcIndex])
 
   // return [mediaElementRef, manifestLoaded, duration];
   return { loadHLS };
