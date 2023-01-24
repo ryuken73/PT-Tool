@@ -150,7 +150,7 @@ const INITIAL_ASSETS = [
   },
   {
     assetId: 6,
-    assetTitle: '해운대',
+    assetTitle: '울릉도',
     created: null,
     updated: null,
     sources: [
@@ -159,23 +159,23 @@ const INITIAL_ASSETS = [
       //   srcLocal:
       //     'http://61.43.246.225:1935/rtplive/cctv_86.stream/chunklist_w1471259849.m3u8',
       //   srcRemote:
-      //     'http://61.43.246.225:1935/rtplive/cctv_86.stream/chunklist_w1471259849.m3u8',
+      //     'http://61.43.246.225:1935/rtplive/cctv_86.straeam/chunklist_w1471259849.m3u8',
       //   srcType: 'video',
       //   size: null,
       // },
       {
         srcId: 8,
-        srcLocal: 'http://210.179.218.53:1935/live/554.stream/playlist.m3u8',
-        srcRemote: 'http://210.179.218.53:1935/live/554.stream/playlist.m3u8',
+        srcLocal: 'https://ulleung.go.kr/wowza/live/dodongpark.stream/playlist.m3u8',
+        srcRemote: 'https://ulleung.go.kr/wowza/live/dodongpark.stream/playlist.m3u8',
         srcType: 'video',
         size: null,
       },
       {
         srcId: 9,
         srcLocal:
-          'https://topiscctv1.eseoul.go.kr/sd1/ch27.stream/playlist.m3u8',
+          'https://ulleung.go.kr/wowza/live/nari.stream/playlist.m3u8',
         srcRemote:
-          'https://topiscctv1.eseoul.go.kr/sd1/ch27.stream/playlist.m3u8',
+          'https://ulleung.go.kr/wowza/live/nari.stream/playlist.m3u8',
         srcType: 'video',
         size: null,
       },
