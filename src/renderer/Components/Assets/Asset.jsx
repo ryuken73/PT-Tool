@@ -3,6 +3,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import AssetViewer from 'renderer/Components/Assets/AssetViewer'
+import SwipeControl from 'renderer/Components/SwipeControl';
 
 const Container = styled.div`
   height: 100%;
@@ -16,16 +17,18 @@ const AssetContainer = (props) => {
   // eslint-disable-next-line react/prop-types
   // const { options, show, drawOn } = props;
   const { asset, show } = props;
-  const { assetId, sources, displayMode='' } = asset;
+  const { assetId, sources, displayMode = '', swipeMode = 'NORMAL' } = asset;
 
   return (
     <Container show={show}>
       <AssetViewer
         displayMode={displayMode}
+        swipeMode={swipeMode}
         assetId={assetId}
         sources={sources}
         show={show}
       />
+      {displayMode === 'swipe' && <SwipeControl swipeMode={swipeMode} />}
     </Container>
   )
 

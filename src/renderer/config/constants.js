@@ -46,7 +46,13 @@ const dev =  {
       delay: 500,
     },
   },
-  IS_TRANSITION_FULL: false
+  IS_TRANSITION_FULL: false,
+  SWIPE_MODES: {
+    NORMAL: 'NORMAL',
+    FADE: 'FADE',
+    ROTATE: 'ROTATE',
+    CARD: 'CARD',
+  }
 }
 
 const prd = {

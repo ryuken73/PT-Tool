@@ -5,17 +5,19 @@ import styled from 'styled-components';
 import interact from 'interactjs';
 import ImageIcon from 'renderer/Components/Common/ImageIcon';
 import SrcViewer from 'renderer/Components/Assets/SrcViewer';
-import SwipeButton from './SwipeButton';
+import SwipeButton from 'renderer/Components/Assets/SwipeButton';
+import Swipers from 'renderer/Components/Assets/Swipers';
 import useAppState from 'renderer/hooks/useAppState';
 import useConfigState from 'renderer/hooks/useConfigState';
 import useWindowSize from 'renderer/hooks/useWindowSize';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper';
-import SwapHorizontalCircleIcon from '@mui/icons-material/SwapHorizontalCircle';
 import SplitIcon from 'renderer/assets/Split.svg';
-import HeightIcon from '@mui/icons-material/Height';
 import 'swiper/css';
 import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/effect-fade';
+import 'swiper/css/effect-flip';
+import 'swiper/css/effect-creative';
 
 const Container = styled.div`
   width: 100%;
@@ -54,19 +56,12 @@ const DragDivWithPosition = styled.div`
   user-select: none;
 `;
 
-const StyledSwiper = styled(Swiper)`
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-`;
-
 const ProtectLayer = styled(Container)`
   display: ${(props) => (props.isDragging ? 'block' : 'none')};
   position: absolute;
   background: transparent;
   z-index: 8888;
 `;
-
 
 const AssetContainer = (props) => {
   // eslint-disable-next-line react/prop-types
@@ -79,7 +74,7 @@ const AssetContainer = (props) => {
   const { config } = useConfigState();
   const { fillSplitter } = config;
   const size = useWindowSize();
-  const { displayMode = 'flexRow', assetId, sources, show } = props;
+  const { displayMode = 'flexRow', swipeMode, assetId, sources, show } = props;
   const srcPath = useSrcLocal ? 'srcLocal' : 'srcRemote';
   // console.log('#### assetContainer:', sources, srcPath, displayMode);
 
@@ -143,7 +138,7 @@ const AssetContainer = (props) => {
         interact.modifiers.restrictRect({
           // restriction: '#topContainer',
           restriction: 'parent',
-          endOnly: true
+          endOnly: false
         })
       ],
       listeners: {
@@ -223,7 +218,22 @@ const AssetContainer = (props) => {
         </FlexContainer>
       )}
       {displayMode === 'swipe' && (
-        <StyledSwiper threshold={100}>
+        // <StyledSwiper
+        //   effect="creative"
+        //   threshold={100}
+        //   pagination={{ clickable: true }}
+        //   modules={[EffectFlip, EffectFade, EffectCreative, Pagination]}
+        //   creativeEffect={{
+        //     prev: {
+        //       shadow: true,
+        //       translate: [0, 0, -400],
+        //     },
+        //     next: {
+        //       translate: ["100%", 0, 0],
+        //     },
+        //   }}
+        // >
+        <Swipers swipeMode={swipeMode}>
           {sources.map((source, index) => (
             <SwiperSlide>
               {({ isActive }) => (
@@ -241,7 +251,7 @@ const AssetContainer = (props) => {
               )}
             </SwiperSlide>
           ))}
-        </StyledSwiper>
+        </Swipers>
       )}
       {(displayMode === '' || displayMode === undefined) && (
         <Container>
