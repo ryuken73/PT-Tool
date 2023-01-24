@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import CSSToggleMenuWebView from '../Menus/CSSToggleMenuWebView';
 import ReloadButton from './ReloadButton';
 
 const Container = styled.div`
@@ -30,7 +31,9 @@ const weatherCSS = [
 ];
 
 const WebView = (props) => {
-  const { src } = props;
+  // eslint-disable-next-line react/prop-types
+  const { src, srcId, show, srcIndex, scale = 1, displayMode } = props;
+  const isFirstImage = srcIndex === 0;
   const webviewRef = React.useRef(null);
 
   React.useEffect(() => {
@@ -55,10 +58,18 @@ const WebView = (props) => {
 
   return (
     <Container>
+      {show && (
+        <CSSToggleMenuWebView
+          srcId={srcId}
+          scale={scale}
+          isFirstImage={isFirstImage}
+          displayMode={displayMode}
+        />
+      )}
       <webview
         key={src}
         ref={webviewRef}
-        style={{ width: '100%', height: '100%' }}
+        style={{ width: '100%', height: '100%', transform: `scale(${scale})` }}
         src={src}
         // useragent={ua}
       />
