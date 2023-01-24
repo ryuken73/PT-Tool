@@ -12,13 +12,9 @@ const StyledImage = styled.img`
   height: 100%;
   object-fit: ${props => props.objectFit};
   transform: ${(props) => `scale(${props.scale})`};
-  /* -webkit-mask-image: ${(props) =>
-    !props.isFirstImage &&
-    'linear-gradient(to right, transparent 10%, blue 67%)'}; */
-`
+`;
 
 const ImageBox = (props) => {
-  // eslint-disable-next-line react/prop-types
   const {
     src,
     srcId,

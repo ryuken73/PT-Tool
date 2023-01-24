@@ -5,7 +5,6 @@ import AspectRatioIcon from '@mui/icons-material/AspectRatio';
 import AddIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveIcon from '@mui/icons-material/RemoveCircleOutline';
 import useAssetState from 'renderer/hooks/useAssetState';
-const { webFrame } = require('electron');
 
 const Container = styled.div`
   position: absolute;
@@ -95,9 +94,6 @@ function CSSToggleMenuImage(props) {
     updateCurrentAssetSrc(srcId, 'objectFit', 'cover');
   }, [objectFit, srcId, updateCurrentAssetSrc]);
 
-  const onClickOpen = React.useCallback(() => {
-  }, [srcId])
-
   const zoomIn = React.useCallback(() => {
     updateCurrentAssetSrc(srcId, 'scale', scale + 0.05);
   }, [scale, srcId, updateCurrentAssetSrc]);
@@ -111,7 +107,7 @@ function CSSToggleMenuImage(props) {
       isRightSide={isToggleBtnRightSide}
       isBottomSide={isToggleBtnDownSide}
     >
-      <ToggleButton type="checkbox" onClick={onClickOpen} />
+      <ToggleButton type="checkbox" />
       <ButtonList>
         <CustomButton>
           <IconButton onClick={toggleObjectFit}>
@@ -119,7 +115,6 @@ function CSSToggleMenuImage(props) {
               sx={{
                 fontSize: 30,
                 color: 'white',
-                // background: 'white',
                 opacity: 1,
                 borderRadius: '5px',
               }}
@@ -132,7 +127,6 @@ function CSSToggleMenuImage(props) {
               sx={{
                 fontSize: 30,
                 color: 'white',
-                // background: 'white',
                 opacity: 1,
                 borderRadius: '5px',
               }}
@@ -145,7 +139,6 @@ function CSSToggleMenuImage(props) {
               sx={{
                 fontSize: 30,
                 color: 'white',
-                // background: 'white',
                 opacity: 1,
                 borderRadius: '5px',
               }}
