@@ -217,6 +217,7 @@ const AssetContainer = (props) => {
               index={index}
             >
               <SrcViewer
+                key={`${assetId}-${source.srcId}`}
                 assetId={assetId}
                 srcPath={srcPath}
                 show={show}
@@ -232,6 +233,7 @@ const AssetContainer = (props) => {
         <FlexContainer displayMode={displayMode}>
           {sources.map((source, index) => (
             <SrcViewer
+              key={`${assetId}-${source.srcId}`}
               assetId={assetId}
               srcPath={srcPath}
               show={show}
@@ -264,6 +266,7 @@ const AssetContainer = (props) => {
               {({ isActive }) => (
                 <>
                 <SrcViewer
+                  key={`${assetId}-${source.srcId}`}
                   assetId={assetId}
                   srcPath={srcPath}
                   show={show}
@@ -282,6 +285,7 @@ const AssetContainer = (props) => {
         <Container>
           {sources.map((source, index) => (
             <SrcViewer
+              key={`${assetId}-${source.srcId}`}
               assetId={assetId}
               srcPath={srcPath}
               show={show}
