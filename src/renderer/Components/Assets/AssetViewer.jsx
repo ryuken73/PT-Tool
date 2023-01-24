@@ -157,7 +157,20 @@ const AssetContainer = (props) => {
         }
       }
     })
-  }, [dragRef, offsetX, onDragStop, syncSplitter, displayMode, draggerOffset, FILL_OFFSET]);
+    // eslint-disable-next-line consistent-return
+    return () => {
+      if(dragRef.current === null) return;
+      interact(dragRef.current).unset();
+    }
+  }, [
+    dragRef,
+    offsetX,
+    onDragStop,
+    syncSplitter,
+    displayMode,
+    draggerOffset,
+    FILL_OFFSET,
+  ]);
 
   React.useEffect(() => {
     if(displayMode !== 'overlaySplit') return;
@@ -175,7 +188,19 @@ const AssetContainer = (props) => {
         }
       }
     })
-  },[containerRef, offsetX, onDragStop, syncSplitter, displayMode, draggerOffset])
+    // eslint-disable-next-line consistent-return
+    return () => {
+      if (containerRef.current === null) return;
+      interact(containerRef.current).unset();
+    };
+  }, [
+    containerRef,
+    offsetX,
+    onDragStop,
+    syncSplitter,
+    displayMode,
+    draggerOffset,
+  ]);
 
   return (
     <Container id="xxx" ref={containerRef}>
