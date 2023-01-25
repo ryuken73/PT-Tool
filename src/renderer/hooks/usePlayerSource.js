@@ -197,6 +197,7 @@ export default function usePlayer(
     }
     if (!isLive && !show){
       mediaElementRef.current.pause();
+      mediaElementRef.current.currentTime = 0;
     }
   }, [displayMode, mediaElementRef, show, srcIndex])
 
