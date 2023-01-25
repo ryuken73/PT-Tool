@@ -27,6 +27,6 @@ export default function useSocketClient(props) {
     return () => {
       sockClient.disconnect();
     };
-  }, [hostAddress, setSocketConnected]);
+  }, [handleSocketEvent, hostAddress, setSocketConnected]);
   return { socket };
 }
