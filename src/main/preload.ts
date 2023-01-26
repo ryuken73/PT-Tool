@@ -13,18 +13,18 @@ window.getCaptureImg = async (docElement) => {
   return dataUrl;
 };
 
-console.log('start navigate media device')
-navigator.mediaDevices
-  .getUserMedia({ video: true })
-  .then(function (stream) {
-    // document.getElementById('camera').srcObject = stream;
-    console.log(stream)
-  })
-  .catch(function (err) {
-    console.error(err)
-    alert('could not connect stream');
-    alert(err);
-  });
+// console.log('start navigate media device')
+// navigator.mediaDevices
+//   .getUserMedia({ video: true })
+//   .then(function (stream) {
+//     // document.getElementById('camera').srcObject = stream;
+//     console.log(stream)
+//   })
+//   .catch(function (err) {
+//     console.error(err)
+//     alert('could not connect stream');
+//     alert(err);
+//   });
 
 // contextBridge.exposeInMainWorld('electron', {
 //   util: {
