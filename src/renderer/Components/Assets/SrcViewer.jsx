@@ -21,7 +21,14 @@ function SrcViewer(props) {
     isSwipeActive,
     ...remainOpts
   } = props;
-  const { srcId, srcType, objectFit = 'cover', scale = 1 } = source;
+  const {
+    srcId,
+    srcType,
+    objectFit = 'cover',
+    scale = 1,
+    translateX = 0,
+    translateY = 0,
+  } = source;
   const Viewer = ViewMap[srcType];
   return (
     <Viewer
@@ -34,6 +41,8 @@ function SrcViewer(props) {
       srcIndex={srcIndex}
       objectFit={objectFit}
       scale={scale}
+      translateX={translateX}
+      translateY={translateY}
       displayMode={displayMode}
       isSwipeActive={isSwipeActive}
       {...remainOpts}

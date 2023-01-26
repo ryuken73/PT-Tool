@@ -3,6 +3,10 @@ import styled from 'styled-components';
 import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/AddCircleOutline';
 import RemoveIcon from '@mui/icons-material/RemoveCircleOutline';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import useAssetState from 'renderer/hooks/useAssetState';
 
 const Container = styled.div`
@@ -37,7 +41,7 @@ const ToggleButton = styled.input`
   top: 0;
   left: 0;
   &:checked ~ ul {
-    width: 100px;
+    width: 300px;
     // background-position: 0px -50px;
   }
 `;
@@ -68,7 +72,7 @@ const CustomButton = styled.li`
 
 function CSSToggleMenuWebView(props) {
   // eslint-disable-next-line react/prop-types
-  const { srcId, isFirstImage, displayMode, scale } = props;
+  const { srcId, isFirstImage, displayMode, scale, translateX, translateY } = props;
   const { updateCurrentAssetSrc } = useAssetState();
   const isToggleBtnRightSide =
     !isFirstImage &&
@@ -84,6 +88,22 @@ function CSSToggleMenuWebView(props) {
   const zoomOut = React.useCallback(() => {
     updateCurrentAssetSrc(srcId, 'scale', scale - 0.05);
   }, [scale, srcId, updateCurrentAssetSrc]);
+
+  const moveLeft = React.useCallback(() => {
+    updateCurrentAssetSrc(srcId, 'translateX', translateX - 1);
+  }, [srcId, translateX, updateCurrentAssetSrc]);
+
+  const moveRight = React.useCallback(() => {
+    updateCurrentAssetSrc(srcId, 'translateX', translateX + 1);
+  }, [srcId, translateX, updateCurrentAssetSrc]);
+
+  const moveUp = React.useCallback(() => {
+    updateCurrentAssetSrc(srcId, 'translateY', translateY - 1);
+  }, [srcId, translateY, updateCurrentAssetSrc]);
+
+  const moveDown = React.useCallback(() => {
+    updateCurrentAssetSrc(srcId, 'translateY', translateY + 1);
+  }, [srcId, translateY, updateCurrentAssetSrc]);
 
   return (
     <Container
@@ -107,6 +127,54 @@ function CSSToggleMenuWebView(props) {
         <CustomButton>
           <IconButton onClick={zoomOut}>
             <RemoveIcon
+              sx={{
+                fontSize: 30,
+                color: 'white',
+                opacity: 1,
+                borderRadius: '5px',
+              }}
+            />
+          </IconButton>
+        </CustomButton>
+        <CustomButton>
+          <IconButton onClick={moveLeft}>
+            <ArrowBackIcon
+              sx={{
+                fontSize: 30,
+                color: 'white',
+                opacity: 1,
+                borderRadius: '5px',
+              }}
+            />
+          </IconButton>
+        </CustomButton>
+        <CustomButton>
+          <IconButton onClick={moveRight}>
+            <ArrowForwardIcon
+              sx={{
+                fontSize: 30,
+                color: 'white',
+                opacity: 1,
+                borderRadius: '5px',
+              }}
+            />
+          </IconButton>
+        </CustomButton>
+        <CustomButton>
+          <IconButton onClick={moveUp}>
+            <ArrowUpwardIcon
+              sx={{
+                fontSize: 30,
+                color: 'white',
+                opacity: 1,
+                borderRadius: '5px',
+              }}
+            />
+          </IconButton>
+        </CustomButton>
+        <CustomButton>
+          <IconButton onClick={moveDown}>
+            <ArrowDownwardIcon
               sx={{
                 fontSize: 30,
                 color: 'white',

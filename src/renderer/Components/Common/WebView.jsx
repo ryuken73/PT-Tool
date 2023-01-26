@@ -32,7 +32,16 @@ const weatherCSS = [
 
 const WebView = (props) => {
   // eslint-disable-next-line react/prop-types
-  const { src, srcId, show, srcIndex, scale = 1, displayMode } = props;
+  const {
+    src,
+    srcId,
+    show,
+    srcIndex,
+    scale = 1,
+    translateX = 0,
+    translateY = 0,
+    displayMode,
+  } = props;
   const isFirstImage = srcIndex === 0;
   const webviewRef = React.useRef(null);
 
@@ -62,6 +71,8 @@ const WebView = (props) => {
         <CSSToggleMenuWebView
           srcId={srcId}
           scale={scale}
+          translateX={translateX}
+          translateY={translateY}
           isFirstImage={isFirstImage}
           displayMode={displayMode}
         />
@@ -69,7 +80,11 @@ const WebView = (props) => {
       <webview
         key={src}
         ref={webviewRef}
-        style={{ width: '100%', height: '100%', transform: `scale(${scale})` }}
+        style={{
+          width: '100%',
+          height: '100%',
+          transform: `scale(${scale}) translateX(${translateX}%) translateY(${translateY}%)`,
+        }}
         src={src}
         // useragent={ua}
       />
