@@ -77,6 +77,14 @@ export default function useAssetState() {
     [clearPathDatumState, dispatch]
   );
 
+  const updateCurrentAssetState = React.useCallback((key, value) => {
+    dispatch(setItemValue({
+      itemId: currentAssetId,
+      key,
+      value,
+    }))
+  }, [currentAssetId, dispatch]);
+
   const updateCurrentAssetSrc = React.useCallback(
     (srcId, key, value) => {
       if (currentAsset.assetId === undefined) return;
@@ -110,5 +118,6 @@ export default function useAssetState() {
     setAssetsState,
     setCurrentAssetIndexState,
     updateCurrentAssetSrc,
+    updateCurrentAssetState,
   };
 }

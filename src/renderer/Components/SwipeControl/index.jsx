@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import useSwipeControlState from 'renderer/hooks/useSwipeControlState';
+// import useSwipeControlState from 'renderer/hooks/useSwipeControlState';
+import useAssetState from 'renderer/hooks/useAssetState';
 import constants from 'renderer/config/constants';
 
 const { SWIPE_MODES } = constants;
@@ -31,10 +32,11 @@ const getNextMode = (currentMode) => {
 function SwipeControl(props) {
   // eslint-disable-next-line react/prop-types
   const { swipeMode = 'NORMAL' } = props;
-  const { setSwipeModeState } = useSwipeControlState();
+  const { updateCurrentAssetState  } = useAssetState();
   const toggleSwipeMode = React.useCallback(() => {
-    setSwipeModeState(getNextMode(swipeMode));
-  }, [setSwipeModeState, swipeMode]);
+    // setSwipeModeState(getNextMode(swipeMode));
+    updateCurrentAssetState('swipeMode', getNextMode(swipeMode));
+  }, [swipeMode, updateCurrentAssetState]);
   const onTouchStart = React.useCallback((event) => {
     event.preventDefault();
     event.target.click();

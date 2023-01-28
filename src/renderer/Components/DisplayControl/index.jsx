@@ -7,7 +7,7 @@ import SwipeIcon from '@mui/icons-material/Swipe';
 import HeightIcon from '@mui/icons-material/Height';
 import CompareIcon from '@mui/icons-material/Compare';
 import useAssetState from 'renderer/hooks/useAssetState';
-import useDisplayModeState from 'renderer/hooks/useDisplayControlState';
+// import useDisplayModeState from 'renderer/hooks/useDisplayControlState';
 
 const Container = styled.div`
   display: flex;
@@ -34,14 +34,15 @@ const OverlayIcon = styled(CompareIcon)`
 `
 
 const DisplayControl = () => {
-  const { setDisplayModeState } = useDisplayModeState();
+  const { updateCurrentAssetState } = useAssetState();
   const menuRef = React.useRef(null);
 
   const changeDisplayMode = React.useCallback((event) => {
     const displayMode = event.currentTarget.value;
-    setDisplayModeState(displayMode);
+    // setDisplayModeState(displayMode);
+    updateCurrentAssetState('displayMode', displayMode);
     },
-    [setDisplayModeState]
+    [updateCurrentAssetState]
   );
 
   const withClose = React.useCallback(
