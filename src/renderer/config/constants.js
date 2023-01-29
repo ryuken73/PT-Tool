@@ -5,8 +5,8 @@ const MENU_RIGHT = 50;
 
 const dev =  {
   TOUCH_WORKSTATION_IP: '10.10.123.167',
-  TOUCH_WEB_SERVER_URL: 'http://10.10.104.246',
-  // TOUCH_WEB_SERVER_URL: 'http://127.0.0.1',
+  // TOUCH_WEB_SERVER_URL: 'http://10.10.104.246',
+  TOUCH_WEB_SERVER_URL: 'http://127.0.0.1',
   LOGLESS_REDUX_ACTIONS: [
     'playerSlice/setPlayerCurrentTime',
     'playerSlice/setPlayerProgress',
