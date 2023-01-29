@@ -7,7 +7,7 @@ import useDebounce from 'renderer/hooks/useDebounce';
 
 function SetFillSplitter() {
   const { config, setConfigValueState } = useConfigState();
-  const { swipeThreshold = 50 } = config;
+  const { swipeThreshold = 10 } = config;
   // const [threshold, setThreshold] = React.useState(swipeThreshold);
   // const debouncedThreshold = useDebounce(threshold, 200);
   const onChange = React.useCallback((event) => {

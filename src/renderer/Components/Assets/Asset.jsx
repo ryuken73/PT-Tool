@@ -13,24 +13,17 @@ const Container = styled.div`
   transition: transform 0.5s;
 `;
 
-const AssetContainer = (props) => {
+const Asset = (props) => {
   // eslint-disable-next-line react/prop-types
   // const { options, show, drawOn } = props;
   const { asset, show } = props;
-  const {
-    assetId,
-    sources,
-    displayMode = '',
-    swipeMode = 'NORMAL',
-    swipeThreshold = 10,
-  } = asset;
+  const { assetId, sources, displayMode = '', swipeMode = 'NORMAL' } = asset;
 
   return (
     <Container show={show}>
       <AssetViewer
         displayMode={displayMode}
         swipeMode={swipeMode}
-        swipeThreshold={swipeThreshold}
         assetId={assetId}
         sources={sources}
         show={show}
@@ -41,4 +34,4 @@ const AssetContainer = (props) => {
 
 };
 
-export default React.memo(AssetContainer);
+export default React.memo(Asset);

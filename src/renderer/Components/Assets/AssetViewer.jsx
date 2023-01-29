@@ -267,7 +267,8 @@ const AssetContainer = (props) => {
         //     },
         //   }}
         // >
-        <Swipers swipeMode={swipeMode} swipeThreshold={swipeThreshold}>
+        // <Swipers swipeMode={swipeMode} swipeThreshold={swipeThreshold}>
+        <Swipers swipeMode={swipeMode}>
           {sources.map((source, index) => (
             <SwiperSlide>
               {({ isActive }) => (

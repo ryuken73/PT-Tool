@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Swiper } from 'swiper/react';
 import constants from 'renderer/config/constants';
+import useConfigState from 'renderer/hooks/useConfigState';
 import {
   EffectCreative,
   EffectFade,
@@ -24,13 +25,11 @@ const StyledSwiper = styled(Swiper)`
 
 const Normal = (props) => {
   // eslint-disable-next-line react/prop-types
-  const { children, swipeThreshold } = props;
+  const { config } = useConfigState();
+  const { swipeThreshold = 0 } = config;
+  const { children } = props;
   return (
-    <StyledSwiper
-      threshold={100}
-      pagination
-      modules={[Pagination]}
-    >
+    <StyledSwiper threshold={swipeThreshold} pagination modules={[Pagination]}>
       {children}
     </StyledSwiper>
   );
