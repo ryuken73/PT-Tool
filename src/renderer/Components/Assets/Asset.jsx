@@ -17,13 +17,20 @@ const AssetContainer = (props) => {
   // eslint-disable-next-line react/prop-types
   // const { options, show, drawOn } = props;
   const { asset, show } = props;
-  const { assetId, sources, displayMode = '', swipeMode = 'NORMAL' } = asset;
+  const {
+    assetId,
+    sources,
+    displayMode = '',
+    swipeMode = 'NORMAL',
+    swipeThreshold = 10,
+  } = asset;
 
   return (
     <Container show={show}>
       <AssetViewer
         displayMode={displayMode}
         swipeMode={swipeMode}
+        swipeThreshold={swipeThreshold}
         assetId={assetId}
         sources={sources}
         show={show}

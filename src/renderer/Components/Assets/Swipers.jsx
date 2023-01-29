@@ -24,20 +24,24 @@ const StyledSwiper = styled(Swiper)`
 
 const Normal = (props) => {
   // eslint-disable-next-line react/prop-types
-  const { children } = props;
+  const { children, swipeThreshold } = props;
   return (
-    <StyledSwiper threshold={100} pagination modules={[Navigation, Pagination]}>
+    <StyledSwiper
+      threshold={100}
+      pagination
+      modules={[Pagination]}
+    >
       {children}
     </StyledSwiper>
   );
 }
 const Creative = (props) => {
   // eslint-disable-next-line react/prop-types
-  const { children } = props;
+  const { children, swipeThreshold } = props;
   return (
     <StyledSwiper
       grabCursor
-      threshold={100}
+      threshold={swipeThreshold}
       effect="creative"
       pagination
       creativeEffect={{
@@ -57,11 +61,11 @@ const Creative = (props) => {
 };
 const Fade = (props) => {
   // eslint-disable-next-line react/prop-types
-  const { children } = props;
+  const { children, swipeThreshold } = props;
   return (
     <StyledSwiper
       spaceBetween={30}
-      threshold={100}
+      threshold={swipeThreshold}
       effect="fade"
       pagination
       modules={[EffectFade, Pagination]}
@@ -72,11 +76,11 @@ const Fade = (props) => {
 }
 const Flip = (props) => {
   // eslint-disable-next-line react/prop-types
-  const { children } = props;
+  const { children, swipeThreshold } = props;
   return (
     <StyledSwiper
       effect="flip"
-      threshold={100}
+      threshold={swipeThreshold}
       grabCursor
       pagination
       modules={[EffectFlip, Pagination]}
@@ -96,9 +100,11 @@ const SwipeMap = {
 
 function Swipers(props) {
   // eslint-disable-next-line react/prop-types
-  const { swipeMode, children } = props;
+  const { swipeMode, swipeThreshold, children } = props;
   const TargetSwiper = SwipeMap[swipeMode];
-  return <TargetSwiper>{children}</TargetSwiper>;
+  return (
+    <TargetSwiper swipeThreshold={swipeThreshold}>{children}</TargetSwiper>
+  );
 }
 
 export default React.memo(Swipers);

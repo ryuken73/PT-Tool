@@ -14,6 +14,7 @@ import SetBackgroundCapture from './SetBackgroundCapture';
 import SetTransitionFull from './SetTransitionFull';
 import SetTitleShown from './SetTitleShown';
 import SetFillSplitter from './SetFillSplitter';
+import SetSwipeThreshold from './SetSwipeThreshold';
 
 const CustomDialog = styled(Dialog)`
   div.MuiDialog-container {
@@ -75,6 +76,12 @@ const ConfigDialog = props => {
             id="alert-dialog-description"
           >
             <SetFillSplitter />
+          </DialogContentText>
+          <DialogContentText
+            sx={{ color: 'white' }}
+            id="alert-dialog-description"
+          >
+            <SetSwipeThreshold />
           </DialogContentText>
           {/* <DialogContentText
             sx={{ color: 'white' }}

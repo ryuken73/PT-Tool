@@ -18,6 +18,7 @@ function SrcViewer(props) {
     source,
     srcIndex,
     displayMode,
+    swipeThreshold,
     isSwipeActive,
     ...remainOpts
   } = props;

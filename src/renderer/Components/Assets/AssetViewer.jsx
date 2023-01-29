@@ -74,7 +74,14 @@ const AssetContainer = (props) => {
   const { config } = useConfigState();
   const { fillSplitter } = config;
   const size = useWindowSize();
-  const { displayMode = 'flexRow', swipeMode, assetId, sources, show } = props;
+  const {
+    displayMode = 'flexRow',
+    swipeMode,
+    swipeThreshold,
+    assetId,
+    sources,
+    show,
+  } = props;
   const srcPath = useSrcLocal ? 'srcLocal' : 'srcRemote';
   // console.log('#### assetContainer:', sources, srcPath, displayMode);
 
@@ -260,7 +267,7 @@ const AssetContainer = (props) => {
         //     },
         //   }}
         // >
-        <Swipers swipeMode={swipeMode}>
+        <Swipers swipeMode={swipeMode} swipeThreshold={swipeThreshold}>
           {sources.map((source, index) => (
             <SwiperSlide>
               {({ isActive }) => (

@@ -22,27 +22,40 @@ const quitApp = async () => {
 };
 
 const isHlsStream = (url) => {
-  const hasMediaFileExt = MEDIA_EXTENSIONS.some((ext) => url.toUpperCase().endsWith(ext));
+  const hasMediaFileExt = MEDIA_EXTENSIONS.some((ext) =>
+    url.toUpperCase().endsWith(ext)
+  );
   return !hasMediaFileExt;
-}
+};
 
-const secondsToTime = (seconds, format='mm:ss') => {
+const debounce = (callback, timeout) => {
+  let id;
+  return (...args) => {
+    clearTimeout(id);
+    // eslint-disable-next-line no-return-assign
+    return (id = setTimeout(() => callback(...args), timeout));
+  };
+};
+
+const secondsToTime = (seconds, format = 'mm:ss') => {
   // console.log('####', seconds)
-  const startIndex = format.startsWith('hh:') ? 11 :
-                     format.startsWith('mm:') ? 14 :
-                     17
+  const startIndex = format.startsWith('hh:')
+    ? 11
+    : format.startsWith('mm:')
+    ? 14
+    : 17;
   const sliceLength = format.length;
-  if(isNaN(seconds) || typeof(seconds) !== 'number' || seconds === Infinity){
-    return '00:00'
+  if (isNaN(seconds) || typeof seconds !== 'number' || seconds === Infinity) {
+    return '00:00';
   }
-  return new Date(seconds*1000).toISOString().substr(startIndex, sliceLength)
-}
+  return new Date(seconds * 1000).toISOString().substr(startIndex, sliceLength);
+};
 
 const arrayAvg = (sources) => {
   const { length } = sources;
   const sum = sources.reduce((acct, source) => {
-    return acct + source
-  }, 0)
+    return acct + source;
+  }, 0);
   return sum / length;
 };
 
@@ -50,7 +63,7 @@ const arrayBitWiseSum = (arrayParent) => {
   return arrayParent.reduce((acct, arrayChild) => {
     return arrayChild.map((value, childIndex) => {
       return value + (acct[childIndex] === undefined ? 0 : acct[childIndex]);
-    })
+    });
   }, []);
 };
 
@@ -71,8 +84,8 @@ const getSmoothLine = (positions, level = 5) => {
   const { length } = fractions;
   const fromLength = Math.ceil(length / 2);
   const fromPostions = pickArrayFraction(fractions, 0, fromLength - 1);
-  const toPositions = pickArrayFraction(fractions, fromLength, length)
-  return [arrayBitWiseAvg(fromPostions), arrayBitWiseAvg(toPositions)]
+  const toPositions = pickArrayFraction(fractions, fromLength, length);
+  return [arrayBitWiseAvg(fromPostions), arrayBitWiseAvg(toPositions)];
 };
 
 // console.log(arrayAvg([1,2,3,4,4]))
@@ -108,7 +121,7 @@ const getSvgPathFromStroke = (stroke) => {
       return acc;
     },
     ['M', ...stroke[0], 'Q']
-  )
+  );
 
   d.push('Z');
   return d.join(' ');
@@ -121,13 +134,16 @@ const easingStrings = {
   easeInOutQuad: (t) => (t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t),
   easeInCubic: (t) => t * t * t,
   easeOutCubic: (t) => --t * t * t + 1,
-  easeInOutCubic: (t) => t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1,
+  easeInOutCubic: (t) =>
+    t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1,
   easeInQuart: (t) => t * t * t * t,
   easeOutQuart: (t) => 1 - --t * t * t * t,
-  easeInOutQuart: (t) => t < 0.5 ? 8 * t * t * t * t : 1 - 8 * --t * t * t * t,
+  easeInOutQuart: (t) =>
+    t < 0.5 ? 8 * t * t * t * t : 1 - 8 * --t * t * t * t,
   easeInQuint: (t) => t * t * t * t * t,
   easeOutQuint: (t) => 1 + --t * t * t * t * t,
-  easeInOutQuint: (t) => t < 0.5 ? 16 * t * t * t * t * t : 1 + 16 * --t * t * t * t * t,
+  easeInOutQuint: (t) =>
+    t < 0.5 ? 16 * t * t * t * t * t : 1 + 16 * --t * t * t * t * t,
   easeInSine: (t) => 1 - Math.cos((t * Math.PI) / 2),
   easeOutSine: (t) => Math.sin((t * Math.PI) / 2),
   easeInOutSine: (t) => -(Math.cos(Math.PI * t) - 1) / 2,
@@ -150,9 +166,10 @@ module.exports = {
   // captureScreen,
   quitApp,
   isHlsStream,
+  debounce,
   arrayBitWiseAvg,
   getSmoothLine,
   getSvgPathFromStroke,
   secondsToTime,
-  easingStrings
+  easingStrings,
 };
