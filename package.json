@@ -249,6 +249,7 @@
     "react-router-dom": "^6.2.2",
     "react-split-pane": "^0.1.92",
     "redux-logger": "^3.0.6",
+    "scrolly-video": "^0.0.13",
     "socket.io-client": "^4.4.1",
     "styled-components": "^5.3.3",
     "swiper": "^8.4.2",

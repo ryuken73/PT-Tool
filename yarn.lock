@@ -6566,6 +6566,11 @@ mkdirp@^1.0.3, mkdirp@^1.0.4:
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
 
+mp4box@^0.4.9:
+  version "0.4.9"
+  resolved "https://registry.yarnpkg.com/mp4box/-/mp4box-0.4.9.tgz#b8e59be72053417bb68704b14ac7afff9e962a19"
+  integrity sha512-APZb4ZaCBBXdyxA9nXF5lVb/xc2OPRWbnxwlHOn7tXxiBVchpLUl+nZMF52MLLv0oESnZBSy5qnDj9sRE9LCoQ==
+
 mpd-parser@0.21.1:
   version "0.21.1"
   resolved "https://registry.yarnpkg.com/mpd-parser/-/mpd-parser-0.21.1.tgz#4f4834074ed0a8e265d8b04a5d2d7b5045a4fa55"
@@ -8094,6 +8099,14 @@ schema-utils@^4.0.0:
     ajv-formats "^2.1.1"
     ajv-keywords "^5.0.0"
 
+scrolly-video@^0.0.13:
+  version "0.0.13"
+  resolved "https://registry.yarnpkg.com/scrolly-video/-/scrolly-video-0.0.13.tgz#a810a23d34018d93d3d0b0467dc00a1a29f88668"
+  integrity sha512-wQYOMDmBOwpAf5VRhjemKmDg5RLHcHIN7FFHAS5nIf9bPSVloUdd7wYZsHTaLEhQ9cb6MGg+tgKMPDnmsmj69w==
+  dependencies:
+    mp4box "^0.4.9"
+    ua-parser-js "^1.0.2"
+
 select-hose@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/select-hose/-/select-hose-2.0.0.tgz#625d8658f865af43ec962bfc376a37359a4994ca"
@@ -9012,6 +9025,11 @@ typescript@^4.5.4:
   version "4.6.2"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-4.6.2.tgz#fe12d2727b708f4eef40f51598b3398baa9611d4"
   integrity sha512-HM/hFigTBHZhLXshn9sN37H085+hQGeJHJ/X7LpBWLID/fbc2acUMfU+lGD98X81sKP+pFa9f0DZmCwB9GnbAg==
+
+ua-parser-js@^1.0.2:
+  version "1.0.33"
+  resolved "https://registry.yarnpkg.com/ua-parser-js/-/ua-parser-js-1.0.33.tgz#f21f01233e90e7ed0f059ceab46eb190ff17f8f4"
+  integrity sha512-RqshF7TPTE0XLYAqmjlu5cLLuGdKrNu9O1KLA/qp39QtbZwuzwv1dT46DZSopoUMsYgXpB3Cv8a03FI8b74oFQ==
 
 unbox-primitive@^1.0.1:
   version "1.0.1"
