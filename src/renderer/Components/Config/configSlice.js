@@ -11,6 +11,7 @@ const initialState = {
     showTitle: 'no',
     fillSplitter: true,
     baseLineSize: 6,
+    lineOpacity: 0.8,
   },
 };
 

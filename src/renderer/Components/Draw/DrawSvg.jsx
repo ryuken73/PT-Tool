@@ -4,12 +4,13 @@ import ArrowDef from 'renderer/Components/Draw/ArrowDef';
 import { getStroke } from 'perfect-freehand';
 import { getSmoothLine, getSvgPathFromStroke, easingStrings } from 'renderer/lib/appUtil';
 import useDrawState from 'renderer/hooks/useDrawState';
+import useConfigState from 'renderer/hooks/useConfigState';
 
 const StyledSvg = styled.svg`
   position: absolute;
   width: 100%;
   height: 100vh;
-  opacity: 0.7;
+  opacity: ${(props) => (props.opacity === undefined ? 0.8 : props.opacity)};
   touch-action: none;
   z-index: 9999;
 `;
@@ -29,6 +30,8 @@ const DrawSvg = (props) => {
     saveRenderOptionState,
     getPositionForArrow
   } = useDrawState();
+  const { config } = useConfigState();
+  const { lineOpacity } = config;
   const [points, setPoints] = React.useState([...INITIAL_POSITIONS]);
   const [mouseUp, setMouseUP] = React.useState(false);
 
@@ -106,6 +109,7 @@ const DrawSvg = (props) => {
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
       style={{ touchAction: 'none' }}
+      opacity={lineOpacity}
     >
       {pathDatum.map((pathData, index) =>
         pathRenderOptions[index].strokeWidth ? (

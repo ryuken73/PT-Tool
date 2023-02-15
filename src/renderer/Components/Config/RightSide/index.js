@@ -2,6 +2,7 @@ import React from 'react';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import SetDrawSize from './SetDrawSize';
+import SetLineOpacity from './SetLineOpacity';
 
 function RightSide() {
   return (
@@ -9,6 +10,9 @@ function RightSide() {
     <DialogContent>
       <DialogContentText sx={{ color: 'white' }}>
         <SetDrawSize />
+      </DialogContentText>
+      <DialogContentText sx={{ color: 'white' }}>
+        <SetLineOpacity />
       </DialogContentText>
     </DialogContent>
   );
