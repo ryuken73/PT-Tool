@@ -159,13 +159,6 @@ const getNextColor = (color) => {
   return COLORS[safeNextIndex];
 };
 
-const SIZES = [6, 12, 18];
-const getNextSize = (size) => {
-  const nextIndex = SIZES.indexOf(size) + 1;
-  const safeNextIndex = nextIndex === SIZES.length ? 0 : nextIndex;
-  return SIZES[safeNextIndex];
-}
-
 const SIZE_OFFSETS = [0, 6, 12, 24];
 const ToolContainer = (props) => {
   // eslint-disable-next-line react/prop-types
@@ -180,7 +173,6 @@ const ToolContainer = (props) => {
   } = useDrawState();
   const { config } = useConfigState();
   const { baseLineSize=6 } = config;
-  console.log('@@@',baseLineSize)
   const {
     size,
     strokeWidth,
