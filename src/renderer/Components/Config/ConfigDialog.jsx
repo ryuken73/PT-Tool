@@ -1,20 +1,14 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import DialogContentText from '@mui/material/DialogContentText';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import useAppState from 'renderer/hooks/useAppState';
 import useConfigState from 'renderer/hooks/useConfigState';
-import SelectTransition from './SelectTransition';
-import SelectDebugTransition from './SelectDebugTransition';
-import SetBackgroundCapture from './SetBackgroundCapture';
-import SetTransitionFull from './SetTransitionFull';
-import SetTitleShown from './SetTitleShown';
-import SetFillSplitter from './SetFillSplitter';
-import SetSwipeThreshold from './SetSwipeThreshold';
+import Divider from '@mui/material/Divider';
+import LeftSide from './LeftSide';
+import RightSide from './RightSide';
 
 const CustomDialog = styled(Dialog)`
   div.MuiDialog-container {
@@ -22,19 +16,17 @@ const CustomDialog = styled(Dialog)`
       background: black;
       opacity: 0.5;
       color: white;
-      max-width: 800px;
+      max-width: 1200px;
+      width: 1000px;
       border: 1px white solid;
       border-radius: 10px;
     }
   }
 `
-
-const InfoBox = styled.div`
-  font-size: 12px;
+const Container = styled.div`
+  display: flex;
 `
-
 const ConfigDialog = props => {
-  const { useSrcLocal } = useAppState();
   const { configDialogOpen, config, toggleConfigModalState } = useConfigState();
   const { debugTransition } = config;
 
@@ -46,51 +38,17 @@ const ConfigDialog = props => {
     <div>
       <CustomDialog open={configDialogOpen} onClose={handleYes}>
         <DialogTitle id="alert-dialog-title">Change Config</DialogTitle>
-        <DialogContent>
-          <DialogContentText
-            sx={{ color: 'white' }}
-            id="alert-dialog-description"
-          >
-            <SelectTransition />
-          </DialogContentText>
-          <DialogContentText
-            sx={{ color: 'white' }}
-            id="alert-dialog-description"
-          >
-            <SetTransitionFull />
-          </DialogContentText>
-          <DialogContentText
-            sx={{ color: 'white' }}
-            id="alert-dialog-description"
-          >
-            <SetBackgroundCapture />
-          </DialogContentText>
-          <DialogContentText
-            sx={{ color: 'white' }}
-            id="alert-dialog-description"
-          >
-            <SetTitleShown />
-          </DialogContentText>
-          <DialogContentText
-            sx={{ color: 'white' }}
-            id="alert-dialog-description"
-          >
-            <SetFillSplitter />
-          </DialogContentText>
-          <DialogContentText
-            sx={{ color: 'white' }}
-            id="alert-dialog-description"
-          >
-            <SetSwipeThreshold />
-          </DialogContentText>
+        <Container>
+          <LeftSide />
+          <Divider orientation="vertical" FlexItem />
+          <RightSide />
           {/* <DialogContentText
             sx={{ color: 'white' }}
             id="alert-dialog-description"
           >
             <SelectDebugTransition />
           </DialogContentText> */}
-          <InfoBox>Mode: {useSrcLocal ? 'Local' : 'Remote'}</InfoBox>
-        </DialogContent>
+        </Container>
         <DialogActions>
           <Button sx={{ color: 'white' }} onClick={handleYes} autoFocus>
             OK

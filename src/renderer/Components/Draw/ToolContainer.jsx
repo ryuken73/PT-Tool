@@ -15,6 +15,7 @@ import CircleIcon from '@mui/icons-material/Circle';
 import PanoramaFishEyeIcon from '@mui/icons-material/PanoramaFishEye';
 import SignalWifi1BarIcon from '@mui/icons-material/SignalWifi1Bar';
 import SignalWifi2BarIcon from '@mui/icons-material/SignalWifi2Bar';
+import SignalWifi3BarIcon from '@mui/icons-material/SignalWifi3Bar';
 import SignalWifi4BarIcon from '@mui/icons-material/SignalWifi4Bar';
 import DragHandle from 'renderer/Components/Draw/DragHandle';
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
@@ -179,6 +180,7 @@ const ToolContainer = (props) => {
   } = useDrawState();
   const { config } = useConfigState();
   const { baseLineSize=6 } = config;
+  console.log('@@@',baseLineSize)
   const {
     size,
     strokeWidth,
@@ -196,7 +198,9 @@ const ToolContainer = (props) => {
     const nextIndex = SIZE_OFFSETS.indexOf(offset) + 1;
     const safeNextIndex = nextIndex === SIZE_OFFSETS.length ? 0 : nextIndex;
     return SIZE_OFFSETS[safeNextIndex] + baseLineSize;
-  }, [baseLineSize]);
+    },
+    [baseLineSize]
+  );
 
   const showStokeIconGrey = !drawShow || strokeWidth === 0;
 
@@ -216,10 +220,12 @@ const ToolContainer = (props) => {
   // eslint-disable-next-line no-nested-ternary
   const SizeIcon =
     // eslint-disable-next-line no-nested-ternary
-    size === 6
+    size === baseLineSize + SIZE_OFFSETS[0]
       ? SignalWifi1BarIcon
-      : size === 12
+      : size === baseLineSize + SIZE_OFFSETS[1]
       ? SignalWifi2BarIcon
+      : size === baseLineSize + SIZE_OFFSETS[2]
+      ? SignalWifi3BarIcon
       : SignalWifi4BarIcon;
 
   const onClickColor = React.useCallback((event) => {
