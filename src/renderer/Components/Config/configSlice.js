@@ -10,6 +10,7 @@ const initialState = {
     backgroundCapture: true,
     showTitle: 'no',
     fillSplitter: true,
+    baseLineSize: 6
   },
 };
 

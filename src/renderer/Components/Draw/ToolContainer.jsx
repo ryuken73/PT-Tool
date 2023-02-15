@@ -22,6 +22,7 @@ import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
 import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import useDrawState from 'renderer/hooks/useDrawState';
+import useConfigState from 'renderer/hooks/useConfigState';
 import CONSTANTS from 'renderer/config/constants';
 import { red } from '@mui/material/colors';
 import { moveMessagePortToContext } from 'worker_threads';
@@ -164,6 +165,7 @@ const getNextSize = (size) => {
   return SIZES[safeNextIndex];
 }
 
+const SIZE_OFFSETS = [0, 6, 12, 24];
 const ToolContainer = (props) => {
   // eslint-disable-next-line react/prop-types
   const { drawShow, toggleDraw } = props;
@@ -175,6 +177,8 @@ const ToolContainer = (props) => {
     clearPathDatumState,
     undoPathDatumState,
   } = useDrawState();
+  const { config } = useConfigState();
+  const { baseLineSize=6 } = config;
   const {
     size,
     strokeWidth,
@@ -186,6 +190,13 @@ const ToolContainer = (props) => {
     fill,
     withArrow
   } = currentOptions;
+
+  const getNextSizeByOffset = React.useCallback((currentSize) => {
+    const offset = currentSize - baseLineSize;
+    const nextIndex = SIZE_OFFSETS.indexOf(offset) + 1;
+    const safeNextIndex = nextIndex === SIZE_OFFSETS.length ? 0 : nextIndex;
+    return SIZE_OFFSETS[safeNextIndex] + baseLineSize;
+  }, [baseLineSize]);
 
   const showStokeIconGrey = !drawShow || strokeWidth === 0;
 
@@ -242,9 +253,9 @@ const ToolContainer = (props) => {
   }, [changePathOptionState, withArrow]);
 
   const toggleSize = React.useCallback(() => {
-    const nextValue = getNextSize(size);
+    const nextValue = getNextSizeByOffset(size);
     changePathOptionState('size', nextValue);
-  }, [changePathOptionState, size]);
+  }, [changePathOptionState, getNextSizeByOffset, size]);
 
   const onStartDrag = React.useCallback((event) => {
     setIsDragging(true);
