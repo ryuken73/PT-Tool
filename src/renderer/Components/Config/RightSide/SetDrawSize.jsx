@@ -30,7 +30,7 @@ function SetDrawSize() {
         aria-label="baseLineSize"
         value={baseLineSize}
         min={5}
-        max={100}
+        max={20}
         onChange={onChange}
         valueLabelDisplay="auto"
       />
