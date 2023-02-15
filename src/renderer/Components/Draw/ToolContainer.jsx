@@ -24,6 +24,7 @@ import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import useDrawState from 'renderer/hooks/useDrawState';
 import useConfigState from 'renderer/hooks/useConfigState';
+import usePrevious from 'renderer/hooks/usePrevious';
 import CONSTANTS from 'renderer/config/constants';
 import { red } from '@mui/material/colors';
 import { moveMessagePortToContext } from 'worker_threads';
@@ -184,6 +185,8 @@ const ToolContainer = (props) => {
     fill,
     withArrow
   } = currentOptions;
+
+  const prevStrokeWidth = usePrevious(strokeWidth);
 
   const getNextSizeByOffset = React.useCallback((currentSize) => {
     const offset = currentSize - baseLineSize;

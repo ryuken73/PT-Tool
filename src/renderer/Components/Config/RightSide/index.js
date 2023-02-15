@@ -3,6 +3,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import SetDrawSize from './SetDrawSize';
 import SetLineOpacity from './SetLineOpacity';
+import SetLineStrokeWidth from './SetLineStrokeWidth';
 
 function RightSide() {
   return (
@@ -13,6 +14,9 @@ function RightSide() {
       </DialogContentText>
       <DialogContentText sx={{ color: 'white' }}>
         <SetLineOpacity />
+      </DialogContentText>
+      <DialogContentText sx={{ color: 'white' }}>
+        <SetLineStrokeWidth />
       </DialogContentText>
     </DialogContent>
   );
