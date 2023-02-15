@@ -35,6 +35,7 @@ export default function useAssetState() {
   );
   const currentAsset = assets[currentAssetIndex] || {};
   const currentAssetId = currentAsset.assetId;
+  const currentAssetType = currentAsset.assetType;
   const { clearPathDatumState } = useDrawState();
 
   const assetShowMask = React.useMemo(() => {
@@ -113,6 +114,7 @@ export default function useAssetState() {
     currentAssetIndex,
     currentAssetTitle,
     currentAssetSrcCount,
+    currentAssetType,
     assetShowMask,
     addAssetState,
     setAssetsState,
