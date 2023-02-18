@@ -1,6 +1,6 @@
 {
-  "name": "react-electron-template",
-  "version": "0.0.8",
+  "name": "SBS Touch PT",
+  "version": "0.0.9",
   "description": "Touch App",
   "main": "./dist/main/main.js",
   "author": {
