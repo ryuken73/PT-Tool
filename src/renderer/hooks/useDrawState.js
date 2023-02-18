@@ -5,7 +5,8 @@ import {
   setPointDatum,
   setPathRenderOptions,
   saveRenderOption,
-  setCurrentOptionValue
+  setCurrentOptionValue,
+  setStrokeWidthFromConfig
 } from 'renderer/Components/Draw/drawSlice';
 import { getSmoothLine } from 'renderer/lib/appUtil';
 
@@ -20,6 +21,9 @@ export default function useDrawState() {
   const dispatch = useDispatch();
   const pathDatum = useSelector((state) => state.draw.pathDatum);
   const pointDatum = useSelector((state) => state.draw.pointDatum);
+  const strokeWidthFromConfig = useSelector(
+    (state) => state.draw.strokeWidthFromConfig
+  );
   const currentOptions = useSelector((state) => state.draw.currentOptions);
   const pathRenderOptions = useSelector(
     (state) => state.draw.pathRenderOptions
@@ -63,6 +67,19 @@ export default function useDrawState() {
     dispatch(saveRenderOption());
   }, [dispatch]);
 
+  // eslint-disable-next-line @typescript-eslint/no-shadow
+  const setStrokeWidthFromConfigState = React.useCallback((strokeWidthFromConfig) => {
+      dispatch(setStrokeWidthFromConfig({ strokeWidthFromConfig }));
+      dispatch(
+        setCurrentOptionValue({
+          key: 'strokeWidth',
+          value: strokeWidthFromConfig,
+        })
+      );
+    },
+    [dispatch]
+  );
+
   const changePathOptionState = React.useCallback((key, value) => {
     dispatch(setCurrentOptionValue({ key, value }));
     },
@@ -82,12 +99,14 @@ export default function useDrawState() {
     pointDatum,
     currentOptions,
     pathRenderOptions,
+    strokeWidthFromConfig,
     addPathDatumState,
     addPointDatumState,
     clearPathDatumState,
     undoPathDatumState,
     saveRenderOptionState,
     changePathOptionState,
-    getPositionForArrow
+    getPositionForArrow,
+    setStrokeWidthFromConfigState
   };
 }

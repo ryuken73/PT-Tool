@@ -168,6 +168,7 @@ const ToolContainer = (props) => {
   const [isDragging, setIsDragging] = React.useState(false);
   const {
     currentOptions,
+    strokeWidthFromConfig,
     changePathOptionState,
     clearPathDatumState,
     undoPathDatumState,
@@ -239,9 +240,10 @@ const ToolContainer = (props) => {
   // }, [changePathOptionState, currentColor]);
 
   const toggleStroke = React.useCallback(() => {
-    const nextValue = strokeWidth === 0 ? 3 : 0;
+    const nextValue = strokeWidth === 0 ? strokeWidthFromConfig : 0;
+    console.log('stroke:', nextValue, strokeWidth, strokeWidthFromConfig)
     changePathOptionState('strokeWidth', nextValue);
-  }, [changePathOptionState, strokeWidth]);
+  }, [changePathOptionState, strokeWidth, strokeWidthFromConfig]);
 
   const toggleWithArrow = React.useCallback(() => {
     const nextValue = !withArrow;
@@ -249,9 +251,9 @@ const ToolContainer = (props) => {
     if (nextValue === true) {
       changePathOptionState('strokeWidth', 0);
     } else {
-      changePathOptionState('strokeWidth', 3);
+      changePathOptionState('strokeWidth', strokeWidthFromConfig);
     }
-  }, [changePathOptionState, withArrow]);
+  }, [changePathOptionState, strokeWidthFromConfig, withArrow]);
 
   const toggleSize = React.useCallback(() => {
     const nextValue = getNextSizeByOffset(size);

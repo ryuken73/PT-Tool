@@ -10,13 +10,13 @@ const CustomLabel = styled(FormLabel)`
 `
 
 function SetLineStrokeWidth() {
-  const { currentOptions, changePathOptionState } = useDrawState();
+  const { currentOptions, setStrokeWidthFromConfigState } = useDrawState();
   const { strokeWidth } = currentOptions;
   const onChange = React.useCallback((event) => {
       const { value } = event.target;
-      changePathOptionState('strokeWidth', value);
+      setStrokeWidthFromConfigState(value);
     },
-    [changePathOptionState]
+    [setStrokeWidthFromConfigState]
   );
   return (
     <FormControl>

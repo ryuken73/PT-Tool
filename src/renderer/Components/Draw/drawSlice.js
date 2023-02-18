@@ -13,6 +13,7 @@ const initialState = {
   pathDatum: [],
   pointDatum: [],
   pathRenderOptions: [],
+  strokeWidthFromConfig: 3,
   currentOptions: {
     size: 12,
     strokeWidth: 3,
@@ -66,6 +67,11 @@ export const drawSlice = createSlice({
       const { currentOptions } = state;
       state.pathRenderOptions.push(currentOptions);
     },
+    setStrokeWidthFromConfig: (state, action) => {
+      const { payload } = action;
+      const { strokeWidthFromConfig } = payload;
+      state.strokeWidthFromConfig = strokeWidthFromConfig;
+    },
     setCurrentOptionValue: (state, action) => {
       const { payload } = action;
       const { key, value } = payload;
@@ -80,7 +86,8 @@ export const {
   setPointDatum,
   setPathRenderOptions,
   saveRenderOption,
-  setCurrentOptionValue
+  setCurrentOptionValue,
+  setStrokeWidthFromConfig
 } = drawSlice.actions;
 
 export default drawSlice.reducer;
