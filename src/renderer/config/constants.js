@@ -7,6 +7,7 @@ const dev =  {
   TOUCH_WORKSTATION_IP: '10.10.123.167',
   // TOUCH_WEB_SERVER_URL: 'http://10.10.104.246',
   TOUCH_WEB_SERVER_URL: 'http://127.0.0.1',
+  SCROLL_VIDEO_SERVER_URL: 'http://127.0.0.1/scrolly',
   LOGLESS_REDUX_ACTIONS: [
     'playerSlice/setPlayerCurrentTime',
     'playerSlice/setPlayerProgress',
@@ -59,6 +60,7 @@ const prd = {
   ...dev,
   TOUCH_WORKSTATION_IP: '10.10.104.246',
   TOUCH_WEB_SERVER_URL: 'http://10.10.104.246',
+  SCROLL_VIDEO_SERVER_URL: 'http://10.10.104.246/scrolly',
 }
 
 export default process.env.NODE_ENV === 'development' ? dev : prd;
