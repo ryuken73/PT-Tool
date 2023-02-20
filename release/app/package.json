@@ -1,5 +1,5 @@
 {
-  "name": "SBS Touch PT",
+  "name": "Touch-App",
   "version": "0.0.9",
   "description": "Touch App",
   "main": "./dist/main/main.js",
