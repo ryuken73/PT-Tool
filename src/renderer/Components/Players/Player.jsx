@@ -63,8 +63,23 @@ const Player = (props) => {
     playerRef.current.load();
   }, [loadHLS, src]);
 
+  const onClick = React.useCallback(() => {
+    if (playerRef.current.paused) {
+      playerRef.current.play();
+    } else {
+      playerRef.current.pause();
+    }
+  }, [playerRef]);
+
+  const onTouchEnd = React.useCallback((event) => {
+    event.preventDefault();
+    onClick();
+    },
+    [onClick]
+  );
+
   return (
-    <Container>
+    <Container onClick={onClick} onTouchEnd={onTouchEnd}>
       {show && (
         <CSSToggleMenuWebView
           srcId={srcId}
