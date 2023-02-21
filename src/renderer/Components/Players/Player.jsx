@@ -64,6 +64,7 @@ const Player = (props) => {
   }, [loadHLS, src]);
 
   const onClick = React.useCallback(() => {
+    if (displayMode === 'brush') return;
     if (playerRef.current.paused) {
       playerRef.current.play();
     } else {
