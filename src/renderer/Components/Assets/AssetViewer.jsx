@@ -18,6 +18,26 @@ import 'swiper/css/pagination';
 import 'swiper/css/effect-fade';
 import 'swiper/css/effect-flip';
 import 'swiper/css/effect-creative';
+import { getStroke } from 'perfect-freehand';
+import { getSvgPathFromStroke } from 'renderer/lib/appUtil';
+
+const options = {
+  size: 300,
+  thinning: 0.5,
+  smoothing: 0.5,
+  streamline: 0.5,
+  easing: (t) => t,
+  start: {
+    taper: 0,
+    easing: (t) => t,
+    cap: true,
+  },
+  end: {
+    taper: 0,
+    easing: (t) => t,
+    cap: true,
+  },
+};
 
 const Container = styled.div`
   width: 100%;
@@ -41,6 +61,14 @@ const OverlayContainer = styled(Container)`
   width: 100%;
   height: 100%;
 `;
+const AbsoluteBoxBrush = styled.div`
+  position: absolute;
+  display: ${props => props.index === 1 && !props.pathData ? 'none':'block'};
+  width: 100%;
+  height: 100%;
+  clip-path: ${(props) => props.index === 1 && props.pathData && `path("${props.pathData}")`};
+`;
+  // clip-path: ${(props) = props.index === 1 && props.pathData ? `path("${props.pathData}")` : `polygon(0 0,100% 0, 100% 100%, 100% 0)`};
 const AbsoluteBox = styled.div`
   position: absolute;
   width: 100%;
@@ -209,8 +237,51 @@ const AssetContainer = (props) => {
     draggerOffset,
   ]);
 
+  const [points, setPoints] = React.useState([]);
+
+  const handlePointerDown = React.useCallback((e) => {
+    e.target.setPointerCapture(e.pointerId);
+    setPoints([[e.pageX, e.pageY, e.pressure]]);
+  }, []);
+
+  const handlePointerMove = React.useCallback((e) => {
+    if (e.buttons !== 1) return;
+    setPoints([...points, [e.pageX, e.pageY, e.pressure]]);
+    },
+    [points]
+  );
+
+  const stroke = React.useMemo(() => getStroke(points, options),[points]);
+  const pathData = getSvgPathFromStroke(stroke);
+  // console.log(pathData);
+
   return (
     <Container id="xxx" ref={containerRef}>
+      {displayMode === 'brush' && (
+        <OverlayContainer>
+          <ProtectLayer isDragging={isDragging} />
+          {sources.map((source, index) => (
+            <AbsoluteBoxBrush
+              pathData={pathData}
+              key={`${assetId}-${source.srcId}`}
+              index={index}
+              onPointerDown={handlePointerDown}
+              onPointerMove={handlePointerMove}
+              style={{ touchAction: "none" }}
+            >
+              <SrcViewer
+                key={`${assetId}-${source.srcId}`}
+                assetId={assetId}
+                srcPath={srcPath}
+                show={show}
+                source={source}
+                srcIndex={index}
+                displayMode={displayMode}
+              />
+            </AbsoluteBoxBrush>
+          ))}
+        </OverlayContainer>
+      )}
       {displayMode === 'overlaySplit' && (
         <OverlayContainer>
           <DragDivWithPosition ref={dragRef}>

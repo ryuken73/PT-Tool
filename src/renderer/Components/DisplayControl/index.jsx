@@ -6,6 +6,7 @@ import SplitscreenIcon from '@mui/icons-material/Splitscreen';
 import SwipeIcon from '@mui/icons-material/Swipe';
 import HeightIcon from '@mui/icons-material/Height';
 import CompareIcon from '@mui/icons-material/Compare';
+import FormatPaintIcon from '@mui/icons-material/FormatPaint';
 import useAssetState from 'renderer/hooks/useAssetState';
 // import useDisplayModeState from 'renderer/hooks/useDisplayControlState';
 
@@ -69,7 +70,7 @@ const DisplayControl = () => {
       <Container ref={menuRef}>
         <CircleMenu
           startAngle={-90}
-          rotationAngle={180}
+          rotationAngle={210}
           itemSize={1.2}
           radius={3}
           rotationAngleInclusive={true}
@@ -86,6 +87,9 @@ const DisplayControl = () => {
           </CircleMenuItem>
           <CircleMenuItem value="overlaySplit" onClick={changeDisplayModeNClose}>
             <OverlayIcon />
+          </CircleMenuItem>
+          <CircleMenuItem value="brush" onClick={changeDisplayModeNClose}>
+            <FormatPaintIcon />
           </CircleMenuItem>
         </CircleMenu>
       </Container>
