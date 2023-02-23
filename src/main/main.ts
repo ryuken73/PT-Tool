@@ -118,7 +118,7 @@ const createWindow = async () => {
   });
 
   mainWindow.webContents.addListener('did-frame-navigate', () => {
-    console.log('^^ did frame navigated');
+    // console.log('^^ did frame navigated');
   })
 
   // Remove this if your app does not use auto updates
