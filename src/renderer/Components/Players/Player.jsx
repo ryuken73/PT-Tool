@@ -6,6 +6,8 @@ import ReloadButton from 'renderer/Components/Common/ReloadButton';
 import usePlayerSource from 'renderer/hooks/usePlayerSource';
 import { isHlsStream } from 'renderer/lib/appUtil';
 import CSSToggleMenuWebView from '../Menus/CSSToggleMenuWebView';
+import CSSToggleMenuImage from '../Menus/CSSToggleMenuImage';
+import CSSToggleMenu from 'renderer/Components/Menus/CSSToggleMenu';
 
 const Container = styled.div`
   width: 100%;
@@ -27,6 +29,8 @@ const Player = (props) => {
     srcIndex,
     objectFit,
     scale = 1,
+    translateX = 0,
+    translateY = 0,
     displayMode,
     isSwipeActive,
   } = props;
@@ -81,9 +85,12 @@ const Player = (props) => {
   return (
     <Container onClick={onClick} onTouchEnd={onTouchEnd}>
       {show && (
-        <CSSToggleMenuWebView
+        <CSSToggleMenu
           srcId={srcId}
+          objectFit={objectFit}
           scale={scale}
+          translateX={translateX}
+          translateY={translateY}
           isFirstImage={isFirstImage}
           displayMode={displayMode}
         />
@@ -92,6 +99,13 @@ const Player = (props) => {
         src={src}
         objectFit={objectFit}
         scale={scale}
+        translateX={translateX}
+        translateY={translateY}
+        // style={{
+        //   width: '100%',
+        //   height: '100%',
+        //   transform: `scale(${scale}) translateX(${translateX}%) translateY(${translateY}%)`,
+        // }}
         ref={playerRef}
       />
       <PlayerControl

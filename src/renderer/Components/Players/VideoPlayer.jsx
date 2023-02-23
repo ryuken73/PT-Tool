@@ -5,17 +5,25 @@ const CustomVideo = styled.video`
   width: 100%;
   height: 100%;
   object-fit: ${props => props.objectFit};
-  transform: ${(props) => `scale(${props.scale})`};
+  transform: ${(props)=> `scale(${props.scale}) translateX(${props.translateX}%) translateY(${props.translateY}%)`};
+
 `
 
 const VideoPlayer = (props, ref) => {
   // eslint-disable-next-line react/prop-types
-  const { objectFit = 'cover', scale } = props;
+  const {
+    objectFit = 'cover',
+    scale = 1,
+    translateX = 0,
+    translateY = 0,
+  } = props;
   return (
     <CustomVideo
       crossOrigin="anonymous"
       objectFit={objectFit}
       scale={scale}
+      translateX={translateX}
+      translateY={translateY}
       ref={ref}
     />
   )
