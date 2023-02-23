@@ -20,16 +20,23 @@ const setupIPCHandlers = () => {
     }
     return Promise.resolve();
   });
-  ipcMain.handle('captureScreen', () => {
+  ipcMain.handle('captureScreen', (event, docWidth) => {
     const currentWindow = BrowserWindow.getFocusedWindow();
     if (currentWindow === null) return;
     const [width, height] = currentWindow.getSize();
     // eslint-disable-next-line consistent-return
+    const captureX = width - (2 * docWidth);
+    const captureWidth = docWidth;
+    // console.log('%%%', docWidth, captureX, captureWidth);
     return currentWindow.webContents.capturePage({
-      x: width * 0.8,
+      x: parseInt(captureX),
       y: 0,
-      width,
+      width: parseInt(captureWidth),
       height,
+      // x: width * 0.5,
+      // y: 0,
+      // width,
+      // height,
     });
   });
   ipcMain.handle('quitApp', () => {

@@ -4,8 +4,8 @@ const os = require('os');
 // if contextIsolation is false, attach method to window object.
 // and use window.methon in renderer
 
-window.getCaptureImg = async (docElement) => {
-  const img = await ipcRenderer.invoke('captureScreen');
+window.getCaptureImg = async (docWidth) => {
+  const img = await ipcRenderer.invoke('captureScreen', docWidth);
   if (img === undefined) {
     return null;
   }
