@@ -1,5 +1,5 @@
 // const { ipcMain, app, BrowserWindow, desktopCapturer } = require('electron');
-const { ipcMain, app, BrowserWindow } = require('electron');
+const { ipcMain, app, screen, BrowserWindow } = require('electron');
 const os = require('os');
 
 const setupIPCHandlers = () => {
@@ -27,12 +27,14 @@ const setupIPCHandlers = () => {
     // eslint-disable-next-line consistent-return
     const captureX = width - (2 * docWidth);
     const captureWidth = docWidth;
-    // console.log('%%%', docWidth, captureX, captureWidth);
+    const primaryDisplay = screen.getPrimaryDisplay();
+    const { scaleFactor } = primaryDisplay;
+    // console.log('%%%', docWidth, captureX, captureWidth, height, scaleFactor);
     return currentWindow.webContents.capturePage({
       x: parseInt(captureX),
       y: 0,
       width: parseInt(captureWidth),
-      height,
+      height: height * scaleFactor,
       // x: width * 0.5,
       // y: 0,
       // width,

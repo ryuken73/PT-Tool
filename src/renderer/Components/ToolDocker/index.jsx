@@ -46,7 +46,7 @@ const InnerBox = styled.div`
     top: 0;
     left: 0;
     position: absolute;
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(10px);
     // -webkit-mask-size: 100%;
     // -webkit-mask-image: linear-gradient(
     //   to right,
@@ -102,7 +102,7 @@ function ToolDocker(props) {
       // const currentDataUrl = await window.getCaptureImg(docRef.current);
       const currentDataUrl = await window.getCaptureImg(docWidth);
       // docRef.current.style.background = `linear-gradient(to right, rgba(0,0,0,0.1) 0%,rgba(0,0,0,1) 100%), url(${currentDataUrl})`;
-      docRef.current.style.background = `url(${currentDataUrl})`;
+      docRef.current.style.backgroundImage = `url(${currentDataUrl})`;
       // eslint-disable-next-line @typescript-eslint/no-shadow
       setDataUrls((dataUrls) => {
         const newDataUrls = [...dataUrls];
