@@ -14,6 +14,7 @@ import ConfirmDialog from './Components/Dialog/ConfirmDialog';
 import ConfigDialog from './Components/Config/ConfigDialog';
 import Loading from './Components/Common/Loading';
 import ToolContainer from './Components/Draw/ToolContainer';
+import ToolContainerSimple from './Components/Draw/ToolContainerSimple';
 import PageTransition from './Components/PageTransition';
 import useAppState from './hooks/useAppState';
 import useConfigState from './hooks/useConfigState';
@@ -297,6 +298,13 @@ const MaximizeToggler = () => {
 
 const bounds = '#root';
 
+const ToolContainerComponent = {
+  classic: ToolContainer,
+  simple: ToolContainerSimple,
+  oneColumn: ToolContainer,
+  twoColumn: ToolContainer,
+};
+
 export default function App() {
   const {
     drawShow,
@@ -312,7 +320,7 @@ export default function App() {
   const { transitionType, isTransitionFull, config } = useConfigState();
   const [quitConfirmOpen, setQuitConfirmOpen] = React.useState(false);
 
-  const { showTitle } = config;
+  const { showTitle, toolContainerType } = config;
   const setAssetsFromServer = React.useCallback(() => {
     getInitialAssets()
       // eslint-disable-next-line promise/always-return
@@ -376,6 +384,9 @@ export default function App() {
     setQuitConfirmOpen(false);
   }, []);
 
+
+  const SelectedToolContainer = ToolContainerComponent[toolContainerType];
+
   return (
     <AppContainer>
       <MaximizeToggler />
@@ -385,7 +396,7 @@ export default function App() {
       <Loading />
       {ENABLE_V_MENU && showTitle === 'yes' && <AssetTitle />}
       <MenuContainer showVertical={ENABLE_V_MENU} drawShow={drawShow} />
-      <ToolContainer drawShow={drawShow} toggleDraw={toggleDraw} />
+      <SelectedToolContainer drawShow={drawShow} toggleDraw={toggleDraw} />
       <ConfigDialog />
       <ConfirmDialog
         open={quitConfirmOpen}
