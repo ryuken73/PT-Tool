@@ -11,6 +11,7 @@ import LeftSide from './LeftSide';
 import RightSide from './RightSide';
 
 const CustomDialog = styled(Dialog)`
+  z-index: 9999 !important;
   div.MuiDialog-container {
     div.MuiPaper-root {
       background: black;
@@ -35,7 +36,6 @@ const ConfigDialog = props => {
   }, [toggleConfigModalState]);
 
   return (
-    <div>
       <CustomDialog open={configDialogOpen} onClose={handleYes}>
         <DialogTitle id="alert-dialog-title">Change Config</DialogTitle>
         <Container>
@@ -55,7 +55,6 @@ const ConfigDialog = props => {
           </Button>
         </DialogActions>
       </CustomDialog>
-    </div>
   );
 }
 
