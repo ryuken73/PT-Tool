@@ -51,18 +51,64 @@ const ToolDivWithPosition = styled.div`
   opacity: ${props => props.isDragging && "0.5"};
 `;
 
-const GridContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(3, minmax(44px, 1fr));
-  grid-template-areas: ${(props) =>
-    props.drawShow ? `
+const simple = `
       ".       pen     dragger"
       "color1  color2  arrow"
       "color3  color4  stroke"
       "undo    remove  size";`
-      : `".    pen dragger";`};
+
+const twoColumn = `
+      "pen     dragger"
+      "color1  color2"
+      "color3  color4"
+      "arrow   stroke"
+      "undo    remove"
+      ".       size";
+`;
+const oneColumn = `
+      "dragger"
+      "pen"
+      "color1"
+      "color2"
+      "color3"
+      "color4"
+      "arrow"
+      "stroke"
+      "undo"
+      "remove"
+      "size";
+`;
+const gridType = {
+  simple,
+  twoColumn,
+  oneColumn
+};
+const columnNum = {
+  simple: 3,
+  twoColumn: 2,
+  oneColumn: 1
+}
+const closedGrid = {
+  simple: `".    pen dragger";`,
+  twoColumn: `"pen dragger";`,
+  oneColumn: `
+    "dragger"
+    "pen"
+  `,
+}
+
+
+const GridContainer = styled.div`
+  display: grid;
+  grid-template-columns: ${(props) => `repeat(${columnNum[props.toolContainerType]}, minmax(44px, 1fr))`};
+  grid-template-areas: ${(props) =>
+    props.drawShow
+      ? gridType[props.toolContainerType]
+      : closedGrid[props.toolContainerType]};
   gap: 0px 0px;
-  backdrop-filter: blur(5px);
+  background: rgb(0, 0, 0, 0.3);
+  padding: 5px;
+  border-radius: 10px;
   div {
     &:nth-child(1) { grid-area: pen; }
     &:nth-child(2) { grid-area: dragger; margin-top: 4px; }
@@ -181,7 +227,7 @@ const ToolContainer = (props) => {
     undoPathDatumState,
   } = useDrawState();
   const { config } = useConfigState();
-  const { baseLineSize=6 } = config;
+  const { baseLineSize=6, toolContainerType } = config;
   const {
     size,
     strokeWidth,
@@ -281,7 +327,10 @@ const ToolContainer = (props) => {
     <Draggable bounds="#root" handle="#dragger" onStart={onStartDrag} onStop={onStopDrag}>
     <ToolDivWithPosition isDragging={isDragging}>
     <Container>
-      <GridContainer drawShow={drawShow}>
+          <GridContainer
+            drawShow={drawShow}
+            toolContainerType={toolContainerType}
+          >
       {/* <FlexContainer> */}
       <IconContainerOne className="item">
         <IconButton
@@ -291,9 +340,9 @@ const ToolContainer = (props) => {
           <ModeEditIcon sx={drawShow ? iconStyleRed : iconStyle} />
         </IconButton>
       </IconContainerOne>
-      <div id="dragger">
+      <IconContainerOne id="dragger">
         <DragHandle className="dragHandler" size="small" />
-      </div>
+      </IconContainerOne>
       {/* </FlexContainer> */}
         <Zoom
           in={drawShow}

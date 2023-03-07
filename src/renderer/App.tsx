@@ -301,8 +301,8 @@ const bounds = '#root';
 const ToolContainerComponent = {
   classic: ToolContainer,
   simple: ToolContainerSimple,
-  oneColumn: ToolContainer,
-  twoColumn: ToolContainer,
+  oneColumn: ToolContainerSimple,
+  twoColumn: ToolContainerSimple,
 };
 
 export default function App() {
