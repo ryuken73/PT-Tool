@@ -6,14 +6,15 @@ const ArrowDef = (props) => {
 
   // eslint-disable-next-line no-nested-ternary
   const arrowStrokeSize = size === 18 ? 0.2 : size === 12 ? 0.25 : 0.5;
-
+  // eslint-disable-next-line no-nested-ternary
+  const refX = size === 30 ? "2.0" : size === 18 ? "0.5" : "-0.5";
   return (
     <defs>
       <marker
         id={id}
         markerWidth="10"
         markerHeight="7"
-        refX="0"
+        refX={refX}
         refY="3.5"
         orient="auto"
       >
