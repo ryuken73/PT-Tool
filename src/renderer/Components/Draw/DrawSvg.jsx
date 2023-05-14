@@ -71,7 +71,7 @@ const DrawSvg = (props) => {
     end: {
       taper: taperEnd,
       easing: easingStrings[easingEnd],
-      cap: withArrow ? false : capEnd,
+      cap: withArrow ? capEnd : capEnd,
     },
     simulatePressur: false
   };
