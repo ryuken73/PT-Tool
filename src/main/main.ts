@@ -9,7 +9,7 @@
  * `./src/main.js` using webpack. This gives us some performance wins.
  */
 import path from 'path';
-import { app, BrowserWindow, shell, ipcMain } from 'electron';
+import { app, BrowserWindow, shell, ipcMain, session } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import { fork } from 'child_process';
@@ -148,5 +148,21 @@ app
       if (mainWindow === null) createWindow();
     });
     console.log('app ready:', __dirname);
+    session
+      .fromPartition('no-xframe')
+      .webRequest.onHeadersReceived({}, (d, c) => {
+        if (
+          d.responseHeaders['x-frame-options'] ||
+          d.responseHeaders['X-Frame-Options']
+        ) {
+          delete d.responseHeaders['x-frame-options'];
+          delete d.responseHeaders['X-Frame-Options'];
+        }
+        c({
+          cancel: false,
+          responseHeaders: d.responseHeaders,
+          statusLine: d.statusLine,
+        });
+      });
   })
   .catch(console.log);

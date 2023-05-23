@@ -65,6 +65,7 @@ const WebView = (props) => {
     webviewRef.current.reload();
   }, []);
 
+  const isFilterable = true;
   return (
     <Container>
       {show && (
@@ -80,10 +81,19 @@ const WebView = (props) => {
       <webview
         key={src}
         ref={webviewRef}
+        partition="no-xframe"
+        scrolling="no"
         style={{
           width: '100%',
           height: '100%',
           transform: `scale(${scale}) translateX(${translateX}%) translateY(${translateY}%)`,
+          // position: 'absolute',
+          // width: '2543px',
+          // height: '913px',
+          // left: '-459px',
+          // top: '-148px',
+          // border: '0px',
+          // overflow: 'hidden'
         }}
         src={src}
         // useragent={ua}
