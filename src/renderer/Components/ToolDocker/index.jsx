@@ -2,7 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import IconButton from '@mui/material/IconButton';
 import SettingsIcon from '@mui/icons-material/Settings';
+import HomeIcon from '@mui/icons-material/Home';
 import AppControlMenu from 'renderer/Components/AppControlMenu';
+import useAppState from 'renderer/hooks/useAppState';
 import useAssetState from 'renderer/hooks/useAssetState';
 import useConfigState from 'renderer/hooks/useConfigState';
 import CONSTANTS from 'renderer/config/constants';
@@ -72,12 +74,20 @@ const CustomSettingIcon = styled(SettingsIcon)`
   opacity: 0.2;
   display: ${(props) => !props.show && 'none'};
 `
+const CustomHomeIcon = styled(HomeIcon)`
+  margin: 10px;
+  z-index: 9999;
+  opacity: 0.2;
+  display: ${(props) => !props.show && 'none'};
+`
+
 
 // const { captureScreen } = appUtil;
 function ToolDocker(props) {
   // eslint-disable-next-line react/prop-types
   const { show, docWidth, quitApp, setAssetsFromServer, transitionType } = props;
   const [dataUrls, setDataUrls] = React.useState([]);
+  const { setHomeShowState } = useAppState();
   const { toggleConfigModalState, config } = useConfigState();
   const { currentAssetIndex } = useAssetState();
   const docRef = React.useRef(null);
@@ -117,6 +127,11 @@ function ToolDocker(props) {
     toggleConfigModalState();
   }, [toggleConfigModalState])
 
+  const onClickHome = React.useCallback(() => {
+    setHomeShowState(true);
+  }, [setHomeShowState])
+
+
   return (
     <DockContainer>
       <InnerBox
@@ -132,6 +147,7 @@ function ToolDocker(props) {
       />
       <IconContainer show={show} docWidth={docWidth}>
         <CustomSettingIcon show={show} onClick={onClickSetting} />
+        <CustomHomeIcon show={show} onClick={onClickHome} />
       </IconContainer>
     </DockContainer>
   );

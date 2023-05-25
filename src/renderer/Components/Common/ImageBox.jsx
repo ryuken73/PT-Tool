@@ -26,6 +26,7 @@ const ImageBox = (props) => {
     translateX = 0,
     translateY = 0,
     displayMode,
+    onClick
   } = props;
   const isFirstImage = srcIndex === 0;
   return (
@@ -46,6 +47,7 @@ const ImageBox = (props) => {
         objectFit={objectFit}
         draggable={false}
         scale={scale}
+        onClick={onClick}
         style={{
           width: '100%',
           height: '100%',

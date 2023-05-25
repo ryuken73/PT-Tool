@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
+  homeShow: true,
   drawShow: false,
   useSrcLocal: false,
   modalOpen: false,
@@ -13,6 +14,11 @@ export const appSlice = createSlice({
   name: 'appSlice',
   initialState,
   reducers: {
+    setHomeShow: (state, action) => {
+      const { payload } = action;
+      const { homeShow } = payload;
+      state.homeShow = homeShow;
+    },
     setDrawShow: (state, action) => {
       const { payload } = action;
       const { drawShow } = payload;
@@ -43,6 +49,7 @@ export const appSlice = createSlice({
 })
 
 export const {
+  setHomeShow,
   setDrawShow,
   setUseSrcLocal,
   setModalOpen,

@@ -10,6 +10,7 @@ import colors from 'renderer/config/colors';
 import DisplayControl from 'renderer/Components/DisplayControl';
 import { useDoubleTap } from 'use-double-tap';
 import CONSTANTS from 'renderer/config/constants';
+import Home from 'renderer/Components/Home';
 import ConfirmDialog from './Components/Dialog/ConfirmDialog';
 import ConfigDialog from './Components/Config/ConfigDialog';
 import Loading from './Components/Common/Loading';
@@ -249,6 +250,13 @@ const AbsoluteBox = styled.div`
   background: transparent;
   z-index: 9999;
 `;
+const HomeContainer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10999;
+  display: ${(props) => !props.show && 'none'};
+`
 const MaximizeContainer = styled(AbsoluteBox)`
   top: 0;
   left: 0;
@@ -307,6 +315,7 @@ const ToolContainerComponent = {
 
 export default function App() {
   const {
+    homeShow,
     drawShow,
     draggableDock,
     dockWidth,
@@ -389,6 +398,11 @@ export default function App() {
 
   return (
     <AppContainer>
+      <HomeContainer
+        show={homeShow}
+      >
+        <Home />
+      </HomeContainer>
       <MaximizeToggler />
       <AssetReloader />
       <AppQuiter />
