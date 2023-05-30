@@ -6,13 +6,18 @@ import assetReducer from 'renderer/Components/Assets/assetSlice';
 import drawReducer from 'renderer/Components/Draw/drawSlice';
 import playerReducer from 'renderer/Components/Players/playerSlice';
 import dialogReducer from 'renderer/Components/Dialog/dialogSlice';
+import { createLocalStorageSaver } from './lib/saveStateMiddleware';
+import { loadState } from 'renderer/lib/localStorage';
 import CONSTANTS from 'renderer/config/constants';
 
-const { LOGLESS_REDUX_ACTIONS = [] } = CONSTANTS;
+const { CONFIG_LOCAL_STORAGE_KEY, LOGLESS_REDUX_ACTIONS = [] } = CONSTANTS;
 
 const logger = createLogger({
   predicate: (getState, action) => !LOGLESS_REDUX_ACTIONS.includes(action.type),
 });
+const saver = createLocalStorageSaver({
+  predicate: (action) => !LOGLESS_REDUX_ACTIONS.includes(action.type),
+})
 
 // eslint-disable-next-line import/prefer-default-export
 export const store = configureStore({
@@ -24,6 +29,7 @@ export const store = configureStore({
     player: playerReducer,
     dialog: dialogReducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger).concat(saver),
   devTools: process.env.NODE_ENV !== 'production',
+  preloadedState: loadState(CONFIG_LOCAL_STORAGE_KEY),
 });
