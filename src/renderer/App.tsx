@@ -317,6 +317,7 @@ export default function App() {
     setUseSrcLocalState,
     setModalOpenState,
     setShowTransitionState,
+    setHomeShowState,
   } = useAppState();
   const { currentAssetSrcCount, setAssetsState } = useAssetState();
   const { transitionType, isTransitionFull, config } = useConfigState();
@@ -335,6 +336,10 @@ export default function App() {
         alert('fail to get asset list! try again.');
       });
   }, [setAssetsState, setModalOpenState]);
+
+  React.useEffect(() => {
+    setHomeShowState(true);
+  }, [])
 
   React.useEffect(() => {
     // eslint-disable-next-line promise/catch-or-return
