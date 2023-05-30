@@ -24,16 +24,49 @@ const HomeContainer = styled.div`
   /* transition: width ${ANIMATION_SEC}s ${EASE_IN_QUART}; */
   /* transition: width ${ANIMATION_SEC}s ${EASE_IN_OUT_BACK} */
 `;
+const Circle = styled.div`
+  width: 0px;
+  width: ${(props) => props.show === true && '100px'};
+  height: 0px;
+  height: ${(props) => props.show === true && '100px'};
+  opacity: 0.1;
+  opacity: ${(props) => props.show === true && '0.3'};
+  border-radius: 50px;
+  background: black;
+  position: absolute;
+  transform: ${(props) => `translate(${props.xyPosition.x}px, ${props.xyPosition.y}px)`};
+  z-index: 21000;
+  /* display: ${props => !props.show && 'none'}; */
+  transition: ${props => props.show ? "width 0s, height 0s":"width 1s, height 1s"};
+`
 
 
 function Home(props) {
   const { homeShow, setHomeShowState } = useAppState();
+  const [circlePosition, setCirclePosition] = React.useState({ x: 0, y: 0 });
+  const [showCircle, setShowCircle] = React.useState(false);
   const { homeSrc = homeImage } = props;
-  const onClickImage = React.useCallback(() => {
+
+  const onClickImage = React.useCallback((event) => {
+    setShowCircle(showCircle => {
+      setTimeout(() => {
+        setShowCircle(false)
+      },100)
+      return true;
+    });
+    setCirclePosition(() => {
+      return {
+        x: event.clientX - 50,
+        y: event.clientY - 50,
+      }
+    })
     setHomeShowState(false);
-  }, [setHomeShowState]);
+    },
+    [setCirclePosition, setHomeShowState]
+  );
   return (
     <HomeContainer homeShow={homeShow}>
+      <Circle xyPosition={circlePosition} show={showCircle} />
       <ImageBox onClick={onClickImage} src={homeSrc} />;
     </HomeContainer>
   )
