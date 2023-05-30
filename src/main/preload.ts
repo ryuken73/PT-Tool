@@ -13,6 +13,10 @@ window.getCaptureImg = async (docWidth) => {
   return dataUrl;
 };
 
+window.openFileDialog = async (method, config) => {
+  return await ipcRenderer.invoke('dialog', method, config);
+};
+
 // console.log('start navigate media device')
 // navigator.mediaDevices
 //   .getUserMedia({ video: true })

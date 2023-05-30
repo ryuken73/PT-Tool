@@ -9,6 +9,7 @@ import SetTransitionFull from './SetTransitionFull';
 import SetTitleShown from './SetTitleShown';
 import SetFillSplitter from './SetFillSplitter';
 import SetSwipeThreshold from './SetSwipeThreshold';
+import SetHomeImagePath from './SetHomeImagePath';
 
 const InfoBox = styled.div`
   font-size: 12px;
@@ -19,6 +20,9 @@ function LeftSide() {
   return (
     // eslint-disable-next-line react/jsx-filename-extension
     <DialogContent>
+      <DialogContentText sx={{ color: 'white' }}>
+        <SetHomeImagePath />
+      </DialogContentText>
       <DialogContentText sx={{ color: 'white' }}>
         <SelectTransition />
       </DialogContentText>

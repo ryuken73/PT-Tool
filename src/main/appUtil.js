@@ -1,5 +1,5 @@
 // const { ipcMain, app, BrowserWindow, desktopCapturer } = require('electron');
-const { ipcMain, app, screen, BrowserWindow } = require('electron');
+const { ipcMain, app, dialog, screen, BrowserWindow } = require('electron');
 const os = require('os');
 
 const setupIPCHandlers = () => {
@@ -19,6 +19,9 @@ const setupIPCHandlers = () => {
       currentWindow.setFullScreen(true);
     }
     return Promise.resolve();
+  });
+  ipcMain.handle('dialog', (event, method, params) => {
+    return dialog[method](params);
   });
   ipcMain.handle('captureScreen', (event, docWidth) => {
     const currentWindow = BrowserWindow.getFocusedWindow();

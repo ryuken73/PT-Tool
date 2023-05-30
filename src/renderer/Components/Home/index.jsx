@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import ImageBox from 'renderer/Components/Common/ImageBox';
 import homeImage from 'renderer/assets/home.png';
 import useAppState from 'renderer/hooks/useAppState';
+import useConfigState from 'renderer/hooks/useConfigState';
 
 const ANIMATION_SEC = 0.5;
 const ANIMATION_SEC_OPACITY = 0.4;
@@ -43,8 +44,10 @@ const Circle = styled.div`
 
 function Home(props) {
   const { homeShow, setHomeShowState } = useAppState();
+  const { homeImagePath } = useConfigState();
   const [circlePosition, setCirclePosition] = React.useState({ x: 0, y: 0 });
   const [showCircle, setShowCircle] = React.useState(false);
+  // eslint-disable-next-line react/prop-types
   const { homeSrc = homeImage } = props;
 
   const onClickImage = React.useCallback((event) => {
