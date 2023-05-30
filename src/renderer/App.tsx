@@ -254,8 +254,9 @@ const HomeContainer = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 10999;
-  display: ${(props) => !props.show && 'none'};
+  z-index: 30000;
+  height: 100%;
+  width: 100%;
 `
 const MaximizeContainer = styled(AbsoluteBox)`
   top: 0;
@@ -398,11 +399,11 @@ export default function App() {
 
   return (
     <AppContainer>
-      <HomeContainer
-        show={homeShow}
-      >
-        <Home />
-      </HomeContainer>
+      {homeShow && isTransitionFull && (
+        <HomeContainer>
+          <Home />
+        </HomeContainer>
+      )}
       <MaximizeToggler />
       <AssetReloader />
       <AppQuiter />

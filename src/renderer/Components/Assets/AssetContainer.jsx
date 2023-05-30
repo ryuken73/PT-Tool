@@ -6,6 +6,7 @@ import useDialogState from 'renderer/hooks/useDialogState';
 import useConfigState from 'renderer/hooks/useConfigState';
 import PageTransition from 'renderer/Components/PageTransition';
 import CONSTANTS from 'renderer/config/constants';
+import Home from 'renderer/Components/Home';
 import Asset from './Asset';
 import AddDialog from '../Dialog/AddDialog';
 
@@ -27,6 +28,15 @@ const Container = styled.div`
   font-size: calc(10px + 2vmin);
   overflow: hidden;
 `;
+const HomeContainer = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 30000;
+  width: 100%;
+  height: 100%;
+  /* display: ${(props) => !props.show && 'none'}; */
+`
 
 const handleDragOver = (event) => {
   event.preventDefault();
@@ -36,7 +46,7 @@ const AssetContainer = () => {
   const { setDialogOpenState, setDroppedSrcState } = useDialogState();
   const { assets, assetShowMask } = useAssetState();
   const { isTransitionFull } = useConfigState();
-  const { showTransition, setShowTransitionState } = useAppState();
+  const { homeShow, showTransition, setShowTransitionState } = useAppState();
 
   const handleDrop = React.useCallback((event) => {
     const url = event.dataTransfer.getData('url');
@@ -54,6 +64,11 @@ const AssetContainer = () => {
 
   return (
     <Container onDrop={handleDrop} onDragOver={handleDragOver}>
+      {homeShow && !isTransitionFull && (
+        <HomeContainer>
+          <Home />
+        </HomeContainer>
+      )}
       {showTransition && !isTransitionFull && (
         <PageTransition handleVideoEnded={handleVideoEnded} />
       )}

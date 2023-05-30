@@ -4,7 +4,7 @@ const initialState = {
   configDialogOpen: false,
   transitionType: 'noTransition',
   transitionResource: 'none',
-  isTransitionFull: false,
+  isTransitionFull: true,
   config: {
     debugTransition: 'no',
     backgroundCapture: true,
