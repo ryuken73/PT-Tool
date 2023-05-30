@@ -139,8 +139,9 @@ const AssetContainer = (props) => {
   }, []);
 
   const SplitSvg = React.useCallback(() => {
-    return <ImageIcon src={SplitIcon} />;
-  }, []);
+    const color = isDragging ? 'white':'transparent';
+    return <ImageIcon src={SplitIcon} color={color} />;
+  }, [isDragging]);
 
   const SplitLeftSvg = React.useCallback(() => {
     return <ImageIcon width="40px" src={SplitIcon} />;
@@ -164,6 +165,7 @@ const AssetContainer = (props) => {
     if(displayMode !== 'overlaySplit') return;
     // const position = { x: 0, y: 0 };
     if(dragRef.current === null) return;
+
     interact(dragRef.current).draggable({
       inertia: {
         resistance: 3,
@@ -192,6 +194,7 @@ const AssetContainer = (props) => {
         }
       }
     })
+
     // eslint-disable-next-line consistent-return
     return () => {
       if(dragRef.current === null) return;
