@@ -13,7 +13,7 @@ const HomeContainer = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 30000;
+  z-index: 21000;
   height: 100%;
   width: 0%;
   width: ${(props) => props.homeShow === true && '100%'};

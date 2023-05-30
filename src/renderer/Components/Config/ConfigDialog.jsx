@@ -11,7 +11,7 @@ import LeftSide from './LeftSide';
 import RightSide from './RightSide';
 
 const CustomDialog = styled(Dialog)`
-  z-index: 9999 !important;
+  z-index: 25000 !important;
   div.MuiDialog-container {
     div.MuiPaper-root {
       background: black;
