@@ -250,14 +250,6 @@ const AbsoluteBox = styled.div`
   background: transparent;
   z-index: 9999;
 `;
-const HomeContainer = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 30000;
-  height: 100%;
-  width: 100%;
-`
 const MaximizeContainer = styled(AbsoluteBox)`
   top: 0;
   left: 0;
@@ -399,10 +391,8 @@ export default function App() {
 
   return (
     <AppContainer>
-      {homeShow && isTransitionFull && (
-        <HomeContainer>
-          <Home />
-        </HomeContainer>
+      {isTransitionFull && (
+        <Home />
       )}
       <MaximizeToggler />
       <AssetReloader />
