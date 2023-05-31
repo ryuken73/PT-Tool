@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import ImageBox from 'renderer/Components/Common/ImageBox';
-import homeImage from 'renderer/assets/home.png';
+import defaultImage from 'renderer/assets/home.png';
 import useAppState from 'renderer/hooks/useAppState';
 import useConfigState from 'renderer/hooks/useConfigState';
 
@@ -44,10 +44,10 @@ const Circle = styled.div`
 
 function Home(props) {
   const { homeShow, setHomeShowState } = useAppState();
-  const { homeImagePath } = useConfigState();
+  const { config } = useConfigState();
   const [circlePosition, setCirclePosition] = React.useState({ x: 0, y: 0 });
   const [showCircle, setShowCircle] = React.useState(false);
-  // eslint-disable-next-line react/prop-types
+  const homeImage = config.homeImagePath || defaultImage;
   const { homeSrc = homeImage } = props;
 
   const onClickImage = React.useCallback((event) => {

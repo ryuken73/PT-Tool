@@ -1,5 +1,8 @@
 import * as React from 'react';
+import styled from 'styled-components';
+import Button from '@mui/material/Button';
 import FormControl from '@mui/material/FormControl';
+import FormControlLabel from '@mui/material/FormControlLabel';
 import FormLabel from '@mui/material/FormLabel';
 import Slider from '@mui/material/Slider';
 import useConfigState from 'renderer/hooks/useConfigState';
@@ -9,7 +12,29 @@ const dialogConfig = {
   title: 'select image file for home',
   buttonLabel: 'this one will do',
   properties: ['openFile']
-}
+};
+const Path = styled.div`
+  display: flex;
+  align-items: center;
+  max-width: 450px;
+`
+const Title = styled.div`
+  font-size: 12px;
+  color: yellow;
+  min-width: 50px;
+`
+const Value = styled.div`
+  font-size: 14px;
+  color: cyan;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`
+const Buttons = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+`
 
 function SetHomeImagePath() {
   const { config, setConfigValueState } = useConfigState();
@@ -21,11 +46,13 @@ function SetHomeImagePath() {
       const fname = result.filePaths[0];
       setConfigValueState('homeImagePath', fname);
     })
-      // setConfigValueState('homeImagePath', value);
     },
-    // [setConfigValueState]
     [setConfigValueState]
   );
+  const onClickSetDefault = React.useCallback(() => {
+    setConfigValueState('homeImagePath', null);
+  }, [setConfigValueState]);
+  const currentPath = homeImagePath || 'default';
   return (
     <FormControl>
       <FormLabel
@@ -34,8 +61,14 @@ function SetHomeImagePath() {
       >
         Home Image Path
       </FormLabel>
-      <div>current path: ${homeImagePath}</div>
-      <button onClick={onClick}>change home image</button>
+      <Path>
+        <Title>current : </Title>
+        <Value>{currentPath}</Value>
+      </Path>
+      <Buttons>
+        <Button variant="contained" onClick={onClick}>change home image</Button>
+        <Button onClick={onClickSetDefault}>set default</Button>
+      </Buttons>
     </FormControl>
   );
 }
