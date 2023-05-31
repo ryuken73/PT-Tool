@@ -28,6 +28,7 @@ const {
   TOUCH_WEB_SERVER_URL,
   ENABLE_V_MENU,
   TRANSITIONS,
+  SYNC_ASSET_KEYS
 } = CONSTANTS;
 
 const INITIAL_ASSETS = [
@@ -306,6 +307,31 @@ const ToolContainerComponent = {
   twoColumn: ToolContainerSimple,
 };
 
+const mergeAssets = (remoteAssets, localAssets) => {
+  return remoteAssets.map(remoteAsset => {
+    const localAsset = localAssets.find(localAsset => localAsset.assetId === remoteAsset.assetId);
+    if(localAsset){
+      // sync local properties to remoteAssets
+      // apply base key
+      SYNC_ASSET_KEYS.base.map(key => {
+        remoteAsset[key] = localAsset[key];
+      })
+      // apply source key
+      remoteAsset.sources.forEach(source => {
+        const localAssetSource = localAsset.sources.find(localSource => localSource.srcId === source.srcId);
+        if(localAssetSource){
+          SYNC_ASSET_KEYS.sources.map(key => {
+            source[key] = localAssetSource[key]
+          })
+        }
+      })
+      return remoteAsset;
+    } else {
+      return remoteAsset;
+    }
+  })
+};
+
 export default function App() {
   const {
     homeShow,
@@ -319,16 +345,22 @@ export default function App() {
     setShowTransitionState,
     setHomeShowState,
   } = useAppState();
-  const { currentAssetSrcCount, setAssetsState } = useAssetState();
+  const { assets: savedAssets, currentAssetSrcCount, setAssetsState } = useAssetState();
   const { transitionType, isTransitionFull, config } = useConfigState();
   const [quitConfirmOpen, setQuitConfirmOpen] = React.useState(false);
 
   const { showTitle, toolContainerType } = config;
   const setAssetsFromServer = React.useCallback(() => {
+    console.log('^^^^:', savedAssets)
     getInitialAssets()
       // eslint-disable-next-line promise/always-return
       .then((assets) => {
-        setAssetsState(assets);
+        let merged = assets;
+        if(savedAssets.length > 0){
+          merged = mergeAssets(assets, savedAssets);
+        }
+        // setAssetsState(assets);
+        setAssetsState(merged);
         setModalOpenState(false);
       })
       .catch((err) => {

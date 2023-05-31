@@ -54,6 +54,10 @@ const dev =  {
     FADE: 'FADE',
     ROTATE: 'ROTATE',
     CARD: 'CARD',
+  },
+  SYNC_ASSET_KEYS: {
+    base: ['displayMode'],
+    sources: ['objectFit', 'scale', 'translateX', 'translateY'] 
   }
 }
 
