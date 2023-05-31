@@ -5,11 +5,12 @@ const CustomImage = styled.img`
     width: ${props => props.width};
     height: ${props => props.height};
     cursor: pointer;
-    border-width: 2px;
+    border-width: 3px;
     border-style: dashed;
     border-color: ${props => props.color};
     border-radius: 10px;
     opacity: 0.7;
+    box-sizing: border-box;
 `
 
 function ImageIcon(props) {
