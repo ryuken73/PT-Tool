@@ -29,6 +29,7 @@ function SrcViewer(props) {
     scale = 1,
     translateX = 0,
     translateY = 0,
+    autoplay,
   } = source;
   const Viewer = ViewMap[srcType];
   return (
@@ -44,6 +45,7 @@ function SrcViewer(props) {
       scale={scale}
       translateX={translateX}
       translateY={translateY}
+      autoplay={autoplay}
       displayMode={displayMode}
       isSwipeActive={isSwipeActive}
       {...remainOpts}

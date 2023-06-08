@@ -8,7 +8,10 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import PlayDisabledIcon from '@mui/icons-material/PlayDisabled';
 import useAssetState from 'renderer/hooks/useAssetState';
+import useMessageBox from 'renderer/hooks/useMessageBox';
 
 const Container = styled.div`
   position: absolute;
@@ -42,7 +45,7 @@ const ToggleButton = styled.input`
   top: 0;
   left: 0;
   &:checked ~ ul {
-    width: 350px;
+    width: 400px;
     // background-position: 0px -50px;
   }
 `;
@@ -73,8 +76,18 @@ const CustomButton = styled.li`
 
 function CSSToggleMenuImage(props) {
   // eslint-disable-next-line react/prop-types
-  const { srcId, objectFit, isFirstImage, displayMode, scale, translateX, translateY } = props;
+  const {
+    srcId,
+    objectFit,
+    isFirstImage,
+    displayMode,
+    scale,
+    translateX,
+    translateY,
+    autoplay = true,
+  } = props;
   const { updateCurrentAssetSrc } = useAssetState();
+  const { showMessageBox } = useMessageBox();
   const isToggleBtnRightSide =
     !isFirstImage &&
     (displayMode === 'overlaySplit' ||
@@ -121,6 +134,15 @@ function CSSToggleMenuImage(props) {
   const moveDown = React.useCallback(() => {
     updateCurrentAssetSrc(srcId, 'translateY', translateY + 1);
   }, [srcId, translateY, updateCurrentAssetSrc]);
+
+  const toggleAutoPlay = React.useCallback(() => {
+    if (autoplay) {
+      showMessageBox('autoplay disabled!');
+    } else {
+      showMessageBox('autoplay enabled!');
+    }
+    updateCurrentAssetSrc(srcId, 'autoplay', !autoplay);
+  }, [autoplay, showMessageBox, srcId, updateCurrentAssetSrc]);
 
   return (
     <Container
@@ -211,6 +233,28 @@ function CSSToggleMenuImage(props) {
                 borderRadius: '5px',
               }}
             />
+          </IconButton>
+        </CustomButton>
+        <CustomButton>
+          <IconButton onClick={toggleAutoPlay}>
+            {autoplay ? (
+              <PlayArrowIcon
+                sx={{
+                  fontSize: 30,
+                  color: 'white',
+                  opacity: 1,
+                  borderRadius: '5px',
+                }}
+              />) : (
+              <PlayDisabledIcon
+                sx={{
+                  fontSize: 30,
+                  color: 'white',
+                  opacity: 1,
+                  borderRadius: '5px',
+                }}
+              />
+            )}
           </IconButton>
         </CustomButton>
       </ButtonList>

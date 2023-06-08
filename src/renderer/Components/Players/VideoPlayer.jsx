@@ -16,6 +16,8 @@ const VideoPlayer = (props, ref) => {
     scale = 1,
     translateX = 0,
     translateY = 0,
+    onClick,
+    onTouchEnd
   } = props;
   return (
     <CustomVideo
@@ -25,6 +27,8 @@ const VideoPlayer = (props, ref) => {
       translateX={translateX}
       translateY={translateY}
       ref={ref}
+      onClick={onClick}
+      onTouchEnd={onTouchEnd}
     />
   )
 }

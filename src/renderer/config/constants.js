@@ -57,7 +57,7 @@ const dev =  {
   },
   SYNC_ASSET_KEYS: {
     base: ['displayMode'],
-    sources: ['objectFit', 'scale', 'translateX', 'translateY'] 
+    sources: ['objectFit', 'scale', 'translateX', 'translateY', 'autoplay']
   }
 }
 

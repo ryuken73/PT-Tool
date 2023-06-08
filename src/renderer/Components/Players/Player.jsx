@@ -31,6 +31,7 @@ const Player = (props) => {
     scale = 1,
     translateX = 0,
     translateY = 0,
+    autoplay,
     displayMode,
     isSwipeActive,
   } = props;
@@ -55,7 +56,11 @@ const Player = (props) => {
       playerRef.current.currentTime = 0;
       playerRef.current.pause();
     };
-  }, [isSwipeActive, playerRef, displayMode, show]);
+    if (!autoplay){
+      playerRef.current.currentTime = 0;
+      playerRef.current.pause();
+    }
+  }, [isSwipeActive, playerRef, displayMode, show, autoplay]);
 
   const reloadPlayer = React.useCallback(() => {
     // const src = asset.source.url;
@@ -84,7 +89,7 @@ const Player = (props) => {
   );
 
   return (
-    <Container onClick={onClick} onTouchEnd={onTouchEnd}>
+    <Container>
       {show && (
         <CSSToggleMenu
           srcId={srcId}
@@ -94,6 +99,7 @@ const Player = (props) => {
           translateY={translateY}
           isFirstImage={isFirstImage}
           displayMode={displayMode}
+          autoplay={autoplay}
         />
       )}
       <VideoPlayer
@@ -108,6 +114,8 @@ const Player = (props) => {
         //   transform: `scale(${scale}) translateX(${translateX}%) translateY(${translateY}%)`,
         // }}
         ref={playerRef}
+        onClick={onClick}
+        onTouchEnd={onTouchEnd}
       />
       <PlayerControl
         ref={playerRef}

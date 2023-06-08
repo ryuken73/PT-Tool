@@ -17,6 +17,7 @@ import Loading from './Components/Common/Loading';
 import ToolContainer from './Components/Draw/ToolContainer';
 import ToolContainerSimple from './Components/Draw/ToolContainerSimple';
 import PageTransition from './Components/PageTransition';
+import MessageBox from './Components/Common/MessageBox';
 import useAppState from './hooks/useAppState';
 import useConfigState from './hooks/useConfigState';
 import useAssetState from './hooks/useAssetState';
@@ -458,6 +459,7 @@ export default function App() {
         docWidth={dockWidth}
         transitionType={transitionType}
       />
+      <MessageBox />
     </AppContainer>
   );
 }

@@ -1,5 +1,5 @@
 export default {
   base: '#03000e',
-  info: 'blue',
+  info: 'green',
   error: 'maroon',
 };
