@@ -25,10 +25,12 @@ const DrawSvg = (props) => {
     pointDatum,
     currentOptions,
     pathRenderOptions,
+    strokeWidthFromConfig,
     addPathDatumState,
     addPointDatumState,
     saveRenderOptionState,
-    getPositionForArrow
+    getPositionForArrow,
+    changePathOptionState
   } = useDrawState();
   const { config } = useConfigState();
   const { lineOpacity } = config;
@@ -37,6 +39,7 @@ const DrawSvg = (props) => {
 
   const pathData = React.useRef([]);
   const rawPathData = React.useRef([]);
+  const doubleTouched = React.useRef(false);
 
   const {
     size,
@@ -76,26 +79,54 @@ const DrawSvg = (props) => {
     simulatePressur: false
   };
 
+  const toggleWithArrow = React.useCallback(() => {
+    const nextValue = !withArrow;
+    changePathOptionState('withArrow', nextValue);
+    if (nextValue === true) {
+      changePathOptionState('strokeWidth', 0);
+    } else {
+      changePathOptionState('strokeWidth', strokeWidthFromConfig);
+    }
+  }, [changePathOptionState, strokeWidthFromConfig, withArrow]);
+
+
   const handlePointerDown = React.useCallback((e) => {
+    // if (e.isPrimary === false) return;
+    if (e.isPrimary) {
+      doubleTouched.current = false;
+    }
+    if (e.isPrimary === false) {
+      doubleTouched.current = true;
+      toggleWithArrow();
+      setMouseUP(true);
+      return;
+    }
     e.target.setPointerCapture(e.pointerId);
     setMouseUP(false);
     setPoints([[e.pageX, e.pageY, e.pressure]]);
-  }, []);
+    },
+    [toggleWithArrow]
+  );
 
   const handlePointerMove = React.useCallback((e) => {
     if (e.buttons !== 1) return;
     if (e.isPrimary === false) return;
+    if (doubleTouched.current) return;
     setPoints([...points, [e.pageX, e.pageY, e.pressure]]);
     },
     [points]
   );
 
-  const handlePointerUp = React.useCallback(() => {
+  const handlePointerUp = React.useCallback((e) => {
+    if (doubleTouched.current) return;
     setMouseUP(true);
     addPathDatumState(pathData.current);
     addPointDatumState(points);
     saveRenderOptionState();
-  }, [addPathDatumState, addPointDatumState, points, saveRenderOptionState]);
+  // }, [toggleWithArrow, addPathDatumState, addPointDatumState, points, saveRenderOptionState]);
+    },
+    [addPathDatumState, addPointDatumState, points, saveRenderOptionState]
+  );
 
   const outlinePoints = getStroke(points, options);
   pathData.current = getSvgPathFromStroke(outlinePoints);
