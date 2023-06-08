@@ -13,7 +13,7 @@ const initialState = {
     baseLineSize: 6,
     lineOpacity: 0.8,
     toolContainerType: 'twoColumn',
-    homeImagePath: 'renderer/assets/home.png'
+    homeImagePath: null,
   },
 };
 

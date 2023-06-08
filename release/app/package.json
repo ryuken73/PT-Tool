@@ -1,6 +1,6 @@
 {
   "name": "Touch-App",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Touch App",
   "main": "./dist/main/main.js",
   "author": {
