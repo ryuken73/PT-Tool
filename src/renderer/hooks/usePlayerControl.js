@@ -19,8 +19,8 @@ const isPlayerPlaying = (player) => {
   );
 };
 
-export default function usePlayerEvent(assetId, srcId, playerRef) {
-  // console.log('usePlayerEvent called ')
+export default function usePlayerControl(assetId, srcId, playerRef) {
+  // console.log('usePlayerControl called ')
   const dispatch = useDispatch();
   const playerId = srcId;
   const videoPlayer =
@@ -109,7 +109,7 @@ export default function usePlayerEvent(assetId, srcId, playerRef) {
     if (!playerRef.current) return;
     const durationSec = parseInt(playerRef.current.duration, 10);
     const durationTime = secondsToTime(parseInt(durationSec, 10), 'hh:mm:ss');
-    // console.log(`in usePlayerEvent : durationSec: ${durationSec}, duration: ${durationTime}`)
+    // console.log(`in usePlayerControl : durationSec: ${durationSec}, duration: ${durationTime}`)
     currentDurationRef.current = durationSec;
     dispatch(setPlayerStatus({ assetId, playerId, key: 'durationTime', value: durationTime }));
     dispatch(

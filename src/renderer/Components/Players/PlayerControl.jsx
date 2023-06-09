@@ -11,7 +11,7 @@ import SliderBar from 'renderer/Components/Common/SliderBar';
 import HoverButton from 'renderer/Components/Common/ButtonHover';
 import ProgressBar from 'renderer/Components/Players/ProgressBar';
 import colors from 'renderer/config/colors';
-import usePlayerEvent from 'renderer/hooks/usePlayerEvent';
+import usePlayerControl from 'renderer/hooks/usePlayerControl';
 import CONSTANTS from 'renderer/config/constants';
 import { IconButton } from '@mui/material';
 
@@ -120,7 +120,7 @@ const Player = (props, playerRef) => {
     onClickPlay,
     onClickForward10,
     onClickReplay10
-  } = usePlayerEvent(assetId, srcId, playerRef);
+  } = usePlayerControl(assetId, srcId, playerRef);
 
   const isRightSide = srcIndex > 0;
   const playerCurrentTime = playerRef.current ? playerRef.current.currentTime : 0;
