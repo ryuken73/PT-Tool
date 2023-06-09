@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import VideoPlayer from 'renderer/Components/Players/VideoPlayer';
 import PlayerControl from 'renderer/Components/Players/PlayerControl';
 import ReloadButton from 'renderer/Components/Common/ReloadButton';
+import PlayIndicator from 'renderer/Components/Common/PlayIndicator';
 import usePlayerSource from 'renderer/hooks/usePlayerSource';
+import usePlayerEvent from 'renderer/hooks/usePlayerEvent';
 import { isHlsStream } from 'renderer/lib/appUtil';
 import CSSToggleMenuWebView from '../Menus/CSSToggleMenuWebView';
 import CSSToggleMenuImage from '../Menus/CSSToggleMenuImage';
@@ -31,7 +33,7 @@ const Player = (props) => {
     scale = 1,
     translateX = 0,
     translateY = 0,
-    autoplay,
+    autoplay=true,
     displayMode,
     isSwipeActive,
   } = props;
@@ -45,6 +47,7 @@ const Player = (props) => {
     show,
     srcIndex
   );
+  const { isPlaying } = usePlayerEvent(assetId, srcId)
 
   React.useEffect(() => {
     if (playerRef.current === null) return;
@@ -92,6 +95,7 @@ const Player = (props) => {
     <Container>
       {show && (
         <CSSToggleMenu
+          assetId={assetId}
           srcId={srcId}
           objectFit={objectFit}
           scale={scale}
@@ -125,6 +129,7 @@ const Player = (props) => {
         srcIndex={srcIndex}
       />
       <ReloadButton reload={reloadPlayer} />
+      <PlayIndicator isPlaying={isPlaying} />
     </Container>
   )
 }
