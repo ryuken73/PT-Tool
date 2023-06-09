@@ -10,8 +10,10 @@ import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PlayDisabledIcon from '@mui/icons-material/PlayDisabled';
+import MenuImageO from 'renderer/assets/menu_org.png';
 import useAssetState from 'renderer/hooks/useAssetState';
 import useMessageBox from 'renderer/hooks/useMessageBox';
+// import usePlayerEvent from 'renderer/hooks/usePlayerEvent';
 
 const Container = styled.div`
   position: absolute;
@@ -24,6 +26,7 @@ const Container = styled.div`
   border-radius: 25px;
   overflow: hidden;
   background: #444;
+  /* background: ${(props) => (props.isPlaying ? 'red' : '#444')}; */
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   transition: all 0.5s ease;
   font-size: 20px;
@@ -56,9 +59,8 @@ const ButtonList = styled.ul`
   height: 50px;
   width: 0px;
   transition: 0.5s width ease;
-  background-image: url('https://i.imgur.com/3d0vJzn.png');
+  background-image: url(${MenuImageO});
   background-repeat: no-repeat;
-  background-position: 0px 0px;
 `;
 const CustomButton = styled.li`
   display: inline-block;
@@ -77,6 +79,7 @@ const CustomButton = styled.li`
 function CSSToggleMenuImage(props) {
   // eslint-disable-next-line react/prop-types
   const {
+    assetId,
     srcId,
     objectFit,
     isFirstImage,
@@ -88,6 +91,7 @@ function CSSToggleMenuImage(props) {
   } = props;
   const { updateCurrentAssetSrc } = useAssetState();
   const { showMessageBox } = useMessageBox();
+  // const { isPlaying } = usePlayerEvent(assetId, srcId);
   const isToggleBtnRightSide =
     !isFirstImage &&
     (displayMode === 'overlaySplit' ||
@@ -137,7 +141,7 @@ function CSSToggleMenuImage(props) {
 
   const toggleAutoPlay = React.useCallback(() => {
     if (autoplay) {
-      showMessageBox('autoplay disabled!');
+      showMessageBox('autoplay disabled!', 1000, 'error');
     } else {
       showMessageBox('autoplay enabled!');
     }
@@ -148,6 +152,7 @@ function CSSToggleMenuImage(props) {
     <Container
       isRightSide={isToggleBtnRightSide}
       isBottomSide={isToggleBtnDownSide}
+      // isPlaying={isPlaying}
     >
       <ToggleButton type="checkbox" />
       <ButtonList>
