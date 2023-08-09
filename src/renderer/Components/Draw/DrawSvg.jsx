@@ -142,9 +142,19 @@ const DrawSvg = (props) => {
       style={{ touchAction: 'none' }}
       opacity={lineOpacity}
     >
+      {/* draw saved datum */}
       {pathDatum.map((pathData, index) =>
         pathRenderOptions[index].strokeWidth ? (
           <>
+            <path
+              d={pathData}
+              fill="transparent"
+              stroke={pathRenderOptions[index].stroke}
+              strokeWidth={pathRenderOptions[index].strokeWidth}
+              strokeLinejoin="bevel"
+              strokeLinecap="bevel"
+              pointerEvents="all"
+            />
             {pathRenderOptions[index].withArrow && (
               <>
                 <ArrowDef
@@ -166,15 +176,6 @@ const DrawSvg = (props) => {
                 />
               </>
             )}
-            <path
-              d={pathData}
-              fill="transparent"
-              stroke={pathRenderOptions[index].stroke}
-              strokeWidth={pathRenderOptions[index].strokeWidth}
-              strokeLinejoin="round"
-              strokeLinecap="round"
-              pointerEvents="all"
-            />
             <path
               d={pathData}
               fill={
@@ -248,6 +249,17 @@ const DrawSvg = (props) => {
           </>
         )
       )}
+      {points && !mouseUp && strokeWidth ? (
+        <path
+          d={pathData.current}
+          fill="transparent"
+          stroke={stroke}
+          strokeWidth={strokeWidth}
+          strokeLinejoin="round"
+          strokeLinecap="round"
+          pointerEvents="all"
+        />
+      ) : null}
       {!mouseUp && withArrow && (
         <>
           <ArrowDef
@@ -270,17 +282,6 @@ const DrawSvg = (props) => {
           <use href="#arrowHeadCurrent" />
         </>
       )}
-      {points && !mouseUp && strokeWidth ? (
-        <path
-          d={pathData.current}
-          fill="transparent"
-          stroke={stroke}
-          strokeWidth={strokeWidth}
-          strokeLinejoin="round"
-          strokeLinecap="round"
-          pointerEvents="all"
-        />
-      ) : null}
       {points && !mouseUp && (
         <path
           d={pathData.current}

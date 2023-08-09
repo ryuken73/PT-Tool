@@ -5,10 +5,11 @@ const ArrowDef = (props) => {
   const { id, size, isFilled, fill, stroke, strokeWidth } = props;
 
   // eslint-disable-next-line no-nested-ternary
-  const arrowStrokeSize = size === 18 ? 0.2 : size === 12 ? 0.25 : 0.5;
+  const arrowStrokeSize = size === 30 ? 0.3 : size === 18 ? 0.4 : size === 12 ? 0.7 : 1.4;
+  // const arrowStrokeSize = 0.5
   // eslint-disable-next-line no-nested-ternary
   const markerWidth = size === 6 ? "15" : size === 12 ? "14" : size === 18 ? "12" : "10";
-  const refX = size === 30 ? "1.0" : size === 18 ? "0.6 ": size === 12 ? "0.4" : "0.1";
+  const refX = size === 30 ? "1.0" : size === 18 ? "0.6 ": size === 12 ? "0.6" : "0.1";
   return (
     <defs>
       <marker
@@ -23,7 +24,7 @@ const ArrowDef = (props) => {
           fill={isFilled ? fill : 'red'}
           stroke={stroke}
           strokeWidth={strokeWidth > 0 ? arrowStrokeSize : 0}
-          points={`0 0, ${markerWidth} 4, 0 8`}
+          points={`0 0, ${markerWidth} 4, 0 8, 2 4`}
         />
       </marker>
     </defs>
