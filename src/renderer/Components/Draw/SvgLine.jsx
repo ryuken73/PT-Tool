@@ -1,19 +1,24 @@
 import React from 'react';
+import useDrawState from 'renderer/hooks/useDrawState';
 import ArrowDef from './ArrowDef';
 
 function SvgLine(props) {
+  // eslint-disable-next-line react/prop-types
   const { pathData, pathRenderOptions, index } = props;
+  const { getPositionForArrow } = useDrawState();
   return (
     <>
-      <path
-        d={pathData}
-        fill="transparent"
-        stroke={pathRenderOptions[index].stroke}
-        strokeWidth={pathRenderOptions[index].strokeWidth}
-        strokeLinejoin="bevel"
-        strokeLinecap="bevel"
-        pointerEvents="all"
-      />
+      {pathRenderOptions[index].strokeWidth && (
+        <path
+          d={pathData}
+          fill="transparent"
+          stroke={pathRenderOptions[index].stroke}
+          strokeWidth={pathRenderOptions[index].strokeWidth}
+          strokeLinejoin="bevel"
+          strokeLinecap="bevel"
+          pointerEvents="all"
+        />
+      )}
       {pathRenderOptions[index].withArrow && (
         <>
           <ArrowDef
