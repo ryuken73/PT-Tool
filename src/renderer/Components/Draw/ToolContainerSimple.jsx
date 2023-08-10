@@ -301,11 +301,11 @@ const ToolContainer = (props) => {
   const toggleWithArrow = React.useCallback(() => {
     const nextValue = !withArrow;
     changePathOptionState('withArrow', nextValue);
-    if (nextValue === true) {
+    /* if (nextValue === true) {
       changePathOptionState('strokeWidth', 0);
     } else {
       changePathOptionState('strokeWidth', strokeWidthFromConfig);
-    }
+    } */
   }, [changePathOptionState, strokeWidthFromConfig, withArrow]);
 
   const toggleSize = React.useCallback(() => {
