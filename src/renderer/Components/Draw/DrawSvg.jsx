@@ -45,12 +45,12 @@ const DrawSvg = () => {
   const toggleWithArrow = React.useCallback(() => {
     const nextValue = !withArrow;
     changePathOptionState('withArrow', nextValue);
-    if (nextValue === true) {
-      changePathOptionState('strokeWidth', 0);
-    } else {
-      changePathOptionState('strokeWidth', strokeWidthFromConfig);
-    }
-  }, [changePathOptionState, strokeWidthFromConfig, withArrow]);
+    // if (nextValue === true) {
+    //   changePathOptionState('strokeWidth', 0);
+    // } else {
+    //   changePathOptionState('strokeWidth', strokeWidthFromConfig);
+    // }
+  }, [changePathOptionState, withArrow]);
 
   const handlePointerDown = React.useCallback(
     (e) => {
