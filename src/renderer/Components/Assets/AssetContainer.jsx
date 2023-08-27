@@ -37,7 +37,7 @@ const AssetContainer = () => {
   const { setDialogOpenState, setDroppedSrcState } = useDialogState();
   const { assets, assetShowMask } = useAssetState();
   const { isTransitionFull } = useConfigState();
-  const { showTransition, setShowTransitionState } = useAppState();
+  const { useSrcLocal, showTransition, setShowTransitionState } = useAppState();
 
   const handleDrop = React.useCallback((event) => {
     const url = event.dataTransfer.getData('url');
@@ -63,7 +63,12 @@ const AssetContainer = () => {
       )}
       {assets.map((asset, index) => (
         // <Asset options={asset} drawOn={drawShow} show={assetShowMask[index]} />
-        <Asset key={asset.assetId} asset={asset} show={assetShowMask[index]} />
+        <Asset
+          useSrcLocal={useSrcLocal}
+          key={asset.assetId}
+          asset={asset}
+          show={assetShowMask[index]}
+        />
       ))}
       <AddDialog />
     </Container>

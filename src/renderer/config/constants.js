@@ -66,7 +66,8 @@ const prd = {
   ...dev,
   TOUCH_WORKSTATION_IP: '10.10.104.246',
   TOUCH_WEB_SERVER_URL: 'http://10.10.104.246',
-  SCROLL_VIDEO_SERVER_URL: 'http://10.10.104.246/scrolly',
+  SCROLL_VIDEO_SERVER_LOCAL_URL: 'http://127.0.0.1/scrolly',
+  SCROLL_VIDEO_SERVER_REMOTE_URL: 'http://10.10.104.246/scrolly',
 }
 
 export default process.env.NODE_ENV === 'development' ? dev : prd;

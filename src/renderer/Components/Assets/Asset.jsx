@@ -6,7 +6,7 @@ import AssetViewer from 'renderer/Components/Assets/AssetViewer'
 import SwipeControl from 'renderer/Components/SwipeControl';
 import constants from 'renderer/config/constants';
 
-const { SCROLL_VIDEO_SERVER_URL } = constants;
+const { SCROLL_VIDEO_SERVER_LOCAL_URL, SCROLL_VIDEO_SERVER_REMOTE_URL } = constants;
 
 const Container = styled.div`
   height: 100%;
@@ -23,9 +23,11 @@ const convertToScrollVideoType = (
   source,
   smooth = false,
   scrollSpeed = 500
+  useSrcLocal = true
 ) => {
   const { srcRemote } = source;
-  const scrollyUrl = `${SCROLL_VIDEO_SERVER_URL}/?url=${srcRemote}&smooth=${smooth}&length=${scrollSpeed}`
+  const serverUrl = useSrcLocal ? SCROLL_VIDEO_SERVER_LOCAL_URL : SCROLL_VIDEO_SERVER_REMOTE_URL;
+  const scrollyUrl = `${serverUrl}/?url=${srcRemote}&smooth=${smooth}&length=${scrollSpeed}`
   return {
     ...source,
     src: scrollyUrl,
@@ -34,7 +36,7 @@ const convertToScrollVideoType = (
     srcType: 'web',
   };
 };
-const applyScrollOptions = (sources, scrollOptions) => {
+const applyScrollOptions = (sources, scrollOptions, useSrcLocal) => {
   if (!scrollOptions.isScrollVideo) {
     return sources;
   };
@@ -42,7 +44,12 @@ const applyScrollOptions = (sources, scrollOptions) => {
 
   // target source for scroll video is limited to first source;
   const targetVideoSource = clone(sources[0]);
-  const sourceModified = convertToScrollVideoType(targetVideoSource, isScrollSmooth, scrollSpeed);
+  const sourceModified = convertToScrollVideoType(
+    targetVideoSource,
+    isScrollSmooth,
+    scrollSpeed,
+    useSrcLocal
+  );
   console.log('&&&', sourceModified);
   return [sourceModified]
 };
@@ -50,7 +57,7 @@ const applyScrollOptions = (sources, scrollOptions) => {
 const Asset = (props) => {
   // eslint-disable-next-line react/prop-types
   // const { options, show, drawOn } = props;
-  const { asset, show } = props;
+  const { asset, show, useSrcLocal } = props;
   const {
     assetId,
     sources: sourcesInState,
@@ -62,7 +69,11 @@ const Asset = (props) => {
   } = asset;
 
   const scrollOptions = { isScrollSmooth, isScrollVideo, scrollSpeed };
-  const sources = applyScrollOptions(sourcesInState, scrollOptions);
+  const sources = applyScrollOptions(
+    sourcesInState,
+    scrollOptions,
+    useSrcLocal
+  );
 
   return (
     <Container show={show}>
