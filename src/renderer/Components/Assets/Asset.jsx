@@ -22,11 +22,13 @@ const clone = (obj) => {
 const convertToScrollVideoType = (
   source,
   smooth = false,
-  scrollSpeed = 500
+  scrollSpeed = 500,
   useSrcLocal = true
 ) => {
   const { srcRemote } = source;
-  const serverUrl = useSrcLocal ? SCROLL_VIDEO_SERVER_LOCAL_URL : SCROLL_VIDEO_SERVER_REMOTE_URL;
+  const serverUrl = useSrcLocal
+    ? SCROLL_VIDEO_SERVER_LOCAL_URL
+    : SCROLL_VIDEO_SERVER_REMOTE_URL;
   const scrollyUrl = `${serverUrl}/?url=${srcRemote}&smooth=${smooth}&length=${scrollSpeed}`
   return {
     ...source,
