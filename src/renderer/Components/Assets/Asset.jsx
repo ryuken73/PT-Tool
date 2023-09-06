@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import AssetViewer from 'renderer/Components/Assets/AssetViewer'
 import SwipeControl from 'renderer/Components/SwipeControl';
 import constants from 'renderer/config/constants';
+import Resizable from '../Common/Resizable';
 
 const { SCROLL_VIDEO_SERVER_LOCAL_URL, SCROLL_VIDEO_SERVER_REMOTE_URL } = constants;
 
@@ -69,6 +70,7 @@ const Asset = (props) => {
     isScrollSmooth,
     scrollSpeed,
   } = asset;
+  const resizableParentRef = React.useRef(null);
 
   const scrollOptions = { isScrollSmooth, isScrollVideo, scrollSpeed };
   const sources = applyScrollOptions(
@@ -78,7 +80,11 @@ const Asset = (props) => {
   );
 
   return (
-    <Container show={show}>
+    <Container show={show} ref={resizableParentRef}>
+      <Resizable
+        gesturableRef={resizableParentRef}
+        text="나는 솔로"
+      ></Resizable>
       <AssetViewer
         displayMode={displayMode}
         swipeMode={swipeMode}
