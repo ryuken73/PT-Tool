@@ -55,7 +55,7 @@ function SvgLineCurrent(props) {
 
   const outlinePoints = getStroke(points, options);
   pathData.current = getSvgPathFromStroke(outlinePoints);
-  const [[x0, y0], [x1, y1]] = getSmoothLine(points, 4);
+  const [[x0, y0], [x1, y1]] = getSmoothLine(points, 3);
 
   return (
     <>
