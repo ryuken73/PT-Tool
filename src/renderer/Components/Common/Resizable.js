@@ -5,23 +5,23 @@ import interact from 'interactjs';
 const Gesturable = styled.div`
   position: absolute;
   z-index: 1000;
-  background: darkblue;
-  padding 5px;
-  border-radius: 10px;
 `
 const Draggable = styled.div`
   touch-action: none;
   user-select: none;
+  background: darkblue;
+  border-radius: 10px;
+  padding 5px;
 `
 
 function dragMoveListener (event) {
-  const target = event.target
+  const { target } = event;
   // keep the dragged position in the data-x/data-y attributes
   const x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx
   const y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy
 
   // translate the element
-  target.style.transform = 'translate(' + x + 'px, ' + y + 'px)'
+  target.style.transform = `translate(${x}px, ${y}px)`;
 
   // update the posiion attributes
   target.setAttribute('data-x', x);
@@ -33,7 +33,6 @@ function Resizable(props) {
   const gesturableRef = React.useRef(null);
   const draggableRef = React.useRef(null);
 
-  console.log('re-render Resizable');
   React.useEffect(() => {
     if (draggableRef.current === null || gesturableRef.current === null) return;
     const angleScale = {
@@ -47,17 +46,11 @@ function Resizable(props) {
         },
         move(event) {
           // document.body.appendChild(new Text(event.scale))
-          console.log('#####123', event)
           const currentAngle = event.angle + angleScale.angle
           const currentScale = event.scale * angleScale.scale
 
-          // draggableRef.current.style.transform =
-          //   'rotate(' + currentAngle + 'deg)' + 'scale(' + currentScale + ')'
-          const currentStyle = gesturableRef.current.style.transform;
-          gesturableRef.current.style.transform = `${currentStyle} ` +
-            ' rotate(' + currentAngle + 'deg)' + 'scale(' + currentScale + ')'
-
-          // uses the dragMoveListener from the draggable demo above
+          draggableRef.current.style.transform =
+            'rotate(' + currentAngle + 'deg)' + 'scale(' + currentScale + ')'
           dragMoveListener(event);
         },
         end (event) {
@@ -74,8 +67,9 @@ function Resizable(props) {
         move: dragMoveListener,
       }
     })
-  }, [])
+  }, []);
   return (
+    // eslint-disable-next-line react/jsx-filename-extension
     <Gesturable ref={gesturableRef}>
       <Draggable ref={draggableRef}>{text}</Draggable>
     </Gesturable>
