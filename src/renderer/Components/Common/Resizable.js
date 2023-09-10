@@ -66,16 +66,8 @@ function Resizable(props) {
   const [hideButton, setHideButton] = React.useState(true);
   const draggableRef = React.useRef(null);
   const resizableRef = React.useRef(null);
-  const currentTransformRef = React.useRef({x:0, y:0, scale: 1});
+  const currentTransformRef = React.useRef({ x: 0, y: 0, angle: 0, scale: 1 });
   const savedTransformRef = React.useRef(null);
-  const angleScaleRef = React.useRef({ angle: 0, scale: 1 });
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  // const angleScale = {
-  //   angle: 0,
-  //   scale: 1,
-  // };
-
 
   const saveCurrentTransform = React.useCallback(() => {
     savedTransformRef.current = {...currentTransformRef.current};
@@ -106,7 +98,7 @@ function Resizable(props) {
     const onFinishScale = () => {
       resizableRef.current.style.transform = `scale(${scale})`;
       animationScale.removeEventListener('finish', onFinishScale);
-      angleScaleRef.current.scale *= scale;
+      currentTransformRef.current.scale = scale;
     }
     animationScale.addEventListener('finish', onFinishScale);
   }, []);
@@ -127,14 +119,13 @@ function Resizable(props) {
     interact(draggableRef.current).gesturable({
       listeners: {
         start(event) {
-          angleScaleRef.current.angle -= event.angle;
+          currentTransformRef.current.angle -= event.angle;
         },
         move(event) {
           // document.body.appendChild(new Text(event.scale))
-          const currentAngle = event.angle + angleScaleRef.current.angle;
-          const inputScale = event.scale * angleScaleRef.current.scale;
+          const currentAngle = event.angle + currentTransformRef.current.angle;
+          const inputScale = event.scale * currentTransformRef.current.scale;
           const currentScale = inputScale < minScale ? minScale : inputScale;
-          currentTransformRef.current.scale = currentScale;
 
           resizableRef.current.style.transform =
             // 'rotate(' + currentAngle + 'deg)' + 'scale(' + currentScale + ')';
@@ -142,8 +133,8 @@ function Resizable(props) {
           dragMoveListener(event, currentTransformRef);
         },
         end(event) {
-          angleScaleRef.current.angle += event.angle;
-          angleScaleRef.current.scale *= event.scale;
+          currentTransformRef.current.angle += event.angle;
+          currentTransformRef.current.scale *= event.scale;
         },
       },
     }).draggable({
