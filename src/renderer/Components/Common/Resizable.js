@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 import interact from 'interactjs';
-import useAppState from 'renderer/hooks/useAppState';
 
 const Container = styled.div`
   position: absolute;
+  bottom: 10px;
   touch-action: none;
   user-select: none;
   z-index: 1000;
