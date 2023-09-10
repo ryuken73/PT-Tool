@@ -12,7 +12,7 @@ const Container = styled.div`
 const FullBox = styled.div`
   width: 100%;
   height: 100%;
-  font-size: 50px;
+  font-size: 80px;
   background: darkblue;
   border-radius: 20px;
   padding: 10px;
@@ -43,6 +43,22 @@ const animate = (element, from, to, options={}) => {
   const animation = element.animate(keyframe, {duration, easing});
   return animation;
 }
+const dragMoveListener = (event, currentTransformRef) => {
+  const { target } = event;
+  // keep the dragged position in the data-x/data-y attributes
+  const x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
+  const y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
+
+  // translate the element
+  target.style.transform = `translate(${x}px, ${y}px)`;
+
+  // update the posiion attributes
+  target.setAttribute('data-x', x);
+  target.setAttribute('data-y', y);
+  currentTransformRef.current.x = x;
+  currentTransformRef.current.y = y;
+  return [x, y]
+};
 
 function Resizable(props) {
   const { minScale = 0.5 } = props;
@@ -51,35 +67,21 @@ function Resizable(props) {
   const draggableRef = React.useRef(null);
   const resizableRef = React.useRef(null);
   const currentTransformRef = React.useRef({});
-  const savedTransformRef = React.useRef({});
+  const savedTransformRef = React.useRef(null);
+  const angleScaleRef = React.useRef({ angle: 0, scale: 1 });
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const angleScale = {
-    angle: 0,
-    scale: 1,
-  };
+  // const angleScale = {
+  //   angle: 0,
+  //   scale: 1,
+  // };
 
-  const dragMoveListener = React.useCallback((event) => {
-    const { target } = event;
-    // keep the dragged position in the data-x/data-y attributes
-    const x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
-    const y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
-
-    // translate the element
-    target.style.transform = `translate(${x}px, ${y}px)`;
-
-    // update the posiion attributes
-    target.setAttribute('data-x', x);
-    target.setAttribute('data-y', y);
-    currentTransformRef.current.x = x;
-    currentTransformRef.current.y = y;
-    return [x, y]
-  }, []);
 
   const saveCurrentTransform = React.useCallback(() => {
     savedTransformRef.current = {...currentTransformRef.current};
   }, []);
   const restoreSavedTransform = React.useCallback(() => {
+    if(savedTransformRef.current === null) return;
     const { x, y, scale } = savedTransformRef.current;
     const { x:xC, y:yC, scale:scaleC} = currentTransformRef.current;
 
@@ -103,47 +105,51 @@ function Resizable(props) {
     const onFinishScale = () => {
       resizableRef.current.style.transform = `scale(${scale})`;
       animationScale.removeEventListener('finish', onFinishScale);
-      angleScale.scale *= scale;
+      angleScaleRef.current.scale *= scale;
     }
     animationScale.addEventListener('finish', onFinishScale);
-  }, [angleScale]);
+  }, []);
 
   const onClickConfirm = React.useCallback((event) => {
     event.stopPropagation();
     const answer = event.target.id;
-    if ((answer === 'save')) {
+    if (answer === 'save') {
       saveCurrentTransform();
     }
     setHideButton(true);
-  }, [])
+    },
+    [saveCurrentTransform]
+  );
 
   React.useEffect(() => {
     if (draggableRef.current === null) return;
     interact(draggableRef.current).gesturable({
       listeners: {
         start(event) {
-          angleScale.angle -= event.angle;
+          angleScaleRef.current.angle -= event.angle;
         },
         move(event) {
+          console.log('move event:', event)
           // document.body.appendChild(new Text(event.scale))
-          const currentAngle = event.angle + angleScale.angle;
-          const inputScale = event.scale * angleScale.scale;
+          const currentAngle = event.angle + angleScaleRef.current.angle;
+          const inputScale = event.scale * angleScaleRef.current.scale;
           const currentScale = inputScale < minScale ? minScale : inputScale;
           currentTransformRef.current.scale = currentScale;
 
           resizableRef.current.style.transform =
             // 'rotate(' + currentAngle + 'deg)' + 'scale(' + currentScale + ')';
             'scale(' + currentScale + ')';
-          dragMoveListener(event);
+          dragMoveListener(event, currentTransformRef);
         },
         end(event) {
-          angleScale.angle += event.angle;
-          angleScale.scale *= event.scale;
+          console.log('end  event:', event)
+          angleScaleRef.current.angle += event.angle;
+          angleScaleRef.current.scale *= event.scale;
         },
       },
     }).draggable({
       inertia: {
-        resistance: 7,
+        resistance: 5,
       },
       modifiers: [
         interact.modifiers.restrict({
@@ -153,8 +159,20 @@ function Resizable(props) {
       ],
       listeners: {
         move: (event) => {
-          const [, y] = dragMoveListener(event);
+          const [, y] = dragMoveListener(event, currentTransformRef);
           // attachToDoc(scalableRef.current, translateRef.current, y);
+        },
+        inertiastart: (event) => {
+          console.log('inertia event:', event.speed)
+          if(event.speed > 2000){
+            restoreSavedTransform();
+          }
+        },
+        end: (event) => {
+          console.log('end event:', event.speed)
+          // if(event.speed > 2000){
+          //   restoreSavedTransform();
+          // }
         }
       },
     }).on('doubletap', function (event) {
@@ -164,7 +182,7 @@ function Resizable(props) {
       event.preventDefault()
       setHideButton(false);
     })
-  }, [dragMoveListener]);
+  }, [minScale, restoreSavedTransform]);
 
   return (
     // eslint-disable-next-line react/jsx-filename-extension

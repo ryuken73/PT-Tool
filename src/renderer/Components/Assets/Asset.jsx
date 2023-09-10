@@ -85,6 +85,10 @@ const Asset = (props) => {
         gesturableRef={resizableParentRef}
         text="나는 솔로"
       ></Resizable>
+      <Resizable
+        gesturableRef={resizableParentRef}
+        text="나는 솔로"
+      ></Resizable>
       <AssetViewer
         displayMode={displayMode}
         swipeMode={swipeMode}
