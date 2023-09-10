@@ -39,8 +39,8 @@ const Button = styled.div`
 `
 const animate = (element, from, to, options={}) => {
   const { duration = 500, easing="cubic-bezier(0.34, 1.56, 0.64, 1)" } = options;
-  const keyframe = [{...from}, {...to}];
-  const animation = element.animate(keyframe, {duration, easing});
+  const keyframe = [{ ...from }, { ...to }];
+  const animation = element.animate(keyframe, { duration, easing });
   return animation;
 }
 const dragMoveListener = (event, currentTransformRef) => {
@@ -61,8 +61,8 @@ const dragMoveListener = (event, currentTransformRef) => {
 };
 
 function Resizable(props) {
-  const { minScale = 0.5 } = props;
-  const { dockWidth } = useAppState();
+  // eslint-disable-next-line react/prop-types
+  const { text, minScale = 0.5 } = props;
   const [hideButton, setHideButton] = React.useState(true);
   const draggableRef = React.useRef(null);
   const resizableRef = React.useRef(null);
@@ -70,20 +70,19 @@ function Resizable(props) {
   const savedTransformRef = React.useRef(null);
 
   const saveCurrentTransform = React.useCallback(() => {
-    savedTransformRef.current = {...currentTransformRef.current};
+    savedTransformRef.current = { ...currentTransformRef.current };
   }, []);
 
   const restoreSavedTransform = React.useCallback(() => {
-    if(savedTransformRef.current === null) return;
+    if (savedTransformRef.current === null) return;
     const { x, y, scale } = savedTransformRef.current;
-    const { x:xC, y:yC, scale:scaleC} = currentTransformRef.current;
+    const { x: xC, y: yC, scale: scaleC } = currentTransformRef.current;
 
     const from = { transform: `translate(${xC}px, ${yC}px)` };
     const to = { transform: `translate(${x}px, ${y}px)` };
     const translateElement = draggableRef.current;
     const animation = animate(translateElement, from, to);
     const onFinished = () => {
-      // resizableRef.current.style.transform = `scale(${scale})`;
       draggableRef.current.style.transform = `translate(${x}px, ${y}px)`;
       draggableRef.current.setAttribute('data-x', x);
       draggableRef.current.setAttribute('data-y', y);
@@ -122,7 +121,6 @@ function Resizable(props) {
           currentTransformRef.current.angle -= event.angle;
         },
         move(event) {
-          // document.body.appendChild(new Text(event.scale))
           const currentAngle = event.angle + currentTransformRef.current.angle;
           const inputScale = event.scale * currentTransformRef.current.scale;
           const currentScale = inputScale < minScale ? minScale : inputScale;
@@ -156,16 +154,13 @@ function Resizable(props) {
           if(event.speed > 2000){
             restoreSavedTransform();
           }
-        },
-        end: (event) => {
-          // if(event.speed > 2000){
-          //   restoreSavedTransform();
-          // }
         }
       },
     }).on('doubletap', function (event) {
       event.preventDefault()
-      restoreSavedTransform();
+      resizableRef.current.style.transform = `scale(${minScale})`;
+      currentTransformRef.current.scale = minScale;
+      // restoreSavedTransform();
     }).on('hold', function (event) {
       event.preventDefault()
       setHideButton(false);
@@ -176,9 +171,7 @@ function Resizable(props) {
     // eslint-disable-next-line react/jsx-filename-extension
     <>
     <Container ref={draggableRef}>
-      <FullBox ref={resizableRef}>
-        나는 솔로
-      </FullBox>
+        <FullBox ref={resizableRef}>{text}</FullBox>
     </Container>
       <SaveConfirm hide={hideButton} onClick={onClickConfirm}>
         <Button id="save">save</Button>
