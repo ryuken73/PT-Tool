@@ -66,7 +66,7 @@ function Resizable(props) {
   const [hideButton, setHideButton] = React.useState(true);
   const draggableRef = React.useRef(null);
   const resizableRef = React.useRef(null);
-  const currentTransformRef = React.useRef({});
+  const currentTransformRef = React.useRef({x:0, y:0, scale: 1});
   const savedTransformRef = React.useRef(null);
   const angleScaleRef = React.useRef({ angle: 0, scale: 1 });
 
@@ -80,6 +80,7 @@ function Resizable(props) {
   const saveCurrentTransform = React.useCallback(() => {
     savedTransformRef.current = {...currentTransformRef.current};
   }, []);
+
   const restoreSavedTransform = React.useCallback(() => {
     if(savedTransformRef.current === null) return;
     const { x, y, scale } = savedTransformRef.current;
@@ -129,7 +130,6 @@ function Resizable(props) {
           angleScaleRef.current.angle -= event.angle;
         },
         move(event) {
-          console.log('move event:', event)
           // document.body.appendChild(new Text(event.scale))
           const currentAngle = event.angle + angleScaleRef.current.angle;
           const inputScale = event.scale * angleScaleRef.current.scale;
@@ -142,7 +142,6 @@ function Resizable(props) {
           dragMoveListener(event, currentTransformRef);
         },
         end(event) {
-          console.log('end  event:', event)
           angleScaleRef.current.angle += event.angle;
           angleScaleRef.current.scale *= event.scale;
         },
@@ -163,13 +162,11 @@ function Resizable(props) {
           // attachToDoc(scalableRef.current, translateRef.current, y);
         },
         inertiastart: (event) => {
-          console.log('inertia event:', event.speed)
           if(event.speed > 2000){
             restoreSavedTransform();
           }
         },
         end: (event) => {
-          console.log('end event:', event.speed)
           // if(event.speed > 2000){
           //   restoreSavedTransform();
           // }
