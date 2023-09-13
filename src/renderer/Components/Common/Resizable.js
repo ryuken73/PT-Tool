@@ -67,7 +67,7 @@ const dragMoveListener = (event, currentTransformRef) => {
 
 function Resizable(props) {
   // eslint-disable-next-line react/prop-types
-  const { text, minScale = 1, index } = props;
+  const { text, minScale = 1, index, textId } = props;
   const [hideButton, setHideButton] = React.useState(true);
   const draggableRef = React.useRef(null);
   const resizableRef = React.useRef(null);

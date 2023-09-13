@@ -87,6 +87,7 @@ const Asset = (props) => {
           key={assetText.textId}
           index={index}
           text={assetText.assetText}
+          textId={assetText.textId}
         />
       ))}
       <AssetViewer
