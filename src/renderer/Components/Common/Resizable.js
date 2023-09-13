@@ -4,7 +4,8 @@ import interact from 'interactjs';
 
 const Container = styled.div`
   position: absolute;
-  bottom: 10px;
+  bottom: ${(props) => `${props.index * 80 + 10}px`};
+  right: 50px;
   touch-action: none;
   user-select: none;
   z-index: 1000;
@@ -12,10 +13,14 @@ const Container = styled.div`
 const FullBox = styled.div`
   width: 100%;
   height: 100%;
-  font-size: 80px;
-  background: darkblue;
+  font-size: 2rem;
+  background: yellow;
+  color: black;
+  border: 3px solid black;
   border-radius: 20px;
   padding: 10px;
+  font-weight: bold;
+  box-sizing: border-box;
 `
 const SaveConfirm = styled.div`
   display: ${(props) => props.hide ? 'none' : 'flex'};
@@ -62,7 +67,7 @@ const dragMoveListener = (event, currentTransformRef) => {
 
 function Resizable(props) {
   // eslint-disable-next-line react/prop-types
-  const { text, minScale = 0.5 } = props;
+  const { text, minScale = 1, index } = props;
   const [hideButton, setHideButton] = React.useState(true);
   const draggableRef = React.useRef(null);
   const resizableRef = React.useRef(null);
@@ -170,7 +175,7 @@ function Resizable(props) {
   return (
     // eslint-disable-next-line react/jsx-filename-extension
     <>
-    <Container ref={draggableRef}>
+    <Container ref={draggableRef} index={index}>
         <FullBox ref={resizableRef}>{text}</FullBox>
     </Container>
       <SaveConfirm hide={hideButton} onClick={onClickConfirm}>

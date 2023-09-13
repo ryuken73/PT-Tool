@@ -69,8 +69,8 @@ const Asset = (props) => {
     isScrollVideo,
     isScrollSmooth,
     scrollSpeed,
+    assetTexts=[]
   } = asset;
-  const resizableParentRef = React.useRef(null);
 
   const scrollOptions = { isScrollSmooth, isScrollVideo, scrollSpeed };
   const sources = applyScrollOptions(
@@ -80,15 +80,15 @@ const Asset = (props) => {
   );
 
   return (
-    <Container show={show} ref={resizableParentRef}>
-      <Resizable
-        gesturableRef={resizableParentRef}
-        text="나는 솔로"
-      ></Resizable>
-      <Resizable
-        gesturableRef={resizableParentRef}
-        text="나는 솔로"
-      ></Resizable>
+    <Container show={show}>
+      {assetTexts.map((assetText, index) => (
+        // eslint-disable-next-line react/no-array-index-key
+        <Resizable
+          key={assetText.textId}
+          index={index}
+          text={assetText.assetText}
+        />
+      ))}
       <AssetViewer
         displayMode={displayMode}
         swipeMode={swipeMode}
