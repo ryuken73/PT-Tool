@@ -109,6 +109,29 @@ export default function useAssetState() {
     [currentAsset.assetId, currentAsset.sources, currentAssetId, dispatch]
   );
 
+  const updateCurrentAssetText = React.useCallback(
+    (textId, key, value) => {
+      if (currentAsset.assetId === undefined) return;
+      const newAssetTexts = currentAsset.assetTexts.map((assetText) => {
+        if (assetText.textId !== textId) {
+          return { ...assetText };
+        }
+        return {
+          ...assetText,
+          [key]: value,
+        };
+      });
+      dispatch(
+        setItemValue({
+          itemId: currentAssetId,
+          key: 'assetTexts',
+          value: newAssetTexts,
+        })
+      );
+    },
+    [currentAsset.assetId, currentAsset.assetTexts, currentAssetId, dispatch]
+  );
+
   return {
     assets,
     currentAssetIndex,
@@ -121,5 +144,6 @@ export default function useAssetState() {
     setCurrentAssetIndexState,
     updateCurrentAssetSrc,
     updateCurrentAssetState,
+    updateCurrentAssetText
   };
 }

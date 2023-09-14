@@ -1,5 +1,8 @@
 import React from 'react';
+import Box from '@mui/material/Box'
+import Slider from '@mui/material/Slider'
 import styled from 'styled-components';
+import useAssetState from 'renderer/hooks/useAssetState';
 import interact from 'interactjs';
 
 const Container = styled.div`
@@ -27,12 +30,16 @@ const SaveConfirm = styled.div`
   position: fixed;
   align-items: center;
   justify-content: space-evenly;
-  width: 100%;
+  width: 50%;
+  left: 25%;
   z-index: 1000;
-  bottom: 5px;
+  bottom: 5%;
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 10px;
 `
 const Button = styled.div`
-  margin-bottom: 5%;
+  /* margin-bottom: 5%; */
   padding-left: 10px;
   padding-right: 10px;
   border-radius: 10px;
@@ -40,7 +47,16 @@ const Button = styled.div`
   color: yellow;
   backdrop-filter: blur(100px);
   background: grey;
-  opacity: 0.5;
+  opacity: 0.8;
+`
+const SmallText = styled.div`
+  backdrop-filter: blur(10px);
+  font-size: 1rem;
+  /* background: teal; */
+  opacity: 0.8;
+  color: black;
+  margin-right: 20px;
+  border-radius: 10px;
 `
 const animate = (element, from, to, options={}) => {
   const { duration = 500, easing="cubic-bezier(0.34, 1.56, 0.64, 1)" } = options;
@@ -67,7 +83,10 @@ const dragMoveListener = (event, currentTransformRef) => {
 
 function Resizable(props) {
   // eslint-disable-next-line react/prop-types
-  const { text, minScale = 1, index, textId } = props;
+  const { minScale = 1, index, assetText } = props;
+  // eslint-disable-next-line react/prop-types
+  const { textId, assetText: text, animationDuration = 500 } = assetText;
+  const { updateCurrentAssetText } = useAssetState();
   const [hideButton, setHideButton] = React.useState(true);
   const draggableRef = React.useRef(null);
   const resizableRef = React.useRef(null);
@@ -86,7 +105,10 @@ function Resizable(props) {
     const from = { transform: `translate(${xC}px, ${yC}px)` };
     const to = { transform: `translate(${x}px, ${y}px)` };
     const translateElement = draggableRef.current;
-    const animation = animate(translateElement, from, to);
+    const animationOption = {
+      duration: animationDuration
+    }
+    const animation = animate(translateElement, from, to, animationOption);
     const onFinished = () => {
       draggableRef.current.style.transform = `translate(${x}px, ${y}px)`;
       draggableRef.current.setAttribute('data-x', x);
@@ -98,14 +120,19 @@ function Resizable(props) {
     const fromScale = { transform: `scale(${scaleC})` };
     const toScale = { transform: `scale(${scale})` };
     const scaleElement = resizableRef.current;
-    const animationScale = animate(scaleElement, fromScale, toScale);
+    const animationScale = animate(
+      scaleElement,
+      fromScale,
+      toScale,
+      animationOption
+    );
     const onFinishScale = () => {
       resizableRef.current.style.transform = `scale(${scale})`;
       animationScale.removeEventListener('finish', onFinishScale);
       currentTransformRef.current.scale = scale;
     }
     animationScale.addEventListener('finish', onFinishScale);
-  }, []);
+  }, [animationDuration]);
 
   const onClickConfirm = React.useCallback((event) => {
     event.stopPropagation();
@@ -116,6 +143,12 @@ function Resizable(props) {
     setHideButton(true);
     },
     [saveCurrentTransform]
+  );
+
+  const handleChangeDuration = React.useCallback((event) => {
+    updateCurrentAssetText(textId, 'animationDuration', event.target.value);
+    },
+    [textId, updateCurrentAssetText]
   );
 
   React.useEffect(() => {
@@ -180,6 +213,22 @@ function Resizable(props) {
     </Container>
       <SaveConfirm hide={hideButton} onClick={onClickConfirm}>
         <Button id="save">save</Button>
+        <Box>
+        <Box sx={{ width: 300, margin: '5px', display: 'flex' }}>
+          <SmallText>Duration</SmallText>
+          <Slider
+            max={5000}
+            step={500}
+            marks
+            value={animationDuration}
+            valueLabelDisplay="on"
+            valueLabelFormat={(value) => `${value}ms`}
+            onChange={handleChangeDuration}
+            aria-label="Default"
+          />
+        </Box>
+        {/* <SmallText>background</SmallText> */}
+        </Box>
         <Button id="cancel">cancel</Button>
       </SaveConfirm>
     </>

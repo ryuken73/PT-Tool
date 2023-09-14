@@ -83,12 +83,7 @@ const Asset = (props) => {
     <Container show={show}>
       {assetTexts.map((assetText, index) => (
         // eslint-disable-next-line react/no-array-index-key
-        <Resizable
-          key={assetText.textId}
-          index={index}
-          text={assetText.assetText}
-          textId={assetText.textId}
-        />
+        <Resizable key={assetText.textId} index={index} assetText={assetText} />
       ))}
       <AssetViewer
         displayMode={displayMode}
