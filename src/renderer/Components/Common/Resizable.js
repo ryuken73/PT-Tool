@@ -58,6 +58,18 @@ const SmallText = styled.div`
   margin-right: 20px;
   border-radius: 10px;
 `
+const StyleContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+`
+const ColorBox = styled.div`
+  height: 1rem;
+  width: 1rem;
+  background: ${props => props.background};
+`
+
 const animate = (element, from, to, options={}) => {
   const { duration = 500, easing="cubic-bezier(0.34, 1.56, 0.64, 1)" } = options;
   const keyframe = [{ ...from }, { ...to }];
@@ -151,6 +163,10 @@ function Resizable(props) {
     [textId, updateCurrentAssetText]
   );
 
+  const onClickColor = React.useCallback((event) => {
+    alert(event.target.id)
+  }, [])
+
   React.useEffect(() => {
     if (draggableRef.current === null) return;
     interact(draggableRef.current).gesturable({
@@ -211,8 +227,8 @@ function Resizable(props) {
     <Container ref={draggableRef} index={index}>
         <FullBox ref={resizableRef}>{text}</FullBox>
     </Container>
-      <SaveConfirm hide={hideButton} onClick={onClickConfirm}>
-        <Button id="save">save</Button>
+      <SaveConfirm hide={hideButton}>
+        <Button id="save" onClick={onClickConfirm}>save</Button>
         <Box>
         <Box sx={{ width: 300, margin: '5px', display: 'flex' }}>
           <SmallText>Duration</SmallText>
@@ -227,9 +243,16 @@ function Resizable(props) {
             aria-label="Default"
           />
         </Box>
-        {/* <SmallText>background</SmallText> */}
+        <StyleContainer onClick={onClickColor}>
+          <ColorBox id="background" background="yellow" />
+          <SmallText id="background">Background</SmallText>
+          <ColorBox id="font" background="black" />
+          <SmallText id="font">Font</SmallText>
+          <ColorBox id="border" background="black" />
+          <SmallText id="border">Border</SmallText>
+        </StyleContainer>
         </Box>
-        <Button id="cancel">cancel</Button>
+        <Button id="cancel" onClick={onClickConfirm}>cancel</Button>
       </SaveConfirm>
     </>
   );
