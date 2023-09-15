@@ -72,6 +72,7 @@ const Asset = (props) => {
     assetTexts=[]
   } = asset;
 
+  console.log('^^^', assetTexts)
   const scrollOptions = { isScrollSmooth, isScrollVideo, scrollSpeed };
   const sources = applyScrollOptions(
     sourcesInState,

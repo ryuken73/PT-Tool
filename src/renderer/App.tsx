@@ -309,8 +309,10 @@ const ToolContainerComponent = {
 };
 
 const mergeAssets = (remoteAssets, localAssets) => {
+  console.log('%%%', remoteAssets, localAssets)
   return remoteAssets.map(remoteAsset => {
     const localAsset = localAssets.find(localAsset => localAsset.assetId === remoteAsset.assetId);
+    console.log('%%%', localAsset)
     if(localAsset){
       // sync local properties to remoteAssets
       // apply base key
@@ -322,7 +324,8 @@ const mergeAssets = (remoteAssets, localAssets) => {
         const localAssetSource = localAsset.sources.find(localSource => localSource.srcId === source.srcId);
         if(localAssetSource){
           SYNC_ASSET_KEYS.sources.map(key => {
-            source[key] = localAssetSource[key]
+            console.log('%%%', key)
+            return source[key] = localAssetSource[key]
           })
         }
       })

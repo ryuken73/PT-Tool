@@ -57,8 +57,14 @@ const dev =  {
     CARD: 'CARD',
   },
   SYNC_ASSET_KEYS: {
-    base: ['displayMode'],
-    sources: ['objectFit', 'scale', 'translateX', 'translateY', 'autoplay']
+    base: ['displayMode', 'assetTexts'],
+    sources: [
+      'objectFit',
+      'scale',
+      'translateX',
+      'translateY',
+      'autoplay'
+    ],
   }
 }
 

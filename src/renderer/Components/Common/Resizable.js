@@ -120,7 +120,8 @@ function Resizable(props) {
     animationDuration = 500,
     background = 'yellow',
     font = 'black',
-    border = 'black'
+    border = 'black',
+    savedTransform = null
   } = assetText;
   console.log('####', background, font, border)
   const { updateCurrentAssetText } = useAssetState();
@@ -131,7 +132,7 @@ function Resizable(props) {
   const draggableRef = React.useRef(null);
   const resizableRef = React.useRef(null);
   const currentTransformRef = React.useRef({ x: 0, y: 0, angle: 0, scale: 1 });
-  const savedTransformRef = React.useRef(null);
+  const savedTransformRef = React.useRef(savedTransform);
 
   const toggleHideColor = React.useCallback(() => {
     // eslint-disable-next-line @typescript-eslint/no-shadow
@@ -142,7 +143,8 @@ function Resizable(props) {
 
   const saveCurrentTransform = React.useCallback(() => {
     savedTransformRef.current = { ...currentTransformRef.current };
-  }, []);
+    updateCurrentAssetText(textId, 'savedTransform', savedTransformRef.current);
+  }, [textId, updateCurrentAssetText]);
 
   const restoreSavedTransform = React.useCallback(() => {
     if (savedTransformRef.current === null) return;
