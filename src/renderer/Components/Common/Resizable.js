@@ -182,9 +182,12 @@ function Resizable(props) {
     [textId, updateCurrentAssetText]
   );
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onClickColor = React.useCallback((event) => {
     toggleHideColor();
-  }, [toggleHideColor])
+    },
+    [toggleHideColor]
+  );
 
   React.useEffect(() => {
     if (draggableRef.current === null) return;

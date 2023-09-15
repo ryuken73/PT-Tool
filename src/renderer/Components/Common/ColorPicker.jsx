@@ -6,7 +6,7 @@ const Container = styled.div``
 
 function ColorPicker(props) {
   // eslint-disable-next-line react/prop-types
-  const { color='yellow', setColor=() => {} } = props;
+  const { color = 'yellow', setColor = () => {} } = props;
   const onChangeColor = React.useCallback(
     (color, event) => {
       console.log(color);
