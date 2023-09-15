@@ -4,6 +4,7 @@ import Slider from '@mui/material/Slider'
 import styled from 'styled-components';
 import useAssetState from 'renderer/hooks/useAssetState';
 import interact from 'interactjs';
+import ColorPicker from './ColorPicker';
 
 const Container = styled.div`
   position: absolute;
@@ -65,9 +66,19 @@ const StyleContainer = styled.div`
   width: 100%;
 `
 const ColorBox = styled.div`
-  height: 1rem;
-  width: 1rem;
+  height: 1.5rem;
+  width: 1.5rem;
+  border: 4px white solid;
+  box-sizing: border-box;
   background: ${props => props.background};
+`
+const ColorPickerContainer = styled.div`
+  display: ${(props) => props.hide ? 'none' : 'flex'};
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate('-50%', -50%);
+  z-index: 1000;
 `
 
 const animate = (element, from, to, options={}) => {
@@ -100,10 +111,18 @@ function Resizable(props) {
   const { textId, assetText: text, animationDuration = 500 } = assetText;
   const { updateCurrentAssetText } = useAssetState();
   const [hideButton, setHideButton] = React.useState(true);
+  const [hideColor, setHideColor] = React.useState(true);
   const draggableRef = React.useRef(null);
   const resizableRef = React.useRef(null);
   const currentTransformRef = React.useRef({ x: 0, y: 0, angle: 0, scale: 1 });
   const savedTransformRef = React.useRef(null);
+
+  const toggleHideColor = React.useCallback(() => {
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    setHideColor((hideColor) => {
+      return !hideColor;
+    })
+  }, [])
 
   const saveCurrentTransform = React.useCallback(() => {
     savedTransformRef.current = { ...currentTransformRef.current };
@@ -164,8 +183,8 @@ function Resizable(props) {
   );
 
   const onClickColor = React.useCallback((event) => {
-    alert(event.target.id)
-  }, [])
+    toggleHideColor();
+  }, [toggleHideColor])
 
   React.useEffect(() => {
     if (draggableRef.current === null) return;
@@ -224,36 +243,39 @@ function Resizable(props) {
   return (
     // eslint-disable-next-line react/jsx-filename-extension
     <>
-    <Container ref={draggableRef} index={index}>
+      <Container ref={draggableRef} index={index}>
         <FullBox ref={resizableRef}>{text}</FullBox>
-    </Container>
+      </Container>
       <SaveConfirm hide={hideButton}>
         <Button id="save" onClick={onClickConfirm}>save</Button>
         <Box>
-        <Box sx={{ width: 300, margin: '5px', display: 'flex' }}>
-          <SmallText>Duration</SmallText>
-          <Slider
-            max={5000}
-            step={500}
-            marks
-            value={animationDuration}
-            valueLabelDisplay="on"
-            valueLabelFormat={(value) => `${value}ms`}
-            onChange={handleChangeDuration}
-            aria-label="Default"
-          />
-        </Box>
-        <StyleContainer onClick={onClickColor}>
-          <ColorBox id="background" background="yellow" />
-          <SmallText id="background">Background</SmallText>
-          <ColorBox id="font" background="black" />
-          <SmallText id="font">Font</SmallText>
-          <ColorBox id="border" background="black" />
-          <SmallText id="border">Border</SmallText>
-        </StyleContainer>
+          <Box sx={{ width: 300, margin: '5px', display: 'flex' }}>
+            <SmallText>Duration</SmallText>
+            <Slider
+              max={5000}
+              step={500}
+              marks
+              value={animationDuration}
+              valueLabelDisplay="on"
+              valueLabelFormat={(value) => `${value}ms`}
+              onChange={handleChangeDuration}
+              aria-label="Default"
+            />
+          </Box>
+          <StyleContainer onClick={onClickColor}>
+            <ColorBox id="background" background="yellow" />
+            <SmallText id="background">Background</SmallText>
+            <ColorBox id="font" background="black" />
+            <SmallText id="font">Font</SmallText>
+            <ColorBox id="border" background="black" />
+            <SmallText id="border">Border</SmallText>
+          </StyleContainer>
         </Box>
         <Button id="cancel" onClick={onClickConfirm}>cancel</Button>
       </SaveConfirm>
+      <ColorPickerContainer hide={hideColor}>
+        <ColorPicker />
+      </ColorPickerContainer>
     </>
   );
 }
