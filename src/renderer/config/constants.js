@@ -65,6 +65,11 @@ const dev =  {
       'translateY',
       'autoplay'
     ],
+  },
+  EASINGS : {
+    LINEAR: "cubic-bezier(0, 0, 1, 1)",
+    FAST_IN: "cubic-bezier(0, 0.55, 0.45, 1)",
+    OVER_OUT: "cubic-bezier(0.34, 1.56, 0.64, 1)",
   }
 }
 

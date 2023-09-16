@@ -5,7 +5,9 @@ import styled from 'styled-components';
 import useAssetState from 'renderer/hooks/useAssetState';
 import interact from 'interactjs';
 import ColorPicker from './ColorPicker';
+import constants from 'renderer/config/constants';
 
+const { EASINGS } = constants;
 const Container = styled.div`
   position: absolute;
   bottom: ${(props) => `${props.index * 80 + 10}px`};
@@ -82,13 +84,26 @@ const ColorPickerContainer = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate('-50%', -50%);
+  transform: translate(50%, 0);
   z-index: 1000;
+`;
+const EasingContainer = styled.div`
+  display: ${(props) => (props.hide ? 'none' : 'block')};
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(250%, 90%);
+  z-index: 1000;
+  color: black;
+  background: white;
+  text-align: left;
+  font-size: 1rem;
+  padding: 10px;
+  border-radius: 10px;
 `;
 
 const animate = (element, from, to, options = {}) => {
-  const { duration = 500, easing = 'cubic-bezier(0.34, 1.56, 0.64, 1)' } =
-    options;
+  const { duration = 500, easing = EASINGS.OVER_OUT } = options;
   const keyframe = [{ ...from }, { ...to }];
   const animation = element.animate(keyframe, { duration, easing });
   return animation;
@@ -121,14 +136,17 @@ function Resizable(props) {
     background = 'yellow',
     font = 'black',
     border = 'black',
-    savedTransform = null
+    savedTransform = null,
+    easingKey = 'OVER_OUT'
   } = assetText;
   console.log('####', background, font, border)
   const { updateCurrentAssetText } = useAssetState();
   const [hideButton, setHideButton] = React.useState(true);
   const [hideStyle, setHideStyle] = React.useState(true);
   const [hideColor, setHideColor] = React.useState(true);
+  const [hideEasing, setHideEasing] = React.useState(true);
   const [currentColorTarget, setCurrentColorTarget] = React.useState(null);
+  const [currentEasingKey, setCurrentEasingKey] = React.useState(easingKey);
   const draggableRef = React.useRef(null);
   const resizableRef = React.useRef(null);
   const currentTransformRef = React.useRef({ x: 0, y: 0, angle: 0, scale: 1 });
@@ -138,6 +156,12 @@ function Resizable(props) {
     // eslint-disable-next-line @typescript-eslint/no-shadow
     setHideColor((hideColor) => {
       return !hideColor;
+    });
+  }, []);
+  const toggleEasing = React.useCallback(() => {
+    // eslint-disable-next-line @typescript-eslint/no-shadow
+    setHideEasing((hideEasing) => {
+      return !hideEasing;
     });
   }, []);
 
@@ -156,12 +180,15 @@ function Resizable(props) {
     const translateElement = draggableRef.current;
     const animationOption = {
       duration: animationDuration,
+      easing: EASINGS[currentEasingKey]
     };
     const animation = animate(translateElement, from, to, animationOption);
     const onFinished = () => {
       draggableRef.current.style.transform = `translate(${x}px, ${y}px)`;
       draggableRef.current.setAttribute('data-x', x);
       draggableRef.current.setAttribute('data-y', y);
+      currentTransformRef.current.x = x;
+      currentTransformRef.current.y = y;
       animation.removeEventListener('finish', onFinished);
     };
     animation.addEventListener('finish', onFinished);
@@ -181,7 +208,7 @@ function Resizable(props) {
       currentTransformRef.current.scale = scale;
     };
     animationScale.addEventListener('finish', onFinishScale);
-  }, [animationDuration]);
+  }, [animationDuration, currentEasingKey]);
 
   const onClickConfirm = React.useCallback(
     (event) => {
@@ -190,9 +217,11 @@ function Resizable(props) {
       if (answer === 'save') {
         saveCurrentTransform();
         setHideButton(true);
+        setHideEasing(true);
       }
       if (answer === 'cancel') {
         setHideButton(true);
+        setHideEasing(true);
       }
       if (answer === 'styleChange') {
         // eslint-disable-next-line @typescript-eslint/no-shadow
@@ -205,7 +234,8 @@ function Resizable(props) {
         })
         return;
       }
-      setHideColor(true)
+      setHideColor(true);
+      setHideEasing(true);
     },
     [saveCurrentTransform]
   );
@@ -231,6 +261,10 @@ function Resizable(props) {
     },
     [currentColorTarget, toggleHideColor]
   );
+  const onClickEasing = React.useCallback((event) => {
+    const nextEasingKey = event.target.id;
+    setCurrentEasingKey(nextEasingKey);
+  }, []);
 
   const isFontColorActive = currentColorTarget === 'font' && !hideColor
   const isBorderColorActive = currentColorTarget === 'border' && !hideColor
@@ -335,10 +369,11 @@ function Resizable(props) {
       </Container>
       <Controls hide={hideButton}>
         <StyleContainer hide={hideStyle}>
-          <Box sx={{ width: 500, margin: '5px', display: 'flex' }}>
+          <Box sx={{ width: 400, margin: '5px', display: 'flex' }}>
             <SmallText active>Duration</SmallText>
             <Slider
-              max={5000}
+              min={500}
+              max={10000}
               step={500}
               marks
               value={animationDuration}
@@ -365,6 +400,9 @@ function Resizable(props) {
               <SmallText active={isBorderColorActive} id="border">Border</SmallText>
             </StyleContainer>
           </Box>
+          <Box>
+            <SmallText active={true} onClick={toggleEasing}>Set Animation</SmallText>
+          </Box>
         </StyleContainer>
         <SaveConfirm>
           <Button id="save" onClick={onClickConfirm}>
@@ -374,7 +412,7 @@ function Resizable(props) {
             Cancel
           </Button>
           <Button id="styleChange" onClick={onClickConfirm}>
-            Open Style Change
+            Set Style
           </Button>
         </SaveConfirm>
       </Controls>
@@ -384,6 +422,17 @@ function Resizable(props) {
           setColor={updateTargetColor}
         />
       </ColorPickerContainer>
+      <EasingContainer hide={hideEasing} onClick={onClickEasing}>
+        {Object.keys(EASINGS).map((easingKey) => (
+          <SmallText
+            key={easingKey}
+            id={easingKey}
+            active={easingKey === currentEasingKey}
+          >
+            {easingKey}
+          </SmallText>
+        ))}
+      </EasingContainer>
     </>
   );
 }
