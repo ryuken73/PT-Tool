@@ -7,7 +7,12 @@ import SwipeControl from 'renderer/Components/SwipeControl';
 import constants from 'renderer/config/constants';
 import Resizable from '../Common/Resizable';
 
-const { SCROLL_VIDEO_SERVER_LOCAL_URL, SCROLL_VIDEO_SERVER_REMOTE_URL } = constants;
+const { 
+  SCROLL_VIDEO_SERVER_LOCAL_URL, 
+  SCROLL_VIDEO_SERVER_REMOTE_URL,
+  NEWS_PREVIEW_SERVER_LOCAL_URL,
+  NEWS_PREVIEW_SERVER_REMOTE_URL
+} = constants;
 
 const Container = styled.div`
   height: 100%;
@@ -19,6 +24,21 @@ const Container = styled.div`
 
 const clone = (obj) => {
   return { ...obj };
+};
+const convertToNewsPreviewType = (assetId, useSrcLocal=true) => {
+  const serverUrl = useSrcLocal
+    ? NEWS_PREVIEW_SERVER_LOCAL_URL
+    : NEWS_PREVIEW_SERVER_REMOTE_URL;
+  const previewUrl = `${serverUrl}?assetId=${assetId}`;
+  return [{
+    progress: '100%',
+    size: null,
+    srcId: 0,
+    srcType: 'web',
+    src: previewUrl,
+    srcLocal: previewUrl,
+    srcRemote: previewUrl,
+  }]
 };
 const convertToScrollVideoType = (
   source,
@@ -69,17 +89,24 @@ const Asset = (props) => {
     isScrollVideo,
     isScrollSmooth,
     scrollSpeed,
-    assetTexts=[]
+    assetTexts=[],
+    isNewsPreview = false,
   } = asset;
 
-  console.log('^^^', assetTexts)
+  console.log('^^^', assetTexts, isNewsPreview)
   const scrollOptions = { isScrollSmooth, isScrollVideo, scrollSpeed };
-  const sources = applyScrollOptions(
+
+  const sourcesScroll = applyScrollOptions(
     sourcesInState,
     scrollOptions,
     useSrcLocal
   );
 
+  const sources = isNewsPreview
+    ? convertToNewsPreviewType(assetId, useSrcLocal)
+    : sourcesScroll;
+
+  console.log('%%%', sources)
   return (
     <Container show={show}>
       {assetTexts.map((assetText, index) => (
