@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   homeShow: true,
   drawShow: false,
+  hideTools: false,
   useSrcLocal: false,
   modalOpen: false,
   draggableDock: false,
@@ -26,6 +27,11 @@ export const appSlice = createSlice({
       const { payload } = action;
       const { drawShow } = payload;
       state.drawShow = drawShow;
+    },
+    setHideTools: (state, action) => {
+      const { payload } = action;
+      const { hideTools } = payload;
+      state.hideTools = hideTools;
     },
     setUseSrcLocal: (state, action) => {
       const { payload } = action;
@@ -88,6 +94,7 @@ export const showMessageBoxForDuration =
 export const {
   setHomeShow,
   setDrawShow,
+  setHideTools,
   setUseSrcLocal,
   setModalOpen,
   setDraggableDock,

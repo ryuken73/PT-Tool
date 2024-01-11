@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   setHomeShow,
   setDrawShow,
+  setHideTools,
   setUseSrcLocal,
   setModalOpen,
   setDraggableDock,
@@ -19,6 +20,7 @@ export default function useAppState() {
   const dispatch = useDispatch();
   const homeShow = useSelector((state) => state.app.homeShow);
   const drawShow = useSelector((state) => state.app.drawShow);
+  const hideTools = useSelector((state) => state.app.hideTools);
   const draggableDock = useSelector((state) => state.app.draggableDock);
   const dockWidth = useSelector((state) => state.app.dockWidth);
   const useSrcLocal = useSelector((state) => state.app.useSrcLocal);
@@ -28,6 +30,12 @@ export default function useAppState() {
 
   const setHomeShowState = React.useCallback((homeShow) => {
     dispatch(setHomeShow({ homeShow }));
+    },
+    [dispatch]
+  );
+
+  const setHideToolsState = React.useCallback((hideTools) => {
+    dispatch(setHideTools({ hideTools }));
     },
     [dispatch]
   );
@@ -68,12 +76,14 @@ export default function useAppState() {
   return {
     homeShow,
     drawShow,
+    hideTools,
     useSrcLocal,
     draggableDock,
     dockWidth,
     showTransition,
     toggleDraw,
     setHomeShowState,
+    setHideToolsState,
     setUseSrcLocalState,
     setModalOpenState,
     setDraggableDockState,
