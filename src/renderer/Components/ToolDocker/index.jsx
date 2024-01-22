@@ -39,6 +39,7 @@ const InnerBox = styled.div`
   background-repeat: no-repeat;
   box-sizing: border-box;
   transform: scaleX(-1);
+  min-width: ${(props) => props.show && '115px'};
   width: ${(props) =>
     props.show ? `${parseInt(props.docWidth, 10)}px` : '0px'};
   &:before {
