@@ -110,8 +110,9 @@ function ToolDocker(props) {
     docRef.current.style.backgroundImage = `url(${prevDataUrl})`;
     setTimeout(async () => {
       if(docWidth === 0) return;
+      const captureWidth = docWidth <= 115 ? 115 : docWidth
       // const currentDataUrl = await window.getCaptureImg(docRef.current);
-      const currentDataUrl = await window.getCaptureImg(docWidth);
+      const currentDataUrl = await window.getCaptureImg(captureWidth);
       // docRef.current.style.background = `linear-gradient(to right, rgba(0,0,0,0.1) 0%,rgba(0,0,0,1) 100%), url(${currentDataUrl})`;
       docRef.current.style.backgroundImage = `url(${currentDataUrl})`;
       // eslint-disable-next-line @typescript-eslint/no-shadow
