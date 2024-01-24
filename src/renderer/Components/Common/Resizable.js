@@ -3,7 +3,10 @@ import Box from '@mui/material/Box';
 import Slider from '@mui/material/Slider';
 import styled from 'styled-components';
 import useAssetState from 'renderer/hooks/useAssetState';
+import usePrevious from 'renderer/hooks/usePrevious';
 import interact from 'interactjs';
+import tackImage from 'renderer/assets/tack.png';
+import questionImage from 'renderer/assets/folderQuestion.png';
 import ColorPicker from './ColorPicker';
 import {
   Container,
@@ -20,6 +23,14 @@ import {
 import constants from 'renderer/config/constants';
 
 const { EASINGS } = constants;
+
+const StyledTack = styled.img`
+  z-index: 1001;
+  width: 60px;
+  padding: 10px;
+  opacity: 1;
+  border-radius: 10px;
+`
 
 const animate = (element, from, to, options = {}) => {
   const { duration = 500, easing = EASINGS.OVER_OUT } = options;
@@ -65,10 +76,15 @@ function Resizable(props) {
   const [hideEasing, setHideEasing] = React.useState(true);
   const [currentColorTarget, setCurrentColorTarget] = React.useState(null);
   const [currentEasingKey, setCurrentEasingKey] = React.useState(easingKey);
+  const [isIconShape, setIsIconShape] = React.useState(false);
+  const [clientX, setClientX] = React.useState(-100);
   const draggableRef = React.useRef(null);
   const resizableRef = React.useRef(null);
   const currentTransformRef = React.useRef({ x: 0, y: 0, angle: 0, scale: 1 });
   const savedTransformRef = React.useRef(savedTransform);
+
+  const prevX = usePrevious(clientX);
+  console.log(prevX, clientX)
 
   const toggleHideColor = React.useCallback(() => {
     // eslint-disable-next-line @typescript-eslint/no-shadow
@@ -107,6 +123,7 @@ function Resizable(props) {
       draggableRef.current.setAttribute('data-y', y);
       currentTransformRef.current.x = x;
       currentTransformRef.current.y = y;
+      setIsIconShape(false);
       animation.removeEventListener('finish', onFinished);
     };
     animation.addEventListener('finish', onFinished);
@@ -248,7 +265,9 @@ function Resizable(props) {
         ],
         listeners: {
           move: (event) => {
-            const [, y] = dragMoveListener(event, currentTransformRef);
+            const [x, y] = dragMoveListener(event, currentTransformRef);
+            console.log(x, y)
+            setClientX(x);
             // attachToDoc(scalableRef.current, translateRef.current, y);
           },
           inertiastart: (event) => {
@@ -260,8 +279,11 @@ function Resizable(props) {
       })
       .on('doubletap', function (event) {
         event.preventDefault();
-        resizableRef.current.style.transform = `scale(${minScale})`;
-        currentTransformRef.current.scale = minScale;
+        setIsIconShape((isIconShape) => {
+          resizableRef.current.style.transform = `scale(${minScale})`;
+          currentTransformRef.current.scale = minScale;
+          return !isIconShape;
+        });
         // restoreSavedTransform();
       })
       .on('hold', function (event) {
@@ -279,8 +301,9 @@ function Resizable(props) {
           background={backgroundCss}
           font={fontCss}
           border={borderCss}
+          isIconShape={isIconShape}
         >
-          {text}
+          {isIconShape ? <StyledTack src={questionImage} /> : <>{text}</>}
         </FullBox>
       </Container>
       <Controls hide={hideButton}>

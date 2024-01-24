@@ -6,9 +6,10 @@ import AssetViewer from 'renderer/Components/Assets/AssetViewer'
 import SwipeControl from 'renderer/Components/SwipeControl';
 import constants from 'renderer/config/constants';
 import Resizable from '../Common/Resizable';
+import tackImage from 'renderer/assets/tack.png';
 
-const { 
-  SCROLL_VIDEO_SERVER_LOCAL_URL, 
+const {
+  SCROLL_VIDEO_SERVER_LOCAL_URL,
   SCROLL_VIDEO_SERVER_REMOTE_URL,
   NEWS_PREVIEW_SERVER_LOCAL_URL,
   NEWS_PREVIEW_SERVER_REMOTE_URL
@@ -21,6 +22,17 @@ const Container = styled.div`
   overflow: hidden;
   transition: transform 0.5s;
 `;
+const StyledTack = styled.img`
+  position: absolute;
+  top: 50px;
+  right: 50px;
+  z-index: 1001;
+  width: 30px;
+  padding: 10px;
+  border: dashed 3px maroon;
+  opacity: 0.3;
+  border-radius: 10px;
+`
 
 const clone = (obj) => {
   return { ...obj };
@@ -107,12 +119,14 @@ const Asset = (props) => {
     : sourcesScroll;
 
   console.log('%%%', sources)
+  const hasText = assetTexts.length > 0;
   return (
     <Container show={show}>
       {assetTexts.map((assetText, index) => (
         // eslint-disable-next-line react/no-array-index-key
         <Resizable key={assetText.textId} index={index} assetText={assetText} />
       ))}
+      {/* {hasText && <StyledTack src={tackImage} />} */}
       <AssetViewer
         displayMode={displayMode}
         swipeMode={swipeMode}

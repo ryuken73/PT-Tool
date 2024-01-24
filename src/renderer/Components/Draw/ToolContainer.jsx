@@ -126,6 +126,7 @@ const blink = keyframes`
   }
   100% {
     opacity: 1;
+  }
 `;
 const iconStyleBlink = {
   ...iconStyle,

@@ -12,9 +12,9 @@ export const FullBox = styled.div`
   width: 100%;
   height: 100%;
   font-size: 2rem;
-  background: ${(props) => props.background};
+  background: ${(props) => props.isIconShape ? 'transparent' : props.background};
   color: ${(props) => props.font};
-  border: ${(props) => `3px solid ${props.border}`};
+  border: ${(props) => props.isIconShape ? 'none' : `3px solid ${props.border}`};
   border-radius: 20px;
   padding: 10px;
   font-weight: bold;
