@@ -6,7 +6,7 @@ import useAssetState from 'renderer/hooks/useAssetState';
 import usePrevious from 'renderer/hooks/usePrevious';
 import interact from 'interactjs';
 import tackImage from 'renderer/assets/tack.png';
-import questionImage from 'renderer/assets/folderQuestion.png';
+import questionImage from 'renderer/assets/folderQuestion.svg';
 import ColorPicker from './ColorPicker';
 import {
   Container,
@@ -24,7 +24,7 @@ import constants from 'renderer/config/constants';
 
 const { EASINGS } = constants;
 
-const StyledTack = styled.img`
+const StyledTack = styled.div`
   z-index: 1001;
   width: 60px;
   padding: 10px;
