@@ -1,5 +1,6 @@
 import React from 'react';
 import Box from '@mui/material/Box';
+import { ReactTyped } from 'react-typed';
 import Slider from '@mui/material/Slider';
 import styled from 'styled-components';
 import useAssetState from 'renderer/hooks/useAssetState';
@@ -24,12 +25,18 @@ import constants from 'renderer/config/constants';
 
 const { EASINGS } = constants;
 
-const StyledTack = styled.div`
+const StyledTack = styled.img`
   z-index: 1001;
   width: 60px;
   padding: 10px;
   opacity: 1;
   border-radius: 10px;
+`
+const StyledReactTyped = styled(ReactTyped)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(10px, 10px);
 `
 
 const animate = (element, from, to, options = {}) => {
@@ -84,7 +91,7 @@ function Resizable(props) {
   const savedTransformRef = React.useRef(savedTransform);
 
   const prevX = usePrevious(clientX);
-  console.log(prevX, clientX)
+  // console.log(prevX, clientX)
 
   const toggleHideColor = React.useCallback(() => {
     // eslint-disable-next-line @typescript-eslint/no-shadow
@@ -266,7 +273,7 @@ function Resizable(props) {
         listeners: {
           move: (event) => {
             const [x, y] = dragMoveListener(event, currentTransformRef);
-            console.log(x, y)
+            // console.log(x, y)
             setClientX(x);
             // attachToDoc(scalableRef.current, translateRef.current, y);
           },
@@ -278,6 +285,7 @@ function Resizable(props) {
         },
       })
       .on('doubletap', function (event) {
+        console.log('doubletap')
         event.preventDefault();
         setIsIconShape((isIconShape) => {
           resizableRef.current.style.transform = `scale(${minScale})`;
@@ -302,8 +310,25 @@ function Resizable(props) {
           font={fontCss}
           border={borderCss}
           isIconShape={isIconShape}
+          text={isIconShape ? '' : text}
         >
-          {isIconShape ? <StyledTack src={questionImage} /> : <>{text}</>}
+          {/* {isIconShape ? <StyledTack src={questionImage} /> : <>{text}</>} */}
+          {isIconShape ? (
+            <StyledTack src={questionImage} />
+          ) : (
+            <>
+            <div style={{visibility: 'hidden'}}>
+            {text}
+            </div>
+            <StyledReactTyped
+              typeSpeed={80}
+              strings={[text]}
+              stopped={true}
+              startWhenVisible={true}
+              showCursor={false}
+            />
+            </>
+          )}
         </FullBox>
       </Container>
       <Controls hide={hideButton}>

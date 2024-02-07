@@ -19,6 +19,7 @@ export const FullBox = styled.div`
   padding: 10px;
   font-weight: bold;
   box-sizing: border-box;
+  position: relative;
 `;
 export const Controls = styled.div`
   position: fixed;
