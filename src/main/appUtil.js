@@ -48,6 +48,9 @@ const setupIPCHandlers = () => {
     const currentWindow = BrowserWindow.getFocusedWindow();
     currentWindow.webContents.openDevTools();
   });
+  ipcMain.handle('getAppVersion', () => {
+    return app.getVersion();
+  });
   ipcMain.handle('quitApp', () => {
     return Promise.resolve(app.quit());
   });

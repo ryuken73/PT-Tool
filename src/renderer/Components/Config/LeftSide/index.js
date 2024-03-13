@@ -20,7 +20,14 @@ const OpenDevTools = styled.button`
 `;
 
 function LeftSide() {
+  const [appVersion, setAppVersion] = React.useState('fetching...');
   const { useSrcLocal } = useAppState();
+  React.useEffect(() => {
+    // eslint-disable-next-line promise/catch-or-return, promise/always-return
+    window.getAppVersion().then((version) => {
+      setAppVersion(version);
+    });
+  }, []);
   const openDevTools = React.useCallback(() => {
     window.openDevTools();
   }, []);
@@ -50,7 +57,9 @@ function LeftSide() {
         <SetSwipeThreshold />
       </DialogContentText>
       <p></p>
-      <InfoBox>Mode: {useSrcLocal ? 'Local' : 'Remote'}</InfoBox>
+      <InfoBox>
+        Mode: {useSrcLocal ? 'Local' : 'Remote'}, Version: {appVersion}
+      </InfoBox>
       <OpenDevTools onClick={openDevTools}>Open Debug Tools</OpenDevTools>
     </DialogContent>
   );

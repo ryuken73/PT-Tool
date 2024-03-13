@@ -21,6 +21,9 @@ window.openDevTools = async () => {
   return ipcRenderer.invoke('openDevTools');
 };
 
+window.getAppVersion = async () => {
+  return ipcRenderer.invoke('getAppVersion');
+};
 // console.log('start navigate media device')
 // navigator.mediaDevices
 //   .getUserMedia({ video: true })
