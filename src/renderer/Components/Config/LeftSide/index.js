@@ -14,9 +14,17 @@ import SetHomeImagePath from './SetHomeImagePath';
 const InfoBox = styled.div`
   font-size: 12px;
 `;
+const OpenDevTools = styled.button`
+  font-size: 12px;
+  cursor: pointer;
+`;
 
 function LeftSide() {
   const { useSrcLocal } = useAppState();
+  const openDevTools = React.useCallback(() => {
+    window.openDevTools();
+  }, []);
+
   return (
     // eslint-disable-next-line react/jsx-filename-extension
     <DialogContent>
@@ -43,6 +51,7 @@ function LeftSide() {
       </DialogContentText>
       <p></p>
       <InfoBox>Mode: {useSrcLocal ? 'Local' : 'Remote'}</InfoBox>
+      <OpenDevTools onClick={openDevTools}>Open Debug Tools</OpenDevTools>
     </DialogContent>
   );
 }

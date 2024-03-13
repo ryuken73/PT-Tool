@@ -17,6 +17,10 @@ window.openFileDialog = async (method, config) => {
   return await ipcRenderer.invoke('dialog', method, config);
 };
 
+window.openDevTools = async () => {
+  return ipcRenderer.invoke('openDevTools');
+};
+
 // console.log('start navigate media device')
 // navigator.mediaDevices
 //   .getUserMedia({ video: true })

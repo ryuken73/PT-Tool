@@ -44,6 +44,10 @@ const setupIPCHandlers = () => {
       // height,
     });
   });
+  ipcMain.handle('openDevTools', () => {
+    const currentWindow = BrowserWindow.getFocusedWindow();
+    currentWindow.webContents.openDevTools();
+  });
   ipcMain.handle('quitApp', () => {
     return Promise.resolve(app.quit());
   });
