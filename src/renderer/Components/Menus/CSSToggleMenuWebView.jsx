@@ -43,7 +43,7 @@ const ToggleButton = styled.input`
   top: 0;
   left: 0;
   &:checked ~ ul {
-    width: 350px;
+    width: 300px;
     // background-position: 0px -50px;
   }
 `;
@@ -76,7 +76,6 @@ function CSSToggleMenuWebView(props) {
   // eslint-disable-next-line react/prop-types
   const { srcId, isFirstImage, displayMode, scale, translateX, translateY } = props;
   const { updateCurrentAssetSrc } = useAssetState();
-  const { hideTools, setHideToolsState } = useAppState();
   const isToggleBtnRightSide =
     !isFirstImage &&
     (displayMode === 'overlaySplit' ||
@@ -107,10 +106,6 @@ function CSSToggleMenuWebView(props) {
   const moveDown = React.useCallback(() => {
     updateCurrentAssetSrc(srcId, 'translateY', translateY + 1);
   }, [srcId, translateY, updateCurrentAssetSrc]);
-
-  const toggleHideTools = React.useCallback(() => {
-    setHideToolsState(!hideTools);
-  }, [hideTools, setHideToolsState]);
 
   return (
     <Container
@@ -182,18 +177,6 @@ function CSSToggleMenuWebView(props) {
         <CustomButton>
           <IconButton onClick={moveDown}>
             <ArrowDownwardIcon
-              sx={{
-                fontSize: 30,
-                color: 'white',
-                opacity: 1,
-                borderRadius: '5px',
-              }}
-            />
-          </IconButton>
-        </CustomButton>
-        <CustomButton>
-          <IconButton onClick={toggleHideTools}>
-            <MenuOpenIcon
               sx={{
                 fontSize: 30,
                 color: 'white',

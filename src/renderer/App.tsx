@@ -340,7 +340,6 @@ export default function App() {
   const {
     homeShow,
     drawShow,
-    hideTools,
     draggableDock,
     dockWidth,
     showTransition,
@@ -442,12 +441,8 @@ export default function App() {
       {drawShow && <DrawSvg />}
       <Loading />
       {ENABLE_V_MENU && showTitle === 'yes' && <AssetTitle />}
-      {!hideTools && (
-        <MenuContainer showVertical={ENABLE_V_MENU} drawShow={drawShow} />
-      )}
-      {!hideTools && (
-        <SelectedToolContainer drawShow={drawShow} toggleDraw={toggleDraw} />
-      )}
+      <MenuContainer showVertical={ENABLE_V_MENU} drawShow={drawShow} />
+      <SelectedToolContainer drawShow={drawShow} toggleDraw={toggleDraw} />
       <ConfigDialog />
       <ConfirmDialog
         open={quitConfirmOpen}
