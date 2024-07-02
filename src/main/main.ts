@@ -138,6 +138,10 @@ app.on('window-all-closed', () => {
   }
 });
 
+// to use google earth in electron (SharedArrayBuffer issue)
+app.commandLine.appendSwitch('enable-features', 'SharedArrayBuffer');
+app.commandLine.appendSwitch('disable-features', 'CrossOriginOpenerPolicy');
+
 app
   .whenReady()
   .then(() => {
@@ -158,6 +162,10 @@ app
           delete d.responseHeaders['x-frame-options'];
           delete d.responseHeaders['X-Frame-Options'];
         }
+        // to use google earth in electron (SharedArrayBuffer issue)
+        // no need to add header
+        // d.responseHeaders['Cross-Origin-Opener-Policy'] = ['same-origin'];
+        // d.responseHeaders['Cross-Origin-Embedder-Policy'] = ['require-corp'];
         c({
           cancel: false,
           responseHeaders: d.responseHeaders,
