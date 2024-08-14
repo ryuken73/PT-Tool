@@ -8,6 +8,7 @@ import SrcViewer from 'renderer/Components/Assets/SrcViewer';
 import SwipeButton from 'renderer/Components/Assets/SwipeButton';
 import Swipers from 'renderer/Components/Assets/Swipers';
 import useAppState from 'renderer/hooks/useAppState';
+import useAssetState from 'renderer/hooks/useAssetState';
 import useConfigState from 'renderer/hooks/useConfigState';
 import useWindowSize from 'renderer/hooks/useWindowSize';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -44,7 +45,13 @@ const Container = styled.div`
   height: 100%;
   touch-action: none;
   user-select: none;
-`
+`;
+const StyledButton = styled.button`
+  position: absolute;
+  z-index: 99999;
+  right: 10px;
+  top: 100px;
+`;
 const FlexContainer = styled(Container)`
   position: relative;
   display: ${(props) => props.displayMode.startsWith('flex') && 'flex'};
@@ -99,6 +106,7 @@ const AssetContainer = (props) => {
   const containerRef = React.useRef(null);
   const dragRef = React.useRef(null);
   const { useSrcLocal, draggableDock, dockWidth } = useAppState();
+  const { assets, currentAssetIndex, setCurrentAssetIndexState }= useAssetState();
   const { config } = useConfigState();
   const { fillSplitter } = config;
   const size = useWindowSize();
@@ -257,9 +265,17 @@ const AssetContainer = (props) => {
   const stroke = React.useMemo(() => getStroke(points, options),[points]);
   const pathData = getSvgPathFromStroke(stroke);
   // console.log(pathData);
+  const goNext = React.useCallback(() => {
+    if (parseInt(currentAssetIndex, 10) === assets.length - 1) {
+      setCurrentAssetIndexState(0);
+      return;
+    }
+    setCurrentAssetIndexState(currentAssetIndex + 1)
+  }, [assets.length, currentAssetIndex, setCurrentAssetIndexState]);
 
   return (
     <Container id="xxx" ref={containerRef}>
+      <StyledButton onClick={goNext}>next</StyledButton>
       {displayMode === 'brush' && (
         <OverlayContainer>
           <ProtectLayer isDragging={isDragging} />
