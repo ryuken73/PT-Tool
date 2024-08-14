@@ -10,6 +10,12 @@ const Container = styled.div`
   display: flex;
   flex-direction: row;
 `
+const RepaintButton = styled.button`
+  position: absolute;
+  top: 100px;
+  right: 50px;
+  z-index: 1000;
+`
 // const ua = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; Touch) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.174 Electron/16.1.0 Safari/537.36"
 // const ua = "Mozilla/5.0 (iPad; CPU OS 13_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/87.0.4280.77 Mobile/15E148 Safari/604.1";
 // const ua = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; ServiceUI 13) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36 Edge/17.17134"
@@ -19,6 +25,8 @@ const Container = styled.div`
 
 const earthString = 'earth.nullschool.net';
 const weatherStrig = 'weather.go.kr';
+const googleEarthString = 'earth.google.com';
+
 const earthCSS = [
   // 'div.earth-bar { position: absolute !important; margin-left: 85%; margin-top: 40%; }',
   'div.earth-bar { position: absolute !important; right: 250px; left: auto; bottom: 30px}',
@@ -65,7 +73,19 @@ const WebView = (props) => {
     webviewRef.current.reload();
   }, []);
 
-  const isFilterable = true;
+  const repaintWebview = React.useCallback(() => {
+    if (webviewRef.current === null) {
+      return;
+    }
+    webviewRef.current.style.border = '1px solid black';
+    setTimeout(() => {
+      webviewRef.current.style.border = 'none';
+    }, 100)
+  }, []);
+
+  // eslint-disable-next-line react/prop-types
+  const isGoogleEarth = src.includes(googleEarthString);
+
   return (
     <Container>
       {show && (
@@ -77,6 +97,9 @@ const WebView = (props) => {
           isFirstImage={isFirstImage}
           displayMode={displayMode}
         />
+      )}
+      {isGoogleEarth && (
+        <RepaintButton onClick={repaintWebview}>repaint</RepaintButton>
       )}
       <webview
         key={src}
