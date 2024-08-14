@@ -219,6 +219,23 @@ const INITIAL_ASSETS = [
     enableOverlay: false,
     displayMode: 'overlaySplit',
   },
+  {
+    assetId: 5,
+    assetTitle: '구글어스',
+    created: null,
+    updated: null,
+    sources: [
+      {
+        srcId: 3,
+        srcLocal:
+          'https://earth.google.com/web/@36.74871436,127.18373772,-29.26438952a,852412.08744943d,30.00001379y,0h,0t,0r/data=OgMKATA',
+        srcRemote:
+          'https://earth.google.com/web/@36.74871436,127.18373772,-29.26438952a,852412.08744943d,30.00001379y,0h,0t,0r/data=OgMKATA',
+        srcType: 'web',
+        size: null,
+      },
+    ],
+  },
 ];
 
 const Container = styled.div`
