@@ -5,7 +5,7 @@ import RefreshIcon from '@mui/icons-material/DisplaySettings';
 
 const Container = styled.div`
   position: absolute;
-  top: 200px;
+  top: 150px;
   right: 50px;
   z-index: 10000;
 `
@@ -21,7 +21,7 @@ export default function EarthRefreshButton(props) {
             fontSize: 50,
             color: 'maroon',
             background: 'white',
-            opacity: 0.2,
+            opacity: 0.5,
             borderRadius: '10%',
           }}
         />
