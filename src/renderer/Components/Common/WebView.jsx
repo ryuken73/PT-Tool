@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import CSSToggleMenuWebView from '../Menus/CSSToggleMenuWebView';
 import ReloadButton from './ReloadButton';
+import EarthRefreshButton from './EarthRefreshButton';
 
 const Container = styled.div`
   width: 100%;
@@ -9,12 +10,6 @@ const Container = styled.div`
   position: relative;
   display: flex;
   flex-direction: row;
-`
-const RepaintButton = styled.button`
-  position: absolute;
-  top: 100px;
-  right: 50px;
-  z-index: 1000;
 `
 // const ua = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; Touch) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.174 Electron/16.1.0 Safari/537.36"
 // const ua = "Mozilla/5.0 (iPad; CPU OS 13_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/87.0.4280.77 Mobile/15E148 Safari/604.1";
@@ -98,9 +93,7 @@ const WebView = (props) => {
           displayMode={displayMode}
         />
       )}
-      {isGoogleEarth && (
-        <RepaintButton onClick={repaintWebview}>repaint</RepaintButton>
-      )}
+      {isGoogleEarth && <EarthRefreshButton onClick={repaintWebview} />}
       <webview
         key={src}
         ref={webviewRef}
