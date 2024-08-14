@@ -228,9 +228,9 @@ const INITIAL_ASSETS = [
       {
         srcId: 3,
         srcLocal:
-          'https://earth.google.com/web/@36.74871436,127.18373772,-29.26438952a,852412.08744943d,30.00001379y,0h,0t,0r/data=OgMKATA',
+          'https://earth.google.com/earth/d/11wK27mw5aEUYj6ocpfPX-vRqU38ejygR?usp=sharing',
         srcRemote:
-          'https://earth.google.com/web/@36.74871436,127.18373772,-29.26438952a,852412.08744943d,30.00001379y,0h,0t,0r/data=OgMKATA',
+          'https://earth.google.com/earth/d/11wK27mw5aEUYj6ocpfPX-vRqU38ejygR?usp=sharing',
         srcType: 'web',
         size: null,
       },
