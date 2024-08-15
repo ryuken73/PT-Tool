@@ -21,6 +21,7 @@ import 'swiper/css/effect-flip';
 import 'swiper/css/effect-creative';
 import { getStroke } from 'perfect-freehand';
 import { getSvgPathFromStroke } from 'renderer/lib/appUtil';
+import NextButton from '../Common/NextButton';
 
 const options = {
   size: 300,
@@ -46,12 +47,7 @@ const Container = styled.div`
   touch-action: none;
   user-select: none;
 `;
-const StyledButton = styled.button`
-  position: absolute;
-  z-index: 99999;
-  right: 10px;
-  top: 100px;
-`;
+
 const FlexContainer = styled(Container)`
   position: relative;
   display: ${(props) => props.displayMode.startsWith('flex') && 'flex'};
@@ -265,19 +261,22 @@ const AssetContainer = (props) => {
   const stroke = React.useMemo(() => getStroke(points, options),[points]);
   const pathData = getSvgPathFromStroke(stroke);
   // console.log(pathData);
-  const goNext = React.useCallback(() => {
+  const nextIndex = React.useMemo(() => {
     if (parseInt(currentAssetIndex, 10) === assets.length - 1) {
-      setCurrentAssetIndexState(0);
-      return;
+      return 0;
     }
-    setCurrentAssetIndexState(currentAssetIndex + 1)
-  }, [assets.length, currentAssetIndex, setCurrentAssetIndexState]);
+    return currentAssetIndex + 1;
+  }, [assets.length, currentAssetIndex]);
+  const goNext = React.useCallback(() => {
+    setCurrentAssetIndexState(nextIndex);
+  }, [nextIndex, setCurrentAssetIndexState]);
+  const nextTitle = assets[nextIndex].assetTitle;
 
   return (
     <Container id="xxx" ref={containerRef}>
-      <StyledButton onClick={goNext}>next</StyledButton>
       {displayMode === 'brush' && (
         <OverlayContainer>
+          <NextButton onClick={goNext} nextTitle={nextTitle} />
           <ProtectLayer isDragging={isDragging} />
           {sources.map((source, index) => (
             <AbsoluteBoxBrush
@@ -303,6 +302,7 @@ const AssetContainer = (props) => {
       )}
       {displayMode === 'overlaySplit' && (
         <OverlayContainer>
+          <NextButton onClick={goNext} nextTitle={nextTitle} />
           <DragDivWithPosition ref={dragRef}>
             <SplitSvg />
           </DragDivWithPosition>
@@ -328,6 +328,7 @@ const AssetContainer = (props) => {
       )}
       {(displayMode === 'flexColumn' || displayMode === 'flexRow') && (
         <FlexContainer displayMode={displayMode}>
+          <NextButton onClick={goNext} nextTitle={nextTitle} />
           {sources.map((source, index) => (
             <SrcViewer
               key={`${assetId}-${source.srcId}`}
@@ -359,6 +360,7 @@ const AssetContainer = (props) => {
         // >
         // <Swipers swipeMode={swipeMode} swipeThreshold={swipeThreshold}>
         <Swipers swipeMode={swipeMode}>
+          <NextButton onClick={goNext} nextTitle={nextTitle} />
           {sources.map((source, index) => (
             <SwiperSlide>
               {({ isActive }) => (
@@ -382,6 +384,7 @@ const AssetContainer = (props) => {
       )}
       {(displayMode === '' || displayMode === undefined) && (
         <Container>
+        <NextButton onClick={goNext} nextTitle={nextTitle} />
           {sources.map((source, index) => (
             <SrcViewer
               key={`${assetId}-${source.srcId}`}
