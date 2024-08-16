@@ -23,6 +23,8 @@ const Text = styled(Box)`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  min-width: ${(props) => props.minWidth};
+  line-height: ${(props) => props.lineHeight};
   &:hover {
     opacity: ${(props) => props.opacityOnHover || '1'};
   }

@@ -9,7 +9,8 @@ import DragHandle from '../Draw/DragHandle';
 const Container = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
+  cursor: pointer;
 `;
 const ToolDivWithPosition = styled.div`
   position: absolute;
@@ -51,12 +52,14 @@ export default function NextButton(props) {
           <TextBox
             id="handle"
             containerProps={{
-              textalign: 'center'
+              textalign: 'right'
             }}
             fontSize="20px"
             text={nextTitle}
             color="white"
             opacity={0.6}
+            minWidth="100px"
+            lineHeight="73px"
           />
           <IconButton size="large" onClick={onClick}>
             <ForwardIcon
