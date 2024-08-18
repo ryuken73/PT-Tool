@@ -25,6 +25,7 @@ const Text = styled(Box)`
   white-space: nowrap;
   min-width: ${(props) => props.minWidth};
   line-height: ${(props) => props.lineHeight};
+  text-shadow: 1px 0 black, 0 1px black, 2px 0 black, 0 2px black;
   &:hover {
     opacity: ${(props) => props.opacityOnHover || '1'};
   }
