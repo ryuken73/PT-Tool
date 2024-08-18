@@ -2,9 +2,9 @@ import React from 'react';
 import styled from 'styled-components';
 import IconButton from '@mui/material/IconButton'
 import ForwardIcon from '@mui/icons-material/Forward';
-import TextBox from './TextBox';
 import Draggable from 'react-draggable';
-import DragHandle from '../Draw/DragHandle';
+import { animate } from 'renderer/lib/appUtil';
+import TextBox from './TextBox';
 
 const Container = styled.div`
   display: flex;
@@ -24,10 +24,20 @@ const ToolDivWithPosition = styled.div`
   opacity: ${(props) => props.isDragging && '0.5'};
 `;
 
+const animateClick = (targetElement) => {
+  const from = { transform: `translate(0px, 0px)`};
+  const to = { transform: `translate(3px, 1px)`};
+  const options = {
+    duration: 70
+  }
+  return animate(targetElement, from, to, options);
+}
+
 export default function NextButton(props) {
   // eslint-disable-next-line react/prop-types
-  const { onClick, nextTitle='text' } = props;
+  const { onClick: clickHandler, nextTitle='text' } = props;
   const [isDragging, setIsDragging] = React.useState(false);
+  const buttonRef = React.useRef(null);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onStartDrag = React.useCallback((event) => {
@@ -39,6 +49,15 @@ export default function NextButton(props) {
   const onStopDrag = React.useCallback(() => {
     setIsDragging(false);
   }, [setIsDragging]);
+
+  const onClick = React.useCallback((e) => {
+      animateClick(buttonRef.current)
+      setTimeout(() => {
+        clickHandler(e);
+      }, 100)
+    },
+    [clickHandler]
+  );
 
   return (
     <Draggable
@@ -61,7 +80,7 @@ export default function NextButton(props) {
             minWidth="100px"
             lineHeight="73px"
           />
-          <IconButton size="large" onClick={onClick}>
+          <IconButton ref={buttonRef} size="large" onClick={onClick}>
             <ForwardIcon
               sx={{
                 fontSize: 50,

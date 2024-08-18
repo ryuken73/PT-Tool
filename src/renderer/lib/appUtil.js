@@ -1,4 +1,8 @@
+// const { constants } = require('renderer/config/constants');
+import  constants from 'renderer/config/constants';
 const { ipcRenderer } = require('electron');
+
+const { EASINGS } = constants;
 const MEDIA_EXTENSIONS = ['MP4', 'OGG', 'WEBM'];
 
 const getVersion = async () => {
@@ -75,6 +79,13 @@ const arrayBitWiseAvg = (arrayParent) => {
 
 const pickArrayFraction = (array, from, to) => {
   return array.slice(from, to + 1);
+};
+
+const animate = (element, from, to, options = {}) => {
+  const { duration = 500, easing = EASINGS.OVER_OUT } = options;
+  const keyframe = [{ ...from }, { ...to }];
+  const animation = element.animate(keyframe, { duration, easing });
+  return animation;
 };
 
 // positions = [[x0,y0], [x1,y1]....,[xx, yy]]
@@ -168,6 +179,7 @@ module.exports = {
   isHlsStream,
   debounce,
   arrayBitWiseAvg,
+  animate,
   getSmoothLine,
   getSvgPathFromStroke,
   secondsToTime,
