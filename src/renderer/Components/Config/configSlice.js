@@ -14,7 +14,8 @@ const initialState = {
     lineOpacity: 0.8,
     toolContainerType: 'twoColumn',
     homeImagePath: null,
-    arrowShape: 'normal'
+    arrowShape: 'normal',
+    showNextButton: true,
   },
 };
 

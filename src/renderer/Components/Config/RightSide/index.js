@@ -6,6 +6,7 @@ import SetLineOpacity from './SetLineOpacity';
 import SetLineStrokeWidth from './SetLineStrokeWidth';
 import SelectToolContainer from './SelectToolContainer';
 import SelectArrowShape from './SelectArrowShape';
+import SetShowNextButton from './SetShowNextButton';
 
 function RightSide() {
   return (
@@ -25,6 +26,9 @@ function RightSide() {
       </DialogContentText>
       <DialogContentText sx={{ color: 'white' }}>
         <SelectArrowShape />
+      </DialogContentText>
+      <DialogContentText sx={{ color: 'white' }}>
+        <SetShowNextButton />
       </DialogContentText>
     </DialogContent>
   );

@@ -104,7 +104,7 @@ const AssetContainer = (props) => {
   const { useSrcLocal, draggableDock, dockWidth } = useAppState();
   const { assets, currentAssetIndex, setCurrentAssetIndexState }= useAssetState();
   const { config } = useConfigState();
-  const { fillSplitter } = config;
+  const { fillSplitter, showNextButton } = config;
   const size = useWindowSize();
   const {
     displayMode = 'flexRow',
@@ -276,7 +276,9 @@ const AssetContainer = (props) => {
     <Container id="xxx" ref={containerRef}>
       {displayMode === 'brush' && (
         <OverlayContainer>
-          <NextButton onClick={goNext} nextTitle={nextTitle} />
+          {showNextButton && (
+            <NextButton onClick={goNext} nextTitle={nextTitle} />
+          )}
           <ProtectLayer isDragging={isDragging} />
           {sources.map((source, index) => (
             <AbsoluteBoxBrush
@@ -302,7 +304,9 @@ const AssetContainer = (props) => {
       )}
       {displayMode === 'overlaySplit' && (
         <OverlayContainer>
-          <NextButton onClick={goNext} nextTitle={nextTitle} />
+          {showNextButton && (
+            <NextButton onClick={goNext} nextTitle={nextTitle} />
+          )}
           <DragDivWithPosition ref={dragRef}>
             <SplitSvg />
           </DragDivWithPosition>
@@ -328,7 +332,9 @@ const AssetContainer = (props) => {
       )}
       {(displayMode === 'flexColumn' || displayMode === 'flexRow') && (
         <FlexContainer displayMode={displayMode}>
-          <NextButton onClick={goNext} nextTitle={nextTitle} />
+          {showNextButton && (
+            <NextButton onClick={goNext} nextTitle={nextTitle} />
+          )}
           {sources.map((source, index) => (
             <SrcViewer
               key={`${assetId}-${source.srcId}`}
@@ -360,7 +366,9 @@ const AssetContainer = (props) => {
         // >
         // <Swipers swipeMode={swipeMode} swipeThreshold={swipeThreshold}>
         <Swipers swipeMode={swipeMode}>
-          <NextButton onClick={goNext} nextTitle={nextTitle} />
+          {showNextButton && (
+            <NextButton onClick={goNext} nextTitle={nextTitle} />
+          )}
           {sources.map((source, index) => (
             <SwiperSlide>
               {({ isActive }) => (
@@ -384,7 +392,9 @@ const AssetContainer = (props) => {
       )}
       {(displayMode === '' || displayMode === undefined) && (
         <Container>
-        <NextButton onClick={goNext} nextTitle={nextTitle} />
+          {showNextButton && (
+            <NextButton onClick={goNext} nextTitle={nextTitle} />
+          )}
           {sources.map((source, index) => (
             <SrcViewer
               key={`${assetId}-${source.srcId}`}
