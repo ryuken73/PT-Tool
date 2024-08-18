@@ -8,7 +8,7 @@ import usePrevious from 'renderer/hooks/usePrevious';
 import interact from 'interactjs';
 import tackImage from 'renderer/assets/tack.png';
 import questionImage from 'renderer/assets/folderQuestion.svg';
-import ColorPicker from './ColorPicker';
+import { animate } from 'renderer/lib/appUtil';
 import {
   Container,
   FullBox,
@@ -22,6 +22,7 @@ import {
   EasingContainer
 } from 'renderer/Components/Common/ResizableStyles'
 import constants from 'renderer/config/constants';
+import ColorPicker from './ColorPicker';
 
 const { EASINGS } = constants;
 
@@ -31,20 +32,14 @@ const StyledTack = styled.img`
   padding: 10px;
   opacity: 1;
   border-radius: 10px;
-`
+`;
 const StyledReactTyped = styled(ReactTyped)`
   position: absolute;
   top: 0;
   left: 0;
   transform: translate(10px, 10px);
-`
+`;
 
-const animate = (element, from, to, options = {}) => {
-  const { duration = 500, easing = EASINGS.OVER_OUT } = options;
-  const keyframe = [{ ...from }, { ...to }];
-  const animation = element.animate(keyframe, { duration, easing });
-  return animation;
-};
 const dragMoveListener = (event, currentTransformRef) => {
   const { target } = event;
   // keep the dragged position in the data-x/data-y attributes
