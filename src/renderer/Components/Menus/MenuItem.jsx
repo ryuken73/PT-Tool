@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import useAppState from 'renderer/hooks/useAppState';
+import { animate } from 'renderer/lib/appUtil';
 
 const Container = styled.div`
   cursor: pointer;
@@ -15,18 +16,34 @@ const Container = styled.div`
   border: ${props => props.isCurrent && '1px solid white'};
   width: 100%; */
 `
+const animateClick = (targetElement) => {
+  const from = { transform: `translate(0px, 0px)`};
+  const to = { transform: `translate(3px, 3px)`};
+  const options = {
+    duration: 70
+  }
+  return animate(targetElement, from, to, options);
+}
 
 const MenuItem = (props) => {
   // eslint-disable-next-line react/prop-types
   const { menuText, isCurrent, onClick, mode="horizontal" } = props;
   const { draggableDock } = useAppState();
+  const itemRef = React.useRef(null);
+  const onClickItem = React.useCallback((e) => {
+    animateClick(itemRef.current);
+      onClick(e);
+    },
+    [onClick]
+  );
   return (
     <Container
       className="menuItem"
       isCurrent={isCurrent}
-      onClick={onClick}
+      onClick={onClickItem}
       draggableDock={draggableDock}
       mode={mode}
+      ref={itemRef}
     >
       {menuText}
     </Container>

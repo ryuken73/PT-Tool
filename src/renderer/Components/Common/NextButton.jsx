@@ -11,6 +11,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: stretch;
   cursor: pointer;
+  box-sizing: border-box;
 `;
 const ToolDivWithPosition = styled.div`
   position: absolute;
@@ -22,6 +23,7 @@ const ToolDivWithPosition = styled.div`
   border-radius: 5px;
   border: ${(props) => props.isDragging && '2px dashed'};
   opacity: ${(props) => props.isDragging && '0.5'};
+  box-sizing: border-box;
 `;
 
 const animateClick = (targetElement) => {
