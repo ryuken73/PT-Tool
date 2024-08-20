@@ -39,6 +39,7 @@ export default function NextButton(props) {
   // eslint-disable-next-line react/prop-types
   const { onClick: clickHandler, nextTitle='text' } = props;
   const [isDragging, setIsDragging] = React.useState(false);
+  const [disabled, setDisabled] = React.useState(false);
   const buttonRef = React.useRef(null);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -53,10 +54,12 @@ export default function NextButton(props) {
   }, [setIsDragging]);
 
   const onClick = React.useCallback((e) => {
+      setDisabled(true);
       animateClick(buttonRef.current)
       setTimeout(() => {
         clickHandler(e);
-      }, 100)
+        setDisabled(false);
+      }, 100);
     },
     [clickHandler]
   );
@@ -82,7 +85,12 @@ export default function NextButton(props) {
             minWidth="100px"
             lineHeight="73px"
           />
-          <IconButton ref={buttonRef} size="large" onClick={onClick}>
+          <IconButton
+            disabled={disabled}
+            ref={buttonRef}
+            size="large"
+            onClick={onClick}
+          >
             <ForwardIcon
               sx={{
                 fontSize: 50,
