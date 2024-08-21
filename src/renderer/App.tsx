@@ -386,6 +386,7 @@ export default function App() {
       })
       .catch((err) => {
         setModalOpenState(false);
+        alert(err);
         alert('fail to get asset list! try again.');
       });
   }, [setAssetsState, setModalOpenState]);
