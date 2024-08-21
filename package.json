@@ -1,6 +1,6 @@
 {
   "name": "Touch-App",
-  "version": "0.2.9",
+  "version": "0.3.0",
   "description": "A foundation for scalable desktop apps",
   "scripts": {
     "build": "concurrently \"npm run build:main\" \"npm run build:renderer\"",
