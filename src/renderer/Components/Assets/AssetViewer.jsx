@@ -270,7 +270,8 @@ const AssetContainer = (props) => {
   const goNext = React.useCallback(() => {
     setCurrentAssetIndexState(nextIndex);
   }, [nextIndex, setCurrentAssetIndexState]);
-  const nextTitle = assets[nextIndex].assetTitle;
+  const nextTitle = assets[nextIndex]?.assetTitle;
+  // const nextTitle = assets[nextIndex].assetTitle;
 
   return (
     <Container id="xxx" ref={containerRef}>
