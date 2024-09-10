@@ -41,6 +41,39 @@ const debounce = (callback, timeout) => {
   };
 };
 
+const debounceEx = (fn, delay, option = { leading: true, trailing: true}) => {
+  let timeout;
+  let isLeadingInvoked = false;
+
+  return function (...args) {
+    const context = this;
+
+    //base condition
+    if(timeout){
+      clearTimeout(timeout);
+    }
+
+    // handle leading
+    if(option.leading && !timeout){
+      fn.apply(context, args);
+      isLeadingInvoked = true;
+    }else{
+      isLeadingInvoked = false;
+    }
+
+    // handle trailing
+    console.log(option.trailing, isLeadingInvoked)
+    timeout = setTimeout(() => {
+      console.log(option.trailing, isLeadingInvoked)
+      if(option.trailing && !isLeadingInvoked){
+        fn.apply(context, args);
+      }
+
+      timeout = null;
+    }, delay);
+  }
+}
+
 const secondsToTime = (seconds, format = 'mm:ss') => {
   // console.log('####', seconds)
   const startIndex = format.startsWith('hh:')
@@ -178,6 +211,7 @@ module.exports = {
   quitApp,
   isHlsStream,
   debounce,
+  debounceEx,
   arrayBitWiseAvg,
   animate,
   getSmoothLine,

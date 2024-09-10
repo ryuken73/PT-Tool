@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Draggable from 'react-draggable';
+import { debounceEx } from 'renderer/lib/appUtil';
 
 const Container = styled.div`
   position: absolute;
@@ -68,8 +69,11 @@ export default function EarthMousePosition() {
   const cancel = React.useCallback(() => {
     alert('cancel');
   }, []);
+
+  const handleDragDebounced = debounceEx(handleDrag, 1000, {leading: false, trailing: false});
+
   return (
-    <Draggable onDrag={handleDrag} handle="#handle">
+    <Draggable onDrag={handleDragDebounced} handle="#handle">
       <Container>
         <Handle id="handle">X</Handle>
         <Position>
