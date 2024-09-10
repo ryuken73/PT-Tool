@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import CSSToggleMenuWebView from '../Menus/CSSToggleMenuWebView';
 import ReloadButton from './ReloadButton';
 import EarthRefreshButton from './EarthRefreshButton';
+import EarthMousePosition from './EarthMousePosition';
 
 const Container = styled.div`
   width: 100%;
@@ -81,6 +82,28 @@ const WebView = (props) => {
   // eslint-disable-next-line react/prop-types
   const isGoogleEarth = src.includes(googleEarthString);
 
+  let x = 250;
+  const sendMouseClick = React.useCallback(() => {
+    const click = () => {
+      const webview = webviewRef.current;
+      const downEvent = {
+        type: 'mouseDown',
+        x: 281,
+        y: 994,
+      }
+      const upEvent = {
+        type: 'mouseUp',
+        x: 281,
+        y: 994,
+      }
+      webview.sendInputEvent(downEvent)
+      setTimeout(() => {
+        webview.sendInputEvent(upEvent)
+      }, 10);
+    }
+    click();
+  }, []);
+
   return (
     <Container>
       {show && (
@@ -93,6 +116,7 @@ const WebView = (props) => {
           displayMode={displayMode}
         />
       )}
+      {isGoogleEarth && <EarthMousePosition />}
       {isGoogleEarth && <EarthRefreshButton onClick={repaintWebview} />}
       <webview
         key={src}
@@ -115,6 +139,7 @@ const WebView = (props) => {
         // useragent={ua}
       />
       <ReloadButton reload={reload} />
+      <button onClick={sendMouseClick}>sendMouseClick</button>
     </Container>
   );
 };
