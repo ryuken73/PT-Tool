@@ -16,6 +16,8 @@ const initialState = {
     homeImagePath: null,
     arrowShape: 'normal',
     showNextButton: true,
+    googleEarthPrevPosition: { x: 0, y: 0 },
+    googleEarthNextPosition: { x: 0, y: 0 },
   },
 };
 

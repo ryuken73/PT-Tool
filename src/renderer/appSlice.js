@@ -11,6 +11,10 @@ const initialState = {
   isMessageBoxHidden: true,
   messageBoxText: '',
   messageBoxLevel: 'success',
+  googlePositionSetter: {
+    show: false,
+    mode: ''
+  },
 };
 
 export const appSlice = createSlice({
@@ -62,7 +66,12 @@ export const appSlice = createSlice({
       const { payload } = action;
       const { messageBoxLevel } = payload;
       state.messageBoxLevel = messageBoxLevel;
-    }
+    },
+    setGooglePositionSetter: (state, action) => {
+      const { payload } = action;
+      const { googlePositionSetter } = payload;
+      state.googlePositionSetter = googlePositionSetter;
+    },
   },
 })
 
@@ -94,7 +103,8 @@ export const {
   setShowTransition,
   setMessageBoxHide,
   setMessageBoxLevel,
-  setMessageBoxText
+  setMessageBoxText,
+  setGooglePositionSetter,
 } = appSlice.actions;
 
 export default appSlice.reducer;

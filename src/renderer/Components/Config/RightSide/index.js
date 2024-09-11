@@ -7,6 +7,7 @@ import SetLineStrokeWidth from './SetLineStrokeWidth';
 import SelectToolContainer from './SelectToolContainer';
 import SelectArrowShape from './SelectArrowShape';
 import SetShowNextButton from './SetShowNextButton';
+import SetGoogleEarthPosition from './SetGoogleEarthPosition';
 
 function RightSide() {
   return (
@@ -29,6 +30,9 @@ function RightSide() {
       </DialogContentText>
       <DialogContentText sx={{ color: 'white' }}>
         <SetShowNextButton />
+      </DialogContentText>
+      <DialogContentText sx={{ color: 'white' }}>
+        <SetGoogleEarthPosition />
       </DialogContentText>
     </DialogContent>
   );

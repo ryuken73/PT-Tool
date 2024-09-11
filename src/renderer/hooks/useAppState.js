@@ -7,6 +7,7 @@ import {
   setModalOpen,
   setDraggableDock,
   setShowTransition,
+  setGooglePositionSetter
 } from 'renderer/appSlice';
 import {
   setPathDatum,
@@ -24,6 +25,9 @@ export default function useAppState() {
   const useSrcLocal = useSelector((state) => state.app.useSrcLocal);
   const showTransition = useSelector((state) => state.app.showTransition);
   const modalOpen = useSelector((state) => state.app.modalOpen);
+  const googlePositionSetter = useSelector(
+    (state) => state.app.googlePositionSetter
+  );
   const { clearPathDatumState } = useDrawState();
 
   const setHomeShowState = React.useCallback((homeShow) => {
@@ -65,6 +69,12 @@ export default function useAppState() {
     [dispatch]
   );
 
+  const setGooglePositionSetterState = React.useCallback((googlePositionSetter) => {
+      dispatch(setGooglePositionSetter({ googlePositionSetter }));
+    },
+    [dispatch]
+  );
+
   return {
     homeShow,
     drawShow,
@@ -72,11 +82,13 @@ export default function useAppState() {
     draggableDock,
     dockWidth,
     showTransition,
+    googlePositionSetter,
     toggleDraw,
     setHomeShowState,
     setUseSrcLocalState,
     setModalOpenState,
     setDraggableDockState,
     setShowTransitionState,
+    setGooglePositionSetterState,
   };
 }

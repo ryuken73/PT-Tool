@@ -2,6 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import Draggable from 'react-draggable';
 import { debounceEx } from 'renderer/lib/appUtil';
+import useAppState from 'renderer/hooks/useAppState';
+import useConfigState from 'renderer/hooks/useConfigState';
+
+const ShowHide = styled.div`
+  display: ${props => !props.show && 'none'};
+`
 
 const Container = styled.div`
   position: absolute;
@@ -46,10 +52,23 @@ const Buttons = styled.div`
 const Button = styled.button`
   min-width: 50px;
 `
+const Mode = styled.div`
+  color: yellow;
+  margin-left: 10px;
+  font-size: 12px;
+`
 
 export default function EarthMousePosition() {
+  const {
+    googlePositionSetter = { show: false, mode: '' },
+    setGooglePositionSetterState,
+  } = useAppState();
+  const {setConfigValueState} = useConfigState();
+
+  const { show, mode } = googlePositionSetter;
   const [position, setPosition] = React.useState({ x: 0, y: 0 });
-  let clientX, clientY;
+  let clientX; 
+  let clientY;
   const handleDrag = React.useCallback((e, data) => {
     if (e instanceof MouseEvent) {
       clientX = e.clientX;
@@ -66,28 +85,57 @@ export default function EarthMousePosition() {
     console.log(e)
     console.log(data)
   }, []);
+
   const setOK = React.useCallback(() => {
-    alert('ok');
-  }, []);
+    if (mode === 'prev') {
+      setConfigValueState('googleEarthPrevPosition', {
+        x: position.x,
+        y: position.y,
+      });
+    }
+    if (mode === 'next') {
+      setConfigValueState('googleEarthNextPosition', {
+        x: position.x,
+        y: position.y,
+      });
+    }
+    setGooglePositionSetterState({
+      show: false,
+      mode: '',
+    });
+  }, [
+    mode,
+    position.x,
+    position.y,
+    setConfigValueState,
+    setGooglePositionSetterState,
+  ]);
+
   const cancel = React.useCallback(() => {
-    alert('cancel');
-  }, []);
+    setGooglePositionSetterState({
+      show: false,
+      mode: '',
+    });
+  }, [setGooglePositionSetterState]);
 
   const handleDragDebounced = debounceEx(handleDrag, 1000, {leading: false, trailing: false});
 
   return (
-    <Draggable onDrag={handleDrag} handle="#handle">
+    <ShowHide show={show}>
+    <Draggable bounds='#root' onDrag={handleDrag} handle="#handle">
     {/* <Draggable handle="#handle"> */}
       <Container>
         <Handle id="handle">X</Handle>
         <Position>
           x:{position.x}, y:{position.y}
         </Position>
+        <Mode>change {mode}</Mode>
         <Buttons>
           <Button onClick={setOK}>OK</Button>
           <Button onClick={cancel}>Cancel</Button>
         </Buttons>
       </Container>
     </Draggable>
+    </ShowHide>
   )
 }
