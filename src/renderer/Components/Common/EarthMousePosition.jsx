@@ -25,7 +25,10 @@ const Container = styled.div`
 `
 const Handle = styled.div`
   width: 30px;
-  background-color: maroon;
+  padding: 5px;
+  font-size: 20px;
+  line-height: 20px;
+  background-color: black;
   border-radius: 5px;
   margin-right: 5px;
   opacity: 0.5;
@@ -73,7 +76,8 @@ export default function EarthMousePosition() {
   const handleDragDebounced = debounceEx(handleDrag, 1000, {leading: false, trailing: false});
 
   return (
-    <Draggable onDrag={handleDragDebounced} handle="#handle">
+    <Draggable onDrag={handleDrag} handle="#handle">
+    {/* <Draggable handle="#handle"> */}
       <Container>
         <Handle id="handle">X</Handle>
         <Position>

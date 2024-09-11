@@ -88,13 +88,13 @@ const WebView = (props) => {
       const webview = webviewRef.current;
       const downEvent = {
         type: 'mouseDown',
-        x: 281,
-        y: 994,
+        x: 292,
+        y: 1105,
       }
       const upEvent = {
         type: 'mouseUp',
-        x: 281,
-        y: 994,
+        x: 292,
+        y: 1105,
       }
       webview.sendInputEvent(downEvent)
       setTimeout(() => {
