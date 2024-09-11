@@ -23,7 +23,10 @@ function EarthNavigationButtons(props) {
   // eslint-disable-next-line react/prop-types
   const { webviewRef } = props;
   const { config } = useConfigState();
-  const { googleEarthPrevPosition, googleEarthNextPosition } = config;
+  const {
+    googleEarthPrevPosition = { x: 0, y: 0 },
+    googleEarthNextPosition = { x: 0, y: 0 },
+  } = config;
 
   const sendMouseClick = React.useCallback((position) => {
       const click = () => {
