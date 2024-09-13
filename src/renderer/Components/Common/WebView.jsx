@@ -64,6 +64,29 @@ const WebView = (props) => {
         weatherCSS.forEach((css) => webview.insertCSS(css));
       });
     }
+    // webview.addEventListener('console-message', e => console.log('webview-messge:', e.message));
+    // webview.addEventListener('did-start-navigation', e => console.log('webview-messge: did-start-navigation'));
+    // webview.addEventListener('did-stop-navigation', e => console.log('webview-messge: did-stop-navigation'));
+    // webview.addEventListener('did-navigate', e => console.log('webview-messge: did-navigate'));
+    // webview.addEventListener('did-stop-loading', e => console.log('webview-messge: did-stop-loading'));
+    // webview.addEventListener('load-commit', e => console.log('webview-messge: load-commit'));
+    // webview.addEventListener('did-fail-load', e => console.log('webview-messge: did-fail-load'));
+    // webview.addEventListener('did-frame-finish-load', e => console.log('webview-messge: did-frame-finish-load'));
+    // webview.addEventListener('ipc-message', e => console.log('webview-messge: ipc-message'));
+    // webview.addEventListener('close', e => console.log('webview-messge: close'));
+    // webview.addEventListener('did-redirect-navigation', e => console.log('webview-messge: did-redirect-navigation'));
+    // webview.addEventListener('mouseup', e => console.log('mouseup'));
+    // webview.addEventListener('dom-ready', e => {
+    //   webview.executeJavaScript(`console.log('dom-ready')`)
+    //   webview.executeJavaScript(`
+    //     const canvas=document.querySelector('canvas');
+    //     canvas.addEventListener('mouseup', e => console.log('mouseup'))
+    //   `)
+    // });
+
+    //   const canvas = document.querySelector('canvas');
+    //   canvas.addEventListner('mouseup', console.log('mouse-up'));
+    // `)
   }, [src, webviewRef]);
 
   const reload = React.useCallback(() => {
