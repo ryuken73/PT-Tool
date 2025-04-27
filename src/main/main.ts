@@ -15,7 +15,10 @@ import log from 'electron-log';
 import { fork } from 'child_process';
 import MenuBuilder from './menu';
 import { resolveHtmlPath } from './util';
-import setupIPCHandlers from './appUtil';
+import setupIPCHandlers from './appUtil'; 
+import v8 from 'v8';
+
+// app.commandLine.appendSwitch('js-flags', '--max-old-space-size 4096'); // 4GB로 설정
 
 setupIPCHandlers();
 export default class AppUpdater {
@@ -118,7 +121,6 @@ const createWindow = async () => {
   });
 
   mainWindow.webContents.addListener('did-frame-navigate', () => {
-    // console.log('^^ did frame navigated');
   })
 
   // Remove this if your app does not use auto updates
@@ -152,6 +154,11 @@ app
       if (mainWindow === null) createWindow();
     });
     console.log('app ready:', __dirname);
+    console.log('Max old space size:', process.execArgv);
+    console.log(
+      'memory heap limit:',
+      v8.getHeapStatistics().heap_size_limit / 1024 / 1024
+    );
     session
       .fromPartition('no-xframe')
       .webRequest.onHeadersReceived({}, (d, c) => {

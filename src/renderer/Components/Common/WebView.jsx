@@ -124,7 +124,7 @@ const WebView = (props) => {
       <webview
         key={src}
         ref={webviewRef}
-        partition="no-xframe"
+        partition={isGoogleEarth ? 'no-xframe' : 'none'}
         scrolling="no"
         style={{
           width: '100%',
